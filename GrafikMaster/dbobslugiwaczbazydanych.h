@@ -8,6 +8,7 @@ class DBObslugiwaczBazyDanych {
 public:
     DBObslugiwaczBazyDanych();
     ~DBObslugiwaczBazyDanych() {}
+    
 private:
     std::ifstream inputFileReader;
     std::ofstream outputFileReader;
