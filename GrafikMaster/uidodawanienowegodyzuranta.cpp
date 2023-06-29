@@ -1,8 +1,11 @@
 
 #include "uidodawanienowegodyzuranta.h"
+#include "pedycjabazydyzurantow.h"
+#include <QMessageBox>
 
-UIDodawanieNowegoDyzuranta::UIDodawanieNowegoDyzuranta() {
+UIDodawanieNowegoDyzuranta::UIDodawanieNowegoDyzuranta(PEdycjaBazyDyzurantow* pebd) {
     setWindowTitle(tr("Dodawanie nowego dyżuranta"));
+    pEdycjaBazyDyzurantow = pebd;
 
     labelNick = new QLabel(tr("nick:"), this);
     labelPriorytet = new QLabel(tr("priorytet:"), this);
@@ -26,11 +29,27 @@ UIDodawanieNowegoDyzuranta::UIDodawanieNowegoDyzuranta() {
 }
 
 void UIDodawanieNowegoDyzuranta::onButtonOKClicked() {
-
+    QString nick = editNick -> text();
+    QString idText = editPriorytet -> text();
+    int ret(-1);
+    if (nick.isEmpty() || idText.isEmpty()) {
+        ret = QMessageBox::critical(this, tr("Błąd"), tr("Niewłaściwe dane!"), QMessageBox::Ok);
+        close();
+        return;
+    }
+    int priorytet(0);
+    bool result(false);
+    priorytet = idText.toInt(&result);
+    if (!result) {
+        ret = QMessageBox::critical(this, tr("Błąd"), tr("Niewłaściwe dane!"), QMessageBox::Ok);
+        close();
+        return;
+    }
+    pEdycjaBazyDyzurantow ->wybranoPrawdziweDodanieNowegoDyzuranta(nick, priorytet);
 }
 
 void UIDodawanieNowegoDyzuranta::onButtonAnulujClicked() {
-
+    close();
 }
 
 UIDodawanieNowegoDyzuranta::~UIDodawanieNowegoDyzuranta() {}

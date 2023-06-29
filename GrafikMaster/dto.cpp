@@ -7,6 +7,14 @@ XDyzurant::XDyzurant()
 XDyzurant::XDyzurant(int a, std::string s, int b)
     : id(a), nick(s), priorytet(b) {}
 
+std::string XDyzurant::getNick() {
+    return nick;
+}
+
+int XDyzurant::getPriorytet() {
+    return priorytet;
+}
+
 //XDyzurantTworzacy
 XDyzurantTworzacy::XDyzurantTworzacy()
     : XDyzurant(), maksymalnie(0), minimalnie(0), unikaniePodRzad(0) {}

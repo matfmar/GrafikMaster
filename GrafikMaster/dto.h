@@ -56,6 +56,8 @@ class XDyzurant {
 public:
     XDyzurant();
     XDyzurant(int a, std::string s, int b);
+    std::string getNick();
+    int getPriorytet();
     virtual ~XDyzurant() {}
 protected:
     int id;

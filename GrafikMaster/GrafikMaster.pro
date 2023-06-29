@@ -12,6 +12,7 @@ SOURCES += \
     dbobslugiwaczbazydanych.cpp \
     dto.cpp \
     main.cpp \
+    mdyzuranci.cpp \
     pedycjabazydyzurantow.cpp \
     pmain.cpp \
     uidodawanienowegodyzuranta.cpp \
@@ -21,6 +22,7 @@ SOURCES += \
 HEADERS += \
     dbobslugiwaczbazydanych.h \
     dto.h \
+    mdyzuranci.h \
     pedycjabazydyzurantow.h \
     pmain.h \
     uidodawanienowegodyzuranta.h \

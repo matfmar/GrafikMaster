@@ -11,16 +11,17 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QGroupBox>
+#include <vector>
 
 class PEdycjaBazyDyzurantow;
+class XDyzurant;
 
-
-class UIEdycjaBazyDyzurantow : public QMainWindow
-{
+class UIEdycjaBazyDyzurantow : public QMainWindow {
     Q_OBJECT
 public:
-    UIEdycjaBazyDyzurantow(PEdycjaBazyDyzurantow* pebd, QWidget *parent = nullptr);
+    UIEdycjaBazyDyzurantow(std::vector<XDyzurant*>* tablicaDyzurantow, PEdycjaBazyDyzurantow* pebd, QWidget *parent = nullptr);
     ~UIEdycjaBazyDyzurantow();
+    void aktualizujTabeleDyzurantow(std::vector<XDyzurant*>* tablicaDyzurantow, bool resultOfAddingNew);
 public slots:
     void onButtonDodajDyzurantaClicked();
     void onButtonUpdateDyzurantaClicked();
@@ -31,6 +32,7 @@ private:
     QWidget* mainWidget;
     QHBoxLayout* mainLayout;
     QVBoxLayout* leftLayout;
+    QVBoxLayout* ultimateMainLayout;
     QGridLayout* rightLayout;
     QGroupBox* groupDyzurant;
 
@@ -42,6 +44,9 @@ private:
     QLineEdit* editPriorytet;
     QPushButton* buttonUpdate;
     QPushButton* buttonUsun;
+    QPushButton* buttonSave;
+
+    void wypelnijListeDyzurantami(std::vector<XDyzurant*>* tab);
 
 };
 

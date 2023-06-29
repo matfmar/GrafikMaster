@@ -8,15 +8,18 @@
 #include <QLineEdit>
 #include <QPushButton>
 
+class PEdycjaBazyDyzurantow;
+
 class UIDodawanieNowegoDyzuranta : public QDialog {
     Q_OBJECT
 public:
-    UIDodawanieNowegoDyzuranta();
+    UIDodawanieNowegoDyzuranta(PEdycjaBazyDyzurantow* pebd);
     ~UIDodawanieNowegoDyzuranta();
 public slots:
     void onButtonOKClicked();
     void onButtonAnulujClicked();
 private:
+    PEdycjaBazyDyzurantow* pEdycjaBazyDyzurantow;
     QGridLayout* layout;
     QLabel* labelNick;
     QLabel* labelPriorytet;
