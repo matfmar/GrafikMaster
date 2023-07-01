@@ -4,7 +4,7 @@
 #include "dto.h"
 
 MDyzuranci::MDyzuranci()
-    : dbObslugiwaczBazyDanych(nullptr) {
+    : dbObslugiwaczBazyDanych(nullptr), tablicaDyzurantow(nullptr) {
     dbObslugiwaczBazyDanych = new DBObslugiwaczBazyDanych();
 
 }

@@ -13,9 +13,12 @@ SOURCES += \
     dto.cpp \
     main.cpp \
     mdyzuranci.cpp \
+    mnowegrafiki.cpp \
+    pdodawanienowegografiku.cpp \
     pedycjabazydyzurantow.cpp \
     pmain.cpp \
     uidodawanienowegodyzuranta.cpp \
+    uidodawanienowegografikuwstep.cpp \
     uiedycjabazydyzurantow.cpp \
     uimainwindow.cpp
 
@@ -23,9 +26,12 @@ HEADERS += \
     dbobslugiwaczbazydanych.h \
     dto.h \
     mdyzuranci.h \
+    mnowegrafiki.h \
+    pdodawanienowegografiku.h \
     pedycjabazydyzurantow.h \
     pmain.h \
     uidodawanienowegodyzuranta.h \
+    uidodawanienowegografikuwstep.h \
     uiedycjabazydyzurantow.h \
     uimainwindow.h
 

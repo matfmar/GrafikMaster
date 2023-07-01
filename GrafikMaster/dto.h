@@ -7,7 +7,7 @@
 #include <map>
 
 //(enum)DzienTygodnia
-enum DzienTygodnia {
+enum DzienTygodnia : int {
     NIEZNANY_DZIEN = 0,
     PONIEDZIALEK = 1,
     WTOREK = 2,
@@ -19,7 +19,7 @@ enum DzienTygodnia {
 };
 
 //(enum)Miesiac
-enum Miesiac {
+enum Miesiac : int {
     NIEZNANY_MIESIAC = 0,
     STYCZEN = 1,
     LUTY = 2,
@@ -36,14 +36,14 @@ enum Miesiac {
 };
 
 //(enum)StatusGrafiku
-enum StatusGrafiku {
+enum StatusGrafiku : int {
     NIEZNANY_STATUS_GRAFIKU = 0,
     ROBOCZY = 1,
     KLEPNIETY = 2
 };
 
 //(enum)StatusDnia
-enum StatusDnia {
+enum StatusDnia : int {
     NIEZNANY_STATUS = 0,
     NIEUSTAWIONY_W_TRAKCIE = 1,
     USTAWIONY_WSTEPNIE = 2,

@@ -35,7 +35,7 @@ void UIMainWindow::onButtonEdytujBazeDyzurantowClicked() {
 }
 
 void UIMainWindow::onButtonDodajNowyGrafikClicked() {
-
+    pMain -> wybranoDodanieNowegoGrafiku();
 }
 
 void UIMainWindow::onButtonPrzegladajGrafikiRoboczeClicked() {
