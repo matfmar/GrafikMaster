@@ -22,6 +22,8 @@ public:
     UIEdycjaBazyDyzurantow(std::vector<XDyzurant*>* tablicaDyzurantow, PEdycjaBazyDyzurantow* pebd, QWidget *parent = nullptr);
     ~UIEdycjaBazyDyzurantow();
     void aktualizujTabeleDyzurantow(std::vector<XDyzurant*>* tablicaDyzurantow, bool resultOfAddingNew);
+    void zablokujMozliwoscUpdate();
+    void wyczyscPolaUpdate();
 public slots:
     void onButtonDodajDyzurantaClicked();
     void onButtonUpdateDyzurantaClicked();

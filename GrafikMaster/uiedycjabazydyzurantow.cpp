@@ -97,7 +97,25 @@ void UIEdycjaBazyDyzurantow::onButtonUpdateDyzurantaClicked() {
 }
 
 void UIEdycjaBazyDyzurantow::onButtonUsunDyzurantaClicked() {
+    int ret(-1);
+    if (listaDyzurantow->currentItem() == nullptr) {
+        ret = QMessageBox::critical(this, tr("Błąd"), tr("Nic nie zaznaczono!"), QMessageBox::Ok);
+        return;
+    }
+    int id = listaDyzurantow->row((listaDyzurantow->currentItem()));
+    pEdycjaBazyDyzurantow -> wybranoUsuniecieDyzuranta(id);
+}
 
+void UIEdycjaBazyDyzurantow::zablokujMozliwoscUpdate() {
+    editNick -> setEnabled(false);
+    editPriorytet -> setEnabled(false);
+    buttonUpdate -> setEnabled(false);
+    buttonUsun -> setEnabled(false);
+}
+
+void UIEdycjaBazyDyzurantow::wyczyscPolaUpdate() {
+    editNick -> clear();
+    editPriorytet -> clear();
 }
 
 void UIEdycjaBazyDyzurantow::onListWidgetClicked(QListWidgetItem* item) {

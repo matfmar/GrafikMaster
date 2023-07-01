@@ -54,6 +54,25 @@ std::vector<XDyzurant*>* MDyzuranci::zrobUpdateDyzuranta(int a, std::string b, i
     return tablicaDyzurantow;
 }
 
+std::vector<XDyzurant*>* MDyzuranci::usunDyzuranta(int a, bool& result) {
+    int id = a;
+    std::vector<XDyzurant*>* tablicaDyzurantow2 = new std::vector<XDyzurant*>();
+    for (auto it = tablicaDyzurantow -> begin(); it < tablicaDyzurantow -> end(); ++it) {
+        tablicaDyzurantow2 -> push_back(*it);
+    }
+    tablicaDyzurantow -> erase(tablicaDyzurantow -> begin() + a);
+    result = dbObslugiwaczBazyDanych -> writeListaDyzurantowFull(tablicaDyzurantow);
+    if (result) {
+        delete tablicaDyzurantow2;
+        tablicaDyzurantow2 = nullptr;
+    }
+    else {
+        delete tablicaDyzurantow;
+        tablicaDyzurantow = tablicaDyzurantow2;
+    }
+    return tablicaDyzurantow;
+}
+
 MDyzuranci::~MDyzuranci() {
     if (dbObslugiwaczBazyDanych != nullptr) {
         delete dbObslugiwaczBazyDanych;

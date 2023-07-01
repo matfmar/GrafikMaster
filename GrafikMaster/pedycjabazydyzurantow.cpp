@@ -31,8 +31,13 @@ void PEdycjaBazyDyzurantow::wybranoUpdateDyzuranta(int a, QString b, int c) {
     uiEdycjaBazyDyzurantow -> aktualizujTabeleDyzurantow(tablicaDyzurantow, result);
 }
 
-void PEdycjaBazyDyzurantow::wybranoUsuniecieDyzuranta() {
-
+void PEdycjaBazyDyzurantow::wybranoUsuniecieDyzuranta(int a) {
+    int id = a;
+    bool result(false);
+    std::vector<XDyzurant*>* tablicaDyzurantow = mDyzuranci -> usunDyzuranta(a, result);
+    uiEdycjaBazyDyzurantow -> zablokujMozliwoscUpdate();
+    uiEdycjaBazyDyzurantow -> wyczyscPolaUpdate();
+    uiEdycjaBazyDyzurantow -> aktualizujTabeleDyzurantow(tablicaDyzurantow, result);
 }
 
 XDyzurant* PEdycjaBazyDyzurantow::wybranoPokazanieSzczegolowDyzuranta(int id) {

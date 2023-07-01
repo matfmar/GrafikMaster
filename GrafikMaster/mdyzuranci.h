@@ -16,6 +16,7 @@ public:
     XDyzurant* pokazDaneJednegoDyzuranta(int id);
     std::vector<XDyzurant*>* dodajNowegoDyzuranta(std::string nick, int priorytet, bool& result);
     std::vector<XDyzurant*>* zrobUpdateDyzuranta(int a, std::string b, int c, bool& result);
+    std::vector<XDyzurant*>* usunDyzuranta(int a, bool& result);
 private:
     DBObslugiwaczBazyDanych* dbObslugiwaczBazyDanych;
     std::vector<XDyzurant*>* tablicaDyzurantow;
