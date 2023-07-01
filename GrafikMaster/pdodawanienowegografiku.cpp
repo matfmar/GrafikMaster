@@ -2,11 +2,15 @@
 #include "pdodawanienowegografiku.h"
 #include "uidodawanienowegografikuwstep.h"
 #include "mnowegrafiki.h"
+#include "dto.h"
 
 PDodawanieNowegoGrafiku::PDodawanieNowegoGrafiku()
     : uiDodawanieNowegoGrafikuWstep(nullptr), mNoweGrafiki(nullptr) {
     mNoweGrafiki = new MNoweGrafiki();
-    uiDodawanieNowegoGrafikuWstep = new UIDodawanieNowegoGrafikuWstep(this);
+    std::vector<Miesiac> tabMiesiace;
+    std::vector<DzienTygodnia> tabDniTygodnia;
+    mNoweGrafiki -> wyciagnijTabliceMiesiecyIDniTygodnia(tabMiesiace, tabDniTygodnia);
+    uiDodawanieNowegoGrafikuWstep = new UIDodawanieNowegoGrafikuWstep(tabMiesiace, tabDniTygodnia, this);
     uiDodawanieNowegoGrafikuWstep -> show();
 }
 

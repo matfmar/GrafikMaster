@@ -11,6 +11,7 @@ class MNoweGrafiki {
 public:
     MNoweGrafiki();
     ~MNoweGrafiki();
+    void wyciagnijTabliceMiesiecyIDniTygodnia(std::vector<Miesiac>& tabM, std::vector<DzienTygodnia>& tabDT);
 private:
     std::vector<Miesiac> tablicaMiesiecy;
     std::vector<DzienTygodnia> tablicaDniTygodnia;

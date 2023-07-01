@@ -13,6 +13,11 @@ void MNoweGrafiki::wypelnijTabliceEnumeracyjne() {
 
 }
 
+void MNoweGrafiki::wyciagnijTabliceMiesiecyIDniTygodnia(std::vector<Miesiac>& tabM, std::vector<DzienTygodnia>& tabDT) {
+    tabM = tablicaMiesiecy;
+    tabDT = tablicaDniTygodnia;
+}
+
 MNoweGrafiki::~MNoweGrafiki() {
 
 }
