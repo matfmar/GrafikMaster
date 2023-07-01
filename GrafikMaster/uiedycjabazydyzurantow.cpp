@@ -15,10 +15,13 @@ UIEdycjaBazyDyzurantow::UIEdycjaBazyDyzurantow(std::vector<XDyzurant*>* tablicaD
     labelNick = new QLabel(tr("nick:"), this);
     labelPriorytet = new QLabel(tr("priorytet:"), this);
     editNick = new QLineEdit(this);
+    editNick -> setEnabled(false);
     editPriorytet = new QLineEdit(this);
+    editPriorytet -> setEnabled(false);
     buttonUpdate = new QPushButton(tr("Aktualizuj dane"), this);
+    buttonUpdate -> setEnabled(false);
     buttonUsun = new QPushButton(tr("Usuń tego dyżuranta"), this);
-    buttonSave = new QPushButton(tr("Zapisz zmiany - kliknij zanim zamkniesz okno!"), this);
+    buttonUsun -> setEnabled(false);
 
     leftLayout = new QVBoxLayout(this);
     leftLayout -> addWidget(listaDyzurantow);
@@ -38,11 +41,7 @@ UIEdycjaBazyDyzurantow::UIEdycjaBazyDyzurantow(std::vector<XDyzurant*>* tablicaD
     mainLayout -> addLayout(leftLayout);
     mainLayout -> addWidget(groupDyzurant);
 
-    ultimateMainLayout = new QVBoxLayout(this);
-    ultimateMainLayout -> addLayout(mainLayout);
-    ultimateMainLayout -> addWidget(buttonSave);
-
-    mainWidget -> setLayout(ultimateMainLayout);
+    mainWidget -> setLayout(mainLayout);
     setCentralWidget(mainWidget);
 
     QObject::connect(buttonDodajDyzuranta, SIGNAL(clicked()), this, SLOT(onButtonDodajDyzurantaClicked()));
@@ -68,7 +67,7 @@ void UIEdycjaBazyDyzurantow::wypelnijListeDyzurantami(std::vector<XDyzurant*>* t
 void UIEdycjaBazyDyzurantow::aktualizujTabeleDyzurantow(std::vector<XDyzurant*>* tablicaDyzurantow, bool resultOfAddingNew) {
     int ret(-1);
     if (!resultOfAddingNew) {
-        ret = QMessageBox::critical(this, tr("Błąd"), tr("Błąd dodawania nowego dyżuranta"), QMessageBox::Ok);
+        ret = QMessageBox::critical(this, tr("Błąd"), tr("Błąd aktualizacji bazy dyżurantów"), QMessageBox::Ok);
         return;
     }
     listaDyzurantow->clear();
@@ -80,6 +79,20 @@ void UIEdycjaBazyDyzurantow::onButtonDodajDyzurantaClicked() {
 }
 
 void UIEdycjaBazyDyzurantow::onButtonUpdateDyzurantaClicked() {
+    int ret(-1);
+    if (listaDyzurantow->currentItem() == nullptr) {
+        ret = QMessageBox::critical(this, tr("Błąd"), tr("Nic nie zaznaczono!"), QMessageBox::Ok);
+        return;
+    }
+    int id = listaDyzurantow->row((listaDyzurantow->currentItem()));
+    QString nick = editNick->text();
+    bool result(false);
+    int priorytet = (editPriorytet->text()).toInt(&result);
+    if (!result) {
+        ret = QMessageBox::critical(this, tr("Błąd"), tr("Złe dane!"), QMessageBox::Ok);
+        return;
+    }
+    pEdycjaBazyDyzurantow -> wybranoUpdateDyzuranta(id, nick, priorytet);
 
 }
 
@@ -96,6 +109,10 @@ void UIEdycjaBazyDyzurantow::onListWidgetClicked(QListWidgetItem* item) {
     }
     editNick -> setText(QString::fromStdString(dyzurant->getNick()));
     editPriorytet -> setText(QString::number(dyzurant->getPriorytet()));
+    editNick -> setEnabled(true);
+    editPriorytet -> setEnabled(true);
+    buttonUpdate -> setEnabled(true);
+    buttonUsun -> setEnabled(true);
 }
 
 UIEdycjaBazyDyzurantow::~UIEdycjaBazyDyzurantow() {

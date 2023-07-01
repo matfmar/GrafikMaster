@@ -15,6 +15,14 @@ int XDyzurant::getPriorytet() {
     return priorytet;
 }
 
+void XDyzurant::setNick(std::string s) {
+    nick = s;
+}
+
+void XDyzurant::setPriorytet(int a) {
+    priorytet = a;
+}
+
 //XDyzurantTworzacy
 XDyzurantTworzacy::XDyzurantTworzacy()
     : XDyzurant(), maksymalnie(0), minimalnie(0), unikaniePodRzad(0) {}

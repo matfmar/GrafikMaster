@@ -25,8 +25,10 @@ void PEdycjaBazyDyzurantow::wybranoPrawdziweDodanieNowegoDyzuranta(QString nick,
     uiDodawanieNowegoDyzuranta -> close();
 }
 
-void PEdycjaBazyDyzurantow::wybranoUpdateDyzuranta() {
-
+void PEdycjaBazyDyzurantow::wybranoUpdateDyzuranta(int a, QString b, int c) {
+    bool result(false);
+    std::vector<XDyzurant*>* tablicaDyzurantow = mDyzuranci->zrobUpdateDyzuranta(a, b.toStdString(), c, result);
+    uiEdycjaBazyDyzurantow -> aktualizujTabeleDyzurantow(tablicaDyzurantow, result);
 }
 
 void PEdycjaBazyDyzurantow::wybranoUsuniecieDyzuranta() {

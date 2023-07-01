@@ -17,7 +17,7 @@ public:
 
     void wybranoDodanieNowegoDyzuranta();
     void wybranoPrawdziweDodanieNowegoDyzuranta(QString nick, int priorytet);
-    void wybranoUpdateDyzuranta();
+    void wybranoUpdateDyzuranta(int a, QString b, int c);
     void wybranoUsuniecieDyzuranta();
     XDyzurant* wybranoPokazanieSzczegolowDyzuranta(int id);
 private:

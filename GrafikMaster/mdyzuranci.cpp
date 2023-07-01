@@ -34,6 +34,26 @@ std::vector<XDyzurant*>* MDyzuranci::dodajNowegoDyzuranta(std::string nick, int 
     return tablicaDyzurantow;
 }
 
+std::vector<XDyzurant*>* MDyzuranci::zrobUpdateDyzuranta(int a, std::string b, int c, bool& result) {
+    std::string nick = b;
+    int id = a;
+    int priorytet = c;
+    XDyzurant* dyzurantDoZmiany = (*tablicaDyzurantow)[id];
+    XDyzurant* zmienionyDyzurant = new XDyzurant(id, nick, priorytet);
+    (*tablicaDyzurantow)[id] = zmienionyDyzurant;
+    result = dbObslugiwaczBazyDanych -> writeListaDyzurantowFull(tablicaDyzurantow);
+    if (result) {
+        delete dyzurantDoZmiany;
+        dyzurantDoZmiany = nullptr;
+    }
+    else {
+        (*tablicaDyzurantow)[id] = dyzurantDoZmiany;
+        delete zmienionyDyzurant;
+        zmienionyDyzurant = nullptr;
+    }
+    return tablicaDyzurantow;
+}
+
 MDyzuranci::~MDyzuranci() {
     if (dbObslugiwaczBazyDanych != nullptr) {
         delete dbObslugiwaczBazyDanych;

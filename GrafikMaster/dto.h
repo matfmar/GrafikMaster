@@ -58,6 +58,8 @@ public:
     XDyzurant(int a, std::string s, int b);
     std::string getNick();
     int getPriorytet();
+    void setNick(std::string s);
+    void setPriorytet(int a);
     virtual ~XDyzurant() {}
 protected:
     int id;

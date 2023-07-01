@@ -32,7 +32,6 @@ private:
     QWidget* mainWidget;
     QHBoxLayout* mainLayout;
     QVBoxLayout* leftLayout;
-    QVBoxLayout* ultimateMainLayout;
     QGridLayout* rightLayout;
     QGroupBox* groupDyzurant;
 
@@ -44,7 +43,6 @@ private:
     QLineEdit* editPriorytet;
     QPushButton* buttonUpdate;
     QPushButton* buttonUsun;
-    QPushButton* buttonSave;
 
     void wypelnijListeDyzurantami(std::vector<XDyzurant*>* tab);
 
