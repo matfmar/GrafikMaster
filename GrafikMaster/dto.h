@@ -99,6 +99,7 @@ private:
     StatusDnia statusUstawiania;
     std::map<int, XDyzurantTworzacy*> mozliwiDyzuranci;
     std::map<int, XDyzurantTworzacy*> unikajacyDyzuranci;
+    std::map<int, XDyzurantTworzacy*> mozliwiNieUnikajacyDyzuranci;
     XDyzurantTworzacy* dyzurantWybrany;
 };
 
