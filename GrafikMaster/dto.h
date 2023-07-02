@@ -81,6 +81,9 @@ private:
     int maksymalnie;
     int minimalnie;
     int unikaniePodRzad;
+    int maksymalnieSoboty;
+    int maksymalnieNiedziele;
+    int maksymalnieWeekendy;
 };
 
 //XDzien
