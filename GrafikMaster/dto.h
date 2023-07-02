@@ -71,7 +71,7 @@ protected:
 class XDyzurantTworzacy : public XDyzurant {
 public:
     XDyzurantTworzacy();
-    XDyzurantTworzacy(int a, std::string s, int b, int c, int d, int e);
+    XDyzurantTworzacy(int a, std::string s, int b, int c, int d, int e, int sb, int nd, int wk);
     ~XDyzurantTworzacy() {}
 private:
     std::vector<int> kiedyChce;
