@@ -25,10 +25,12 @@ void XDyzurant::setPriorytet(int a) {
 
 //XDyzurantTworzacy
 XDyzurantTworzacy::XDyzurantTworzacy()
-    : XDyzurant(), maksymalnie(0), minimalnie(0), unikaniePodRzad(0) {}
+    : XDyzurant(), maksymalnie(0), minimalnie(0), unikaniePodRzad(0),
+    maksymalnieSoboty(0), maksymalnieNiedziele(0), maksymalnieWeekendy(0) {}
 
-XDyzurantTworzacy::XDyzurantTworzacy(int a, std::string s, int b, int c, int d, int e)
-    : XDyzurant(a, s, b), maksymalnie(c), minimalnie(d), unikaniePodRzad(e) {}
+XDyzurantTworzacy::XDyzurantTworzacy(int a, std::string s, int b, int c, int d, int e, int sb, int nd, int wk)
+    : XDyzurant(a, s, b), maksymalnie(c), minimalnie(d), unikaniePodRzad(e),
+    maksymalnieSoboty(sb), maksymalnieNiedziele(nd), maksymalnieWeekendy(wk) {}
 
 //XDzien
 XDzien::XDzien()
