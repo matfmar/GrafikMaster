@@ -18,6 +18,7 @@ SOURCES += \
     pedycjabazydyzurantow.cpp \
     pmain.cpp \
     uidodawanienowegodyzuranta.cpp \
+    uidodawanienowegografiku.cpp \
     uidodawanienowegografikuwstep.cpp \
     uiedycjabazydyzurantow.cpp \
     uimainwindow.cpp
@@ -31,6 +32,7 @@ HEADERS += \
     pedycjabazydyzurantow.h \
     pmain.h \
     uidodawanienowegodyzuranta.h \
+    uidodawanienowegografiku.h \
     uidodawanienowegografikuwstep.h \
     uiedycjabazydyzurantow.h \
     uimainwindow.h

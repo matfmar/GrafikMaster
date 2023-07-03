@@ -2,7 +2,8 @@
 #include "mnowegrafiki.h"
 #include "dto.h"
 
-MNoweGrafiki::MNoweGrafiki() {
+MNoweGrafiki::MNoweGrafiki()
+    : nowyGrafik(nullptr) {
     wypelnijTabliceEnumeracyjne();
 
 }
@@ -18,6 +19,14 @@ void MNoweGrafiki::wyciagnijTabliceMiesiecyIDniTygodnia(std::vector<Miesiac>& ta
     tabDT = tablicaDniTygodnia;
 }
 
-MNoweGrafiki::~MNoweGrafiki() {
+XGrafik* MNoweGrafiki::utworzNowyGrafik(int r, int ld, Miesiac m, DzienTygodnia dt) {
+    nowyGrafik = new XGrafik(r, m, ROBOCZY, ld, dt);
+    return nowyGrafik;
+}
 
+MNoweGrafiki::~MNoweGrafiki() {
+    if (nowyGrafik != nullptr) {
+        delete nowyGrafik;
+        nowyGrafik = nullptr;
+    }
 }

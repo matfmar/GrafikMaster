@@ -29,6 +29,8 @@ private:
     QLineEdit* editRok,* editLiczbaDni;
     QComboBox* boxMiesiac,* boxPierwszyDzien;
     QPushButton* buttonDodaj,* buttonAnuluj;
+    std::vector<Miesiac> tablicaMiesiecy;
+    std::vector<DzienTygodnia> tablicaDniTygodnia;
 
     QString translateEnumToQString(Miesiac m);
     QString translateEnumToQString(DzienTygodnia dt);

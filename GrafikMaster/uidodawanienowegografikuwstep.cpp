@@ -2,10 +2,13 @@
 #include "uidodawanienowegografikuwstep.h"
 #include "pdodawanienowegografiku.h"
 #include "dto.h"
+#include <QMessageBox>
 
 UIDodawanieNowegoGrafikuWstep::UIDodawanieNowegoGrafikuWstep(std::vector<Miesiac> tM, std::vector<DzienTygodnia> tDT, PDodawanieNowegoGrafiku* pd) {
     setWindowTitle(tr("Dane nowego grafiku"));
     pDodawanieNowegoGrafiku = pd;
+    tablicaMiesiecy = tM;
+    tablicaDniTygodnia = tDT;
 
     labelRok = new QLabel(tr("Rok:"), this);
     editRok = new QLineEdit(this);
@@ -80,7 +83,26 @@ QString UIDodawanieNowegoGrafikuWstep::translateEnumToQString(DzienTygodnia dt) 
 }
 
 void UIDodawanieNowegoGrafikuWstep::onButtonDodajClicked() {
-
+    int ret(0);
+    if (editRok->text().isEmpty() || editLiczbaDni->text().isEmpty()) {
+        ret = QMessageBox::critical(this, tr("Błąd"), tr("Za mało danych!"), QMessageBox::Ok);
+        return;
+    }
+    bool result(false);
+    int rok = editRok->text().toInt(&result);
+    if (!result) {
+        ret = QMessageBox::critical(this, tr("Błąd"), tr("Zły rok!"), QMessageBox::Ok);
+        return;
+    }
+    int liczbaDni(0);
+    liczbaDni = editLiczbaDni->text().toInt(&result);
+    if ((!result) || ((liczbaDni < 28) || (liczbaDni > 31))) {
+        ret = QMessageBox::critical(this, tr("Błąd"), tr("Zła liczba dni!"), QMessageBox::Ok);
+        return;
+    }
+    Miesiac miesiac = tablicaMiesiecy[boxMiesiac->currentIndex()];
+    DzienTygodnia pierwszyDzien = tablicaDniTygodnia[boxPierwszyDzien->currentIndex()];
+    pDodawanieNowegoGrafiku ->wybranoDodanieInformacjiWstepnychNowegoGrafiku(rok, liczbaDni, miesiac, pierwszyDzien);
 }
 
 void UIDodawanieNowegoGrafikuWstep::onButtonAnulujClicked() {

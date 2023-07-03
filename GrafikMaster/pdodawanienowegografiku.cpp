@@ -1,17 +1,25 @@
 
 #include "pdodawanienowegografiku.h"
 #include "uidodawanienowegografikuwstep.h"
+#include "uidodawanienowegografiku.h"
 #include "mnowegrafiki.h"
 #include "dto.h"
 
 PDodawanieNowegoGrafiku::PDodawanieNowegoGrafiku()
-    : uiDodawanieNowegoGrafikuWstep(nullptr), mNoweGrafiki(nullptr) {
+    : uiDodawanieNowegoGrafikuWstep(nullptr), mNoweGrafiki(nullptr), uiDodawanieNowegoGrafiku(nullptr) {
     mNoweGrafiki = new MNoweGrafiki();
     std::vector<Miesiac> tabMiesiace;
     std::vector<DzienTygodnia> tabDniTygodnia;
     mNoweGrafiki -> wyciagnijTabliceMiesiecyIDniTygodnia(tabMiesiace, tabDniTygodnia);
     uiDodawanieNowegoGrafikuWstep = new UIDodawanieNowegoGrafikuWstep(tabMiesiace, tabDniTygodnia, this);
     uiDodawanieNowegoGrafikuWstep -> show();
+}
+
+void PDodawanieNowegoGrafiku::wybranoDodanieInformacjiWstepnychNowegoGrafiku(int r, int ld, Miesiac m, DzienTygodnia dt) {
+    XGrafik* nowyGrafik = mNoweGrafiki ->utworzNowyGrafik(r, ld, m, dt);
+    uiDodawanieNowegoGrafikuWstep -> close();
+    uiDodawanieNowegoGrafiku = new UIDodawanieNowegoGrafiku();
+    uiDodawanieNowegoGrafiku -> show();
 }
 
 PDodawanieNowegoGrafiku::~PDodawanieNowegoGrafiku() {
@@ -23,4 +31,9 @@ PDodawanieNowegoGrafiku::~PDodawanieNowegoGrafiku() {
         delete uiDodawanieNowegoGrafikuWstep;
         uiDodawanieNowegoGrafikuWstep = nullptr;
     }
+    if (uiDodawanieNowegoGrafiku != nullptr) {
+        delete uiDodawanieNowegoGrafiku;
+        uiDodawanieNowegoGrafiku = nullptr;
+    }
+
 }
