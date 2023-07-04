@@ -17,6 +17,7 @@
 #include <vector>
 
 class XDyzurant;
+class PDodawanieNowegoGrafiku;
 
 class UIDodawanieNowegoGrafiku : public QMainWindow {
     Q_OBJECT
@@ -50,6 +51,7 @@ private:
     QVBoxLayout* mainLayout;
     QHBoxLayout* ultimateLayout;
 
+    PDodawanieNowegoGrafiku* pDodawanieNowegoGrafiku;
 
 };
 
