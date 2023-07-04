@@ -7,7 +7,7 @@
 #include "mdyzuranci.h"
 
 PDodawanieNowegoGrafiku::PDodawanieNowegoGrafiku()
-    : uiDodawanieNowegoGrafikuWstep(nullptr), mNoweGrafiki(nullptr), uiDodawanieNowegoGrafiku(nullptr), tablicaDyzurantow(nullptr) {
+    : uiDodawanieNowegoGrafikuWstep(nullptr), mNoweGrafiki(nullptr), uiDodawanieNowegoGrafiku(nullptr), tablicaDyzurantow(nullptr), mDyzuranci(nullptr) {
     mNoweGrafiki = new MNoweGrafiki();
     std::vector<Miesiac> tabMiesiace;
     std::vector<DzienTygodnia> tabDniTygodnia;
