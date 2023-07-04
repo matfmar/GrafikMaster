@@ -130,7 +130,9 @@ void UIDodawanieNowegoGrafiku::onButtonStartClicked() {
 }
     
 void UIDodawanieNowegoGrafiku::onButtonZerujClicked() {
-    
+    wyborDwa -> setChecked(false);
+    wyborTrzy -> setChecked(false);
+    wyborCztery -> setChecked(false);
 }
 
 void UIDodawanieNowegoGrafiku::onListaDyzurantowTworzacychClicked(QListWidgetItem* item) {
