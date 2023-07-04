@@ -20,6 +20,10 @@ class UIDodawanieNowegoGrafiku : public QMainWindow {
 public:
     UIDodawanieNowegoGrafiku(QWidget *parent = nullptr);
     ~UIDodawanieNowegoGrafiku() {}
+public slots:
+    void onButtonUpdateClicked();
+    void onButtonStartClicked();
+    void onButtonZerujClicked();
 private:
     QWidget* mainWidget;
     QListWidget* listaDyzurantowDostepnych,* listaDyzurantowTworzacych;
