@@ -114,10 +114,11 @@ UIDodawanieNowegoGrafiku::UIDodawanieNowegoGrafiku(QWidget *parent)
     mainWidget -> setLayout(ultimateLayout);
     setCentralWidget(mainWidget);
 
-    void onButtonUpdateClicked();
-    void onButtonStartClicked();
-    void onButtonZerujClicked();
-    void onListaDyzurantowTworzacychClicked(QListWidgetItem* item);
+    QObject::connect(buttonUpdate, SIGNAL(clicked()), this, SLOT(onButtonUpdateClicked()));
+    QObject::connect(buttonStart, SIGNAL(clicked()), this, SLOT(onButtonStartClicked()));
+    QObject::connect(buttonZeruj, SIGNAL(clicked()), this, SLOT(onButtonZerujClicked()));
+    QObject::connect(listaDyzurantowTworzacych, SIGNAL(clicked(QListWidgetItem*)), this, SLOT(onListaDyzurantowTworzacychClicked(QListWidgetItem*)));
+
 }
 
 void UIDodawanieNowegoGrafiku::onButtonUpdateClicked() {
