@@ -22,7 +22,7 @@ class PDodawanieNowegoGrafiku;
 class UIDodawanieNowegoGrafiku : public QMainWindow {
     Q_OBJECT
 public:
-    UIDodawanieNowegoGrafiku(std::vector<XDyzurant*>* td, PDodawanieNowegoGrafiku* pDodawanieNowegoGrafiku, QWidget *parent = nullptr);
+    UIDodawanieNowegoGrafiku(std::vector<XDyzurant*>* td, PDodawanieNowegoGrafiku* pd, QWidget *parent = nullptr);
     ~UIDodawanieNowegoGrafiku() {}
 public slots:
     void onButtonUpdateClicked();
