@@ -2,9 +2,12 @@
 #ifndef PDODAWANIENOWEGOGRAFIKU_H
 #define PDODAWANIENOWEGOGRAFIKU_H
 
+#include <vector>
+
 class MNoweGrafiki;
 class UIDodawanieNowegoGrafikuWstep;
 class UIDodawanieNowegoGrafiku;
+class XDyzurant;
 enum Miesiac : int;
 enum DzienTygodnia : int;
 
@@ -17,6 +20,7 @@ private:
     UIDodawanieNowegoGrafikuWstep* uiDodawanieNowegoGrafikuWstep;
     UIDodawanieNowegoGrafiku* uiDodawanieNowegoGrafiku;
     MNoweGrafiki* mNoweGrafiki;
+    std::vector<XDyzurant*>* tablicaDyzurantow;
 };
 
 #endif // PDODAWANIENOWEGOGRAFIKU_H
