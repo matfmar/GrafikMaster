@@ -38,5 +38,9 @@ PDodawanieNowegoGrafiku::~PDodawanieNowegoGrafiku() {
         delete uiDodawanieNowegoGrafiku;
         uiDodawanieNowegoGrafiku = nullptr;
     }
+    if (mDyzuranci != nullptr) {
+        delete mDyzuranci;
+        mDyzuranci = nullptr;
+    }
 
 }
