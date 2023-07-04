@@ -113,5 +113,26 @@ UIDodawanieNowegoGrafiku::UIDodawanieNowegoGrafiku(QWidget *parent)
 
     mainWidget -> setLayout(ultimateLayout);
     setCentralWidget(mainWidget);
+
+    void onButtonUpdateClicked();
+    void onButtonStartClicked();
+    void onButtonZerujClicked();
+    void onListaDyzurantowTworzacychClicked(QListWidgetItem* item);
+}
+
+void UIDodawanieNowegoGrafiku::onButtonUpdateClicked() {
+    
+}
+
+void UIDodawanieNowegoGrafiku::onButtonStartClicked() {
+    
+}
+    
+void UIDodawanieNowegoGrafiku::onButtonZerujClicked() {
+    
+}
+
+void UIDodawanieNowegoGrafiku::onListaDyzurantowTworzacychClicked(QListWidgetItem* item) {
+    
 }
 
