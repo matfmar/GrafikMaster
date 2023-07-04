@@ -5,6 +5,7 @@
 #include <vector>
 
 class MNoweGrafiki;
+class MDyzuranci;
 class UIDodawanieNowegoGrafikuWstep;
 class UIDodawanieNowegoGrafiku;
 class XDyzurant;
@@ -20,6 +21,7 @@ private:
     UIDodawanieNowegoGrafikuWstep* uiDodawanieNowegoGrafikuWstep;
     UIDodawanieNowegoGrafiku* uiDodawanieNowegoGrafiku;
     MNoweGrafiki* mNoweGrafiki;
+    MDyzuranci* mDyzuranci;
     std::vector<XDyzurant*>* tablicaDyzurantow;
 };
 
