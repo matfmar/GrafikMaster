@@ -24,6 +24,7 @@ public slots:
     void onButtonUpdateClicked();
     void onButtonStartClicked();
     void onButtonZerujClicked();
+    void onListaDyzurantowTworzacychClicked(QListWidgetItem* item);
 private:
     QWidget* mainWidget;
     QListWidget* listaDyzurantowDostepnych,* listaDyzurantowTworzacych;
