@@ -1,6 +1,7 @@
 
 #include "uidodawanienowegografiku.h"
 #include "pdodawanienowegografiku.h"
+#include "dto.h"
 
 UIDodawanieNowegoGrafiku::UIDodawanieNowegoGrafiku(std::vector<XDyzurant*>* td, PDodawanieNowegoGrafiku* pd, QWidget *parent)
     : QMainWindow{parent} {
