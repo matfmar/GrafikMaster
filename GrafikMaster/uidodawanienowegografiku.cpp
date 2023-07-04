@@ -2,10 +2,11 @@
 #include "uidodawanienowegografiku.h"
 #include "pdodawanienowegografiku.h"
 
-UIDodawanieNowegoGrafiku::UIDodawanieNowegoGrafiku(std::vector<XDyzurant*>* td, PDodawanieNowegoGrafiku* pDodawanieNowegoGrafiku, QWidget *parent)
+UIDodawanieNowegoGrafiku::UIDodawanieNowegoGrafiku(std::vector<XDyzurant*>* td, PDodawanieNowegoGrafiku* pd, QWidget *parent)
     : QMainWindow{parent} {
     setWindowTitle(tr("Dodawanie dyżurantów do grafiku"));
     mainWidget = new QWidget(this);
+    pDodawanieNowegoGrafiku = pd;
 
     labelDyzuranciDostepni = new QLabel(tr("Lista dostępnych dyżurantów:"), this);
     labelDyzuranciTworzacy = new QLabel(tr("Lista dyżurantów do tego grafiku:"), this);
