@@ -4,6 +4,7 @@
 #include "uidodawanienowegografiku.h"
 #include "mnowegrafiki.h"
 #include "dto.h"
+#include "mdyzuranci.h"
 
 PDodawanieNowegoGrafiku::PDodawanieNowegoGrafiku()
     : uiDodawanieNowegoGrafikuWstep(nullptr), mNoweGrafiki(nullptr), uiDodawanieNowegoGrafiku(nullptr) {
@@ -18,7 +19,9 @@ PDodawanieNowegoGrafiku::PDodawanieNowegoGrafiku()
 void PDodawanieNowegoGrafiku::wybranoDodanieInformacjiWstepnychNowegoGrafiku(int r, int ld, Miesiac m, DzienTygodnia dt) {
     XGrafik* nowyGrafik = mNoweGrafiki ->utworzNowyGrafik(r, ld, m, dt);
     uiDodawanieNowegoGrafikuWstep -> close();
-    uiDodawanieNowegoGrafiku = new UIDodawanieNowegoGrafiku();
+    mDyzuranci = new MDyzuranci();
+    tablicaDyzurantow = mDyzuranci -> wyciagnijTabliceDyzurantow();
+    uiDodawanieNowegoGrafiku = new UIDodawanieNowegoGrafiku(tablicaDyzurantow, this);
     uiDodawanieNowegoGrafiku -> show();
 }
 
