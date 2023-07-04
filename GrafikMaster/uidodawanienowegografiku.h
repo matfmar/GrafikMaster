@@ -14,11 +14,14 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QGridLayout>
+#include <vector>
+
+class XDyzurant;
 
 class UIDodawanieNowegoGrafiku : public QMainWindow {
     Q_OBJECT
 public:
-    UIDodawanieNowegoGrafiku(QWidget *parent = nullptr);
+    UIDodawanieNowegoGrafiku(std::vector<XDyzurant*>* td, PDodawanieNowegoGrafiku* pDodawanieNowegoGrafiku, QWidget *parent = nullptr);
     ~UIDodawanieNowegoGrafiku() {}
 public slots:
     void onButtonUpdateClicked();
