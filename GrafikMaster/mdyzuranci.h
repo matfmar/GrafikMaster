@@ -20,6 +20,8 @@ public:
 private:
     DBObslugiwaczBazyDanych* dbObslugiwaczBazyDanych;
     std::vector<XDyzurant*>* tablicaDyzurantow;
+
+    bool sprawdzCzyIstniejeDanyDyzurant(std::string nick);
 };
 
 #endif // MDYZURANCI_H

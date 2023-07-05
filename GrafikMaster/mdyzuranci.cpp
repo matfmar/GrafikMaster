@@ -21,10 +21,21 @@ XDyzurant* MDyzuranci::pokazDaneJednegoDyzuranta(int id) {
     return ((*tablicaDyzurantow)[id]);
 }
 
+bool MDyzuranci::sprawdzCzyIstniejeDanyDyzurant(std::string nick) {
+    for (auto it=tablicaDyzurantow->begin(); it<tablicaDyzurantow->end(); ++it) {
+        if ((*it)->getNick() == nick) {
+            return true;
+        }
+    }
+    return false;
+}
+
 std::vector<XDyzurant*>* MDyzuranci::dodajNowegoDyzuranta(std::string nick, int priorytet, bool& result) {
     int liczbaDyzurantow = tablicaDyzurantow->size();
     XDyzurant* nowyDyzurant = new XDyzurant(liczbaDyzurantow, nick, priorytet);
-    tablicaDyzurantow -> push_back(nowyDyzurant);
+    if (!sprawdzCzyIstniejeDanyDyzurant(nick)) {
+        tablicaDyzurantow -> push_back(nowyDyzurant);
+    }
     result = dbObslugiwaczBazyDanych -> writeListaDyzurantowFull(tablicaDyzurantow);
     if (!result) {
         tablicaDyzurantow->pop_back();
@@ -79,6 +90,12 @@ MDyzuranci::~MDyzuranci() {
         dbObslugiwaczBazyDanych = nullptr;
     }
     if (tablicaDyzurantow != nullptr) {
+        for (auto it=tablicaDyzurantow->begin(); it<tablicaDyzurantow->end(); ++it) {
+            if (*it != nullptr) {
+                delete (*it);
+                *it = nullptr;
+            }
+        }
         delete tablicaDyzurantow;
         tablicaDyzurantow = nullptr;
     }

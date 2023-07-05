@@ -3,9 +3,8 @@
 #include "dto.h"
 
 MNoweGrafiki::MNoweGrafiki()
-    : nowyGrafik(nullptr) {
+    : nowyGrafik(nullptr), tablicaDyzurantowTworzacych(nullptr) {
     wypelnijTabliceEnumeracyjne();
-
 }
 
 void MNoweGrafiki::wypelnijTabliceEnumeracyjne() {
@@ -21,12 +20,50 @@ void MNoweGrafiki::wyciagnijTabliceMiesiecyIDniTygodnia(std::vector<Miesiac>& ta
 
 XGrafik* MNoweGrafiki::utworzNowyGrafik(int r, int ld, Miesiac m, DzienTygodnia dt) {
     nowyGrafik = new XGrafik(r, m, ROBOCZY, ld, dt);
+    tablicaDyzurantowTworzacych = new std::vector<XDyzurantTworzacy*>();
     return nowyGrafik;
+}
+
+std::string MNoweGrafiki::utworzDyzurantaTworzacego(XDyzurant* dyzurant) {
+    XDyzurantTworzacy* nowyDyzurantTworzacy = new XDyzurantTworzacy(dyzurant);
+    tablicaDyzurantowTworzacych -> push_back(nowyDyzurantTworzacy);
+    return (nowyDyzurantTworzacy->getNick());
+}
+
+void MNoweGrafiki::usunDyzurantaTworzacego(std::string nick) {
+    XDyzurantTworzacy* dyzurantDoUsuniecia(nullptr);
+    for (auto it = tablicaDyzurantowTworzacych->begin(); it<tablicaDyzurantowTworzacych->end(); ++it) {
+        if ((*it)->getNick() == nick) {
+            dyzurantDoUsuniecia = *it;
+            delete dyzurantDoUsuniecia;
+            tablicaDyzurantowTworzacych->erase(it);
+            break;
+        }
+    }
+    return;
+}
+
+XDyzurantTworzacy* MNoweGrafiki::pobierzDaneDyzurantaTworzacego(std::string nick) {
+    for (auto it = tablicaDyzurantowTworzacych->begin(); it<tablicaDyzurantowTworzacych->end(); ++it) {
+        if ((*it)->getNick() == nick) {
+            return (*it);
+        }
+    }
 }
 
 MNoweGrafiki::~MNoweGrafiki() {
     if (nowyGrafik != nullptr) {
         delete nowyGrafik;
         nowyGrafik = nullptr;
+    }
+    if (tablicaDyzurantowTworzacych != nullptr) {
+        for (auto it = tablicaDyzurantowTworzacych->begin(); it<tablicaDyzurantowTworzacych->end(); ++it) {
+            if (*it != nullptr) {
+                delete *it;
+                *it = nullptr;
+            }
+        }
+        delete tablicaDyzurantowTworzacych;
+        tablicaDyzurantowTworzacych = nullptr;
     }
 }

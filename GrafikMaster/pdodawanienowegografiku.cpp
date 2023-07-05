@@ -25,6 +25,27 @@ void PDodawanieNowegoGrafiku::wybranoDodanieInformacjiWstepnychNowegoGrafiku(int
     uiDodawanieNowegoGrafiku -> show();
 }
 
+QString PDodawanieNowegoGrafiku::wybranoDodanieDyzurantaTworzacego(QString nick) {
+    XDyzurant* dyzurantZlokalizowany(nullptr);
+    for (auto it = tablicaDyzurantow->begin(); it<tablicaDyzurantow->end(); ++it) {
+        if ((*it)->getNick() == (nick.toStdString())) {
+            dyzurantZlokalizowany = *it;
+            break;
+        }
+    }
+    std::string nowyNick = mNoweGrafiki -> utworzDyzurantaTworzacego(dyzurantZlokalizowany);
+    return (QString::fromStdString(nowyNick));
+}
+
+void PDodawanieNowegoGrafiku::wybranoUsuniecieDyzurantaTworzacego(QString nick) {
+    mNoweGrafiki -> usunDyzurantaTworzacego(nick.toStdString());
+}
+
+XDyzurantTworzacy* PDodawanieNowegoGrafiku::wybranoPobranieDanychDyzurantaTworzacego(QString nick) {
+    XDyzurantTworzacy* xdt = mNoweGrafiki -> pobierzDaneDyzurantaTworzacego(nick.toStdString());
+    return xdt;
+}
+
 PDodawanieNowegoGrafiku::~PDodawanieNowegoGrafiku() {
     if (mNoweGrafiki != nullptr) {
         delete mNoweGrafiki;

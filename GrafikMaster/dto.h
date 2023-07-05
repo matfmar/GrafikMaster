@@ -56,8 +56,10 @@ class XDyzurant {
 public:
     XDyzurant();
     XDyzurant(int a, std::string s, int b);
+    XDyzurant(XDyzurant* d);
     std::string getNick();
     int getPriorytet();
+    int getId();
     void setNick(std::string s);
     void setPriorytet(int a);
     virtual ~XDyzurant() {}
@@ -71,8 +73,20 @@ protected:
 class XDyzurantTworzacy : public XDyzurant {
 public:
     XDyzurantTworzacy();
-    XDyzurantTworzacy(int a, std::string s, int b, int c, int d, int e, int sb, int nd, int wk);
+    XDyzurantTworzacy(int a, std::string s, int b, int c, int d, int e, int sb, int nd, int wk, bool wgm);
+    XDyzurantTworzacy(XDyzurant* d);
     ~XDyzurantTworzacy() {}
+    std::string getKiedyChce();
+    std::string getKiedyNieMoze();
+    std::string getKiedyMoze();
+    std::string getKiedyUnika();
+    bool getCzyWpisywanieGdzieMoze();
+    int getMaksymalnie();
+    int getMinimalnie();
+    int getUnikaniePodRzad();
+    int getMaksymelnieSoboty();
+    int getMaksymalnieNiedziele();
+    int getMaksymalnieWeekendy();
 private:
     std::vector<int> kiedyChce;
     std::vector<int> kiedyNieMoze;
@@ -84,6 +98,7 @@ private:
     int maksymalnieSoboty;
     int maksymalnieNiedziele;
     int maksymalnieWeekendy;
+    bool wpisywanieGdzieMoze;
 };
 
 //XDzien

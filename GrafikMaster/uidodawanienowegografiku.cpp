@@ -2,6 +2,7 @@
 #include "uidodawanienowegografiku.h"
 #include "pdodawanienowegografiku.h"
 #include "dto.h"
+#include <QMessageBox>
 
 UIDodawanieNowegoGrafiku::UIDodawanieNowegoGrafiku(std::vector<XDyzurant*>* td, PDodawanieNowegoGrafiku* pd, QWidget *parent)
     : QMainWindow{parent} {
@@ -16,7 +17,9 @@ UIDodawanieNowegoGrafiku::UIDodawanieNowegoGrafiku(std::vector<XDyzurant*>* td, 
     listaDyzurantowTworzacych = new QListWidget(this);
     listaDyzurantowTworzacych -> setSelectionMode(QAbstractItemView::SingleSelection);
     buttonWLewo = new QPushButton(tr("<<<<<"), this);
+    buttonWLewo->setEnabled(false);
     buttonWPrawo = new QPushButton(tr(">>>>>"), this);
+    buttonWPrawo->setEnabled(false);
     layoutButtonsPrawoLewo = new QVBoxLayout(this);
     layoutButtonsPrawoLewo->addWidget(buttonWLewo);
     layoutButtonsPrawoLewo->addWidget(buttonWPrawo);
@@ -49,7 +52,10 @@ UIDodawanieNowegoGrafiku::UIDodawanieNowegoGrafiku(std::vector<XDyzurant*>* td, 
     layoutRadioGroup->addWidget(editMoze, 2, 1);
     groupMozeNieMoze = new QGroupBox(tr("Dni, w których może lub nie może wziąć dyżuru"), this);
     groupMozeNieMoze->setLayout(layoutRadioGroup);
+
     wyborNieMoze->setChecked(true);
+    editNieMoze->setEnabled(true);
+    editMoze->setEnabled(false);
 
     labelChce = new QLabel(tr("Chce:"), this);
     editChce = new QLineEdit(this);
@@ -85,19 +91,21 @@ UIDodawanieNowegoGrafiku::UIDodawanieNowegoGrafiku(std::vector<XDyzurant*>* td, 
     wyborDwa = new QRadioButton(tr("Dwa i więcej pod rząd"), this);
     wyborTrzy = new QRadioButton(tr("Trzy i więcej pod rząd"), this);
     wyborCztery = new QRadioButton(tr("Cztery i więcej pod rząd"), this);
+    wyborNic = new QRadioButton(tr("Nie unikaj ciągów"), this);
     groupRadioPodRzad = new QButtonGroup(this);
     groupRadioPodRzad->addButton(wyborDwa);
     groupRadioPodRzad->addButton(wyborTrzy);
     groupRadioPodRzad->addButton(wyborCztery);
-    buttonZeruj = new QPushButton(tr("Wyczyść ciągi dyżurowe"), this);
+    groupRadioPodRzad->addButton(wyborNic);
     layoutPodRzad = new QVBoxLayout(this);
     layoutPodRzad->addWidget(labelPodRzad);
     layoutPodRzad->addWidget(wyborDwa);
     layoutPodRzad->addWidget(wyborTrzy);
     layoutPodRzad->addWidget(wyborCztery);
-    layoutPodRzad->addWidget(buttonZeruj);
+    layoutPodRzad->addWidget(wyborNic);
     groupPodRzad = new QGroupBox(tr("Ciągi dyżurowe"), this);
     groupPodRzad->setLayout(layoutPodRzad);
+    wyborCztery->setChecked(true);
 
     buttonUpdate = new QPushButton(tr("Aktualizuj dane"), this);
 
@@ -119,9 +127,42 @@ UIDodawanieNowegoGrafiku::UIDodawanieNowegoGrafiku(std::vector<XDyzurant*>* td, 
 
     QObject::connect(buttonUpdate, SIGNAL(clicked()), this, SLOT(onButtonUpdateClicked()));
     QObject::connect(buttonStart, SIGNAL(clicked()), this, SLOT(onButtonStartClicked()));
-    QObject::connect(buttonZeruj, SIGNAL(clicked()), this, SLOT(onButtonZerujClicked()));
     QObject::connect(listaDyzurantowTworzacych, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(onListaDyzurantowTworzacychClicked(QListWidgetItem*)));
+    QObject::connect(listaDyzurantowDostepnych, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(onListaDyzurantowDostepnychClicked(QListWidgetItem*)));
+    QObject::connect(buttonWPrawo, SIGNAL(clicked()), this, SLOT(onButtonWPrawoClicked()));
+    QObject::connect(buttonWLewo, SIGNAL(clicked()), this, SLOT(onButtonWLewoClicked()));
+    QObject::connect(wyborMoze, SIGNAL(clicked()), this, SLOT(onWyborMozeClicked()));
+    QObject::connect(wyborNieMoze, SIGNAL(clicked()), this, SLOT(onWyborNieMozeClicked()));
 
+    wypelnijListeDyzurantami(td);
+}
+
+void UIDodawanieNowegoGrafiku::wypelnijListeDyzurantami(std::vector<XDyzurant*>* tab) {
+    if (tab == nullptr) {
+        int ret = QMessageBox::critical(this, tr("BŁĄD"), tr("Błąd odczytu listy dyżurantów z bazy!"), QMessageBox::Ok);
+        return;
+    }
+    QString item("");
+    for (auto it = tab->begin(); it != tab->end(); ++it) {
+        item = QString::fromStdString((*it)->getNick());
+        listaDyzurantowDostepnych -> addItem(item);
+    }
+}
+
+void UIDodawanieNowegoGrafiku::onButtonWPrawoClicked() {
+    QString nick = (listaDyzurantowDostepnych->currentItem())->text();
+    QString nowyNick = pDodawanieNowegoGrafiku->wybranoDodanieDyzurantaTworzacego(nick);
+    listaDyzurantowTworzacych->addItem(nowyNick);
+    delete (listaDyzurantowDostepnych->currentItem());
+    buttonWPrawo->setEnabled(false);
+}
+
+void UIDodawanieNowegoGrafiku::onButtonWLewoClicked() {
+    QString nick = (listaDyzurantowTworzacych->currentItem())->text();
+    pDodawanieNowegoGrafiku->wybranoUsuniecieDyzurantaTworzacego(nick);
+    listaDyzurantowDostepnych->addItem(nick);
+    delete (listaDyzurantowTworzacych->currentItem());
+    buttonWLewo->setEnabled(false);
 }
 
 void UIDodawanieNowegoGrafiku::onButtonUpdateClicked() {
@@ -131,14 +172,70 @@ void UIDodawanieNowegoGrafiku::onButtonUpdateClicked() {
 void UIDodawanieNowegoGrafiku::onButtonStartClicked() {
     
 }
-    
-void UIDodawanieNowegoGrafiku::onButtonZerujClicked() {
-    wyborDwa -> setChecked(false);
-    wyborTrzy -> setChecked(false);
-    wyborCztery -> setChecked(false);
+
+void UIDodawanieNowegoGrafiku::onListaDyzurantowDostepnychClicked(QListWidgetItem* item) {
+    buttonWPrawo->setEnabled(true);
 }
 
 void UIDodawanieNowegoGrafiku::onListaDyzurantowTworzacychClicked(QListWidgetItem* item) {
-    
+    QString nick = item ->text();
+    XDyzurantTworzacy* aktualnyDyzurant = pDodawanieNowegoGrafiku -> wybranoPobranieDanychDyzurantaTworzacego(nick);
+    editChce->setText(QString::fromStdString(aktualnyDyzurant->getKiedyChce()));
+    bool wybor = aktualnyDyzurant->getCzyWpisywanieGdzieMoze();
+    if (wybor) {
+        wyborMoze->setChecked(true);
+        editMoze->setText(QString::fromStdString(aktualnyDyzurant->getKiedyMoze()));
+        editMoze->setEnabled(true);
+        editNieMoze->clear();
+        editNieMoze->setEnabled(false);
+    }
+    else {
+        wyborNieMoze->setChecked(true);
+        editNieMoze->setText(QString::fromStdString(aktualnyDyzurant->getKiedyNieMoze()));
+        editNieMoze->setEnabled(true);
+        editMoze->clear();
+        editMoze->setEnabled(false);
+    }
+    editUnika->setText(QString::fromStdString(aktualnyDyzurant->getKiedyUnika()));
+    editMaks->setText(QString::number(aktualnyDyzurant->getMaksymalnie()));
+    editMin->setText(QString::number(aktualnyDyzurant->getMinimalnie()));
+    editMaksSoboty->setText(QString::number(aktualnyDyzurant->getMaksymelnieSoboty()));
+    editMaksNiedziele->setText(QString::number(aktualnyDyzurant->getMaksymalnieNiedziele()));
+    editMaksWeekendy->setText(QString::number(aktualnyDyzurant->getMaksymalnieWeekendy()));
+    switch (aktualnyDyzurant->getUnikaniePodRzad()) {
+    case 0: wyborNic->setChecked(true); break;
+    case 2: wyborDwa->setChecked(true); break;
+    case 3: wyborTrzy->setChecked(true); break;
+    case 4: wyborCztery->setChecked(true); break;
+    default: wyborNic->setChecked(true); break;
+    }
+
+    buttonWLewo->setEnabled(true);
+}
+
+void UIDodawanieNowegoGrafiku::onWyborMozeClicked() {
+    if (wyborMoze->isChecked()) {
+        editMoze->setEnabled(true);
+        editNieMoze->setEnabled(false);
+        editNieMoze->clear();
+    }
+    else {
+        editMoze->setEnabled(false);
+        editMoze->clear();
+        editNieMoze->setEnabled(true);
+    }
+}
+
+void UIDodawanieNowegoGrafiku::onWyborNieMozeClicked() {
+    if (wyborNieMoze->isChecked()) {
+        editNieMoze->setEnabled(true);
+        editMoze->setEnabled(false);
+        editMoze->clear();
+    }
+    else {
+        editNieMoze->setEnabled(false);
+        editNieMoze->clear();
+        editMoze->setEnabled(true);
+    }
 }
 

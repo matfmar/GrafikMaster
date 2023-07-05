@@ -27,8 +27,12 @@ public:
 public slots:
     void onButtonUpdateClicked();
     void onButtonStartClicked();
-    void onButtonZerujClicked();
     void onListaDyzurantowTworzacychClicked(QListWidgetItem* item);
+    void onListaDyzurantowDostepnychClicked(QListWidgetItem* item);
+    void onButtonWPrawoClicked();
+    void onButtonWLewoClicked();
+    void onWyborMozeClicked();
+    void onWyborNieMozeClicked();
 private:
     QWidget* mainWidget;
     QListWidget* listaDyzurantowDostepnych,* listaDyzurantowTworzacych;
@@ -38,10 +42,9 @@ private:
     QLabel* labelMaksSoboty,* labelMaksNiedziele,* labelMaksWeekendy;
     QLineEdit* editChce,* editNieMoze,* editMoze,* editUnika,* editMaks,* editMin;
     QLineEdit* editMaksSoboty,* editMaksNiedziele,* editMaksWeekendy;
-    QPushButton* buttonUpdate,* buttonStart,* buttonZeruj;
+    QPushButton* buttonUpdate,* buttonStart;
     QRadioButton* wyborMoze,* wyborNieMoze;
-    QRadioButton* wyborDwa,* wyborTrzy,* wyborCztery;
-
+    QRadioButton* wyborDwa,* wyborTrzy,* wyborCztery,* wyborNic;
     QVBoxLayout* layoutButtonsPrawoLewo,* layoutListLeft,* layoutListRight;
     QHBoxLayout* layoutListWidgetsButtons;
     QGroupBox* groupMozeNieMoze,* groupPodRzad;
@@ -50,9 +53,9 @@ private:
     QVBoxLayout* layoutPodRzad;
     QVBoxLayout* mainLayout;
     QHBoxLayout* ultimateLayout;
-
     PDodawanieNowegoGrafiku* pDodawanieNowegoGrafiku;
 
+    void wypelnijListeDyzurantami(std::vector<XDyzurant*>* tab);
 };
 
 #endif // UIDODAWANIENOWEGOGRAFIKU_H
