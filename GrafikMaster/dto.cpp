@@ -377,6 +377,9 @@ void XGrafik::dodajPierwszeDaneDyzurantowKiedyChca(std::vector<XDyzurantTworzacy
                 }
             }
         }
+        if (lider == nullptr) {
+            return;
+        }
         //lider znaleziony, teraz wstawiamy go do grafiku
         (*it)->dyzurantWybrany = lider;
         (*it)->mozliwiDyzuranci.clear();	//nikt inny tego dnia nie dostanie
@@ -410,7 +413,6 @@ void XGrafik::dodajPierwszeDaneDyzurantowKiedyChca(std::vector<XDyzurantTworzacy
     }
 
 }
-//---------------------------------------------------------------------------------------------------
 
 XGrafik::~XGrafik() {
     for (auto it=tablicaDni.begin(); it<tablicaDni.end(); ++it) {
