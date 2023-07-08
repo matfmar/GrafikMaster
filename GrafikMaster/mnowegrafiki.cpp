@@ -82,6 +82,13 @@ bool MNoweGrafiki::updateDyzurantaTworzacego(std::string nick, bool czyM, std::s
     return true;
 }
 
+void MNoweGrafiki::wypelnijGrafikPierwszymiDanymi() {
+    for (auto it=tablicaDyzurantowTworzacych->begin(); it<tablicaDyzurantowTworzacych->end(); ++it) {
+        nowyGrafik->dodajPierwszeDaneDyzurantaMozeUnika(*it);
+    }
+    nowyGrafik->dodajPierwszeDaneDyzurantowKiedyChca(tablicaDyzurantowTworzacych);
+}
+
 MNoweGrafiki::~MNoweGrafiki() {
     if (nowyGrafik != nullptr) {
         delete nowyGrafik;

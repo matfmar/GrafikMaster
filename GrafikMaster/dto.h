@@ -80,6 +80,10 @@ public:
     std::string getKiedyNieMoze();
     std::string getKiedyMoze();
     std::string getKiedyUnika();
+    std::vector<int> getKiedyChce2();
+    std::vector<int> getKiedyMoze2();
+    std::vector<int> getKiedyNieMoze2();
+    std::vector<int> getKiedyUnika2();
     bool getCzyWpisywanieGdzieMoze();
     int getMaksymalnie();
     int getMinimalnie();
@@ -98,6 +102,14 @@ public:
     void setMaksymalnieNiedziele(int a);
     void setMaksymalnieWeekendy(int a);
     void setWpisywanieCzyMoze(bool b);
+    void incLiczbaDyzurow(DzienTygodnia dt);
+    void decLiczbaDyzurow(DzienTygodnia dt);
+    bool sprawdzCzyMozeDanegoDnia(int dzien);
+    bool sprawdzCzyChceDanegoDnia(int dzien);
+    void usunDyzur(int dzien);
+    void dodajDyzur(int dzien);
+    void sortujDyzury();
+    std::vector<int> znajdzSekwencje(int krotnosc);
 private:
     std::vector<int> kiedyChce;
     std::vector<int> kiedyNieMoze;
@@ -111,16 +123,20 @@ private:
     int maksymalnieWeekendy;
     bool wpisywanieGdzieMoze;
 
+    int liczbaDyzurow;
+    int liczbaSobot;
+    int liczbaNiedziel;
+    int liczbaWeekendow;
+    std::vector<int> dyzury;
+
     std::vector<int> convertStringToVectorOfInts(std::string s, bool& result);
 };
 
 //XDzien
-class XDzien {
-public:
+struct XDzien {
     XDzien();
     XDzien(DzienTygodnia dt, int ld, bool czs, StatusDnia sd, XDyzurantTworzacy* dw);
     ~XDzien() {}
-private:
     DzienTygodnia dzienTygodnia;
     int liczbaDnia;
     bool czySwieto;
@@ -137,7 +153,10 @@ class XGrafik {
 public:
     XGrafik();
     XGrafik(int r, Miesiac m, StatusGrafiku st, int ld, DzienTygodnia pd);
-    ~XGrafik() {}
+    void stworzPodstawyGrafiku();
+    void dodajPierwszeDaneDyzurantaMozeUnika(XDyzurantTworzacy* dyzurant);
+    void dodajPierwszeDaneDyzurantowKiedyChca(std::vector<XDyzurantTworzacy*>* tablicaDyzurantowTworzacych);
+    ~XGrafik();
 private:
     int rok;
     Miesiac miesiac;
@@ -146,5 +165,8 @@ private:
     DzienTygodnia pierwszyDzien;
     std::vector<XDzien*> tablicaDni;
 };
+
+//GENERAL
+DzienTygodnia incDzien(DzienTygodnia dt);
 
 #endif // DTO_H
