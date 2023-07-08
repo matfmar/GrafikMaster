@@ -108,6 +108,7 @@ UIDodawanieNowegoGrafiku::UIDodawanieNowegoGrafiku(std::vector<XDyzurant*>* td, 
     wyborCztery->setChecked(true);
 
     buttonUpdate = new QPushButton(tr("Aktualizuj dane"), this);
+    buttonUpdate->setEnabled(false);
 
     mainLayout = new QVBoxLayout(this);
     mainLayout -> addLayout(layoutListWidgetsButtons);
@@ -166,7 +167,37 @@ void UIDodawanieNowegoGrafiku::onButtonWLewoClicked() {
 }
 
 void UIDodawanieNowegoGrafiku::onButtonUpdateClicked() {
-    
+    QString nick = listaDyzurantowTworzacych->currentItem()->text();
+    bool czyWpisywanieGdzieMoze = wyborMoze->isChecked();
+    QString stringMoze = editMoze->text();
+    QString stringNieMoze = editNieMoze->text();
+    QString stringChce = editChce->text();
+    QString stringUnika = editUnika->text();
+    bool result;
+    int maksymalnie = editMaks->text().toInt(&result);
+    if (!result) return;
+    int minimalnie = editMin->text().toInt(&result);
+    if (!result) return;
+    int maksSoboty = editMaksSoboty->text().toInt(&result);
+    if (!result) return;
+    int maksNiedziele = editMaksNiedziele->text().toInt(&result);
+    if (!result) return;
+    int maksWeekendy = editMaksWeekendy->text().toInt(&result);
+    if (!result) return;
+    int wyborCiagi(-1);
+    if (wyborNic->isChecked()) wyborCiagi = 0;
+    else if (wyborDwa->isChecked()) wyborCiagi = 2;
+    else if (wyborTrzy->isChecked()) wyborCiagi = 3;
+    else if (wyborCztery->isChecked()) wyborCiagi = 4;
+    else wyborCiagi = -1;
+    result = pDodawanieNowegoGrafiku->wybranoUpdateDyzurantaTworzacego(nick, czyWpisywanieGdzieMoze, stringMoze, stringNieMoze, stringUnika, stringChce, maksymalnie, minimalnie, maksSoboty, maksNiedziele, maksWeekendy, wyborCiagi);
+    if (!result) {
+        QMessageBox::critical(this, tr("Błąd"), tr("Błędne dane!"), QMessageBox::Ok);
+    }
+    else {
+        QMessageBox::information(this, tr("Potwierdzenie"), tr("Zaktualizowano dane dyżuranta w tym grafiku."), QMessageBox::Ok);
+    }
+    onListaDyzurantowTworzacychClicked(listaDyzurantowTworzacych->currentItem());
 }
 
 void UIDodawanieNowegoGrafiku::onButtonStartClicked() {
@@ -211,6 +242,7 @@ void UIDodawanieNowegoGrafiku::onListaDyzurantowTworzacychClicked(QListWidgetIte
     }
 
     buttonWLewo->setEnabled(true);
+    buttonUpdate->setEnabled(true);
 }
 
 void UIDodawanieNowegoGrafiku::onWyborMozeClicked() {

@@ -87,6 +87,17 @@ public:
     int getMaksymelnieSoboty();
     int getMaksymalnieNiedziele();
     int getMaksymalnieWeekendy();
+    void setKiedyChce(std::string s, bool& result);
+    void setKiedyNieMoze(std::string s, bool& result);
+    void setKiedyMoze(std::string s, bool& result);
+    void setKiedyUnika(std::string s, bool& result);
+    void setMaksymalnie(int a);
+    void setMinimalnie(int a);
+    void setUnikaniePodRzad(int a);
+    void setMaksymalnieSoboty(int a);
+    void setMaksymalnieNiedziele(int a);
+    void setMaksymalnieWeekendy(int a);
+    void setWpisywanieCzyMoze(bool b);
 private:
     std::vector<int> kiedyChce;
     std::vector<int> kiedyNieMoze;
@@ -99,6 +110,8 @@ private:
     int maksymalnieNiedziele;
     int maksymalnieWeekendy;
     bool wpisywanieGdzieMoze;
+
+    std::vector<int> convertStringToVectorOfInts(std::string s, bool& result);
 };
 
 //XDzien

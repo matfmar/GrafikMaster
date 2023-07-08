@@ -22,6 +22,8 @@ public:
     QString wybranoDodanieDyzurantaTworzacego(QString nick);
     void wybranoUsuniecieDyzurantaTworzacego(QString nick);
     XDyzurantTworzacy* wybranoPobranieDanychDyzurantaTworzacego(QString nick);
+    bool wybranoUpdateDyzurantaTworzacego(QString nick, bool czyM, QString m, QString nm, QString u, QString ch, int maks, int min, int maksS, int maksN, int maksW, int c);
+
 private:
     UIDodawanieNowegoGrafikuWstep* uiDodawanieNowegoGrafikuWstep;
     UIDodawanieNowegoGrafiku* uiDodawanieNowegoGrafiku;

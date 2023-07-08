@@ -101,6 +101,62 @@ int XDyzurantTworzacy::getMaksymalnieNiedziele() {return maksymalnieNiedziele;}
 
 int XDyzurantTworzacy::getMaksymalnieWeekendy() {return maksymalnieWeekendy;}
 
+std::vector<int> XDyzurantTworzacy::convertStringToVectorOfInts(std::string s, bool& result) {
+    std::string temp("");
+    std::vector<int> v;
+    if (s.empty() || s == "") {
+        result = true;
+        return v;
+    }
+    s += ',';
+    for (char c : s) {
+        if (c >= '0' && c <= '9') {
+            temp += c;
+        }
+        else if (c == ',') {
+            v.push_back(std::stoi(temp));
+            temp = "";
+        }
+        else {
+            result = false;
+            v.clear();
+            return v;
+        }
+    }
+    result = true;
+    return v;
+}
+
+void XDyzurantTworzacy::setKiedyChce(std::string s, bool& result) {
+    kiedyChce = convertStringToVectorOfInts(s, result);
+}
+
+void XDyzurantTworzacy::setKiedyNieMoze(std::string s, bool& result) {
+    kiedyNieMoze = convertStringToVectorOfInts(s, result);
+}
+
+void XDyzurantTworzacy::setKiedyMoze(std::string s, bool& result) {
+    kiedyMoze = convertStringToVectorOfInts(s, result);
+}
+
+void XDyzurantTworzacy::setKiedyUnika(std::string s, bool& result) {
+    kiedyUnika = convertStringToVectorOfInts(s, result);
+}
+
+void XDyzurantTworzacy::setMaksymalnie(int a) {maksymalnie = a;}
+
+void XDyzurantTworzacy::setMinimalnie(int a) {minimalnie = a;}
+
+void XDyzurantTworzacy::setUnikaniePodRzad(int a) {unikaniePodRzad = a;}
+
+void XDyzurantTworzacy::setMaksymalnieSoboty(int a) {maksymalnieSoboty = a;}
+
+void XDyzurantTworzacy::setMaksymalnieNiedziele(int a) {maksymalnieNiedziele = a;}
+
+void XDyzurantTworzacy::setMaksymalnieWeekendy(int a) {maksymalnieWeekendy = a;}
+
+void XDyzurantTworzacy::setWpisywanieCzyMoze(bool b) {wpisywanieGdzieMoze = b;}
+
 //XDzien
 XDzien::XDzien()
     : dzienTygodnia(NIEZNANY_DZIEN), liczbaDnia(0), czySwieto(false), statusUstawiania(NIEZNANY_STATUS), dyzurantWybrany(nullptr) {}

@@ -46,6 +46,11 @@ XDyzurantTworzacy* PDodawanieNowegoGrafiku::wybranoPobranieDanychDyzurantaTworza
     return xdt;
 }
 
+bool PDodawanieNowegoGrafiku::wybranoUpdateDyzurantaTworzacego(QString nick, bool czyM, QString m, QString nm, QString u, QString ch, int maks, int min, int maksS, int maksN, int maksW, int c) {
+    bool result = mNoweGrafiki->updateDyzurantaTworzacego(nick.toStdString(), czyM, m.toStdString(), nm.toStdString(), u.toStdString(), ch.toStdString(), maks, min, maksS, maksN, maksW, c);
+    return result;
+}
+
 PDodawanieNowegoGrafiku::~PDodawanieNowegoGrafiku() {
     if (mNoweGrafiki != nullptr) {
         delete mNoweGrafiki;

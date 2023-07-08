@@ -51,6 +51,37 @@ XDyzurantTworzacy* MNoweGrafiki::pobierzDaneDyzurantaTworzacego(std::string nick
     }
 }
 
+bool MNoweGrafiki::updateDyzurantaTworzacego(std::string nick, bool czyM, std::string m, std::string nm, std::string u, std::string ch, int maks, int min, int maksS, int maksN, int maksW, int c) {
+    XDyzurantTworzacy* dyzurant(nullptr);
+    for (auto it = tablicaDyzurantowTworzacych->begin(); it<tablicaDyzurantowTworzacych->end(); ++it) {
+        if ((*it)->getNick() == nick) {
+            dyzurant = *it;
+            break;
+        }
+    }
+    if (dyzurant == nullptr) return false;
+    dyzurant->setWpisywanieCzyMoze(czyM);
+    dyzurant->setMaksymalnie(maks);
+    dyzurant->setMinimalnie(min);
+    dyzurant->setMaksymalnieNiedziele(maksN);
+    dyzurant->setMaksymalnieSoboty(maksS);
+    dyzurant->setMaksymalnieWeekendy(maksW);
+    dyzurant->setUnikaniePodRzad(c);
+    bool result(false);
+    if (czyM) {
+        dyzurant->setKiedyMoze(m, result);
+    }
+    else {
+        dyzurant->setKiedyNieMoze(nm, result);
+    }
+    if (!result) return result;
+    dyzurant->setKiedyChce(ch, result);
+    if (!result) return result;
+    dyzurant->setKiedyUnika(u, result);
+    if (!result) return result;
+    return true;
+}
+
 MNoweGrafiki::~MNoweGrafiki() {
     if (nowyGrafik != nullptr) {
         delete nowyGrafik;
