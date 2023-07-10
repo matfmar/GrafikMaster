@@ -93,7 +93,19 @@ XGrafik* MNoweGrafiki::wypelnijGrafikPierwszymiDanymi() {
     return nowyGrafik;
 }
 
-XGrafik* MNoweGrafiki::wypelnijGrafikDyzurantami() {
+bool MNoweGrafiki::sprawdzWstepnieZgodnosc() {
+    for (auto it=tablicaDyzurantowTworzacych->begin(); it<tablicaDyzurantowTworzacych->end(); ++it) {
+        if (!((*it)->sprawdzZgodnoscLiczbyDyzurow() && (*it)->sprawdzZgodnoscLiczbySobotINiedzielIWeekendow()))
+            return false;
+    }
+    return true;
+}
+
+XGrafik* MNoweGrafiki::wypelnijGrafikDyzurantami(bool& immediateResult) {
+    immediateResult = sprawdzWstepnieZgodnosc();
+    if (!immediateResult) {
+        return nowyGrafik;
+    }
     nowyGrafik -> wypelnijGrafikDyzurantami();
     return nowyGrafik;
 }

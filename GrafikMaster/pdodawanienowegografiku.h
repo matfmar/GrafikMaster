@@ -25,7 +25,7 @@ public:
     void wybranoUsuniecieDyzurantaTworzacego(QString nick);
     XDyzurantTworzacy* wybranoPobranieDanychDyzurantaTworzacego(QString nick);
     bool wybranoUpdateDyzurantaTworzacego(QString nick, bool czyM, QString m, QString nm, QString u, QString ch, int maks, int min, int maksS, int maksN, int maksW, int c);
-    void wybranoProsbeOStworzenieGrafiku();
+    void wybranoProsbeOStworzenieGrafiku(bool& immediateResult);
 
 private:
     UIDodawanieNowegoGrafikuWstep* uiDodawanieNowegoGrafikuWstep;

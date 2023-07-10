@@ -53,10 +53,10 @@ bool PDodawanieNowegoGrafiku::wybranoUpdateDyzurantaTworzacego(QString nick, boo
     bool result = mNoweGrafiki->updateDyzurantaTworzacego(nick.toStdString(), czyM, m.toStdString(), nm.toStdString(), u.toStdString(), ch.toStdString(), maks, min, maksS, maksN, maksW, c);
     return result;
 }
-void PDodawanieNowegoGrafiku::wybranoProsbeOStworzenieGrafiku() {
+void PDodawanieNowegoGrafiku::wybranoProsbeOStworzenieGrafiku(bool& immediateResult) {
     XGrafik* grafikWstepny(nullptr);
     grafikWstepny = mNoweGrafiki->wypelnijGrafikPierwszymiDanymi();
-    grafikWstepny = mNoweGrafiki->wypelnijGrafikDyzurantami();
+    grafikWstepny = mNoweGrafiki->wypelnijGrafikDyzurantami(immediateResult);
 
     uiTworzoneGrafiki = new UITworzoneGrafiki(grafikWstepny);
     uiTworzoneGrafiki->show();

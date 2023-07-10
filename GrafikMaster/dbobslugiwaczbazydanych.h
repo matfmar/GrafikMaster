@@ -6,6 +6,7 @@
 #include <vector>
 
 class XDyzurant;
+class XGrafik;
 
 class DBObslugiwaczBazyDanych {
 public:
@@ -15,6 +16,7 @@ public:
     //ObslugaDyzurantow
     std::vector<XDyzurant*>* getTablicaDyzurantowFull();
     bool writeListaDyzurantowFull(std::vector<XDyzurant*>* tdf);
+    bool zapiszUlozonyGrafikDoPliku(XGrafik* grafik);
 private:
     std::ifstream inputFileReader;
     std::ofstream outputFileReader;
