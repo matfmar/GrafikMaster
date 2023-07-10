@@ -56,6 +56,7 @@ bool PDodawanieNowegoGrafiku::wybranoUpdateDyzurantaTworzacego(QString nick, boo
 void PDodawanieNowegoGrafiku::wybranoProsbeOStworzenieGrafiku() {
     XGrafik* grafikWstepny(nullptr);
     grafikWstepny = mNoweGrafiki->wypelnijGrafikPierwszymiDanymi();
+    grafikWstepny = mNoweGrafiki->wypelnijGrafikDyzurantami();
 
     uiTworzoneGrafiki = new UITworzoneGrafiki(grafikWstepny);
     uiTworzoneGrafiki->show();

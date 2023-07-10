@@ -22,6 +22,7 @@ public:
     XDyzurantTworzacy* pobierzDaneDyzurantaTworzacego(std::string nick);
     bool updateDyzurantaTworzacego(std::string nick, bool czyM, std::string m, std::string nm, std::string u, std::string ch, int maks, int min, int maksS, int maksN, int maksW, int c);
     XGrafik* wypelnijGrafikPierwszymiDanymi();
+    XGrafik* wypelnijGrafikDyzurantami();
 private:
     std::vector<Miesiac> tablicaMiesiecy;
     std::vector<DzienTygodnia> tablicaDniTygodnia;
@@ -29,6 +30,7 @@ private:
     std::vector<XDyzurantTworzacy*>* tablicaDyzurantowTworzacych;
 
     void wypelnijTabliceEnumeracyjne();
+    void wypelnijDzien(int dzien);
 };
 
 #endif // MNOWEGRAFIKI_H

@@ -317,6 +317,17 @@ void XDzien::przeliczMozliwiNieUnikajacyDyzuranci() {
     }
 }
 
+XDzien::XDzien(XDzien& xd) {
+    dzienTygodnia = xd.dzienTygodnia;
+    liczbaDnia = xd.liczbaDnia;
+    czySwieto = xd.czySwieto;
+    statusUstawiania = xd.statusUstawiania;
+    mozliwiDyzuranci = xd.mozliwiDyzuranci;
+    unikajacyDyzuranci = xd.unikajacyDyzuranci;
+    mozliwiNieUnikajacyDyzuranci = xd.mozliwiNieUnikajacyDyzuranci;
+    dyzurantWybrany = xd.dyzurantWybrany;
+}
+
 //XGrafik==============================================================================================================================
 XGrafik::XGrafik()
     : rok(0), miesiac(NIEZNANY_MIESIAC), status(NIEZNANY_STATUS_GRAFIKU), liczbaDni(0), pierwszyDzien(NIEZNANY_DZIEN) {}
@@ -449,6 +460,14 @@ void XGrafik::przeliczMozliwiNieUnikajacyDyzuranciDlaJednegoDnia(int dzien) {
 
 std::vector<XDzien*> XGrafik::udostepnijTabliceDni() {
     return tablicaDni;
+}
+
+void XGrafik::wypelnijGrafikDyzurantami() {
+    wypelnijDzien(1);
+}
+
+void XGrafik::wypelnijDzien(int dzien) {        //glowna funkcja wywolywana rekurencyjnie
+
 }
 
 XGrafik::~XGrafik() {

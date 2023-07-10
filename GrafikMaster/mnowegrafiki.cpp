@@ -93,6 +93,11 @@ XGrafik* MNoweGrafiki::wypelnijGrafikPierwszymiDanymi() {
     return nowyGrafik;
 }
 
+XGrafik* MNoweGrafiki::wypelnijGrafikDyzurantami() {
+    nowyGrafik -> wypelnijGrafikDyzurantami();
+    return nowyGrafik;
+}
+
 MNoweGrafiki::~MNoweGrafiki() {
     if (nowyGrafik != nullptr) {
         delete nowyGrafik;

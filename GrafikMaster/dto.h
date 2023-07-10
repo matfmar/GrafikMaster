@@ -136,6 +136,7 @@ private:
 struct XDzien {
     XDzien();
     XDzien(DzienTygodnia dt, int ld, bool czs, StatusDnia sd, XDyzurantTworzacy* dw);
+    XDzien(XDzien& xd);
     ~XDzien() {}
     DzienTygodnia dzienTygodnia;
     int liczbaDnia;
@@ -160,7 +161,9 @@ public:
     void dodajPierwszeDaneDyzurantowKiedyChca(std::vector<XDyzurantTworzacy*>* tablicaDyzurantowTworzacych);
     void przeliczMozliwiNieUnikajacyDyzuranciDlaKazdegoDnia();
     void przeliczMozliwiNieUnikajacyDyzuranciDlaJednegoDnia(int dzien);
+    void wypelnijGrafikDyzurantami();
     std::vector<XDzien*> udostepnijTabliceDni();
+    void wypelnijDzien(int dzien);  //niestety ta funkcja rekurencyjna chyba musi byc publiczna
     ~XGrafik();
 private:
     int rok;
