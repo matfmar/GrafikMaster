@@ -6,8 +6,11 @@
 #include "dto.h"
 #include "mdyzuranci.h"
 
+#include "uitworzonegrafiki.h"  //debug only
+
 PDodawanieNowegoGrafiku::PDodawanieNowegoGrafiku()
-    : uiDodawanieNowegoGrafikuWstep(nullptr), mNoweGrafiki(nullptr), uiDodawanieNowegoGrafiku(nullptr), tablicaDyzurantow(nullptr), mDyzuranci(nullptr) {
+    : uiDodawanieNowegoGrafikuWstep(nullptr), mNoweGrafiki(nullptr), uiDodawanieNowegoGrafiku(nullptr), tablicaDyzurantow(nullptr), mDyzuranci(nullptr),
+    uiTworzoneGrafiki(nullptr) {
     mNoweGrafiki = new MNoweGrafiki();
     std::vector<Miesiac> tabMiesiace;
     std::vector<DzienTygodnia> tabDniTygodnia;
@@ -50,6 +53,14 @@ bool PDodawanieNowegoGrafiku::wybranoUpdateDyzurantaTworzacego(QString nick, boo
     bool result = mNoweGrafiki->updateDyzurantaTworzacego(nick.toStdString(), czyM, m.toStdString(), nm.toStdString(), u.toStdString(), ch.toStdString(), maks, min, maksS, maksN, maksW, c);
     return result;
 }
+void PDodawanieNowegoGrafiku::wybranoProsbeOStworzenieGrafiku() {
+    XGrafik* grafikWstepny(nullptr);
+    grafikWstepny = mNoweGrafiki->wypelnijGrafikPierwszymiDanymi();
+
+    uiTworzoneGrafiki = new UITworzoneGrafiki(grafikWstepny);
+    uiTworzoneGrafiki->show();
+
+}
 
 PDodawanieNowegoGrafiku::~PDodawanieNowegoGrafiku() {
     if (mNoweGrafiki != nullptr) {
@@ -67,6 +78,10 @@ PDodawanieNowegoGrafiku::~PDodawanieNowegoGrafiku() {
     if (mDyzuranci != nullptr) {
         delete mDyzuranci;
         mDyzuranci = nullptr;
+    }
+    if (uiTworzoneGrafiki != nullptr) {
+        delete uiTworzoneGrafiki;
+        uiTworzoneGrafiki = nullptr;
     }
 
 }

@@ -14,6 +14,8 @@ class XDyzurantTworzacy;
 enum Miesiac : int;
 enum DzienTygodnia : int;
 
+class UITworzoneGrafiki;    //debug only
+
 class PDodawanieNowegoGrafiku {
 public:
     PDodawanieNowegoGrafiku();
@@ -23,6 +25,7 @@ public:
     void wybranoUsuniecieDyzurantaTworzacego(QString nick);
     XDyzurantTworzacy* wybranoPobranieDanychDyzurantaTworzacego(QString nick);
     bool wybranoUpdateDyzurantaTworzacego(QString nick, bool czyM, QString m, QString nm, QString u, QString ch, int maks, int min, int maksS, int maksN, int maksW, int c);
+    void wybranoProsbeOStworzenieGrafiku();
 
 private:
     UIDodawanieNowegoGrafikuWstep* uiDodawanieNowegoGrafikuWstep;
@@ -30,6 +33,8 @@ private:
     MNoweGrafiki* mNoweGrafiki;
     MDyzuranci* mDyzuranci;
     std::vector<XDyzurant*>* tablicaDyzurantow;
+
+    UITworzoneGrafiki* uiTworzoneGrafiki;   //debug only
 };
 
 #endif // PDODAWANIENOWEGOGRAFIKU_H

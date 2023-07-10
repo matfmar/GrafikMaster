@@ -201,7 +201,7 @@ void UIDodawanieNowegoGrafiku::onButtonUpdateClicked() {
 }
 
 void UIDodawanieNowegoGrafiku::onButtonStartClicked() {
-    
+    pDodawanieNowegoGrafiku->wybranoProsbeOStworzenieGrafiku();
 }
 
 void UIDodawanieNowegoGrafiku::onListaDyzurantowDostepnychClicked(QListWidgetItem* item) {

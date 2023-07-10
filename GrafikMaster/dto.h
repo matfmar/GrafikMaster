@@ -145,6 +145,8 @@ struct XDzien {
     std::map<int, XDyzurantTworzacy*> unikajacyDyzuranci;
     std::map<int, XDyzurantTworzacy*> mozliwiNieUnikajacyDyzuranci;
     XDyzurantTworzacy* dyzurantWybrany;
+
+    void przeliczMozliwiNieUnikajacyDyzuranci();
 };
 
 
@@ -156,6 +158,9 @@ public:
     void stworzPodstawyGrafiku();
     void dodajPierwszeDaneDyzurantaMozeUnika(XDyzurantTworzacy* dyzurant);
     void dodajPierwszeDaneDyzurantowKiedyChca(std::vector<XDyzurantTworzacy*>* tablicaDyzurantowTworzacych);
+    void przeliczMozliwiNieUnikajacyDyzuranciDlaKazdegoDnia();
+    void przeliczMozliwiNieUnikajacyDyzuranciDlaJednegoDnia(int dzien);
+    std::vector<XDzien*> udostepnijTabliceDni();
     ~XGrafik();
 private:
     int rok;
@@ -163,7 +168,7 @@ private:
     StatusGrafiku status;
     int liczbaDni;
     DzienTygodnia pierwszyDzien;
-    std::vector<XDzien*> tablicaDni;
+    std::vector<XDzien*> tablicaDni;    //numerowane od 1 do liczbaDni+1;
 };
 
 //GENERAL

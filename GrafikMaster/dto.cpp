@@ -1,5 +1,6 @@
 #include "dto.h"
 #include <algorithm>
+#include <QDebug>
 
 //GENERAL===============================================================================================================================
 //----------------------------------------------------------------------
@@ -223,7 +224,7 @@ bool XDyzurantTworzacy::sprawdzCzyMozeDanegoDnia(int dzien) {
 
 bool XDyzurantTworzacy::sprawdzCzyChceDanegoDnia(int dzien) {
     for (auto it=kiedyChce.begin(); it<kiedyChce.end(); ++it) {
-        if (*it == dzien) {
+        if ((*it) == dzien) {
             return true;
         }
     }
@@ -250,25 +251,36 @@ void XDyzurantTworzacy::sortujDyzury() {
 std::vector<int> XDyzurantTworzacy::znajdzSekwencje(int krotnosc) {	//krotnosc 4 - szukam trójek itd.(zeby potem zapobiegac powstaniu czworki)
     std::vector<int> v;
     int i(0), roznica(0), ile(0), lewy(0), prawy(0);
-    for (auto it = dyzury.begin(); it<dyzury.end(); ++it) {
-        if (i == 0) {
-            continue;
-        }
-        roznica = (*it) - (*(it-1));
-        if (roznica == 2) {
-            ile++;
-        }
-        else {
-            ile = 0;
-        }
-        if (ile == krotnosc-2) {
-            lewy = *(it-((krotnosc-2)*2));
+    if (krotnosc == 2) {
+        for (auto it = dyzury.begin(); it<dyzury.end(); ++it) {
+            lewy = *it;
             prawy = *it;
             v.push_back(lewy);
             v.push_back(prawy);
-            ile = 0;
         }
-        i++;
+    }
+    else {
+        for (auto it = dyzury.begin(); it<dyzury.end(); ++it) {
+            if (i == 0) {
+                i++;
+                continue;
+            }
+            roznica = (*it) - (*(it-1));
+            if (roznica == 2) {
+                ile++;
+            }
+            else {
+                ile = 0;
+            }
+            if (ile == krotnosc-2) {
+                lewy = *(it-(krotnosc-2));
+                prawy = *it;
+                v.push_back(lewy);
+                v.push_back(prawy);
+                ile = 0;
+            }
+            i++;
+        }
     }
     return v;
 }
@@ -295,6 +307,15 @@ XDzien::XDzien()
 
 XDzien::XDzien(DzienTygodnia dt, int ld, bool czs, StatusDnia sd, XDyzurantTworzacy* dw)
     : dzienTygodnia(dt), liczbaDnia(ld), czySwieto(czs), statusUstawiania(sd), dyzurantWybrany(dw) {}
+
+void XDzien::przeliczMozliwiNieUnikajacyDyzuranci() {
+    mozliwiNieUnikajacyDyzuranci = mozliwiDyzuranci;
+    auto it = unikajacyDyzuranci.begin();
+    while (it != unikajacyDyzuranci.end()) {
+        mozliwiNieUnikajacyDyzuranci.erase(it->first);
+        ++it;
+    }
+}
 
 //XGrafik==============================================================================================================================
 XGrafik::XGrafik()
@@ -378,7 +399,7 @@ void XGrafik::dodajPierwszeDaneDyzurantowKiedyChca(std::vector<XDyzurantTworzacy
             }
         }
         if (lider == nullptr) {
-            return;
+            continue;
         }
         //lider znaleziony, teraz wstawiamy go do grafiku
         (*it)->dyzurantWybrany = lider;
@@ -398,7 +419,9 @@ void XGrafik::dodajPierwszeDaneDyzurantowKiedyChca(std::vector<XDyzurantTworzacy
             for (auto it3 = tablicaPar.begin(); it3 < tablicaPar.end(); it3 += 2) {
                 lewy = *it3;
                 prawy = *(it3+1);
-                if (lewy-2 > 1) {
+                qDebug() << lewy;
+                qDebug() << prawy;
+                if (lewy-2 > 0) {
                     if (tablicaDni[lewy-2]->dyzurantWybrany != lider) {
                         tablicaDni[lewy-2]->unikajacyDyzuranci.insert(std::pair<int,XDyzurantTworzacy*>(lider->getId(), lider));
                     }
@@ -412,6 +435,20 @@ void XGrafik::dodajPierwszeDaneDyzurantowKiedyChca(std::vector<XDyzurantTworzacy
         }
     }
 
+}
+
+void XGrafik::przeliczMozliwiNieUnikajacyDyzuranciDlaKazdegoDnia() {
+    for (auto it=tablicaDni.begin(); it<tablicaDni.end(); ++it) {
+        (*it)->przeliczMozliwiNieUnikajacyDyzuranci();
+    }
+}
+
+void XGrafik::przeliczMozliwiNieUnikajacyDyzuranciDlaJednegoDnia(int dzien) {
+    tablicaDni[dzien]->przeliczMozliwiNieUnikajacyDyzuranci();
+}
+
+std::vector<XDzien*> XGrafik::udostepnijTabliceDni() {
+    return tablicaDni;
 }
 
 XGrafik::~XGrafik() {

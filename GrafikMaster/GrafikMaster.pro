@@ -21,7 +21,8 @@ SOURCES += \
     uidodawanienowegografiku.cpp \
     uidodawanienowegografikuwstep.cpp \
     uiedycjabazydyzurantow.cpp \
-    uimainwindow.cpp
+    uimainwindow.cpp \
+    uitworzonegrafiki.cpp
 
 HEADERS += \
     dbobslugiwaczbazydanych.h \
@@ -35,7 +36,8 @@ HEADERS += \
     uidodawanienowegografiku.h \
     uidodawanienowegografikuwstep.h \
     uiedycjabazydyzurantow.h \
-    uimainwindow.h
+    uimainwindow.h \
+    uitworzonegrafiki.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
