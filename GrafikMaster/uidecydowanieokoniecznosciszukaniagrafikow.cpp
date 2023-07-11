@@ -1,10 +1,12 @@
 
 #include "uidecydowanieokoniecznosciszukaniagrafikow.h"
+#include "pdecydowanieokontynuacjiszukaniagrafikow.h"
 #include <QMessageBox>
 
-UIDecydowanieOKoniecznosciSzukaniaGrafikow::UIDecydowanieOKoniecznosciSzukaniaGrafikow()
+UIDecydowanieOKoniecznosciSzukaniaGrafikow::UIDecydowanieOKoniecznosciSzukaniaGrafikow(PDecydowanieOKontynuacjiSzukaniaGrafikow* p)
     : QDialog() {
     setWindowTitle(tr("Szukanie grafików..."));
+    parent = p;
 
     buttonSzukajDalej = new QPushButton(tr("SZUKAJ DALEJ"), this);
     buttonWyswietlGrafiki = new QPushButton(tr("WYŚWIETL ZNALEZIONE GRAFIKI"), this);
@@ -24,18 +26,25 @@ UIDecydowanieOKoniecznosciSzukaniaGrafikow::UIDecydowanieOKoniecznosciSzukaniaGr
 }
 
 void UIDecydowanieOKoniecznosciSzukaniaGrafikow::onButtonSzukajDalejClicked() {
-
+    parent->setDecyzjaUzytkownika(1);
+    close();
 }
 
 void UIDecydowanieOKoniecznosciSzukaniaGrafikow::onButtonZakonczSzukanieClicked() {
-
+    parent->setDecyzjaUzytkownika(2);
+    close();
 }
 
 void UIDecydowanieOKoniecznosciSzukaniaGrafikow::onButtonWyswietlGrafikiClicked() {
 
 }
 
-void UIDecydowanieOKoniecznosciSzukaniaGrafikow::wyswietlKomunikatZakonczeniaSzukania() {
-    QMessageBox::information(this, tr("Informacja"), tr("Zakończono wyszukiwanie grafików"), QMessageBox::Ok);
+void UIDecydowanieOKoniecznosciSzukaniaGrafikow::wyswietlKomunikatZakonczeniaSzukania(bool result) {
+    if (!result) {
+        QMessageBox::information(this, tr("Informacja"), tr("Zakończono wyszukiwanie grafików - skończyły się opcje."), QMessageBox::Ok);
+    }
+    else {
+        QMessageBox::information(this, tr("Informacja"), tr("Zakończono wyszukiwanie grafików - na prośbę użytkownika."), QMessageBox::Ok);
+    }
     close();
 }

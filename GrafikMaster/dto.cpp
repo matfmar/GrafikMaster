@@ -21,6 +21,20 @@ DzienTygodnia incDzien(DzienTygodnia dt) {
     return dt2;
 }
 
+std::string przeliczDzienTygodniaNaLancuch(DzienTygodnia dt) {
+    switch (dt) {
+    case PONIEDZIALEK: return "poniedziałek"; break;
+    case WTOREK: return "wtorek"; break;
+    case SRODA: return "środa"; break;
+    case CZWARTEK: return "czwartek"; break;
+    case PIATEK: return "piątek"; break;
+    case SOBOTA: return "sobota"; break;
+    case NIEDZIELA: return "niedziela"; break;
+    default: return "nie_wiadomo"; break;
+    }
+    return "";
+}
+
 //XDyzurant==============================================================================================================================
 XDyzurant::XDyzurant()
     : id(0), nick(""), priorytet(0) {}
@@ -361,11 +375,12 @@ XDzien::XDzien(XDzien* xd) {
 XGrafik::XGrafik()
     : rok(0), miesiac(NIEZNANY_MIESIAC), status(NIEZNANY_STATUS_GRAFIKU), liczbaDni(0), pierwszyDzien(NIEZNANY_DZIEN), db(nullptr),
     tablicaDyzurantowTworzacych(nullptr), pDecydowanieOKontynuacjiSzukaniaGrafikow(nullptr),
-    licznikStworzonychGrafikow(nullptr), zakonczenieSzukania(nullptr) {}
+    licznikStworzonychGrafikow(nullptr), zakonczenieSzukania(nullptr), licznikOstatecznyStworzonychGrafikow(nullptr) {}
 
 XGrafik::XGrafik(int r, Miesiac m, StatusGrafiku st, int ld, DzienTygodnia pd)
     : rok(r), miesiac(m), status(st), liczbaDni(ld), pierwszyDzien(pd), db(nullptr), tablicaDyzurantowTworzacych(nullptr),
-    pDecydowanieOKontynuacjiSzukaniaGrafikow(nullptr), licznikStworzonychGrafikow(nullptr), zakonczenieSzukania(nullptr) {}
+    pDecydowanieOKontynuacjiSzukaniaGrafikow(nullptr), licznikStworzonychGrafikow(nullptr), zakonczenieSzukania(nullptr),
+    licznikOstatecznyStworzonychGrafikow(nullptr) {}
 
 XGrafik::XGrafik(XGrafik& gr) {
     rok = gr.rok;
@@ -383,6 +398,7 @@ XGrafik::XGrafik(XGrafik& gr) {
     pDecydowanieOKontynuacjiSzukaniaGrafikow = gr.pDecydowanieOKontynuacjiSzukaniaGrafikow;
     licznikStworzonychGrafikow = gr.licznikStworzonychGrafikow; //tylko kopiujemy wskaźnik, obiekt jest już stworzony
     zakonczenieSzukania = gr.zakonczenieSzukania;   //tylko kopiujemy wskaźnik, obiekt jest już stworzony
+    licznikOstatecznyStworzonychGrafikow = gr.licznikOstatecznyStworzonychGrafikow; //jw.
 }
 
 XGrafik::XGrafik(XGrafik* gr) {
@@ -401,6 +417,7 @@ XGrafik::XGrafik(XGrafik* gr) {
     pDecydowanieOKontynuacjiSzukaniaGrafikow = gr->pDecydowanieOKontynuacjiSzukaniaGrafikow;
     licznikStworzonychGrafikow = gr->licznikStworzonychGrafikow; //tylko kopiujemy wskaźnik, obiekt jest już stworzony
     zakonczenieSzukania = gr->zakonczenieSzukania;   //tylko kopiujemy wskaźnik, obiekt jest już stworzony
+    licznikOstatecznyStworzonychGrafikow = gr->licznikOstatecznyStworzonychGrafikow;    //jw.
 }
 
 void XGrafik::stworzPodstawyGrafiku() {
@@ -542,29 +559,36 @@ bool XGrafik::sprawdzZgodnoscZMinimalnaLiczbaDyzurowDlaWszystkich() {
 }
 
 void XGrafik::wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt) {
+    qDebug() << "Wszedłem do XGrafik procedura wyjściowa";
     //uzupełnienie wskaźnika do tablicy dyżurantów tworzących (pochodzi z obiektu MNoweGrafiki)
     tablicaDyzurantowTworzacych = tdt;
     //stworzenie klasy odpowiedzialnej za komunikację z użytkownikiem przy szukaniu tych grafików
     pDecydowanieOKontynuacjiSzukaniaGrafikow = new PDecydowanieOKontynuacjiSzukaniaGrafikow();
+    qDebug() << "Stworzyłem obiekt prezentujący do interfejsu";
     //stworzenie w "globalnej" przestrzeni licznika stworzonych grafików oraz zmiennej od decyzji dalszego szukania
     licznikStworzonychGrafikow = new int(0);
     zakonczenieSzukania = new bool(false);  //false - czyli szukamy do oporu
+    licznikOstatecznyStworzonychGrafikow = new int(0);
+    qDebug() << "Stworzyłem zmienne sterujące";
     //inicjalizacja funkcji pseudolosowej
     srand(time(0));
+    qDebug() << "Zainicjowałem funkcję pseudolosową";
     //ODPALAMY SZUKANIE !!!
-    bool result = wypelnijDzien(1, licznikStworzonychGrafikow, zakonczenieSzukania);
+    qDebug() << "Właśnie mam odpalić procedurę rekurencyjną";
+    bool result = wypelnijDzien(1);
     //ten moment uruchamia się po powrocie z całego procesu wyszukiwania grafików
     //usuwamy powyższe zmienne sterujące
     delete licznikStworzonychGrafikow;
     licznikStworzonychGrafikow = nullptr;
     delete zakonczenieSzukania;
     zakonczenieSzukania = nullptr;
+    delete licznikOstatecznyStworzonychGrafikow;
+    licznikOstatecznyStworzonychGrafikow = nullptr;
     //kończymy pracę obiektu  odpowiedzialnego za komunikację, ale przedtem wyswietlamy komunikat o zakończeniu szukania grafików
-    pDecydowanieOKontynuacjiSzukaniaGrafikow->pokazKomunikatZakonczeniaSzukania();
+    pDecydowanieOKontynuacjiSzukaniaGrafikow->pokazKomunikatZakonczeniaSzukania(result);
     delete pDecydowanieOKontynuacjiSzukaniaGrafikow;
     pDecydowanieOKontynuacjiSzukaniaGrafikow = nullptr;
-    //
-
+    //chyba koniec ???
 
 }
 
@@ -647,7 +671,8 @@ bool XGrafik::setLosowoNowyDzien(int dzien, int& kluczWybranegoDyzuranta) {
     return result;
 }
 
-bool XGrafik::wypelnijDzien(int dzien, int* licznikStworzonychGrafikow, bool* zakonczenieSzukania) {        //glowna funkcja wywolywana rekurencyjnie
+bool XGrafik::wypelnijDzien(int dzien) {        //glowna funkcja wywolywana rekurencyjnie
+    //qDebug() << "Odpalono procedurę rekurencyjną";
 //UWAGA: jeśli *zakończenieSzukania==false, to oznacza że traktujemy jakby grafik nie był znaleziony czyli szukamy do oporu
 //jeśli *zakończenieSzukania==true, to funkcja będzie wychodzić z pętli byle szybciej
 //ten "przełącznik" zakończenieSzukania służy do tego by w razie decyzji o zaprzestaniu poszukiwań móc posprzątać cały rekurencyjny bałagan który się stworzył
@@ -661,12 +686,20 @@ bool XGrafik::wypelnijDzien(int dzien, int* licznikStworzonychGrafikow, bool* za
             db = new DBObslugiwaczBazyDanych();
         }
         //... oraz zapisujemy do pliku...
-        db->zapiszUlozonyGrafikDoPliku(this);
+        db->zapiszUlozonyGrafikDoPliku(this, *licznikOstatecznyStworzonychGrafikow);
         //... zwiększamy licznik stworzonych grafików
         (*licznikStworzonychGrafikow)++;
+        (*licznikOstatecznyStworzonychGrafikow)++;
         //... oraz sprawdzamy czy nie doszliśmy do progu decyzji o wyświetleniu okna co do dalszych poszukiwań
         if (*licznikStworzonychGrafikow >= 10) {
-            pDecydowanieOKontynuacjiSzukaniaGrafikow->pokazOknoWyboruOpcji();   //nie będzie powrotu z tej funkcji przed decyzją użytkownika
+            int wybor = pDecydowanieOKontynuacjiSzukaniaGrafikow->pokazOknoWyboruOpcji();   //nie będzie powrotu z tej funkcji przed decyzją użytkownika
+            if (wybor == 1) {
+                *zakonczenieSzukania = false;
+            }
+            else if (wybor == 2) {
+                *zakonczenieSzukania = true;
+            }
+            *licznikStworzonychGrafikow = 0;        //zerujemy licznik, od nowa liczymy "dziesiątkę grafików"
         }
         //...i spadamy.
         return *zakonczenieSzukania;
@@ -693,7 +726,7 @@ bool XGrafik::wypelnijDzien(int dzien, int* licznikStworzonychGrafikow, bool* za
         } while(!resultDodania);
         //a teraz mamy nowy grafik z dodanym prawidłowo nowym dyżurantem dla dnia, więc.....
         //...wywołujemy rekurencyjnie ową procedurę, ale dla kolejnego dnia
-    } while (!nowyGrafik->wypelnijDzien(dzien+1, licznikStworzonychGrafikow, zakonczenieSzukania)); //PATRZ NIŻEJ
+    } while (!nowyGrafik->wypelnijDzien(dzien+1)); //PATRZ NIŻEJ
     //jeśli zakończy się klęską, wracamy do góry -> wyrzucamy z tablicy MOŻLIWE felernego dyżuranta i z powrotem próbujemy szczęścia
 
     //a jeśli zakończyła sie sukcesem i grafik się znalazł -> i tak niszczymy obiekt (zwalniamy pamięć)...

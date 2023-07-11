@@ -175,7 +175,7 @@ public:
     std::vector<XDzien*> udostepnijTabliceDni();
     bool setLosowoNowyDzien(int dzien, int& kluczWybranegoDyzuranta);
 
-    bool wypelnijDzien(int dzien, int* licznikStworzonychGrafikow, bool* zakonczenieSzukania);  //niestety ta funkcja rekurencyjna chyba musi byc publiczna
+    bool wypelnijDzien(int dzien);  //niestety ta funkcja rekurencyjna chyba musi byc publiczna
 
     ~XGrafik();
 private:
@@ -193,6 +193,7 @@ private:
 
     int* licznikStworzonychGrafikow;    //wskaźnik do "globalnej" zmiennej zawierającej ilość stworzonych grafików
     bool* zakonczenieSzukania;          //wskaźnik do "globalnej" zmiennej zawierającej decyzję o sposobie wychodzenia z pętli (true -> kończymy, false -> szukamy dalej)
+    int* licznikOstatecznyStworzonychGrafikow;
 
     bool losujDyzurantaDoDyzuruPoKluczu(int dzien, std::map<int, XDyzurantTworzacy*>* m, int& kluczWybranegoDyzuranta);
     void dodajUnikanie(XDyzurantTworzacy* dt, int klucz, int unikanieKrotnosc, bool& result);
@@ -202,5 +203,6 @@ private:
 
 //GENERAL
 DzienTygodnia incDzien(DzienTygodnia dt);
+std::string przeliczDzienTygodniaNaLancuch(DzienTygodnia dt);
 
 #endif // DTO_H

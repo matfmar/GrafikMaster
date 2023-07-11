@@ -69,8 +69,22 @@ bool DBObslugiwaczBazyDanych::writeListaDyzurantowFull(std::vector<XDyzurant*>* 
     return true;
 }
 
-bool DBObslugiwaczBazyDanych::zapiszUlozonyGrafikDoPliku(XGrafik* grafik) {
-    //do UZUPEŁNIENIA
+bool DBObslugiwaczBazyDanych::zapiszUlozonyGrafikDoPliku(XGrafik* grafik, int id) {
+    if (grafik == nullptr) {
+        return false;
+    }
+    std::string filename = "w_grafik_" + std::to_string(id) + ".data";
+    outputFileReader.open("data/grafiki_robocze/" + filename, std::ofstream::out | std::ofstream::trunc);
+    if (!outputFileReader.is_open()) {
+        return false;
+    }
+    std::vector<XDzien*> tablicaDni = grafik->udostepnijTabliceDni();
+    std::string strToWrite("");
+    for (auto it = tablicaDni.begin()+1; it<tablicaDni.end()-1; ++it) { //nie bierzemy pod uwagę pustych dni dołożonych dla ułatwienia algorytmu
+        strToWrite = std::to_string((*it)->liczbaDnia) + ". (" + przeliczDzienTygodniaNaLancuch((*it)->dzienTygodnia) + "): " + (*it)->dyzurantWybrany->getNick();
+        outputFileReader << strToWrite << std::endl;
+    }
+    outputFileReader.close();
     return true;
 }
 

@@ -16,7 +16,7 @@ public:
     //ObslugaDyzurantow
     std::vector<XDyzurant*>* getTablicaDyzurantowFull();
     bool writeListaDyzurantowFull(std::vector<XDyzurant*>* tdf);
-    bool zapiszUlozonyGrafikDoPliku(XGrafik* grafik);
+    bool zapiszUlozonyGrafikDoPliku(XGrafik* grafik, int id);
 private:
     std::ifstream inputFileReader;
     std::ofstream outputFileReader;

@@ -7,13 +7,14 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 
+class PDecydowanieOKontynuacjiSzukaniaGrafikow;
 
 class UIDecydowanieOKoniecznosciSzukaniaGrafikow : public QDialog {
     Q_OBJECT
 public:
-    UIDecydowanieOKoniecznosciSzukaniaGrafikow();
+    UIDecydowanieOKoniecznosciSzukaniaGrafikow(PDecydowanieOKontynuacjiSzukaniaGrafikow* p);
     ~UIDecydowanieOKoniecznosciSzukaniaGrafikow() {}
-    void wyswietlKomunikatZakonczeniaSzukania();
+    void wyswietlKomunikatZakonczeniaSzukania(bool result);
 public slots:
     void onButtonSzukajDalejClicked();
     void onButtonZakonczSzukanieClicked();
@@ -21,6 +22,7 @@ public slots:
 private:
     QPushButton* buttonSzukajDalej,* buttonZakonczSzukanie,* buttonWyswietlGrafiki;
     QVBoxLayout* mainLayout;
+    PDecydowanieOKontynuacjiSzukaniaGrafikow* parent;
 
 };
 

@@ -57,9 +57,9 @@ void PDodawanieNowegoGrafiku::wybranoProsbeOStworzenieGrafiku(bool& immediateRes
     mNoweGrafiki->wypelnijGrafikPierwszymiDanymi();
     mNoweGrafiki->wypelnijGrafikDyzurantami(immediateResult);
 
-    if (immediateResult) {      //przy dobrej wstepnej weryfikacji zamykamy okno tworzenia grafikow
-        uiDodawanieNowegoGrafiku->close();
-    }
+    //if (immediateResult) {      //przy dobrej wstepnej weryfikacji zamykamy okno tworzenia grafikow
+    //    uiDodawanieNowegoGrafiku->close();
+    //}
 
     //uiTworzoneGrafiki = new UITworzoneGrafiki(grafikWstepny);
     //uiTworzoneGrafiki->show();
