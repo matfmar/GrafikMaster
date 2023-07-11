@@ -205,9 +205,8 @@ void UIDodawanieNowegoGrafiku::onButtonStartClicked() {
     pDodawanieNowegoGrafiku->wybranoProsbeOStworzenieGrafiku(immediateResult);
     if (!immediateResult) {
         QMessageBox::critical(this, tr("Błąd"), tr("Podano wewnętrznie sprzecze kryteria!"), QMessageBox::Ok);
-        return;
+        close();
     }
-
 }
 
 void UIDodawanieNowegoGrafiku::onListaDyzurantowDostepnychClicked(QListWidgetItem* item) {

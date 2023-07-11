@@ -54,12 +54,15 @@ bool PDodawanieNowegoGrafiku::wybranoUpdateDyzurantaTworzacego(QString nick, boo
     return result;
 }
 void PDodawanieNowegoGrafiku::wybranoProsbeOStworzenieGrafiku(bool& immediateResult) {
-    XGrafik* grafikWstepny(nullptr);
-    grafikWstepny = mNoweGrafiki->wypelnijGrafikPierwszymiDanymi();
-    grafikWstepny = mNoweGrafiki->wypelnijGrafikDyzurantami(immediateResult);
+    mNoweGrafiki->wypelnijGrafikPierwszymiDanymi();
+    mNoweGrafiki->wypelnijGrafikDyzurantami(immediateResult);
 
-    uiTworzoneGrafiki = new UITworzoneGrafiki(grafikWstepny);
-    uiTworzoneGrafiki->show();
+    if (immediateResult) {      //przy dobrej wstepnej weryfikacji zamykamy okno tworzenia grafikow
+        uiDodawanieNowegoGrafiku->close();
+    }
+
+    //uiTworzoneGrafiki = new UITworzoneGrafiki(grafikWstepny);
+    //uiTworzoneGrafiki->show();
 
 }
 

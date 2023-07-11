@@ -83,31 +83,29 @@ bool MNoweGrafiki::updateDyzurantaTworzacego(std::string nick, bool czyM, std::s
     return true;
 }
 
-XGrafik* MNoweGrafiki::wypelnijGrafikPierwszymiDanymi() {
+void MNoweGrafiki::wypelnijGrafikPierwszymiDanymi() {
     nowyGrafik->stworzPodstawyGrafiku();
     for (auto it=tablicaDyzurantowTworzacych->begin(); it<tablicaDyzurantowTworzacych->end(); ++it) {
         nowyGrafik->dodajPierwszeDaneDyzurantaMozeUnika(*it);
     }
     nowyGrafik->dodajPierwszeDaneDyzurantowKiedyChca(tablicaDyzurantowTworzacych);
     nowyGrafik->przeliczMozliwiNieUnikajacyDyzuranciDlaKazdegoDnia();
-    return nowyGrafik;
 }
 
 bool MNoweGrafiki::sprawdzWstepnieZgodnosc() {
     for (auto it=tablicaDyzurantowTworzacych->begin(); it<tablicaDyzurantowTworzacych->end(); ++it) {
-        if (!((*it)->sprawdzZgodnoscLiczbyDyzurow() && (*it)->sprawdzZgodnoscLiczbySobotINiedzielIWeekendow()))
+        if (!((*it)->sprawdzZgodnoscMaksymalnejLiczbyDyzurow() && (*it)->sprawdzZgodnoscLiczbySobotINiedzielIWeekendow()))
             return false;
     }
     return true;
 }
 
-XGrafik* MNoweGrafiki::wypelnijGrafikDyzurantami(bool& immediateResult) {
+void MNoweGrafiki::wypelnijGrafikDyzurantami(bool& immediateResult) {
     immediateResult = sprawdzWstepnieZgodnosc();
     if (!immediateResult) {
-        return nowyGrafik;
+        return;
     }
-    nowyGrafik -> wypelnijGrafikDyzurantami();
-    return nowyGrafik;
+    nowyGrafik -> wypelnijGrafikDyzurantami(tablicaDyzurantowTworzacych);
 }
 
 MNoweGrafiki::~MNoweGrafiki() {

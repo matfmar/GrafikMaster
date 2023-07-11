@@ -14,9 +14,11 @@ SOURCES += \
     main.cpp \
     mdyzuranci.cpp \
     mnowegrafiki.cpp \
+    pdecydowanieokontynuacjiszukaniagrafikow.cpp \
     pdodawanienowegografiku.cpp \
     pedycjabazydyzurantow.cpp \
     pmain.cpp \
+    uidecydowanieokoniecznosciszukaniagrafikow.cpp \
     uidodawanienowegodyzuranta.cpp \
     uidodawanienowegografiku.cpp \
     uidodawanienowegografikuwstep.cpp \
@@ -29,9 +31,11 @@ HEADERS += \
     dto.h \
     mdyzuranci.h \
     mnowegrafiki.h \
+    pdecydowanieokontynuacjiszukaniagrafikow.h \
     pdodawanienowegografiku.h \
     pedycjabazydyzurantow.h \
     pmain.h \
+    uidecydowanieokoniecznosciszukaniagrafikow.h \
     uidodawanienowegodyzuranta.h \
     uidodawanienowegografiku.h \
     uidodawanienowegografikuwstep.h \

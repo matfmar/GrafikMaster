@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <QDebug>
 #include "dbobslugiwaczbazydanych.h"
+#include "pdecydowanieokontynuacjiszukaniagrafikow.h"
 
 //GENERAL===============================================================================================================================
 //----------------------------------------------------------------------
@@ -306,8 +307,12 @@ std::vector<int> XDyzurantTworzacy::getKiedyUnika2() {
     return kiedyUnika;
 }
 
-bool XDyzurantTworzacy::sprawdzZgodnoscLiczbyDyzurow() {
-    return (liczbaDyzurow >= minimalnie && liczbaDyzurow <= maksymalnie);
+bool XDyzurantTworzacy::sprawdzZgodnoscMaksymalnejLiczbyDyzurow() {
+    return (liczbaDyzurow <= maksymalnie);
+}
+
+bool XDyzurantTworzacy::sprawdzZgodnoscMinimalnejLiczbyDyzurow() {
+    return (liczbaDyzurow >= minimalnie);
 }
 
 bool XDyzurantTworzacy::sprawdzZgodnoscLiczbySobotINiedzielIWeekendow() {
@@ -354,10 +359,13 @@ XDzien::XDzien(XDzien* xd) {
 
 //XGrafik==============================================================================================================================
 XGrafik::XGrafik()
-    : rok(0), miesiac(NIEZNANY_MIESIAC), status(NIEZNANY_STATUS_GRAFIKU), liczbaDni(0), pierwszyDzien(NIEZNANY_DZIEN), db(nullptr) {}
+    : rok(0), miesiac(NIEZNANY_MIESIAC), status(NIEZNANY_STATUS_GRAFIKU), liczbaDni(0), pierwszyDzien(NIEZNANY_DZIEN), db(nullptr),
+    tablicaDyzurantowTworzacych(nullptr), pDecydowanieOKontynuacjiSzukaniaGrafikow(nullptr),
+    licznikStworzonychGrafikow(nullptr), zakonczenieSzukania(nullptr) {}
 
 XGrafik::XGrafik(int r, Miesiac m, StatusGrafiku st, int ld, DzienTygodnia pd)
-    : rok(r), miesiac(m), status(st), liczbaDni(ld), pierwszyDzien(pd), db(nullptr) {}
+    : rok(r), miesiac(m), status(st), liczbaDni(ld), pierwszyDzien(pd), db(nullptr), tablicaDyzurantowTworzacych(nullptr),
+    pDecydowanieOKontynuacjiSzukaniaGrafikow(nullptr), licznikStworzonychGrafikow(nullptr), zakonczenieSzukania(nullptr) {}
 
 XGrafik::XGrafik(XGrafik& gr) {
     rok = gr.rok;
@@ -371,6 +379,10 @@ XGrafik::XGrafik(XGrafik& gr) {
         tablicaDni.push_back(nowyDzien);
     }
     db = gr.db;     //trzeba na to uważać - przekazywany jest potencjalnie pusty, a potencjalnie pełny wskaźnik
+    tablicaDyzurantowTworzacych = gr.tablicaDyzurantowTworzacych;   //uwaga, ten obiekt jest "gdzie indziej"
+    pDecydowanieOKontynuacjiSzukaniaGrafikow = gr.pDecydowanieOKontynuacjiSzukaniaGrafikow;
+    licznikStworzonychGrafikow = gr.licznikStworzonychGrafikow; //tylko kopiujemy wskaźnik, obiekt jest już stworzony
+    zakonczenieSzukania = gr.zakonczenieSzukania;   //tylko kopiujemy wskaźnik, obiekt jest już stworzony
 }
 
 XGrafik::XGrafik(XGrafik* gr) {
@@ -385,6 +397,10 @@ XGrafik::XGrafik(XGrafik* gr) {
         tablicaDni.push_back(nowyDzien);
     }
     db = gr->db;    //trzeba na to uważać - przekazywany jest potencjalnie pusty, a potencjalnie pełny wskaźnik
+    tablicaDyzurantowTworzacych = gr->tablicaDyzurantowTworzacych;  //uwaga, ten obiekt jest "gdzie indziej"
+    pDecydowanieOKontynuacjiSzukaniaGrafikow = gr->pDecydowanieOKontynuacjiSzukaniaGrafikow;
+    licznikStworzonychGrafikow = gr->licznikStworzonychGrafikow; //tylko kopiujemy wskaźnik, obiekt jest już stworzony
+    zakonczenieSzukania = gr->zakonczenieSzukania;   //tylko kopiujemy wskaźnik, obiekt jest już stworzony
 }
 
 void XGrafik::stworzPodstawyGrafiku() {
@@ -516,9 +532,40 @@ std::vector<XDzien*> XGrafik::udostepnijTabliceDni() {
     return tablicaDni;
 }
 
-void XGrafik::wypelnijGrafikDyzurantami() {
+bool XGrafik::sprawdzZgodnoscZMinimalnaLiczbaDyzurowDlaWszystkich() {
+    for (auto it = tablicaDyzurantowTworzacych->begin(); it< tablicaDyzurantowTworzacych->end(); ++it) {
+        if (!((*it)->sprawdzZgodnoscMinimalnejLiczbyDyzurow())) {
+            return false;
+        }
+    }
+    return true;
+}
+
+void XGrafik::wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt) {
+    //uzupełnienie wskaźnika do tablicy dyżurantów tworzących (pochodzi z obiektu MNoweGrafiki)
+    tablicaDyzurantowTworzacych = tdt;
+    //stworzenie klasy odpowiedzialnej za komunikację z użytkownikiem przy szukaniu tych grafików
+    pDecydowanieOKontynuacjiSzukaniaGrafikow = new PDecydowanieOKontynuacjiSzukaniaGrafikow();
+    //stworzenie w "globalnej" przestrzeni licznika stworzonych grafików oraz zmiennej od decyzji dalszego szukania
+    licznikStworzonychGrafikow = new int(0);
+    zakonczenieSzukania = new bool(false);  //false - czyli szukamy do oporu
+    //inicjalizacja funkcji pseudolosowej
     srand(time(0));
-    bool result = wypelnijDzien(1);
+    //ODPALAMY SZUKANIE !!!
+    bool result = wypelnijDzien(1, licznikStworzonychGrafikow, zakonczenieSzukania);
+    //ten moment uruchamia się po powrocie z całego procesu wyszukiwania grafików
+    //usuwamy powyższe zmienne sterujące
+    delete licznikStworzonychGrafikow;
+    licznikStworzonychGrafikow = nullptr;
+    delete zakonczenieSzukania;
+    zakonczenieSzukania = nullptr;
+    //kończymy pracę obiektu  odpowiedzialnego za komunikację, ale przedtem wyswietlamy komunikat o zakończeniu szukania grafików
+    pDecydowanieOKontynuacjiSzukaniaGrafikow->pokazKomunikatZakonczeniaSzukania();
+    delete pDecydowanieOKontynuacjiSzukaniaGrafikow;
+    pDecydowanieOKontynuacjiSzukaniaGrafikow = nullptr;
+    //
+
+
 }
 
 void XGrafik::dodajUnikanie(XDyzurantTworzacy* dt, int klucz, int unikanieKrotnosc, bool& result) {   //dodaje unikanie i od razu przelicza tablicę MOZLIWI_NIE_UNIKAJACY
@@ -534,8 +581,9 @@ void XGrafik::dodajUnikanie(XDyzurantTworzacy* dt, int klucz, int unikanieKrotno
             if (tablicaDni[lewy-2]->dyzurantWybrany != dt) {
                 tablicaDni[lewy-2]->unikajacyDyzuranci.insert(std::pair<int,XDyzurantTworzacy*>(klucz, dt));
                 przeliczMozliwiNieUnikajacyDyzuranciDlaJednegoDnia(lewy-2);
+                //no i mogło się okazać że wyleciał w tym dniu zbiór MOZLIWI_NIE_UNIKAJACY !
                 if (sprawdzPustoscZbioruMozliwiNieUnikajacy(lewy-2)) {
-                    result = false;
+                    result = false;     //wiec trzeba wyjsc z błędem.
                     return;
                 }
             }
@@ -544,8 +592,9 @@ void XGrafik::dodajUnikanie(XDyzurantTworzacy* dt, int klucz, int unikanieKrotno
             if (tablicaDni[prawy+2]->dyzurantWybrany != dt) {
                 tablicaDni[prawy+2]->unikajacyDyzuranci.insert(std::pair<int,XDyzurantTworzacy*>(klucz, dt));
                 przeliczMozliwiNieUnikajacyDyzuranciDlaJednegoDnia(prawy+2);
+                //no i mogło się okazać że wyleciał w tym dniu zbiór MOZLIWI_NIE_UNIKAJACY !
                 if (sprawdzPustoscZbioruMozliwiNieUnikajacy(prawy+2)) {
-                    result = false;
+                    result = false;     //wiec trzeba wyjsc z błędem.
                     return;
                 }
             }
@@ -573,7 +622,7 @@ bool XGrafik::losujDyzurantaDoDyzuruPoKluczu(int dzien, std::map<int, XDyzurantT
     dt->incLiczbaDyzurow(tablicaDni[dzien]->dzienTygodnia);
     dt->dodajDyzur(dzien);
     //posprawdzaj limity i ewentualnie cofnij zmiany
-    if (!(dt->sprawdzZgodnoscLiczbyDyzurow() && dt->sprawdzZgodnoscLiczbySobotINiedzielIWeekendow())) {
+    if (!(dt->sprawdzZgodnoscMaksymalnejLiczbyDyzurow() && dt->sprawdzZgodnoscLiczbySobotINiedzielIWeekendow())) {
         dt->decLiczbaDyzurow(tablicaDni[dzien]->dzienTygodnia);
         dt->usunDyzurPrzedPopBack();
         return false;
@@ -598,16 +647,29 @@ bool XGrafik::setLosowoNowyDzien(int dzien, int& kluczWybranegoDyzuranta) {
     return result;
 }
 
-bool XGrafik::wypelnijDzien(int dzien) {        //glowna funkcja wywolywana rekurencyjnie
+bool XGrafik::wypelnijDzien(int dzien, int* licznikStworzonychGrafikow, bool* zakonczenieSzukania) {        //glowna funkcja wywolywana rekurencyjnie
+//UWAGA: jeśli *zakończenieSzukania==false, to oznacza że traktujemy jakby grafik nie był znaleziony czyli szukamy do oporu
+//jeśli *zakończenieSzukania==true, to funkcja będzie wychodzić z pętli byle szybciej
+//ten "przełącznik" zakończenieSzukania służy do tego by w razie decyzji o zaprzestaniu poszukiwań móc posprzątać cały rekurencyjny bałagan który się stworzył
     if (dzien > liczbaDni) {
-        //czyli ułożyliśmy cały grafik !!!!!
+        //czyli ułożyliśmy cały grafik !!!!! - ale trzeba jeszcze sprawdzic czy zgadza sie minimalna liczba dyzurow dla kazdego dyzuranta
+        if (!sprawdzZgodnoscZMinimalnaLiczbaDyzurowDlaWszystkich()) {
+            return *zakonczenieSzukania;   //jeśli nie to spadamy.
+        }
+        //jeśli tak - tworzymy - lub wykorzystujemy obiekt komunikatora z bazą danych...
         if (db == nullptr) {
             db = new DBObslugiwaczBazyDanych();
         }
-        //więc zapisujemy do pliku...
+        //... oraz zapisujemy do pliku...
         db->zapiszUlozonyGrafikDoPliku(this);
+        //... zwiększamy licznik stworzonych grafików
+        (*licznikStworzonychGrafikow)++;
+        //... oraz sprawdzamy czy nie doszliśmy do progu decyzji o wyświetleniu okna co do dalszych poszukiwań
+        if (*licznikStworzonychGrafikow >= 10) {
+            pDecydowanieOKontynuacjiSzukaniaGrafikow->pokazOknoWyboruOpcji();   //nie będzie powrotu z tej funkcji przed decyzją użytkownika
+        }
         //...i spadamy.
-        return true;
+        return *zakonczenieSzukania;
     }
     XGrafik* nowyGrafik(nullptr);
     bool resultDodania(false);
@@ -623,7 +685,7 @@ bool XGrafik::wypelnijDzien(int dzien) {        //glowna funkcja wywolywana reku
                 nowyGrafik = nullptr;
                 //a teraz BARDZO WAŻNE: tablica MOŻLIWI NIE UNIKAJĄCY mogła się właśnie wyczyścić, więc trzeba ZAKOŃCZYĆ DZIAŁANIE TEJ INSTANCJI
                 if (tablicaDni[dzien]->mozliwiNieUnikajacyDyzuranci.empty()) {
-                    return false;
+                    return *zakonczenieSzukania;
                 }
             }
             nowyGrafik = new XGrafik(this);
@@ -631,7 +693,7 @@ bool XGrafik::wypelnijDzien(int dzien) {        //glowna funkcja wywolywana reku
         } while(!resultDodania);
         //a teraz mamy nowy grafik z dodanym prawidłowo nowym dyżurantem dla dnia, więc.....
         //...wywołujemy rekurencyjnie ową procedurę, ale dla kolejnego dnia
-    } while (!nowyGrafik->wypelnijDzien(dzien+1)); //PATRZ NIŻEJ
+    } while (!nowyGrafik->wypelnijDzien(dzien+1, licznikStworzonychGrafikow, zakonczenieSzukania)); //PATRZ NIŻEJ
     //jeśli zakończy się klęską, wracamy do góry -> wyrzucamy z tablicy MOŻLIWE felernego dyżuranta i z powrotem próbujemy szczęścia
 
     //a jeśli zakończyła sie sukcesem i grafik się znalazł -> i tak niszczymy obiekt (zwalniamy pamięć)...
@@ -640,7 +702,7 @@ bool XGrafik::wypelnijDzien(int dzien) {        //glowna funkcja wywolywana reku
         nowyGrafik = nullptr;
     }
     //i spadamy.
-    return true;
+    return *zakonczenieSzukania;
 }
 
 XGrafik::~XGrafik() {

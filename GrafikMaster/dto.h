@@ -7,6 +7,7 @@
 #include <map>
 
 class DBObslugiwaczBazyDanych;
+class PDecydowanieOKontynuacjiSzukaniaGrafikow;
 
 //(enum)DzienTygodnia
 enum DzienTygodnia : int {
@@ -112,7 +113,8 @@ public:
     void usunDyzurPrzedPopBack();
     void dodajDyzur(int dzien);
     void sortujDyzury();
-    bool sprawdzZgodnoscLiczbyDyzurow();
+    bool sprawdzZgodnoscMaksymalnejLiczbyDyzurow();    //wylacznie maksymalna liczba
+    bool sprawdzZgodnoscMinimalnejLiczbyDyzurow();
     bool sprawdzZgodnoscLiczbySobotINiedzielIWeekendow();
     std::vector<int> znajdzSekwencje(int krotnosc);
 private:
@@ -169,10 +171,12 @@ public:
     void dodajPierwszeDaneDyzurantowKiedyChca(std::vector<XDyzurantTworzacy*>* tablicaDyzurantowTworzacych);
     void przeliczMozliwiNieUnikajacyDyzuranciDlaKazdegoDnia();
     void przeliczMozliwiNieUnikajacyDyzuranciDlaJednegoDnia(int dzien);
-    void wypelnijGrafikDyzurantami();
+    void wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt);
     std::vector<XDzien*> udostepnijTabliceDni();
     bool setLosowoNowyDzien(int dzien, int& kluczWybranegoDyzuranta);
-    bool wypelnijDzien(int dzien);  //niestety ta funkcja rekurencyjna chyba musi byc publiczna
+
+    bool wypelnijDzien(int dzien, int* licznikStworzonychGrafikow, bool* zakonczenieSzukania);  //niestety ta funkcja rekurencyjna chyba musi byc publiczna
+
     ~XGrafik();
 private:
     int rok;
@@ -183,9 +187,17 @@ private:
     std::vector<XDzien*> tablicaDni;    //numerowane od 1 do liczbaDni+1;
     DBObslugiwaczBazyDanych* db;        //do zapisywania wypelnionych w calosci grafikow
 
+    std::vector<XDyzurantTworzacy*>* tablicaDyzurantowTworzacych;
+
+    PDecydowanieOKontynuacjiSzukaniaGrafikow* pDecydowanieOKontynuacjiSzukaniaGrafikow;
+
+    int* licznikStworzonychGrafikow;    //wskaźnik do "globalnej" zmiennej zawierającej ilość stworzonych grafików
+    bool* zakonczenieSzukania;          //wskaźnik do "globalnej" zmiennej zawierającej decyzję o sposobie wychodzenia z pętli (true -> kończymy, false -> szukamy dalej)
+
     bool losujDyzurantaDoDyzuruPoKluczu(int dzien, std::map<int, XDyzurantTworzacy*>* m, int& kluczWybranegoDyzuranta);
     void dodajUnikanie(XDyzurantTworzacy* dt, int klucz, int unikanieKrotnosc, bool& result);
     bool sprawdzPustoscZbioruMozliwiNieUnikajacy(int dzien);
+    bool sprawdzZgodnoscZMinimalnaLiczbaDyzurowDlaWszystkich();
 };
 
 //GENERAL
