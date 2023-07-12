@@ -3,8 +3,7 @@
 #include "pdecydowanieokontynuacjiszukaniagrafikow.h"
 #include <QMessageBox>
 
-UIDecydowanieOKoniecznosciSzukaniaGrafikow::UIDecydowanieOKoniecznosciSzukaniaGrafikow(PDecydowanieOKontynuacjiSzukaniaGrafikow* p)
-    : QDialog() {
+UIDecydowanieOKoniecznosciSzukaniaGrafikow::UIDecydowanieOKoniecznosciSzukaniaGrafikow(PDecydowanieOKontynuacjiSzukaniaGrafikow* p) {
     setWindowTitle(tr("Szukanie grafików..."));
     parent = p;
 
