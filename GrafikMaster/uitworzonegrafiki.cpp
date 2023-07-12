@@ -1,10 +1,11 @@
 
 #include "uitworzonegrafiki.h"
+#include "pdodawanienowegografiku.h"
 #include "dto.h"
 
-UITworzoneGrafiki::UITworzoneGrafiki(XGrafik* g, QWidget *parent) : QMainWindow{parent} {
+UITworzoneGrafiki::UITworzoneGrafiki(XGrafik* g, PDodawanieNowegoGrafiku* p) {
     setWindowTitle(tr("Podglad grafikow"));
-    mainWidget = new QWidget(this);
+    parent = p;
 
     listaOstateczni = new QListWidget(this);
     listaMozliwi = new QListWidget(this);
@@ -14,14 +15,22 @@ UITworzoneGrafiki::UITworzoneGrafiki(XGrafik* g, QWidget *parent) : QMainWindow{
     listaMozliwi -> addItem("MOŻLIWI");
     listaUnikajacy -> addItem("UNIKAJĄCY");
     listaMozliwiNieUnikajacy -> addItem("MOŻLIWI NIE UNIKAJĄCY");
-    mainLayout = new QHBoxLayout(this);
-    mainLayout->addWidget(listaOstateczni);
-    mainLayout->addWidget(listaMozliwi);
-    mainLayout->addWidget(listaUnikajacy);
-    mainLayout->addWidget(listaMozliwiNieUnikajacy);
-    mainWidget -> setLayout(mainLayout);
-    setCentralWidget(mainWidget);
+    buttonOk = new QPushButton(tr("Jest dobrze"), this);
+    buttonZle = new QPushButton(tr("Jest źle, poprawiamy"), this);
+
+    mainLayout = new QGridLayout(this);
+    mainLayout->addWidget(listaOstateczni, 0, 0);
+    mainLayout->addWidget(listaMozliwi, 0, 1);
+    mainLayout->addWidget(listaUnikajacy, 0, 2);
+    mainLayout->addWidget(listaMozliwiNieUnikajacy, 0, 3);
+    mainLayout->addWidget(buttonOk, 1, 0);
+    mainLayout->addWidget(buttonZle, 1, 1);
+
+    setLayout(mainLayout);
     setFixedSize(800, 800);
+
+    QObject::connect(buttonOk, SIGNAL(clicked()), this, SLOT(onButtonOkClicked()));
+    QObject::connect(buttonZle, SIGNAL(clicked()), this, SLOT(onButtonZleClicked()));
 
     grafik = g;
     std::vector<XDzien*> tablicaDni = grafik->udostepnijTabliceDni();
@@ -50,3 +59,14 @@ QString UITworzoneGrafiki::zwrocDyzurantaOstatecznego(XDyzurantTworzacy* dt) {
     }
     return QString::fromStdString(dt->getNick());
 }
+
+void UITworzoneGrafiki::onButtonOkClicked() {
+    parent->wybranoDecyzjeWarunkowPoczatkowychGrafiku(1);
+    close();
+}
+
+void UITworzoneGrafiki::onButtonZleClicked() {
+    parent->wybranoDecyzjeWarunkowPoczatkowychGrafiku(0);
+    close();
+}
+

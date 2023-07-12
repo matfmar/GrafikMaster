@@ -3,25 +3,31 @@
 #define UITWORZONEGRAFIKI_H
 
 
-#include <QMainWindow>
-#include <QHBoxLayout>
+#include <QDialog>
+#include <QGridLayout>
 #include <QListWidget>
 #include <QString>
+#include <QPushButton>
 #include <map>
 
 class XGrafik;
 class XDyzurantTworzacy;
+class PDodawanieNowegoGrafiku;
 
-class UITworzoneGrafiki : public QMainWindow {
+class UITworzoneGrafiki : public QDialog {
     Q_OBJECT
 public:
-    UITworzoneGrafiki(XGrafik* g, QWidget *parent = nullptr);
+    UITworzoneGrafiki(XGrafik* g, PDodawanieNowegoGrafiku* p);
     ~UITworzoneGrafiki() {}
+public slots:
+    void onButtonOkClicked();
+    void onButtonZleClicked();
 private:
-    QWidget* mainWidget;
-    QHBoxLayout* mainLayout;
+    QGridLayout* mainLayout;
     QListWidget* listaOstateczni,* listaMozliwi,* listaUnikajacy,* listaMozliwiNieUnikajacy;
     XGrafik* grafik;
+    QPushButton* buttonOk,* buttonZle;
+    PDodawanieNowegoGrafiku* parent;
 
     QString zwrocLancuchWynikowy(std::map<int, XDyzurantTworzacy*> mapa);
     QString zwrocDyzurantaOstatecznego(XDyzurantTworzacy* dt);

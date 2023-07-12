@@ -10,7 +10,7 @@
 
 PDodawanieNowegoGrafiku::PDodawanieNowegoGrafiku()
     : uiDodawanieNowegoGrafikuWstep(nullptr), mNoweGrafiki(nullptr), uiDodawanieNowegoGrafiku(nullptr), tablicaDyzurantow(nullptr), mDyzuranci(nullptr),
-    uiTworzoneGrafiki(nullptr) {
+    uiTworzoneGrafiki(nullptr), decyzjaWarunkowPoczatkowychGrafiku(0) {
     mNoweGrafiki = new MNoweGrafiki();
     std::vector<Miesiac> tabMiesiace;
     std::vector<DzienTygodnia> tabDniTygodnia;
@@ -54,16 +54,27 @@ bool PDodawanieNowegoGrafiku::wybranoUpdateDyzurantaTworzacego(QString nick, boo
     return result;
 }
 void PDodawanieNowegoGrafiku::wybranoProsbeOStworzenieGrafiku(bool& immediateResult) {
-    mNoweGrafiki->wypelnijGrafikPierwszymiDanymi();
+    XGrafik* grafikWstepny = mNoweGrafiki->wypelnijGrafikPierwszymiDanymi();
+
+    //pokazujemy efekt pierwszych danych na grafik
+    uiTworzoneGrafiki = new UITworzoneGrafiki(grafikWstepny, this);
+    uiTworzoneGrafiki->exec();  //blokujące program
+
+    if (decyzjaWarunkowPoczatkowychGrafiku == 0) {
+        return;
+    }
+
+    //jeśli jest ok, to idziemy dalej.
     mNoweGrafiki->wypelnijGrafikDyzurantami(immediateResult);
 
     if (immediateResult) {      //przy dobrej wstepnej weryfikacji zamykamy okno tworzenia grafikow
         uiDodawanieNowegoGrafiku->close();
     }
 
-    //uiTworzoneGrafiki = new UITworzoneGrafiki(grafikWstepny);
-    //uiTworzoneGrafiki->show();
+}
 
+void PDodawanieNowegoGrafiku::wybranoDecyzjeWarunkowPoczatkowychGrafiku(int decyzja) {
+    decyzjaWarunkowPoczatkowychGrafiku = decyzja;
 }
 
 PDodawanieNowegoGrafiku::~PDodawanieNowegoGrafiku() {

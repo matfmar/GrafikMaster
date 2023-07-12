@@ -19,6 +19,11 @@ int PDecydowanieOKontynuacjiSzukaniaGrafikow::pokazOknoWyboruOpcji() {
 }
 
 void PDecydowanieOKontynuacjiSzukaniaGrafikow::pokazKomunikatZakonczeniaSzukania(bool result) {
+    if (uiDecydowanieOKoniecznosciSzukaniaGrafikow != nullptr) {
+        delete uiDecydowanieOKoniecznosciSzukaniaGrafikow;
+        uiDecydowanieOKoniecznosciSzukaniaGrafikow = nullptr;
+    }
+    uiDecydowanieOKoniecznosciSzukaniaGrafikow = new UIDecydowanieOKoniecznosciSzukaniaGrafikow(this);
     uiDecydowanieOKoniecznosciSzukaniaGrafikow->show();
     uiDecydowanieOKoniecznosciSzukaniaGrafikow->wyswietlKomunikatZakonczeniaSzukania(result);
 }

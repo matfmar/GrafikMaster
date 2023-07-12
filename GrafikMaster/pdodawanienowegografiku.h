@@ -26,6 +26,7 @@ public:
     XDyzurantTworzacy* wybranoPobranieDanychDyzurantaTworzacego(QString nick);
     bool wybranoUpdateDyzurantaTworzacego(QString nick, bool czyM, QString m, QString nm, QString u, QString ch, int maks, int min, int maksS, int maksN, int maksW, int c);
     void wybranoProsbeOStworzenieGrafiku(bool& immediateResult);
+    void wybranoDecyzjeWarunkowPoczatkowychGrafiku(int decyzja);
 
 private:
     UIDodawanieNowegoGrafikuWstep* uiDodawanieNowegoGrafikuWstep;
@@ -33,6 +34,7 @@ private:
     MNoweGrafiki* mNoweGrafiki;
     MDyzuranci* mDyzuranci;
     std::vector<XDyzurant*>* tablicaDyzurantow;
+    int decyzjaWarunkowPoczatkowychGrafiku;
 
     UITworzoneGrafiki* uiTworzoneGrafiki;   //debug only
 };

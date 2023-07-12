@@ -83,13 +83,14 @@ bool MNoweGrafiki::updateDyzurantaTworzacego(std::string nick, bool czyM, std::s
     return true;
 }
 
-void MNoweGrafiki::wypelnijGrafikPierwszymiDanymi() {
+XGrafik* MNoweGrafiki::wypelnijGrafikPierwszymiDanymi() {
     nowyGrafik->stworzPodstawyGrafiku();
     for (auto it=tablicaDyzurantowTworzacych->begin(); it<tablicaDyzurantowTworzacych->end(); ++it) {
         nowyGrafik->dodajPierwszeDaneDyzurantaMozeUnika(*it);
     }
     nowyGrafik->dodajPierwszeDaneDyzurantowKiedyChca(tablicaDyzurantowTworzacych);
     nowyGrafik->przeliczMozliwiNieUnikajacyDyzuranciDlaKazdegoDnia();
+    return nowyGrafik;
 }
 
 bool MNoweGrafiki::sprawdzWstepnieZgodnosc() {

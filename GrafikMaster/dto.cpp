@@ -592,7 +592,7 @@ void XGrafik::wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt) {
 
 }
 
-void XGrafik::dodajUnikanie(XDyzurantTworzacy* dt, int klucz, int unikanieKrotnosc, bool& result) {   //dodaje unikanie i od razu przelicza tablicę MOZLIWI_NIE_UNIKAJACY
+void XGrafik::dodajUnikanie(XDyzurantTworzacy* dt, int klucz, int unikanieKrotnosc, bool& result, int dzien) {   //dodaje unikanie i od razu przelicza tablicę MOZLIWI_NIE_UNIKAJACY
     dt->sortujDyzury();
     result = true;
     std::vector<int> tablicaPar;
@@ -601,23 +601,25 @@ void XGrafik::dodajUnikanie(XDyzurantTworzacy* dt, int klucz, int unikanieKrotno
     for (auto it3 = tablicaPar.begin(); it3 < tablicaPar.end(); it3 += 2) {
         lewy = *it3;
         prawy = *(it3+1);
-        if (lewy-2 > 0) {
+        if (lewy-2 > dzien && lewy-2 > 0) {
             if (tablicaDni[lewy-2]->dyzurantWybrany != dt) {
                 tablicaDni[lewy-2]->unikajacyDyzuranci.insert(std::pair<int,XDyzurantTworzacy*>(klucz, dt));
-                przeliczMozliwiNieUnikajacyDyzuranciDlaJednegoDnia(lewy-2);
+                tablicaDni[lewy-2]->mozliwiNieUnikajacyDyzuranci.erase(klucz);
+                //przeliczMozliwiNieUnikajacyDyzuranciDlaJednegoDnia(lewy-2);
                 //no i mogło się okazać że wyleciał w tym dniu zbiór MOZLIWI_NIE_UNIKAJACY !
-                if (sprawdzPustoscZbioruMozliwiNieUnikajacy(lewy-2)) {
+                if (tablicaDni[lewy-2]->mozliwiNieUnikajacyDyzuranci.size() == 0) {
                     result = false;     //wiec trzeba wyjsc z błędem.
                     return;
                 }
             }
         }
-        if (prawy < liczbaDni) {
+        if (prawy+2 > dzien && prawy < liczbaDni) {
             if (tablicaDni[prawy+2]->dyzurantWybrany != dt) {
                 tablicaDni[prawy+2]->unikajacyDyzuranci.insert(std::pair<int,XDyzurantTworzacy*>(klucz, dt));
-                przeliczMozliwiNieUnikajacyDyzuranciDlaJednegoDnia(prawy+2);
+                tablicaDni[prawy+2]->mozliwiNieUnikajacyDyzuranci.erase(klucz);
+                //przeliczMozliwiNieUnikajacyDyzuranciDlaJednegoDnia(prawy+2);
                 //no i mogło się okazać że wyleciał w tym dniu zbiór MOZLIWI_NIE_UNIKAJACY !
-                if (sprawdzPustoscZbioruMozliwiNieUnikajacy(prawy+2)) {
+                if (tablicaDni[prawy+2]->mozliwiNieUnikajacyDyzuranci.size() == 0) {
                     result = false;     //wiec trzeba wyjsc z błędem.
                     return;
                 }
@@ -628,6 +630,9 @@ void XGrafik::dodajUnikanie(XDyzurantTworzacy* dt, int klucz, int unikanieKrotno
 
 bool XGrafik::losujDyzurantaDoDyzuruPoKluczu(int dzien, int& kluczWybranegoDyzuranta) {
     auto it = tablicaDni[dzien]->mozliwiNieUnikajacyDyzuranci.begin();
+    if (tablicaDni[dzien]->mozliwiNieUnikajacyDyzuranci.size() == 0) {
+        return false;
+    }
     std::advance(it, rand() % (tablicaDni[dzien]->mozliwiNieUnikajacyDyzuranci.size()));
     XDyzurantTworzacy* dt = it->second;
     int klucz = it->first;
@@ -655,7 +660,7 @@ bool XGrafik::losujDyzurantaDoDyzuruPoKluczu(int dzien, int& kluczWybranegoDyzur
     int krotnoscUnikanie = dt->getUnikaniePodRzad();
     bool resultDodaniaUnikania(false);
     if (krotnoscUnikanie != 0) {
-        dodajUnikanie(dt, klucz, krotnoscUnikanie,resultDodaniaUnikania);     //dodaje unikanie i od razu przelicza tablicę MOZLIWI_NIE_UNIKAJACY
+        dodajUnikanie(dt, klucz, krotnoscUnikanie,resultDodaniaUnikania, dzien);     //dodaje unikanie i od razu przelicza tablicę MOZLIWI_NIE_UNIKAJACY
         if (!resultDodaniaUnikania) {
             dt->decLiczbaDyzurow(tablicaDni[dzien]->dzienTygodnia);     //trzeba cofnąć zmiany w tablicy dyżurantów
             dt->usunDyzur(dzien);       //nie mogę przez pop_back, bo dokonano sortowania przed szukaniem sekwencji
@@ -714,7 +719,7 @@ bool XGrafik::wypelnijDzien(int dzien) {        //glowna funkcja wywolywana reku
                 delete nowyGrafik;
                 nowyGrafik = nullptr;
                 //a teraz BARDZO WAŻNE: tablica MOŻLIWI NIE UNIKAJĄCY mogła się właśnie wyczyścić, więc trzeba wtedy ZAKOŃCZYĆ DZIAŁANIE TEJ INSTANCJI
-                if (tablicaDni[dzien]->mozliwiNieUnikajacyDyzuranci.empty()) {
+                if (tablicaDni[dzien]->mozliwiNieUnikajacyDyzuranci.size() == 0) {
                     return *zakonczenieSzukania;
                 }
             }
