@@ -5,7 +5,7 @@
 #include <QDialog>
 
 PDecydowanieOKontynuacjiSzukaniaGrafikow::PDecydowanieOKontynuacjiSzukaniaGrafikow()
-    : decyzjaUzytkownika(2), uiDecydowanieOKoniecznosciSzukaniaGrafikow(nullptr) {   //domyślnie koniec szukania - gdyby użytkownik zamknął okno zamiast kliknąć odpowiedni przycisk
+    : uiDecydowanieOKoniecznosciSzukaniaGrafikow(nullptr), decyzjaUzytkownika(2)  {   //domyślnie koniec szukania - gdyby użytkownik zamknął okno zamiast kliknąć odpowiedni przycisk
 }
 
 int PDecydowanieOKontynuacjiSzukaniaGrafikow::pokazOknoWyboruOpcji() {
