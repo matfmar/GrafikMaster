@@ -626,9 +626,9 @@ void XGrafik::dodajUnikanie(XDyzurantTworzacy* dt, int klucz, int unikanieKrotno
     }
 }
 
-bool XGrafik::losujDyzurantaDoDyzuruPoKluczu(int dzien, std::map<int, XDyzurantTworzacy*>* m, int& kluczWybranegoDyzuranta) {
-    auto it = m->begin();
-    std::advance(it, rand() % (m->size()));
+bool XGrafik::losujDyzurantaDoDyzuruPoKluczu(int dzien, int& kluczWybranegoDyzuranta) {
+    auto it = tablicaDni[dzien]->mozliwiNieUnikajacyDyzuranci.begin();
+    std::advance(it, rand() % (tablicaDni[dzien]->mozliwiNieUnikajacyDyzuranci.size()));
     XDyzurantTworzacy* dt = it->second;
     int klucz = it->first;
     kluczWybranegoDyzuranta = klucz;
@@ -666,11 +666,6 @@ bool XGrafik::losujDyzurantaDoDyzuruPoKluczu(int dzien, std::map<int, XDyzurantT
     return true;
 }
 
-bool XGrafik::setLosowoNowyDzien(int dzien, int& kluczWybranegoDyzuranta) {
-    bool result = (losujDyzurantaDoDyzuruPoKluczu(dzien, &(tablicaDni[dzien]->mozliwiNieUnikajacyDyzuranci), kluczWybranegoDyzuranta));
-    return result;
-}
-
 bool XGrafik::wypelnijDzien(int dzien) {        //glowna funkcja wywolywana rekurencyjnie
     //qDebug() << "Odpalono procedurę rekurencyjną";
 //UWAGA: jeśli *zakończenieSzukania==false, to oznacza że traktujemy jakby grafik nie był znaleziony czyli szukamy do oporu
@@ -678,9 +673,9 @@ bool XGrafik::wypelnijDzien(int dzien) {        //glowna funkcja wywolywana reku
 //ten "przełącznik" zakończenieSzukania służy do tego by w razie decyzji o zaprzestaniu poszukiwań móc posprzątać cały rekurencyjny bałagan który się stworzył
     if (dzien > liczbaDni) {
         //czyli ułożyliśmy cały grafik !!!!! - ale trzeba jeszcze sprawdzic czy zgadza sie minimalna liczba dyzurow dla kazdego dyzuranta
-        if (!sprawdzZgodnoscZMinimalnaLiczbaDyzurowDlaWszystkich()) {
-            return *zakonczenieSzukania;   //jeśli nie to spadamy.
-        }
+        //if (!sprawdzZgodnoscZMinimalnaLiczbaDyzurowDlaWszystkich()) {
+        //    return *zakonczenieSzukania;   //jeśli nie to spadamy.
+        //}
         //jeśli tak - tworzymy - lub wykorzystujemy obiekt komunikatora z bazą danych...
         if (db == nullptr) {
             db = new DBObslugiwaczBazyDanych();
@@ -706,23 +701,25 @@ bool XGrafik::wypelnijDzien(int dzien) {        //glowna funkcja wywolywana reku
     }
     XGrafik* nowyGrafik(nullptr);
     bool resultDodania(false);
-    int kluczWybranegoDyzuranta(-1);
+    int kluczWybranegoDyzurantaDoTegoDnia(-1);
     do {
         do {
             if (nowyGrafik != nullptr){         //robi się tylko gdy warunek pętli się schrzanił i trzeba liczyć jeszcze raz
                 //wyrzucamy z tablicy MOZLIWE dla DANEGO DNIA - UWAGA: AKTUALNEGO GRAFIKU!!! - dyzuranta, którego wstawienie zakończyło się klęską
-                tablicaDni[dzien]->mozliwiDyzuranci.erase(kluczWybranegoDyzuranta);
-                tablicaDni[dzien]->mozliwiNieUnikajacyDyzuranci.erase(kluczWybranegoDyzuranta);
+                if (kluczWybranegoDyzurantaDoTegoDnia != -1) {
+                    tablicaDni[dzien]->mozliwiDyzuranci.erase(kluczWybranegoDyzurantaDoTegoDnia);
+                    tablicaDni[dzien]->mozliwiNieUnikajacyDyzuranci.erase(kluczWybranegoDyzurantaDoTegoDnia);
+                }
                 //usuwamy stworzony do celów byłego dodawania grafik - tam jest za duży rozpierdol żeby cofać zmiany, trzeba zrekonstruować cały obiekt na nowo
                 delete nowyGrafik;
                 nowyGrafik = nullptr;
-                //a teraz BARDZO WAŻNE: tablica MOŻLIWI NIE UNIKAJĄCY mogła się właśnie wyczyścić, więc trzeba ZAKOŃCZYĆ DZIAŁANIE TEJ INSTANCJI
+                //a teraz BARDZO WAŻNE: tablica MOŻLIWI NIE UNIKAJĄCY mogła się właśnie wyczyścić, więc trzeba wtedy ZAKOŃCZYĆ DZIAŁANIE TEJ INSTANCJI
                 if (tablicaDni[dzien]->mozliwiNieUnikajacyDyzuranci.empty()) {
                     return *zakonczenieSzukania;
                 }
             }
             nowyGrafik = new XGrafik(this);
-            resultDodania = nowyGrafik->setLosowoNowyDzien(dzien, kluczWybranegoDyzuranta);
+            resultDodania = nowyGrafik->losujDyzurantaDoDyzuruPoKluczu(dzien, kluczWybranegoDyzurantaDoTegoDnia);
         } while(!resultDodania);
         //a teraz mamy nowy grafik z dodanym prawidłowo nowym dyżurantem dla dnia, więc.....
         //...wywołujemy rekurencyjnie ową procedurę, ale dla kolejnego dnia

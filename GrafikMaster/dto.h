@@ -173,7 +173,8 @@ public:
     void przeliczMozliwiNieUnikajacyDyzuranciDlaJednegoDnia(int dzien);
     void wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt);
     std::vector<XDzien*> udostepnijTabliceDni();
-    bool setLosowoNowyDzien(int dzien, int& kluczWybranegoDyzuranta);
+
+    bool losujDyzurantaDoDyzuruPoKluczu(int dzien, int& kluczWybranegoDyzuranta);
 
     bool wypelnijDzien(int dzien);  //niestety ta funkcja rekurencyjna chyba musi byc publiczna
 
@@ -195,7 +196,6 @@ private:
     bool* zakonczenieSzukania;          //wskaźnik do "globalnej" zmiennej zawierającej decyzję o sposobie wychodzenia z pętli (true -> kończymy, false -> szukamy dalej)
     int* licznikOstatecznyStworzonychGrafikow;
 
-    bool losujDyzurantaDoDyzuruPoKluczu(int dzien, std::map<int, XDyzurantTworzacy*>* m, int& kluczWybranegoDyzuranta);
     void dodajUnikanie(XDyzurantTworzacy* dt, int klucz, int unikanieKrotnosc, bool& result);
     bool sprawdzPustoscZbioruMozliwiNieUnikajacy(int dzien);
     bool sprawdzZgodnoscZMinimalnaLiczbaDyzurowDlaWszystkich();
