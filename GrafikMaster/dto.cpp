@@ -330,7 +330,7 @@ bool XDyzurantTworzacy::sprawdzZgodnoscMinimalnejLiczbyDyzurow() {
 }
 
 bool XDyzurantTworzacy::sprawdzZgodnoscLiczbySobotINiedzielIWeekendow() {
-    return (liczbaSobot < maksymalnieSoboty && (liczbaNiedziel < maksymalnieNiedziele && liczbaWeekendow < maksymalnieWeekendy));
+    return (liczbaSobot <= maksymalnieSoboty && (liczbaNiedziel <= maksymalnieNiedziele && liczbaWeekendow <= maksymalnieWeekendy));
 }
 
 //XDzien==============================================================================================================================
@@ -559,22 +559,17 @@ bool XGrafik::sprawdzZgodnoscZMinimalnaLiczbaDyzurowDlaWszystkich() {
 }
 
 void XGrafik::wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt) {
-    qDebug() << "Wszedłem do XGrafik procedura wyjściowa";
     //uzupełnienie wskaźnika do tablicy dyżurantów tworzących (pochodzi z obiektu MNoweGrafiki)
     tablicaDyzurantowTworzacych = tdt;
     //stworzenie klasy odpowiedzialnej za komunikację z użytkownikiem przy szukaniu tych grafików
     pDecydowanieOKontynuacjiSzukaniaGrafikow = new PDecydowanieOKontynuacjiSzukaniaGrafikow();
-    qDebug() << "Stworzyłem obiekt prezentujący do interfejsu";
     //stworzenie w "globalnej" przestrzeni licznika stworzonych grafików oraz zmiennej od decyzji dalszego szukania
     licznikStworzonychGrafikow = new int(0);
     zakonczenieSzukania = new bool(false);  //false - czyli szukamy do oporu
     licznikOstatecznyStworzonychGrafikow = new int(0);
-    qDebug() << "Stworzyłem zmienne sterujące";
     //inicjalizacja funkcji pseudolosowej
     srand(time(0));
-    qDebug() << "Zainicjowałem funkcję pseudolosową";
     //ODPALAMY SZUKANIE !!!
-    qDebug() << "Właśnie mam odpalić procedurę rekurencyjną";
     bool result = wypelnijDzien(1);
     //ten moment uruchamia się po powrocie z całego procesu wyszukiwania grafików
     //usuwamy powyższe zmienne sterujące
@@ -582,12 +577,12 @@ void XGrafik::wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt) {
     licznikStworzonychGrafikow = nullptr;
     delete zakonczenieSzukania;
     zakonczenieSzukania = nullptr;
-    delete licznikOstatecznyStworzonychGrafikow;
-    licznikOstatecznyStworzonychGrafikow = nullptr;
     //kończymy pracę obiektu  odpowiedzialnego za komunikację, ale przedtem wyswietlamy komunikat o zakończeniu szukania grafików
-    pDecydowanieOKontynuacjiSzukaniaGrafikow->pokazKomunikatZakonczeniaSzukania(result);
+    pDecydowanieOKontynuacjiSzukaniaGrafikow->pokazKomunikatZakonczeniaSzukania(result, *licznikOstatecznyStworzonychGrafikow);
     delete pDecydowanieOKontynuacjiSzukaniaGrafikow;
     pDecydowanieOKontynuacjiSzukaniaGrafikow = nullptr;
+    delete licznikOstatecznyStworzonychGrafikow;
+    licznikOstatecznyStworzonychGrafikow = nullptr;
     //chyba koniec ???
 
 }

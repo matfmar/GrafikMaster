@@ -10,7 +10,7 @@ public:
     PDecydowanieOKontynuacjiSzukaniaGrafikow();
     ~PDecydowanieOKontynuacjiSzukaniaGrafikow();
     int pokazOknoWyboruOpcji(); //zwraca decyzję użytkownika (1-kontynuacja, 2-stop)
-    void pokazKomunikatZakonczeniaSzukania(bool result);
+    void pokazKomunikatZakonczeniaSzukania(bool result, int ileGrafikow);
     void setDecyzjaUzytkownika(int d);
 private:
     UIDecydowanieOKoniecznosciSzukaniaGrafikow* uiDecydowanieOKoniecznosciSzukaniaGrafikow;

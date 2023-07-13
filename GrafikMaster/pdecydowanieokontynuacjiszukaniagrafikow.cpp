@@ -18,14 +18,14 @@ int PDecydowanieOKontynuacjiSzukaniaGrafikow::pokazOknoWyboruOpcji() {
     return decyzjaUzytkownika;
 }
 
-void PDecydowanieOKontynuacjiSzukaniaGrafikow::pokazKomunikatZakonczeniaSzukania(bool result) {
+void PDecydowanieOKontynuacjiSzukaniaGrafikow::pokazKomunikatZakonczeniaSzukania(bool result, int ileGrafikow) {
     if (uiDecydowanieOKoniecznosciSzukaniaGrafikow != nullptr) {
         delete uiDecydowanieOKoniecznosciSzukaniaGrafikow;
         uiDecydowanieOKoniecznosciSzukaniaGrafikow = nullptr;
     }
     uiDecydowanieOKoniecznosciSzukaniaGrafikow = new UIDecydowanieOKoniecznosciSzukaniaGrafikow(this);
     uiDecydowanieOKoniecznosciSzukaniaGrafikow->show();
-    uiDecydowanieOKoniecznosciSzukaniaGrafikow->wyswietlKomunikatZakonczeniaSzukania(result);
+    uiDecydowanieOKoniecznosciSzukaniaGrafikow->wyswietlKomunikatZakonczeniaSzukania(result, ileGrafikow);
 }
 
 void PDecydowanieOKontynuacjiSzukaniaGrafikow::setDecyzjaUzytkownika(int d) {

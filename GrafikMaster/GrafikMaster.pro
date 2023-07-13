@@ -18,12 +18,14 @@ SOURCES += \
     pdodawanienowegografiku.cpp \
     pedycjabazydyzurantow.cpp \
     pmain.cpp \
+    pprzegladaniegrafikowroboczych.cpp \
     uidecydowanieokoniecznosciszukaniagrafikow.cpp \
     uidodawanienowegodyzuranta.cpp \
     uidodawanienowegografiku.cpp \
     uidodawanienowegografikuwstep.cpp \
     uiedycjabazydyzurantow.cpp \
     uimainwindow.cpp \
+    uiprzegladaniegrafikowroboczych.cpp \
     uitworzonegrafiki.cpp
 
 HEADERS += \
@@ -35,12 +37,14 @@ HEADERS += \
     pdodawanienowegografiku.h \
     pedycjabazydyzurantow.h \
     pmain.h \
+    pprzegladaniegrafikowroboczych.h \
     uidecydowanieokoniecznosciszukaniagrafikow.h \
     uidodawanienowegodyzuranta.h \
     uidodawanienowegografiku.h \
     uidodawanienowegografikuwstep.h \
     uiedycjabazydyzurantow.h \
     uimainwindow.h \
+    uiprzegladaniegrafikowroboczych.h \
     uitworzonegrafiki.h
 
 # Default rules for deployment.

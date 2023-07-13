@@ -14,7 +14,7 @@ class UIDecydowanieOKoniecznosciSzukaniaGrafikow : public QDialog {
 public:
     UIDecydowanieOKoniecznosciSzukaniaGrafikow(PDecydowanieOKontynuacjiSzukaniaGrafikow* p);
     ~UIDecydowanieOKoniecznosciSzukaniaGrafikow() {}
-    void wyswietlKomunikatZakonczeniaSzukania(bool result);
+    void wyswietlKomunikatZakonczeniaSzukania(bool result, int ileGrafikow);
 public slots:
     void onButtonSzukajDalejClicked();
     void onButtonZakonczSzukanieClicked();

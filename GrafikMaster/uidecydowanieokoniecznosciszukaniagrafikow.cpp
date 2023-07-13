@@ -38,12 +38,16 @@ void UIDecydowanieOKoniecznosciSzukaniaGrafikow::onButtonWyswietlGrafikiClicked(
 
 }
 
-void UIDecydowanieOKoniecznosciSzukaniaGrafikow::wyswietlKomunikatZakonczeniaSzukania(bool result) {
+void UIDecydowanieOKoniecznosciSzukaniaGrafikow::wyswietlKomunikatZakonczeniaSzukania(bool result, int ileGrafikow) {
+    QString s = QString::number(ileGrafikow);
+    QString msg("");
     if (!result) {
-        QMessageBox::information(this, tr("Informacja"), tr("Zakończono wyszukiwanie grafików - skończyły się opcje."), QMessageBox::Ok);
+        msg = "Zakończono wyszukiwanie grafików - skończyły się opcje. Liczba grafików: " + s + ".";
+        QMessageBox::information(this, tr("Informacja"), msg, QMessageBox::Ok);
     }
     else {
-        QMessageBox::information(this, tr("Informacja"), tr("Zakończono wyszukiwanie grafików - na prośbę użytkownika."), QMessageBox::Ok);
+        msg = "Zakończono wyszukiwanie grafików - na prośbę użytkownika. Liczba grafików: " + s + ".";
+        QMessageBox::information(this, tr("Informacja"), msg, QMessageBox::Ok);
     }
     close();
 }
