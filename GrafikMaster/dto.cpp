@@ -755,7 +755,10 @@ bool XGrafik::wypelnijDzien(int dzien) {        //glowna funkcja wywolywana reku
 }
 
 std::string XGrafik::getMiesiacRok() {
-    
+    std::string miesiacPart = przeliczMiesiacNaLiczbe(miesiac);
+    std::string rokPart = std::to_string(rok);
+    std::string miesiacRok = miesiacPart + "_" + rokPart;
+    return miesiacRok;
 }
 
 XGrafik::~XGrafik() {
