@@ -26,6 +26,20 @@ private:
     PPrzegladanieGrafikowRoboczych* pPrzegladanieGrafikowRoboczych;
     QWidget* mainWidget;
 
+    QGroupBox* groupMiesiacRok;
+    QLabel* labelMiesiac,* labelRok;
+    QLineEdit* editMiesiac,* editRok;
+    QPushBUtton* buttonSzukaj;
+    QGridLayout* layoutGroup;
+    
+    QPushButton* buttonLeft,* buttonRight;
+    QLabel* labelNumber;
+    QHBoxLayout* layoutChoice;
+
+    QTableWidget* tableGrafik;
+    QPushButton* buttonClose;
+    QVBoxLayout* mainLayout;
+
 };
 
 #endif // UIPRZEGLADANIEGRAFIKOWROBOCZYCH_H
