@@ -57,7 +57,7 @@ void UIPrzegladanieGrafikowRoboczych::onButtonSzukajClicked() {
         QMessageBox::critical(this, tr("Błąd"), tr("Nieprawidłowe dane!"), QMessageBox::Ok);
         return;
     }
-    
+    pPrzegladanieGrafikowRoboczych->wybranoSzukanieGrafikow(miesiac, rok);
 }
     
 void UIPrzegladanieGrafikowRoboczych::onButtonLeftClicked() {
