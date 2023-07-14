@@ -35,6 +35,25 @@ std::string przeliczDzienTygodniaNaLancuch(DzienTygodnia dt) {
     return "";
 }
 
+std::string przeliczMiesiacNaLiczbe(Miesiac m) {
+    switch (m) {
+        case STYCZEN: return "1"; break;
+        case LUTY: return "2"; break;
+        case MARZEC: return "3"; break;
+        case KWIECIEN: return "4"; break;
+        case MAJ: return "5"; break;
+        case CZERWIEC: return "6"; break;
+        case LIPIEC: return "7"; break;
+        case SIERPIEN: return "8"; break;
+        case WRZESIEN: return "9"; break;
+        case PAZDZIERNIK: return "10"; break;
+        case LISTOPAD: return "11"; break;
+        case GRUDZIEN: return "12"; break;
+        default: return "0"; break;
+    }
+    return "";
+}
+
 //XDyzurant==============================================================================================================================
 XDyzurant::XDyzurant()
     : id(0), nick(""), priorytet(0) {}
@@ -733,6 +752,10 @@ bool XGrafik::wypelnijDzien(int dzien) {        //glowna funkcja wywolywana reku
     }
     //i spadamy.
     return *zakonczenieSzukania;
+}
+
+std::string XGrafik::getMiesiacRok() {
+    
 }
 
 XGrafik::~XGrafik() {
