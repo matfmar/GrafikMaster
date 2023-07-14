@@ -205,5 +205,6 @@ private:
 //GENERAL
 DzienTygodnia incDzien(DzienTygodnia dt);
 std::string przeliczDzienTygodniaNaLancuch(DzienTygodnia dt);
+std::string przeliczMiesiacNaLiczbe(Miesiac m);
 
 #endif // DTO_H
