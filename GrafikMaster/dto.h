@@ -173,6 +173,7 @@ public:
     void przeliczMozliwiNieUnikajacyDyzuranciDlaJednegoDnia(int dzien);
     void wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt);
     std::vector<XDzien*> udostepnijTabliceDni();
+    std::string getMiesiacRok();
 
     bool losujDyzurantaDoDyzuruPoKluczu(int dzien, int& kluczWybranegoDyzuranta);
 
