@@ -73,7 +73,8 @@ bool DBObslugiwaczBazyDanych::zapiszUlozonyGrafikDoPliku(XGrafik* grafik, int id
     if (grafik == nullptr) {
         return false;
     }
-    std::string filename = "w_grafik_" + std::to_string(id) + ".data";
+    std::string miesiacRokPart = grafik->getMiesiacRok();
+    std::string filename = "w_grafik_" + miesiacRokPart + "_" + std::to_string(id) + ".data";    
     outputFileReader.open("data/grafiki_robocze/" + filename, std::ofstream::out | std::ofstream::trunc);
     if (!outputFileReader.is_open()) {
         return false;
