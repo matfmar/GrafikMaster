@@ -1,6 +1,7 @@
 
 #include "uiprzegladaniegrafikowroboczych.h"
 #include "pprzegladaniegrafikowroboczych.h"
+#include <QMessageBox>
 
 UIPrzegladanieGrafikowRoboczych::UIPrzegladanieGrafikowRoboczych(PPrzegladanieGrafikowRoboczych* p, QWidget *parent)
     : QMainWindow{parent} {
@@ -49,6 +50,13 @@ UIPrzegladanieGrafikowRoboczych::UIPrzegladanieGrafikowRoboczych(PPrzegladanieGr
 }
 
 void UIPrzegladanieGrafikowRoboczych::onButtonSzukajClicked() {
+    bool result1(false), result2(false);
+    int miesiac = editMiesiac->text().toInt(&result1);
+    int rok = editRok->text().toInt(&result2);
+    if (!(result1 && result2)) {
+        QMessageBox::critical(this, tr("Błąd"), tr("Nieprawidłowe dane!"), QMessageBox::Ok);
+        return;
+    }
     
 }
     
