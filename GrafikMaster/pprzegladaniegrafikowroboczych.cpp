@@ -7,6 +7,22 @@ PPrzegladanieGrafikowRoboczych::PPrzegladanieGrafikowRoboczych()
 
 }
 
+void PPrzegladanieGrafikowRoboczych::wybranoSzukanieGrafikow(int miesiac, int rok) {
+    
+}
+    
+void PPrzegladanieGrafikowRoboczych::wybranoGrafikWLewo() {
+    
+}
+
+void PPrzegladanieGrafikowRoboczych::wybranoGrafikWPrawo() {
+    
+}
+ 
+void PPrzegladanieGrafikowRoboczych::wybranoZamkniecie() {
+    
+}
+
 PPrzegladanieGrafikowRoboczych::~PPrzegladanieGrafikowRoboczych() {
     if (uiPrzegladanieGrafikowRoboczych != nullptr) {
         delete uiPrzegladanieGrafikowRoboczych;
