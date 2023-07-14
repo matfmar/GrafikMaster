@@ -8,7 +8,10 @@
 #include <QLineEdit>
 #include <QGridLayout>
 #include <QVBoxLayout>
+#include <QHBoxLayout>
 #include <QPushButton>
+#include <QGroupBox>
+#include <QTableWidget>
 
 class PPrzegladanieGrafikowRoboczych;
 
