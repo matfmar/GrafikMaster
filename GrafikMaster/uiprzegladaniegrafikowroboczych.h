@@ -21,7 +21,10 @@ public:
     UIPrzegladanieGrafikowRoboczych(PPrzegladanieGrafikowRoboczych* p, QWidget *parent = nullptr);
     ~UIPrzegladanieGrafikowRoboczych() {}
 public slots:
-
+    void onButtonSzukajClicked();
+    void onButtonLeftClicked();
+    void onButtonRightClicked();
+    void onButtonCloseClicked();
 private:
     PPrzegladanieGrafikowRoboczych* pPrzegladanieGrafikowRoboczych;
     QWidget* mainWidget;
