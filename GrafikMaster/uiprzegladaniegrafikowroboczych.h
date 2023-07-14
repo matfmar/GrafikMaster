@@ -4,6 +4,11 @@
 
 
 #include <QMainWindow>
+#include <QLabel>
+#include <QLineEdit>
+#include <QGridLayout>
+#include <QVBoxLayout>
+#include <QPushButton>
 
 class PPrzegladanieGrafikowRoboczych;
 
