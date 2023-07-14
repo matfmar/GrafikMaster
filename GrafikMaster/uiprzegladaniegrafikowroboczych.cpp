@@ -44,7 +44,7 @@ UIPrzegladanieGrafikowRoboczych::UIPrzegladanieGrafikowRoboczych(PPrzegladanieGr
     QObject::connect(buttonSzukaj, SIGNAL(clicked()), this, SLOT(onButtonSzukajClicked()));
     QObject::connect(buttonLeft, SIGNAL(clicked()), this, SLOT(onButtonLeftClicked()));
     QObject::connect(buttonRight, SIGNAL(clicked()), this, SLOT(onButtonRightClicked()));
-    QObject:connect(buttonClose, SIGNAL(clicked()), this, SLOT(onButtonCloseClicked()));
+    QObject::connect(buttonClose, SIGNAL(clicked()), this, SLOT(onButtonCloseClicked()));
             
 }
 
