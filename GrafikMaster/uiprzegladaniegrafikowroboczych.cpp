@@ -22,6 +22,27 @@ UIPrzegladanieGrafikowRoboczych::UIPrzegladanieGrafikowRoboczych(PPrzegladanieGr
     layoutGroup->addWidget(buttonSzukaj, 2, 0);
     groupMiesiacRok->setLayout(layoutGroup);
 
+    buttonLeft = new QPushButton(tr("<<"), this);
+    buttonRight = new QPushButton(tr(">>"), this);
+    labelNumber = new QLabel(tr("0"), this);
+    layoutChoice = new QHBoxLayout(this);
+    layoutChoice->addWidget(buttonLeft);
+    layoutChoice->addWidget(labelNumber);
+    layoutChoice->addWidget(buttonRight);
+
+    tableGrafik = new QTableWidget(31, 3, this);
+    buttonClose = new QPushBUtton(tr("Zamknij"), this);
+
+    mainLqyout = new QVBoxLayout(this);
+    mainLayout->addWidget(groupMiesiacRok);
+    mainLayout->addLayout(layoutChoice);
+    mainLayout->addWidget(tableGrafik);
+    mainLayout->addWidget(buttonClose);
+    mainWidget->setLayout(mainLayout);
+    setCentralWidget(mainWidget);
+
+    
+        
 /*
     PPrzegladanieGrafikowRoboczych* pPrzegladanieGrafikowRoboczych;
     QWidget* mainWidget;
