@@ -782,9 +782,9 @@ bool XGrafik::wypelnijDzien(int dzien) {        //glowna funkcja wywolywana reku
 //ten "przełącznik" zakończenieSzukania służy do tego by w razie decyzji o zaprzestaniu poszukiwań móc posprzątać cały rekurencyjny bałagan który się stworzył
     if (dzien > liczbaDni) {
         //czyli ułożyliśmy cały grafik !!!!! - ale trzeba jeszcze sprawdzic czy zgadza sie minimalna liczba dyzurow dla kazdego dyzuranta
-        //if (!sprawdzZgodnoscZMinimalnaLiczbaDyzurowDlaWszystkich()) {
-        //    return *zakonczenieSzukania;   //jeśli nie to spadamy.
-        //}
+        if (!sprawdzZgodnoscZMinimalnaLiczbaDyzurowDlaWszystkich()) {
+            return *zakonczenieSzukania;   //jeśli nie to spadamy.
+        }
         //jeśli tak - tworzymy - lub wykorzystujemy obiekt komunikatora z bazą danych...
         if (db == nullptr) {
             db = new DBObslugiwaczBazyDanych();
