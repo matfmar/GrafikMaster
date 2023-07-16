@@ -95,8 +95,9 @@ XGrafik* MNoweGrafiki::wypelnijGrafikPierwszymiDanymi() {
 
 bool MNoweGrafiki::sprawdzWstepnieZgodnosc() {
     for (auto it=tablicaDyzurantowTworzacych->begin(); it<tablicaDyzurantowTworzacych->end(); ++it) {
-        if (!((*it)->sprawdzZgodnoscMaksymalnejLiczbyDyzurow() && (*it)->sprawdzZgodnoscLiczbySobotINiedzielIWeekendow()))
+        if (!((*it)->liczniki->sprawdzZgodnoscLiczbySobotINiedzielIWeekendow() && (*it)->liczniki->sprawdzZgodnoscMaksymalnejLiczbyDyzurow())) {
             return false;
+        }
     }
     return true;
 }

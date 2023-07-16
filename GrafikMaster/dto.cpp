@@ -744,7 +744,7 @@ bool XGrafik::losujDyzurantaDoDyzuruPoKluczu(int dzien, int& kluczWybranegoDyzur
     licznikDt->incLiczbaDyzurow(tablicaDni[dzien]->dzienTygodnia);
     //i sprawdzamy czy liczniki nie zostały przekroczone
     if (!(licznikDt->sprawdzZgodnoscMaksymalnejLiczbyDyzurow() && licznikDt->sprawdzZgodnoscLiczbySobotINiedzielIWeekendow())) {
-        dt->decLiczbaDyzurow(tablicaDni[dzien]->dzienTygodnia);
+        //dt->decLiczbaDyzurow(tablicaDni[dzien]->dzienTygodnia);   //niepotrzebne, przy return false i tak liczniki są niszczone
         return false;
     }
     //liczniki nie zostały przekroczone, więc dodajemy do listy dyżurów
@@ -766,8 +766,8 @@ bool XGrafik::losujDyzurantaDoDyzuruPoKluczu(int dzien, int& kluczWybranegoDyzur
     if (krotnoscUnikanie != 0) {
         dodajUnikanie(licznikDt, dt, klucz, krotnoscUnikanie,resultDodaniaUnikania, dzien);     //dodaje unikanie i od razu przelicza tablicę MOZLIWI_NIE_UNIKAJACY
         if (!resultDodaniaUnikania) {
-            licznikDt->decLiczbaDyzurow(tablicaDni[dzien]->dzienTygodnia);     //trzeba cofnąć zmiany w tablicy dyżurantów
-            licznikDt->usunDyzur(dzien);       //nie mogę przez pop_back, bo dokonano sortowania przed szukaniem sekwencji
+            //licznikDt->decLiczbaDyzurow(tablicaDni[dzien]->dzienTygodnia);     //trzeba cofnąć zmiany w tablicy dyżurantów - niepotrzebne - patrz wyżej
+            //licznikDt->usunDyzur(dzien);       //nie mogę przez pop_back, bo dokonano sortowania przed szukaniem sekwencji - niepotrzebne - patrz wyżej
             return false;
         }
     }
@@ -814,6 +814,13 @@ bool XGrafik::wypelnijDzien(int dzien) {        //glowna funkcja wywolywana reku
     do {
         do {
             if (nowyGrafik != nullptr){         //robi się tylko gdy warunek pętli się schrzanił i trzeba liczyć jeszcze raz
+                //dla USTAWIONY_NIE_DO_RUSZENIA cała ta instrukcja warunkowa uruchomiona była została z drugiego warunku, czyli trzeba wrócić krok wstecz
+                //tutaj nie ma znaczenia pustość tablicy MOŻLIWI NIE UNIKAJĄCY - bez niniejszego warunku ustawiony sztywno dyżurant uniemożliwiałby powrót algorytmu
+                if (tablicaDni[dzien]->statusUstawiania == USTAWIONY_NIE_DO_RUSZENIA) {
+                    delete nowyGrafik;
+                    nowyGrafik = nullptr;
+                    return *zakonczenieSzukania;
+                }
                 //wyrzucamy z tablicy MOZLIWE dla DANEGO DNIA - UWAGA: AKTUALNEGO GRAFIKU!!! - dyzuranta, którego wstawienie zakończyło się klęską
                 if (kluczWybranegoDyzurantaDoTegoDnia != -1) {
                     tablicaDni[dzien]->mozliwiDyzuranci.erase(kluczWybranegoDyzurantaDoTegoDnia);
