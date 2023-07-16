@@ -32,7 +32,7 @@ private:
     QGroupBox* groupMiesiacRok;
     QLabel* labelMiesiac,* labelRok;
     QLineEdit* editMiesiac,* editRok;
-    QPushBUtton* buttonSzukaj;
+    QPushButton* buttonSzukaj;
     QGridLayout* layoutGroup;
     
     QPushButton* buttonLeft,* buttonRight;

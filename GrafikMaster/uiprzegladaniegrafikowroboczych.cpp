@@ -10,7 +10,7 @@ UIPrzegladanieGrafikowRoboczych::UIPrzegladanieGrafikowRoboczych(PPrzegladanieGr
     mainWidget = new QWidget(this);
 
     labelMiesiac = new QLabel(tr("Miesiąc:"), this);
-    labelRok = new QLabel(tr("Rok":), this);
+    labelRok = new QLabel(tr("Rok"), this);
     editMiesiac = new QLineEdit(this);
     editRok = new QLineEdit(this);
     buttonSzukaj = new QPushButton(tr("Szukaj grafików"), this);
@@ -32,9 +32,9 @@ UIPrzegladanieGrafikowRoboczych::UIPrzegladanieGrafikowRoboczych(PPrzegladanieGr
     layoutChoice->addWidget(buttonRight);
 
     tableGrafik = new QTableWidget(31, 3, this);
-    buttonClose = new QPushBUtton(tr("Zamknij"), this);
+    buttonClose = new QPushButton(tr("Zamknij"), this);
 
-    mainLqyout = new QVBoxLayout(this);
+    mainLayout = new QVBoxLayout(this);
     mainLayout->addWidget(groupMiesiacRok);
     mainLayout->addLayout(layoutChoice);
     mainLayout->addWidget(tableGrafik);

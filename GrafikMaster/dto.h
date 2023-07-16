@@ -78,7 +78,33 @@ public:
     XDyzurantTworzacy();
     XDyzurantTworzacy(int a, std::string s, int b, int c, int d, int e, int sb, int nd, int wk, bool wgm);
     XDyzurantTworzacy(XDyzurant* d);
-    ~XDyzurantTworzacy() {}
+    ~XDyzurantTworzacy();
+
+    class XLiczniki {
+    public:
+        XLiczniki(XDyzurantTworzacy* p);
+        XLiczniki(XLiczniki* l);    //copy constructor
+        XDyzurantTworzacy* parent;
+
+        int liczbaDyzurow;
+        int liczbaSobot;
+        int liczbaNiedziel;
+        int liczbaWeekendow;
+        std::vector<int> dyzury;
+
+        void incLiczbaDyzurow(DzienTygodnia dt);
+        void decLiczbaDyzurow(DzienTygodnia dt);
+        void usunDyzur(int dzien);
+        void usunDyzurPrzedPopBack();
+        void dodajDyzur(int dzien);
+        void sortujDyzury();
+        std::vector<int> znajdzSekwencje(int krotnosc);
+        bool sprawdzZgodnoscMaksymalnejLiczbyDyzurow();    //wylacznie maksymalna liczba
+        bool sprawdzZgodnoscMinimalnejLiczbyDyzurow();
+        bool sprawdzZgodnoscLiczbySobotINiedzielIWeekendow();
+    };
+    XLiczniki* liczniki;
+
     std::string getKiedyChce();
     std::string getKiedyNieMoze();
     std::string getKiedyMoze();
@@ -113,9 +139,7 @@ public:
     void usunDyzurPrzedPopBack();
     void dodajDyzur(int dzien);
     void sortujDyzury();
-    bool sprawdzZgodnoscMaksymalnejLiczbyDyzurow();    //wylacznie maksymalna liczba
-    bool sprawdzZgodnoscMinimalnejLiczbyDyzurow();
-    bool sprawdzZgodnoscLiczbySobotINiedzielIWeekendow();
+
     std::vector<int> znajdzSekwencje(int krotnosc);
 private:
     std::vector<int> kiedyChce;
@@ -130,11 +154,7 @@ private:
     int maksymalnieWeekendy;
     bool wpisywanieGdzieMoze;
 
-    int liczbaDyzurow;
-    int liczbaSobot;
-    int liczbaNiedziel;
-    int liczbaWeekendow;
-    std::vector<int> dyzury;
+
 
     std::vector<int> convertStringToVectorOfInts(std::string s, bool& result);
 };
@@ -190,6 +210,7 @@ private:
     DBObslugiwaczBazyDanych* db;        //do zapisywania wypelnionych w calosci grafikow
 
     std::vector<XDyzurantTworzacy*>* tablicaDyzurantowTworzacych;
+    std::map<int, XDyzurantTworzacy::XLiczniki*> mapaLicznikowDyzurantow;   //szeregowane po kluczach odpowiednich dyżurantów tworzących
 
     PDecydowanieOKontynuacjiSzukaniaGrafikow* pDecydowanieOKontynuacjiSzukaniaGrafikow;
 
@@ -197,7 +218,7 @@ private:
     bool* zakonczenieSzukania;          //wskaźnik do "globalnej" zmiennej zawierającej decyzję o sposobie wychodzenia z pętli (true -> kończymy, false -> szukamy dalej)
     int* licznikOstatecznyStworzonychGrafikow;
 
-    void dodajUnikanie(XDyzurantTworzacy* dt, int klucz, int unikanieKrotnosc, bool& result, int dzien);
+    void dodajUnikanie(XDyzurantTworzacy::XLiczniki* licznikDt, XDyzurantTworzacy* dt, int klucz, int unikanieKrotnosc, bool& result, int dzien);
     bool sprawdzPustoscZbioruMozliwiNieUnikajacy(int dzien);
     bool sprawdzZgodnoscZMinimalnaLiczbaDyzurowDlaWszystkich();
 };

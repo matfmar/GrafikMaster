@@ -88,17 +88,23 @@ void XDyzurant::setPriorytet(int a) {
 XDyzurantTworzacy::XDyzurantTworzacy()
     : XDyzurant(), maksymalnie(0), minimalnie(0), unikaniePodRzad(0),
     maksymalnieSoboty(0), maksymalnieNiedziele(0), maksymalnieWeekendy(0), wpisywanieGdzieMoze(false),
-    liczbaDyzurow(0), liczbaSobot(0), liczbaNiedziel(0), liczbaWeekendow(0) {}
+    liczniki(nullptr) {
+    liczniki = new XDyzurantTworzacy::XLiczniki(this);
+}
 
 XDyzurantTworzacy::XDyzurantTworzacy(int a, std::string s, int b, int c, int d, int e, int sb, int nd, int wk, bool wgm)
     : XDyzurant(a, s, b), maksymalnie(c), minimalnie(d), unikaniePodRzad(e),
     maksymalnieSoboty(sb), maksymalnieNiedziele(nd), maksymalnieWeekendy(wk), wpisywanieGdzieMoze(wgm),
-    liczbaDyzurow(0), liczbaSobot(0), liczbaNiedziel(0), liczbaWeekendow(0) {}
+    liczniki(nullptr) {
+    liczniki = new XDyzurantTworzacy::XLiczniki(this);
+}
 
 XDyzurantTworzacy::XDyzurantTworzacy(XDyzurant* d)
     : XDyzurant(d), maksymalnie(0), minimalnie(0), unikaniePodRzad(0),
     maksymalnieSoboty(0), maksymalnieNiedziele(0), maksymalnieWeekendy(0), wpisywanieGdzieMoze(false),
-    liczbaDyzurow(0), liczbaSobot(0), liczbaNiedziel(0), liczbaWeekendow(0) {}
+    liczniki(nullptr) {
+    liczniki = new XDyzurantTworzacy::XLiczniki(this);
+}
 
 std::string XDyzurantTworzacy::getKiedyChce() {
     std::string s("");
@@ -214,29 +220,7 @@ void XDyzurantTworzacy::setMaksymalnieWeekendy(int a) {maksymalnieWeekendy = a;}
 
 void XDyzurantTworzacy::setWpisywanieCzyMoze(bool b) {wpisywanieGdzieMoze = b;}
 
-void XDyzurantTworzacy::incLiczbaDyzurow(DzienTygodnia dt) {    //zwieksza licznik dyzurow oraz odpowiednio liczniki sobot niedziel i weekendow jesli trzeba
-    if (dt == SOBOTA) {
-        liczbaSobot++;
-        liczbaWeekendow++;
-    }
-    else if (dt == NIEDZIELA) {
-        liczbaNiedziel++;
-        liczbaWeekendow++;
-    }
-    liczbaDyzurow++;
-}
 
-void XDyzurantTworzacy::decLiczbaDyzurow(DzienTygodnia dt) {
-    if (dt == SOBOTA) {
-        liczbaSobot--;
-        liczbaWeekendow--;
-    }
-    else if (dt == NIEDZIELA) {
-        liczbaNiedziel--;
-        liczbaWeekendow--;
-    }
-    liczbaDyzurow--;
-}
 
 bool XDyzurantTworzacy::sprawdzCzyMozeDanegoDnia(int dzien) {
     if (wpisywanieGdzieMoze) {
@@ -266,7 +250,90 @@ bool XDyzurantTworzacy::sprawdzCzyChceDanegoDnia(int dzien) {
     return false;
 }
 
-void XDyzurantTworzacy::usunDyzur(int dzien) {
+std::vector<int> XDyzurantTworzacy::getKiedyChce2() {
+    return kiedyChce;
+}
+
+std::vector<int> XDyzurantTworzacy::getKiedyMoze2() {
+    return kiedyMoze;
+}
+
+std::vector<int> XDyzurantTworzacy::getKiedyNieMoze2() {
+    return kiedyNieMoze;
+}
+
+std::vector<int> XDyzurantTworzacy::getKiedyUnika2() {
+    return kiedyUnika;
+}
+
+
+XDyzurantTworzacy::~XDyzurantTworzacy() {
+    if (liczniki != nullptr) {
+        delete liczniki;
+        liczniki = nullptr;
+    }
+}
+
+//XDyzurantTworzacy::XLiczniki===========================================================================================================================
+
+class XLiczniki {
+public:
+    XLiczniki(XDyzurantTworzacy* p);
+    XLiczniki(XLiczniki* l);    //copy constructor
+    XDyzurantTworzacy* parent;
+
+    int liczbaDyzurow;
+    int liczbaSobot;
+    int liczbaNiedziel;
+    int liczbaWeekendow;
+    std::vector<int> dyzury;
+
+    void incLiczbaDyzurow(DzienTygodnia dt);
+    void decLiczbaDyzurow(DzienTygodnia dt);
+    void usunDyzur(int dzien);
+    void usunDyzurPrzedPopBack();
+    void dodajDyzur(int dzien);
+    void sortujDyzury();
+    std::vector<int> znajdzSekwencje(int krotnosc);
+};
+
+XDyzurantTworzacy::XLiczniki::XLiczniki(XDyzurantTworzacy* p)
+    : parent(p), liczbaDyzurow(0), liczbaSobot(0), liczbaNiedziel(0), liczbaWeekendow(0) {}
+
+XDyzurantTworzacy::XLiczniki::XLiczniki(XDyzurantTworzacy::XLiczniki* l) {
+    parent = l->parent;
+    liczbaDyzurow = l->liczbaDyzurow;
+    liczbaSobot = l->liczbaSobot;
+    liczbaNiedziel = l->liczbaNiedziel;
+    liczbaWeekendow = l->liczbaWeekendow;
+    dyzury = l->dyzury;
+}
+
+void XDyzurantTworzacy::XLiczniki::incLiczbaDyzurow(DzienTygodnia dt) {    //zwieksza licznik dyzurow oraz odpowiednio liczniki sobot niedziel i weekendow jesli trzeba
+    if (dt == SOBOTA) {
+        liczbaSobot++;
+        liczbaWeekendow++;
+    }
+    else if (dt == NIEDZIELA) {
+        liczbaNiedziel++;
+        liczbaWeekendow++;
+    }
+    liczbaDyzurow++;
+}
+
+void XDyzurantTworzacy::XLiczniki::decLiczbaDyzurow(DzienTygodnia dt) {
+    if (dt == SOBOTA) {
+        liczbaSobot--;
+        liczbaWeekendow--;
+    }
+    else if (dt == NIEDZIELA) {
+        liczbaNiedziel--;
+        liczbaWeekendow--;
+    }
+    liczbaDyzurow--;
+}
+
+void XDyzurantTworzacy::XLiczniki::usunDyzur(int dzien) {
     for (auto it=dyzury.begin(); it<dyzury.end(); ++it) {
         if (*it == dzien) {
             dyzury.erase(it);
@@ -275,19 +342,19 @@ void XDyzurantTworzacy::usunDyzur(int dzien) {
     }
 }
 
-void XDyzurantTworzacy::usunDyzurPrzedPopBack() {
+void XDyzurantTworzacy::XLiczniki::usunDyzurPrzedPopBack() {
     dyzury.pop_back();
 }
 
-void XDyzurantTworzacy::dodajDyzur(int dzien) { //zwieksza wylacznie tabelke z dyzurami
+void XDyzurantTworzacy::XLiczniki::dodajDyzur(int dzien) { //zwieksza wylacznie tabelke z dyzurami
     dyzury.push_back(dzien);
 }
 
-void XDyzurantTworzacy::sortujDyzury() {
+void XDyzurantTworzacy::XLiczniki::sortujDyzury() {
     std::sort(dyzury.begin(), dyzury.end());
 }
 
-std::vector<int> XDyzurantTworzacy::znajdzSekwencje(int krotnosc) {	//krotnosc 4 - szukam trójek itd.(zeby potem zapobiegac powstaniu czworki)
+std::vector<int> XDyzurantTworzacy::XLiczniki::znajdzSekwencje(int krotnosc) {	//krotnosc 4 - szukam trójek itd.(zeby potem zapobiegac powstaniu czworki)
     std::vector<int> v;
     int i(0), roznica(0), ile(0), lewy(0), prawy(0);
     if (krotnosc == 2) {
@@ -324,32 +391,16 @@ std::vector<int> XDyzurantTworzacy::znajdzSekwencje(int krotnosc) {	//krotnosc 4
     return v;
 }
 
-std::vector<int> XDyzurantTworzacy::getKiedyChce2() {
-    return kiedyChce;
+bool XDyzurantTworzacy::XLiczniki::sprawdzZgodnoscMaksymalnejLiczbyDyzurow() {
+    return (liczbaDyzurow <= parent->getMaksymalnie());
 }
 
-std::vector<int> XDyzurantTworzacy::getKiedyMoze2() {
-    return kiedyMoze;
+bool XDyzurantTworzacy::XLiczniki::sprawdzZgodnoscMinimalnejLiczbyDyzurow() {
+    return (liczbaDyzurow >= parent->getMinimalnie());
 }
 
-std::vector<int> XDyzurantTworzacy::getKiedyNieMoze2() {
-    return kiedyNieMoze;
-}
-
-std::vector<int> XDyzurantTworzacy::getKiedyUnika2() {
-    return kiedyUnika;
-}
-
-bool XDyzurantTworzacy::sprawdzZgodnoscMaksymalnejLiczbyDyzurow() {
-    return (liczbaDyzurow <= maksymalnie);
-}
-
-bool XDyzurantTworzacy::sprawdzZgodnoscMinimalnejLiczbyDyzurow() {
-    return (liczbaDyzurow >= minimalnie);
-}
-
-bool XDyzurantTworzacy::sprawdzZgodnoscLiczbySobotINiedzielIWeekendow() {
-    return (liczbaSobot <= maksymalnieSoboty && (liczbaNiedziel <= maksymalnieNiedziele && liczbaWeekendow <= maksymalnieWeekendy));
+bool XDyzurantTworzacy::XLiczniki::sprawdzZgodnoscLiczbySobotINiedzielIWeekendow() {
+    return (liczbaSobot <= parent->getMaksymelnieSoboty() && (liczbaNiedziel <= parent->getMaksymalnieNiedziele() && liczbaWeekendow <= parent->getMaksymalnieWeekendy()));
 }
 
 //XDzien==============================================================================================================================
@@ -408,10 +459,20 @@ XGrafik::XGrafik(XGrafik& gr) {
     liczbaDni = gr.liczbaDni;
     pierwszyDzien = gr.pierwszyDzien;
     XDzien* nowyDzien(nullptr);
+    //kopiowanie każdego dnia z osobna
     for (auto it=gr.tablicaDni.begin(); it<gr.tablicaDni.end(); ++it) {
         nowyDzien = new XDzien(*it);
         tablicaDni.push_back(nowyDzien);
     }
+    //kopiowanie każdej pozycji z liczników dla dyżurantów tworzących z osobna
+    XDyzurantTworzacy::XLiczniki* nowyEl(nullptr);
+    int odpowiedniKlucz(-1);
+    for (auto el : gr.mapaLicznikowDyzurantow) {    //kopiujac grafik kopiowana jest mapa licznikow dyzurantow tworzacych
+        nowyEl = new XDyzurantTworzacy::XLiczniki(el.second);
+        odpowiedniKlucz = el.first;
+        mapaLicznikowDyzurantow.insert(std::pair<int, XDyzurantTworzacy::XLiczniki*>(odpowiedniKlucz, nowyEl));
+    }
+    //kopiowanie obiektu do bazy danych
     db = gr.db;     //trzeba na to uważać - przekazywany jest potencjalnie pusty, a potencjalnie pełny wskaźnik
     tablicaDyzurantowTworzacych = gr.tablicaDyzurantowTworzacych;   //uwaga, ten obiekt jest "gdzie indziej"
     pDecydowanieOKontynuacjiSzukaniaGrafikow = gr.pDecydowanieOKontynuacjiSzukaniaGrafikow;
@@ -427,10 +488,20 @@ XGrafik::XGrafik(XGrafik* gr) {
     liczbaDni = gr->liczbaDni;
     pierwszyDzien = gr->pierwszyDzien;
     XDzien* nowyDzien(nullptr);
+    //kopiowanie każdego dnia z osobna
     for (auto it=gr->tablicaDni.begin(); it<gr->tablicaDni.end(); ++it) {
         nowyDzien = new XDzien(*it);
         tablicaDni.push_back(nowyDzien);
     }
+    //kopiowanie każdej pozycji z liczników dla dyżurantów tworzących z osobna
+    XDyzurantTworzacy::XLiczniki* nowyEl(nullptr);
+    int odpowiedniKlucz(-1);
+    for (auto el : gr->mapaLicznikowDyzurantow) {    //kopiujac grafik kopiowana jest mapa licznikow dyzurantow tworzacych
+        nowyEl = new XDyzurantTworzacy::XLiczniki(el.second);
+        odpowiedniKlucz = el.first;
+        mapaLicznikowDyzurantow.insert(std::pair<int, XDyzurantTworzacy::XLiczniki*>(odpowiedniKlucz, nowyEl));
+    }
+    //kopiowanie obiektu do bazy danych
     db = gr->db;    //trzeba na to uważać - przekazywany jest potencjalnie pusty, a potencjalnie pełny wskaźnik
     tablicaDyzurantowTworzacych = gr->tablicaDyzurantowTworzacych;  //uwaga, ten obiekt jest "gdzie indziej"
     pDecydowanieOKontynuacjiSzukaniaGrafikow = gr->pDecydowanieOKontynuacjiSzukaniaGrafikow;
@@ -520,17 +591,17 @@ void XGrafik::dodajPierwszeDaneDyzurantowKiedyChca(std::vector<XDyzurantTworzacy
         (*it)->dyzurantWybrany = lider;
         (*it)->mozliwiDyzuranci.clear();	//nikt inny tego dnia nie dostanie
         (*it)->mozliwiDyzuranci.insert(std::pair<int,XDyzurantTworzacy*>(lider->getId(), lider));	//jw. cd.
-        (*it)->statusUstawiania = USTAWIONY_WSTEPNIE;
-        lider->incLiczbaDyzurow((*it)->dzienTygodnia);
-        lider->dodajDyzur((*it)->liczbaDnia);
-        (*(it-1))->mozliwiDyzuranci.erase(lider->getId());
-        (*(it+1))->mozliwiDyzuranci.erase(lider->getId());
+        (*it)->statusUstawiania = USTAWIONY_NIE_DO_RUSZENIA;
+        lider->liczniki->incLiczbaDyzurow((*it)->dzienTygodnia);
+        lider->liczniki->dodajDyzur((*it)->liczbaDnia);
+        (*(it-1))->mozliwiDyzuranci.erase(lider->getId());  //usuniecie z mozliwosci dnia poprzedniego
+        (*(it+1))->mozliwiDyzuranci.erase(lider->getId());  //usuniecie z mozliwosci dnia nastepnego
         (*it)->unikajacyDyzuranci.erase(lider->getId());	//moglo byc tak ze zostalo wstawione z unikania ciagow
         //dzien ustawiony, teraz patrzymy na unikanie ciągów dla lidera który właśnie dostał nowy dyżur
         unikanieKrotnosc = lider->getUnikaniePodRzad();
-        lider->sortujDyzury();		//trzeba posortowac
+        lider->liczniki->sortujDyzury();		//trzeba posortowac
         if (unikanieKrotnosc != 0) {	//przyspieszy program
-            tablicaPar = lider->znajdzSekwencje(unikanieKrotnosc);
+            tablicaPar = lider->liczniki->znajdzSekwencje(unikanieKrotnosc);
             for (auto it3 = tablicaPar.begin(); it3 < tablicaPar.end(); it3 += 2) {
                 lewy = *it3;
                 prawy = *(it3+1);
@@ -569,8 +640,8 @@ std::vector<XDzien*> XGrafik::udostepnijTabliceDni() {
 }
 
 bool XGrafik::sprawdzZgodnoscZMinimalnaLiczbaDyzurowDlaWszystkich() {
-    for (auto it = tablicaDyzurantowTworzacych->begin(); it< tablicaDyzurantowTworzacych->end(); ++it) {
-        if (!((*it)->sprawdzZgodnoscMinimalnejLiczbyDyzurow())) {
+    for (auto el : mapaLicznikowDyzurantow) {
+        if (el.second->liczbaDyzurow < el.second->parent->getMinimalnie()) {
             return false;
         }
     }
@@ -580,6 +651,14 @@ bool XGrafik::sprawdzZgodnoscZMinimalnaLiczbaDyzurowDlaWszystkich() {
 void XGrafik::wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt) {
     //uzupełnienie wskaźnika do tablicy dyżurantów tworzących (pochodzi z obiektu MNoweGrafiki)
     tablicaDyzurantowTworzacych = tdt;
+    //stworzenie mapy licznikow dla odpowiednich dyzurantow tworzących
+    XDyzurantTworzacy::XLiczniki* elementMapy(nullptr);
+    int odpowiedniKlucz(-1);
+    for (auto it=tablicaDyzurantowTworzacych->begin(); it<tablicaDyzurantowTworzacych->end(); ++it) {
+        elementMapy = new XDyzurantTworzacy::XLiczniki((*it)->liczniki);
+        odpowiedniKlucz = (*it)->getId();
+        mapaLicznikowDyzurantow.insert(std::pair<int, XDyzurantTworzacy::XLiczniki*>(odpowiedniKlucz, elementMapy));
+    }
     //stworzenie klasy odpowiedzialnej za komunikację z użytkownikiem przy szukaniu tych grafików
     pDecydowanieOKontynuacjiSzukaniaGrafikow = new PDecydowanieOKontynuacjiSzukaniaGrafikow();
     //stworzenie w "globalnej" przestrzeni licznika stworzonych grafików oraz zmiennej od decyzji dalszego szukania
@@ -606,16 +685,16 @@ void XGrafik::wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt) {
 
 }
 
-void XGrafik::dodajUnikanie(XDyzurantTworzacy* dt, int klucz, int unikanieKrotnosc, bool& result, int dzien) {   //dodaje unikanie i od razu przelicza tablicę MOZLIWI_NIE_UNIKAJACY
-    dt->sortujDyzury();
+void XGrafik::dodajUnikanie(XDyzurantTworzacy::XLiczniki* licznikDt, XDyzurantTworzacy* dt, int klucz, int unikanieKrotnosc, bool& result, int dzien) {   //dodaje unikanie i od razu przelicza tablicę MOZLIWI_NIE_UNIKAJACY
+    licznikDt->sortujDyzury();
     result = true;
     std::vector<int> tablicaPar;
     int lewy(0), prawy(0);
-    tablicaPar = dt->znajdzSekwencje(unikanieKrotnosc);
+    tablicaPar = licznikDt->znajdzSekwencje(unikanieKrotnosc);
     for (auto it3 = tablicaPar.begin(); it3 < tablicaPar.end(); it3 += 2) {
         lewy = *it3;
         prawy = *(it3+1);
-        if (lewy-2 > dzien && lewy-2 > 0) {
+        if (lewy-2 > dzien && lewy-2 > 0) { //ustawiamy tylko wprzód!
             if (tablicaDni[lewy-2]->dyzurantWybrany != dt) {
                 tablicaDni[lewy-2]->unikajacyDyzuranci.insert(std::pair<int,XDyzurantTworzacy*>(klucz, dt));
                 tablicaDni[lewy-2]->mozliwiNieUnikajacyDyzuranci.erase(klucz);
@@ -627,7 +706,7 @@ void XGrafik::dodajUnikanie(XDyzurantTworzacy* dt, int klucz, int unikanieKrotno
                 }
             }
         }
-        if (prawy+2 > dzien && prawy < liczbaDni) {
+        if (prawy+2 > dzien && prawy < liczbaDni) { //ustawiamy tylko wprzód!
             if (tablicaDni[prawy+2]->dyzurantWybrany != dt) {
                 tablicaDni[prawy+2]->unikajacyDyzuranci.insert(std::pair<int,XDyzurantTworzacy*>(klucz, dt));
                 tablicaDni[prawy+2]->mozliwiNieUnikajacyDyzuranci.erase(klucz);
@@ -643,16 +722,36 @@ void XGrafik::dodajUnikanie(XDyzurantTworzacy* dt, int klucz, int unikanieKrotno
 }
 
 bool XGrafik::losujDyzurantaDoDyzuruPoKluczu(int dzien, int& kluczWybranegoDyzuranta) {
-    auto it = tablicaDni[dzien]->mozliwiNieUnikajacyDyzuranci.begin();
+    //najpierw sprawdzamy, czy już może nie jest ten dzień ustawiony (np. z ustawień wstępnych)
+    if (tablicaDni[dzien]->statusUstawiania == USTAWIONY_NIE_DO_RUSZENIA) { //to oznacza że był wstawiony z ustawień wstępnych
+        kluczWybranegoDyzuranta = tablicaDni[dzien]->dyzurantWybrany->getId();
+        return true;    //jeśli tak to kończymy
+    }
+    //a teraz trzeba sprawdzić czy w ogóle jest z czego wybierać
     if (tablicaDni[dzien]->mozliwiNieUnikajacyDyzuranci.size() == 0) {
+        kluczWybranegoDyzuranta = -1;
         return false;
     }
+    //teraz losujemy z możliwych odpowiedniego dyżuranta
+    auto it = tablicaDni[dzien]->mozliwiNieUnikajacyDyzuranci.begin();
     std::advance(it, rand() % (tablicaDni[dzien]->mozliwiNieUnikajacyDyzuranci.size()));
-    XDyzurantTworzacy* dt = it->second;
-    int klucz = it->first;
-    kluczWybranegoDyzuranta = klucz;
-    //przypisanie do dnia
+    //a teraz zmienne odnoszące się do róznych elementów wylosowanego dyżuranta
+    XDyzurantTworzacy* dt = it->second; //wskaźnik do tablicy dyżurantów tworzących
+    int klucz = it->first;  //klucz
+    kluczWybranegoDyzuranta = klucz;    //też klucz, ale przekazywany na zewnątrz procedury
+    XDyzurantTworzacy::XLiczniki* licznikDt = mapaLicznikowDyzurantow[klucz];
+    //w pierwszej kolejności zwiekszamy liczniki danego dyzuranta
+    licznikDt->incLiczbaDyzurow(tablicaDni[dzien]->dzienTygodnia);
+    //i sprawdzamy czy liczniki nie zostały przekroczone
+    if (!(licznikDt->sprawdzZgodnoscMaksymalnejLiczbyDyzurow() && licznikDt->sprawdzZgodnoscLiczbySobotINiedzielIWeekendow())) {
+        dt->decLiczbaDyzurow(tablicaDni[dzien]->dzienTygodnia);
+        return false;
+    }
+    //liczniki nie zostały przekroczone, więc dodajemy do listy dyżurów
+    licznikDt->dodajDyzur(dzien);
+    //przypisanie dyżuranta do dnia
     tablicaDni[dzien]->dyzurantWybrany = dt;
+    tablicaDni[dzien]->statusUstawiania = USTAWIONY_WSTEPNIE;   //widać że był wstawiony z losowania
     //wyrzucenie z tablic MOZLIWY i MOZLIWY_NIE_UNIKAJACY
     tablicaDni[dzien]->mozliwiDyzuranci.erase(klucz);
     tablicaDni[dzien]->mozliwiNieUnikajacyDyzuranci.erase(klucz);
@@ -661,23 +760,14 @@ bool XGrafik::losujDyzurantaDoDyzuruPoKluczu(int dzien, int& kluczWybranegoDyzur
     tablicaDni[dzien-1]->mozliwiNieUnikajacyDyzuranci.erase(klucz);
     tablicaDni[dzien+1]->mozliwiDyzuranci.erase(klucz);
     tablicaDni[dzien+1]->mozliwiNieUnikajacyDyzuranci.erase(klucz);
-    //dodaj ten nowy dyzur do listy dyzurow dla danego dyzuranta
-    dt->incLiczbaDyzurow(tablicaDni[dzien]->dzienTygodnia);
-    dt->dodajDyzur(dzien);
-    //posprawdzaj limity i ewentualnie cofnij zmiany
-    if (!(dt->sprawdzZgodnoscMaksymalnejLiczbyDyzurow() && dt->sprawdzZgodnoscLiczbySobotINiedzielIWeekendow())) {
-        dt->decLiczbaDyzurow(tablicaDni[dzien]->dzienTygodnia);
-        dt->usunDyzurPrzedPopBack();
-        return false;
-    }
     //dodawanie unikania w razie włączonej opcji unikania ciągów
     int krotnoscUnikanie = dt->getUnikaniePodRzad();
     bool resultDodaniaUnikania(false);
     if (krotnoscUnikanie != 0) {
-        dodajUnikanie(dt, klucz, krotnoscUnikanie,resultDodaniaUnikania, dzien);     //dodaje unikanie i od razu przelicza tablicę MOZLIWI_NIE_UNIKAJACY
+        dodajUnikanie(licznikDt, dt, klucz, krotnoscUnikanie,resultDodaniaUnikania, dzien);     //dodaje unikanie i od razu przelicza tablicę MOZLIWI_NIE_UNIKAJACY
         if (!resultDodaniaUnikania) {
-            dt->decLiczbaDyzurow(tablicaDni[dzien]->dzienTygodnia);     //trzeba cofnąć zmiany w tablicy dyżurantów
-            dt->usunDyzur(dzien);       //nie mogę przez pop_back, bo dokonano sortowania przed szukaniem sekwencji
+            licznikDt->decLiczbaDyzurow(tablicaDni[dzien]->dzienTygodnia);     //trzeba cofnąć zmiany w tablicy dyżurantów
+            licznikDt->usunDyzur(dzien);       //nie mogę przez pop_back, bo dokonano sortowania przed szukaniem sekwencji
             return false;
         }
     }
@@ -762,12 +852,21 @@ std::string XGrafik::getMiesiacRok() {
 }
 
 XGrafik::~XGrafik() {
+    //usuwanie każdego dnia z tablicy dni
     for (auto it=tablicaDni.begin(); it<tablicaDni.end(); ++it) {
         if ((*it) != nullptr) {
             delete (*it);
             (*it) = nullptr;
         }
     }
+    //usuwanie kazdej pozycji z liczników dla dyzurantów tworzacych
+    for (auto el : mapaLicznikowDyzurantow) {
+        if (el.second != nullptr) {
+            delete el.second;
+            el.second = nullptr;
+        }
+    }
+    //usuwanie obiektu dostepu do bazy danych
     if (db != nullptr) {
         delete db;
         db = nullptr;
