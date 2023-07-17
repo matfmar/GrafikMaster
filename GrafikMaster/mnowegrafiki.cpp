@@ -133,6 +133,9 @@ std::vector<std::string> XGrafik::wczytajUstawienia() {
     }
     tablicaDyzurantowTworzacych->clear();
     //teraz przechodzimy do ładowania
+    if (db == nullptr) {
+        db = new DBObslugiwaczBazyDanych();
+    }
     
 }
 
