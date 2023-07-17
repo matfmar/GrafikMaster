@@ -830,7 +830,7 @@ bool XGrafik::wypelnijDzien(int dzien) {        //glowna funkcja wywolywana reku
                 delete nowyGrafik;
                 nowyGrafik = nullptr;
                 //a teraz BARDZO WAŻNE: tablica MOŻLIWI NIE UNIKAJĄCY mogła się właśnie wyczyścić, więc trzeba wtedy ZAKOŃCZYĆ DZIAŁANIE TEJ INSTANCJI
-                if (tablicaDni[dzien]->mozliwiNieUnikajacyDyzuranci.size() == 0) {
+                if (tablicaDni[dzien]->mozliwiNieUnikajacyDyzuranci.empty()) {
                     return *zakonczenieSzukania;
                 }
             }
