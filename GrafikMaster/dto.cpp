@@ -276,27 +276,6 @@ XDyzurantTworzacy::~XDyzurantTworzacy() {
 
 //XDyzurantTworzacy::XLiczniki===========================================================================================================================
 
-class XLiczniki {
-public:
-    XLiczniki(XDyzurantTworzacy* p);
-    XLiczniki(XLiczniki* l);    //copy constructor
-    XDyzurantTworzacy* parent;
-
-    int liczbaDyzurow;
-    int liczbaSobot;
-    int liczbaNiedziel;
-    int liczbaWeekendow;
-    std::vector<int> dyzury;
-
-    void incLiczbaDyzurow(DzienTygodnia dt);
-    void decLiczbaDyzurow(DzienTygodnia dt);
-    void usunDyzur(int dzien);
-    void usunDyzurPrzedPopBack();
-    void dodajDyzur(int dzien);
-    void sortujDyzury();
-    std::vector<int> znajdzSekwencje(int krotnosc);
-};
-
 XDyzurantTworzacy::XLiczniki::XLiczniki(XDyzurantTworzacy* p)
     : parent(p), liczbaDyzurow(0), liczbaSobot(0), liczbaNiedziel(0), liczbaWeekendow(0) {}
 
@@ -728,7 +707,7 @@ bool XGrafik::losujDyzurantaDoDyzuruPoKluczu(int dzien, int& kluczWybranegoDyzur
         return true;    //jeśli tak to kończymy
     }
     //a teraz trzeba sprawdzić czy w ogóle jest z czego wybierać
-    if (tablicaDni[dzien]->mozliwiNieUnikajacyDyzuranci.size() == 0) {
+    if (tablicaDni[dzien]->mozliwiNieUnikajacyDyzuranci.empty()) {
         kluczWybranegoDyzuranta = -1;
         return false;
     }
