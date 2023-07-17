@@ -87,6 +87,7 @@ bool MNoweGrafiki::updateDyzurantaTworzacego(std::string nick, bool czyM, std::s
 bool MNoweGrafiki::zapiszUstawieniaDoPliku() {
     db = new DBObslugiwaczBazyDanych();
     std::vector<std::string> dane;
+    std::vector<std::string> nicki;
     std::string s("");
     for (auto it=tablicaDyzurantowTworzacych->begin(); it<tablicaDyzurantowTworzacych->end(); ++it) {
         if ((*it)->getCzyWpisywanieGdzieMoze()) {
@@ -114,7 +115,15 @@ bool MNoweGrafiki::zapiszUstawieniaDoPliku() {
             }
             return false;
         }
+        nicki.push_bakc((*it)->getNick());
         dane.clear();
+    }
+    if (!(db->zapiszNicki(nicki)) {
+        if (db != nullptr) {
+            delete db;
+            db = nullptr;
+        }
+        return false;
     }
     if (db != nullptr) {
         delete db;
