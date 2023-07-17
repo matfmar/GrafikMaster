@@ -23,7 +23,7 @@ public:
     XDyzurantTworzacy* pobierzDaneDyzurantaTworzacego(std::string nick);
     bool updateDyzurantaTworzacego(std::string nick, bool czyM, std::string m, std::string nm, std::string u, std::string ch, int maks, int min, int maksS, int maksN, int maksW, int c);
     bool zapiszUstawieniaDoPliku();
-    std::vector<std::string> wczytajUstawienia();
+    std::vector<std::string> wczytajUstawienia(std::vector<XDyzurant*>* tablicaDyzurantow);
     XGrafik* wypelnijGrafikPierwszymiDanymi();
     void wypelnijGrafikDyzurantami(bool& immediateResult);
 private:
