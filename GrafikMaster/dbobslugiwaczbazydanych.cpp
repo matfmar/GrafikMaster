@@ -89,6 +89,10 @@ bool DBObslugiwaczBazyDanych::zapiszUlozonyGrafikDoPliku(XGrafik* grafik, int id
     return true;
 }
 
+bool DBObslugiwaczBazyDanych::zapiszUstawieniaDyzurantaTworzacego(std::vector<std::string> dane, std::string dyzurant) {
+    
+}
+
 DBObslugiwaczBazyDanych::~DBObslugiwaczBazyDanych() {
 
 }
