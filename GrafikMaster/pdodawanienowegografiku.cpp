@@ -81,6 +81,10 @@ bool PDodawanieNowegoGrafiku::wybranoZapisanieUstawienDoPliku() {
     return (mNoweGrafiki->zapiszUstawieniaDoPliku());
 }
 
+std::vector<std::string> PDodawanieNowegoGrafiku::wybranoWczytanieUstawien() {
+    
+}
+
 PDodawanieNowegoGrafiku::~PDodawanieNowegoGrafiku() {
     if (mNoweGrafiki != nullptr) {
         delete mNoweGrafiki;
