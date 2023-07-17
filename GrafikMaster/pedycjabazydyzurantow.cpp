@@ -44,7 +44,7 @@ XDyzurant* PEdycjaBazyDyzurantow::wybranoPokazanieSzczegolowDyzuranta(int id) {
     return (mDyzuranci -> pokazDaneJednegoDyzuranta(id));
 }
 
-void PEdycjaBazyDyzurantow::wybranoZapisanieUstawienDoPliku() {
+bool PEdycjaBazyDyzurantow::wybranoZapisanieUstawienDoPliku() {
     
 }
 
