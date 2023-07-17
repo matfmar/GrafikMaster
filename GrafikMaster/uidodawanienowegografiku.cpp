@@ -109,6 +109,7 @@ UIDodawanieNowegoGrafiku::UIDodawanieNowegoGrafiku(std::vector<XDyzurant*>* td, 
 
     buttonUpdate = new QPushButton(tr("Aktualizuj dane"), this);
     buttonUpdate->setEnabled(false);
+    buttonZapiszUstawienia = new QPushButton(tr("Zapisz wszystkie warunki do pliku"), this);
 
     mainLayout = new QVBoxLayout(this);
     mainLayout -> addLayout(layoutListWidgetsButtons);
@@ -116,6 +117,7 @@ UIDodawanieNowegoGrafiku::UIDodawanieNowegoGrafiku(std::vector<XDyzurant*>* td, 
     mainLayout -> addLayout(layoutLabelsEdits);
     mainLayout -> addWidget(groupPodRzad);
     mainLayout -> addWidget(buttonUpdate);
+    mainLayout -> addWidget(buttonZapiszUstawienia);
 
     buttonStart = new QPushButton(tr("UŁÓŻ GRAFIK !"), this);
 
@@ -134,6 +136,7 @@ UIDodawanieNowegoGrafiku::UIDodawanieNowegoGrafiku(std::vector<XDyzurant*>* td, 
     QObject::connect(buttonWLewo, SIGNAL(clicked()), this, SLOT(onButtonWLewoClicked()));
     QObject::connect(wyborMoze, SIGNAL(clicked()), this, SLOT(onWyborMozeClicked()));
     QObject::connect(wyborNieMoze, SIGNAL(clicked()), this, SLOT(onWyborNieMozeClicked()));
+    QObject::connect(buttonZapiszUstawienia, SIGNAL(clicked()), this, SLOT(onButtonZapiszUstawieniaClicked()));
 
     wypelnijListeDyzurantami(td);
 }
@@ -248,6 +251,10 @@ void UIDodawanieNowegoGrafiku::onListaDyzurantowTworzacychClicked(QListWidgetIte
 
     buttonWLewo->setEnabled(true);
     buttonUpdate->setEnabled(true);
+}
+
+void UIDodawanieNowegoGrafiku::onButtonZapiszUstawieniaClicked() {
+    
 }
 
 void UIDodawanieNowegoGrafiku::onWyborMozeClicked() {
