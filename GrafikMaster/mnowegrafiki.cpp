@@ -123,6 +123,10 @@ bool MNoweGrafiki::zapiszUstawieniaDoPliku() {
     return true;
 }
 
+std::vector<std::string> XGrafik::wczytajUstawienia() {
+    
+}
+
 XGrafik* MNoweGrafiki::wypelnijGrafikPierwszymiDanymi() {
     nowyGrafik->stworzPodstawyGrafiku();
     for (auto it=tablicaDyzurantowTworzacych->begin(); it<tablicaDyzurantowTworzacych->end(); ++it) {
