@@ -293,7 +293,25 @@ void UIDodawanieNowegoGrafiku::onWyborNieMozeClicked() {
 }
 
 void UIDodawanieNowegoGrafiku::onButtonWczytajUstawieniaClicked() {
-    std::vector<std::string> listaDyzurantow = pDodawanieNowegoGrafiku->wybranoWczytanieUstawien();
-    
+    std::vector<std::string> tablicaNickow = pDodawanieNowegoGrafiku->wybranoWczytanieUstawien();
+    QList<QListWidgetItem*> lista;
+    for (auto it=tablicaNickow.begin(); it<tablicaNickow.end(); ++it) {
+        listaDyzurantowTworzacych->addItem(QString::fromStdString(*it));
+        lista = listaDyzurantowDostepnych->findItems(QString::fromStdString(*it), Qt::MatchExactly);
+        for (QListWidgetItem* item : lista) {    //powinien odpalić sie tylko jeden raz
+            delete (*item);        //więc tylko jeden element ulegnie usunięciu
+        }
+    }
+    editMoze->clear();
+    editNieMoze->clear();
+    editChce->clear();
+    editUnika->clear();
+    editMaks->clear();
+    editMin->clear();
+    editMaksWeekendy->clear();
+    editMaksSoboty->clear();
+    editMaksNiedziele->clear();
+    wyborNic->setChecked(true);
+    wyborNieMoze->setChecked(true);
 }
 
