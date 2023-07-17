@@ -84,7 +84,28 @@ bool MNoweGrafiki::updateDyzurantaTworzacego(std::string nick, bool czyM, std::s
 }
 
 bool MNoweGrafiki::zapiszUstawieniaDoPliku() {
-    
+    std::vector<std::string> dane;
+    std::string s("");
+    for (auto it=tablicaDyzurantowTworzacych->begin(); it<tablicaDyzurantowTworzacych->end(); ++it) {
+        if ((*it)->getCzyWpisywanieGdzieMoze()) {
+            dane.push_back("1");    //1. wers - czy moze czy nie moze
+            s = (*it)->getKiedyMoze();
+        }
+        else {
+            dane.push_back("0");    //1. wers
+            s = (*it)->getKiedyNieMoze();
+        }
+        dane.push_back(s);        //2. wers - kiedy moze lub kiedy nie moze
+        dane.push_back((*it)->getKiedyChce());    //3. wers - kiedy chce
+        dane.push_back((*it)->getKiedyUnika());    //4. wers - kiedy unika
+        dane.push_back(std::to_string((*it)->getMaksymalnie()));    //5. wers - maksymalnie
+        dane.push_back(std::to_string((*it)->getMinimalnie()));       //6. wers - minimalnie
+        dane.push_back(std::to_string((*it)->getMaksymalnieSoboty()));    //7. wers- maks soboty
+        dane.push_back(std::to_string((*it)->getMaksymalnieNiedziele()));    //8. wers - maks niedziele
+        dane.push_back(std::to_string((*it)->getMaksymalnieWeekendy()));    //9. wers - maks weekendy
+        dane.push_back(std::to_string((*it)->getUnikaniePodRzad()));        //10. wers - unikanie pod rząd
+        
+    }
 }
 
 XGrafik* MNoweGrafiki::wypelnijGrafikPierwszymiDanymi() {
