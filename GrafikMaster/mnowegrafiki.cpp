@@ -132,7 +132,7 @@ bool MNoweGrafiki::zapiszUstawieniaDoPliku() {
     return true;
 }
 
-std::vector<std::string> XGrafik::wczytajUstawienia() {
+std::vector<std::string> XGrafik::wczytajUstawienia(std::vector<XDyzurant*>* tablicaDyzurantow) {
     //czyszczenie tablicy dyżurantow tworzących
     for (auto it=tablicaDyzurantowTworzacych->begin(); it<tablicaDyzurantowTworzacych->end(); ++it) {
         if ((*it) != nullptr) {
