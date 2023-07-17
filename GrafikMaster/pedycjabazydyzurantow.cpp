@@ -44,6 +44,10 @@ XDyzurant* PEdycjaBazyDyzurantow::wybranoPokazanieSzczegolowDyzuranta(int id) {
     return (mDyzuranci -> pokazDaneJednegoDyzuranta(id));
 }
 
+void PEdycjaBazyDyzurantow::wybranoZapisanieUstawienDoPliku() {
+    
+}
+
 PEdycjaBazyDyzurantow::~PEdycjaBazyDyzurantow() {
     if (uiEdycjaBazyDyzurantow != nullptr) {
         delete uiEdycjaBazyDyzurantow;
