@@ -153,7 +153,8 @@ std::vector<std::string> XGrafik::wczytajUstawienia() {
     std::vector<std::string> daneDyzurantaTworzacego;
     for (auto it=nicki.begin(); it<nicki.end(); ++it) {
         daneDyzurantaTworzacego = db->wczytajDyzurantaTworzacego(*it, result);
-        //tutaj procedura przetwarzająca vector na odpowiednie dane
+        //start przerabiania tablicy wierszy na obiekt XDyzurantTworzacy
+        
     }
 }
 
