@@ -4,6 +4,7 @@
 
 #include <fstream>
 #include <vector>
+#include <string>
 
 class XDyzurant;
 class XGrafik;
@@ -17,6 +18,7 @@ public:
     std::vector<XDyzurant*>* getTablicaDyzurantowFull();
     bool writeListaDyzurantowFull(std::vector<XDyzurant*>* tdf);
     bool zapiszUlozonyGrafikDoPliku(XGrafik* grafik, int id);
+    bool zapiszUstawieniaDyzurantaTworzacego(std::vector<std::string> dane, std::string dyzurant);
 private:
     std::ifstream inputFileReader;
     std::ofstream outputFileReader;
