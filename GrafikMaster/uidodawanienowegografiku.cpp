@@ -254,7 +254,13 @@ void UIDodawanieNowegoGrafiku::onListaDyzurantowTworzacychClicked(QListWidgetIte
 }
 
 void UIDodawanieNowegoGrafiku::onButtonZapiszUstawieniaClicked() {
-    
+    bool result = pDodawanieNowegoGrafiku->wybranoZapisanieUstawienDoPliku();
+    if (result) {
+        QMessageBox::information(this, tr("Informacja"), tr("Poprawnie zapisano wpisane warunki do pliku"), QMessageBox::Ok);
+    }
+    else {
+        QMessageBox::critical(this, tr("Błąd"), tr("Błąd zapisywania wpisanych warunków do pliku"), QMessageBox::Ok);
+    }
 }
 
 void UIDodawanieNowegoGrafiku::onWyborMozeClicked() {
