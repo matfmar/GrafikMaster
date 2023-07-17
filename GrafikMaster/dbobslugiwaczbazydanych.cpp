@@ -125,6 +125,19 @@ bool DBObslugiwaczBazyDanych::zapiszUstawieniaDyzurantaTworzacego(std::vector<st
     return true;
 }
 
+bool DBObslugiwaczBazyDanych::zapiszNicki(std::vector<std::string> nicki) {
+    std::string filename = "nicki.data";
+    outputFileReader.open("data/zapisane_warunki/" + filename, std::ofstream::out | std::ofstream::trunc);
+    if (!outputFileReader.is_open()) {
+        return false;
+    }
+    for (auto it = nicki.begin(); it<nicki.end(); ++it) {
+        outputFileReader << *it << std::endl;
+    }
+    outputFileReader.close();
+    return true;
+}
+
 DBObslugiwaczBazyDanych::~DBObslugiwaczBazyDanych() {
 
 }
