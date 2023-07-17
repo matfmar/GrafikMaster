@@ -107,13 +107,20 @@ bool MNoweGrafiki::zapiszUstawieniaDoPliku() {
         dane.push_back(std::to_string((*it)->getMaksymalnieWeekendy()));    //9. wers - maks weekendy
         dane.push_back(std::to_string((*it)->getUnikaniePodRzad()));        //10. wers - unikanie pod rząd
         
-        db->zapiszUstawieniaDyzurantaTworzacego(dane, (*it)->getNick());
+        if (!(db->zapiszUstawieniaDyzurantaTworzacego(dane, (*it)->getNick()))) {
+            if (db != nullptr) {
+                delete db;
+                db = nullptr;
+            }
+            return false;
+        }
         dane.clear();
     }
     if (db != nullptr) {
         delete db;
         db = nullptr;
     }
+    return true;
 }
 
 XGrafik* MNoweGrafiki::wypelnijGrafikPierwszymiDanymi() {
