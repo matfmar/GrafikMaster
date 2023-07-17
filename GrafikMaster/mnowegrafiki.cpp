@@ -124,6 +124,15 @@ bool MNoweGrafiki::zapiszUstawieniaDoPliku() {
 }
 
 std::vector<std::string> XGrafik::wczytajUstawienia() {
+    //czyszczenie tablicy dyżurantow tworzących
+    for (auto it=tablicaDyzurantowTworzacych->begin(); it<tablicaDyzurantowTworzacych->end(); ++it) {
+        if ((*it) != nullptr) {
+            delete (*it);
+            *it = nullptr;
+        }
+    }
+    tablicaDyzurantowTworzacych->clear();
+    //teraz przechodzimy do ładowania
     
 }
 
