@@ -33,6 +33,7 @@ public slots:
     void onButtonWLewoClicked();
     void onWyborMozeClicked();
     void onWyborNieMozeClicked();
+    void onButtonZapiszUstawieniaClicked();
 private:
     QWidget* mainWidget;
     QListWidget* listaDyzurantowDostepnych,* listaDyzurantowTworzacych;
@@ -43,6 +44,7 @@ private:
     QLineEdit* editChce,* editNieMoze,* editMoze,* editUnika,* editMaks,* editMin;
     QLineEdit* editMaksSoboty,* editMaksNiedziele,* editMaksWeekendy;
     QPushButton* buttonUpdate,* buttonStart;
+    QPushButton* buttonZapiszUstawienia;
     QRadioButton* wyborMoze,* wyborNieMoze;
     QRadioButton* wyborDwa,* wyborTrzy,* wyborCztery,* wyborNic;
     QVBoxLayout* layoutButtonsPrawoLewo,* layoutListLeft,* layoutListRight;
