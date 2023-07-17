@@ -109,7 +109,8 @@ UIDodawanieNowegoGrafiku::UIDodawanieNowegoGrafiku(std::vector<XDyzurant*>* td, 
 
     buttonUpdate = new QPushButton(tr("Aktualizuj dane"), this);
     buttonUpdate->setEnabled(false);
-    buttonZapiszUstawienia = new QPushButton(tr("Zapisz wszystkie warunki do pliku"), this);
+    buttonZapiszUstawienia = new QPushButton(tr("Zapisz wszystkie warunki"), this);
+    buttonWczytajUstawienia = new QPushButton(tr("Wczytaj wszystkie warunki"), this);
 
     mainLayout = new QVBoxLayout(this);
     mainLayout -> addLayout(layoutListWidgetsButtons);
@@ -118,6 +119,7 @@ UIDodawanieNowegoGrafiku::UIDodawanieNowegoGrafiku(std::vector<XDyzurant*>* td, 
     mainLayout -> addWidget(groupPodRzad);
     mainLayout -> addWidget(buttonUpdate);
     mainLayout -> addWidget(buttonZapiszUstawienia);
+    mainLayout -> addWidget(buttonWczytajUstawienia);
 
     buttonStart = new QPushButton(tr("UŁÓŻ GRAFIK !"), this);
 
@@ -137,6 +139,7 @@ UIDodawanieNowegoGrafiku::UIDodawanieNowegoGrafiku(std::vector<XDyzurant*>* td, 
     QObject::connect(wyborMoze, SIGNAL(clicked()), this, SLOT(onWyborMozeClicked()));
     QObject::connect(wyborNieMoze, SIGNAL(clicked()), this, SLOT(onWyborNieMozeClicked()));
     QObject::connect(buttonZapiszUstawienia, SIGNAL(clicked()), this, SLOT(onButtonZapiszUstawieniaClicked()));
+    QObject::connect(buttonWczytajUstawienia, SIGNAL(clicked()), this, SLOT(onButtonWczytajUstawieniaClicked()));
 
     wypelnijListeDyzurantami(td);
 }
@@ -287,5 +290,9 @@ void UIDodawanieNowegoGrafiku::onWyborNieMozeClicked() {
         editNieMoze->clear();
         editMoze->setEnabled(true);
     }
+}
+
+void UIDodawanieNowegoGrafiku::onButtonWczytajUstawieniaClicked() {
+    
 }
 
