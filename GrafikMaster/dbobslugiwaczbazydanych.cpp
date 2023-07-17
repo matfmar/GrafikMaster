@@ -154,6 +154,10 @@ std::vector<std::string> DBObslugiwaczBazyDanych::wczytajNicki(bool& result) {
     return v;
 }
 
+std::vector<std::string> DBObslugiwaczBazyDanych::wczytajDyzurantaTworzacego(std::string nick, bool& result) {
+    
+}
+
 DBObslugiwaczBazyDanych::~DBObslugiwaczBazyDanych() {
 
 }
