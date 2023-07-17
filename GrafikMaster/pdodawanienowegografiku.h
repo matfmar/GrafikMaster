@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <QString>
+#include <string>
 
 class MNoweGrafiki;
 class MDyzuranci;
@@ -28,7 +29,7 @@ public:
     void wybranoProsbeOStworzenieGrafiku(bool& immediateResult);
     void wybranoDecyzjeWarunkowPoczatkowychGrafiku(int decyzja);
     bool wybranoZapisanieUstawienDoPliku();
-
+    std::vector<std::string> wybranoWczytanieUstawien();
 private:
     UIDodawanieNowegoGrafikuWstep* uiDodawanieNowegoGrafikuWstep;
     UIDodawanieNowegoGrafiku* uiDodawanieNowegoGrafiku;
