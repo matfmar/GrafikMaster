@@ -151,10 +151,30 @@ std::vector<std::string> XGrafik::wczytajUstawienia(std::vector<XDyzurant*>* tab
         return;
     }
     std::vector<std::string> daneDyzurantaTworzacego;
+    XDyzurant* dyzurantMaster(nullptr);
+    XDyzurantTworzacy* nowyDyzurantTworzacy(nullptr);
+    bool resultX(false);
     for (auto it=nicki.begin(); it<nicki.end(); ++it) {
         daneDyzurantaTworzacego = db->wczytajDyzurantaTworzacego(*it, result);
         //start przerabiania tablicy wierszy na obiekt XDyzurantTworzacy
-        
+        //znajdz obiekt XDyzurant
+        for (auto it2=tablicaDyzurantow->begin(); it2<tablicaDyzurantow->end(); ++it2) {
+            if ((*it) == (*it2)->getNick()) {
+                dyzurantMaster = *it2;
+                break;
+            }
+        }
+        //stworz nowy XDyzurantTworzacy
+        nowyDyzurantTworzacy = new XDyzurantTworzacy(dyzurantMaster);
+        if (daneDyzurantaTworzacego[0] == "0") {
+            nowyDyzurantTworzacy->setWpisywanieCzyMoze(false);
+            nowyDyzurantTworzacy->setKiedyNieMoze(daneDyzurantaTworzacego[1], resultX);
+        }
+        else {
+            nowyDyzurantTworzacy->setWpisywanieCzyMoze(true);
+            nowyDyzurantTworzacy->setKiedyMoze(daneDyzurantaTworzacego[2], resultX);
+            
+        }
     }
 }
 
