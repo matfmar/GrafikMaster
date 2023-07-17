@@ -77,6 +77,10 @@ void PDodawanieNowegoGrafiku::wybranoDecyzjeWarunkowPoczatkowychGrafiku(int decy
     decyzjaWarunkowPoczatkowychGrafiku = decyzja;
 }
 
+bool PDodawanieNowegoGrafiku::wybranoZapisanieUstawienDoPliku() {
+    return (mNoweGrafiki->zapiszUstawieniaDoPliku());
+}
+
 PDodawanieNowegoGrafiku::~PDodawanieNowegoGrafiku() {
     if (mNoweGrafiki != nullptr) {
         delete mNoweGrafiki;
