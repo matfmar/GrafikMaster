@@ -145,7 +145,16 @@ std::vector<std::string> XGrafik::wczytajUstawienia() {
     if (db == nullptr) {
         db = new DBObslugiwaczBazyDanych();
     }
-    
+    bool result(false);
+    std::vector<std::string> nicki = db->wczytajNicki(result);
+    if (!result) {
+        return;
+    }
+    std::vector<std::string> daneDyzurantaTworzacego;
+    for (auto it=nicki.begin(); it<nicki.end(); ++it) {
+        daneDyzurantaTworzacego = db->wczytajDyzurantaTworzacego(*it, result);
+        //tutaj procedura przetwarzająca vector na odpowiednie dane
+    }
 }
 
 XGrafik* MNoweGrafiki::wypelnijGrafikPierwszymiDanymi() {
