@@ -83,6 +83,10 @@ bool MNoweGrafiki::updateDyzurantaTworzacego(std::string nick, bool czyM, std::s
     return true;
 }
 
+bool MNoweGrafiki::zapiszUstawieniaDoPliku() {
+    
+}
+
 XGrafik* MNoweGrafiki::wypelnijGrafikPierwszymiDanymi() {
     nowyGrafik->stworzPodstawyGrafiku();
     for (auto it=tablicaDyzurantowTworzacych->begin(); it<tablicaDyzurantowTworzacych->end(); ++it) {
