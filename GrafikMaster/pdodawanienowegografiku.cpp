@@ -82,7 +82,7 @@ bool PDodawanieNowegoGrafiku::wybranoZapisanieUstawienDoPliku() {
 }
 
 std::vector<std::string> PDodawanieNowegoGrafiku::wybranoWczytanieUstawien() {
-    
+    return (mNoweGrafiki->wczytajUstawienia());
 }
 
 PDodawanieNowegoGrafiku::~PDodawanieNowegoGrafiku() {
