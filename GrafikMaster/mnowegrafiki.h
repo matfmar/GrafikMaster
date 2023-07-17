@@ -10,6 +10,7 @@ enum DzienTygodnia : int;
 class XGrafik;
 class XDyzurantTworzacy;
 class XDyzurant;
+class DBObslugiwaczBazyDanych;
 
 class MNoweGrafiki {
 public:
@@ -29,6 +30,7 @@ private:
     std::vector<DzienTygodnia> tablicaDniTygodnia;
     XGrafik* nowyGrafik;
     std::vector<XDyzurantTworzacy*>* tablicaDyzurantowTworzacych;
+    DBObslugiwaczBazyDanych* db;
 
     void wypelnijTabliceEnumeracyjne();
     void wypelnijDzien(int dzien);
