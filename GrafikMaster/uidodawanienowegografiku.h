@@ -45,6 +45,7 @@ private:
     QLineEdit* editMaksSoboty,* editMaksNiedziele,* editMaksWeekendy;
     QPushButton* buttonUpdate,* buttonStart;
     QPushButton* buttonZapiszUstawienia;
+    QPushButton* buttonWczytajUstawienia;
     QRadioButton* wyborMoze,* wyborNieMoze;
     QRadioButton* wyborDwa,* wyborTrzy,* wyborCztery,* wyborNic;
     QVBoxLayout* layoutButtonsPrawoLewo,* layoutListLeft,* layoutListRight;
