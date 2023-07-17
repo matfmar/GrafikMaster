@@ -293,6 +293,7 @@ void UIDodawanieNowegoGrafiku::onWyborNieMozeClicked() {
 }
 
 void UIDodawanieNowegoGrafiku::onButtonWczytajUstawieniaClicked() {
+    std::vector<std::string> listaDyzurantow = pDodawanieNowegoGrafiku->wybranoWczytanieUstawien();
     
 }
 
