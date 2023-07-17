@@ -155,7 +155,20 @@ std::vector<std::string> DBObslugiwaczBazyDanych::wczytajNicki(bool& result) {
 }
 
 std::vector<std::string> DBObslugiwaczBazyDanych::wczytajDyzurantaTworzacego(std::string nick, bool& result) {
-    
+    std::vector<std::string> v;
+    std::string filename = nick + ".data";
+    inputFileReader.open("data/zapisane_warunki/" + filename);
+    if (!inputFileReader.is_open()) {
+        result = false;
+        return v;
+    }
+    std::string line("");
+    while (getline(inputFileReader, line)) {
+        v.push_back(line);
+    }
+    inputFileReader.close();
+    result = true;
+    return v;
 }
 
 DBObslugiwaczBazyDanych::~DBObslugiwaczBazyDanych() {
