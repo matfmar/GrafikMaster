@@ -138,6 +138,22 @@ bool DBObslugiwaczBazyDanych::zapiszNicki(std::vector<std::string> nicki) {
     return true;
 }
 
+std::vector<std::string> DBObslugiwaczBazyDanych::wczytajNicki(bool& result) {
+    std::vector<std::string> v;
+    inputFileReader.open("data/zapisane_warunki/nicki.data");
+    if (!inputFileReader.is_open()) {
+        result = false;
+        return v;
+    }
+    std::string line("");
+    while (getline(inputFileReader, line)) {
+        v.push_back(line);
+    }
+    inputFileReader.close();
+    result = true;
+    return v;
+}
+
 DBObslugiwaczBazyDanych::~DBObslugiwaczBazyDanych() {
 
 }
