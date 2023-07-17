@@ -34,6 +34,7 @@ public slots:
     void onWyborMozeClicked();
     void onWyborNieMozeClicked();
     void onButtonZapiszUstawieniaClicked();
+    void onButtonWczytajUstawieniaClicked();
 private:
     QWidget* mainWidget;
     QListWidget* listaDyzurantowDostepnych,* listaDyzurantowTworzacych;
