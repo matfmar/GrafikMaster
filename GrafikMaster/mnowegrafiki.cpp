@@ -172,10 +172,23 @@ std::vector<std::string> XGrafik::wczytajUstawienia(std::vector<XDyzurant*>* tab
         }
         else {
             nowyDyzurantTworzacy->setWpisywanieCzyMoze(true);
-            nowyDyzurantTworzacy->setKiedyMoze(daneDyzurantaTworzacego[2], resultX);
-            
+            nowyDyzurantTworzacy->setKiedyMoze(daneDyzurantaTworzacego[1], resultX);
         }
+        nowyDyzurantTworzacy->setKiedyChce(daneDyzurantaTworzacego[2], resultX);
+        nowyDyzurantTworzacy->setKiedyUnika(daneDyzurantaTworzacego[3], resultX);
+        nowyDyzurantTworzacy->setMaksymalnie(std::stoi(daneDyzurantaTworzacego[4]));
+        nowyDyzurantTworzacy->setMinimalnie(std::stoi(daneDyzurantaTworzacego[5]));
+        nowyDyzurantTworzacy->setMaksymalnieSoboty(std::stoi(daneDyzurantaTworzacego[6]));
+        nowyDyzurantTworzacy->setMaksymalnieNiedziele(std::stoi(daneDyzurantaTworzacego[7]));
+        nowyDyzurantTworzacy->setMaksymalnieWeekendy(std::stoi(daneDyzurantaTworzacego[8]));
+        nowyDyzurantTworzacy->setUnikaniePodRzad(std::stoi(daneDyzurantaTworzacego[9]));
+        tablicaDyzurantowTworzacych -> push_back(nowyDyzurantTworzacy);
+        daneDyzurantaTworzacego.clear();
+        nowyDyzurantTworzacy = nullptr;
     }
+    //teraz jest juz nowa tablicaDyzurantowTworzacych stworzona
+    //wiec wystarczy do interfejsu zwrocic tablice nickow
+    return nicki;
 }
 
 XGrafik* MNoweGrafiki::wypelnijGrafikPierwszymiDanymi() {
