@@ -1,10 +1,11 @@
 
 #include "mnowegrafiki.h"
 #include "dto.h"
+#include "dbobslugiwaczbazydanych.h"
 #include <QDebug>
 
 MNoweGrafiki::MNoweGrafiki()
-    : nowyGrafik(nullptr), tablicaDyzurantowTworzacych(nullptr) {
+    : nowyGrafik(nullptr), tablicaDyzurantowTworzacych(nullptr). db(nullptr) {
     wypelnijTabliceEnumeracyjne();
 }
 
@@ -84,6 +85,7 @@ bool MNoweGrafiki::updateDyzurantaTworzacego(std::string nick, bool czyM, std::s
 }
 
 bool MNoweGrafiki::zapiszUstawieniaDoPliku() {
+    db = new DBObslugiwaczBazyDanych();
     std::vector<std::string> dane;
     std::string s("");
     for (auto it=tablicaDyzurantowTworzacych->begin(); it<tablicaDyzurantowTworzacych->end(); ++it) {
@@ -105,6 +107,12 @@ bool MNoweGrafiki::zapiszUstawieniaDoPliku() {
         dane.push_back(std::to_string((*it)->getMaksymalnieWeekendy()));    //9. wers - maks weekendy
         dane.push_back(std::to_string((*it)->getUnikaniePodRzad()));        //10. wers - unikanie pod rząd
         
+        db->zapiszUstawieniaDyzurantaTworzacego(dane, (*it)->getNick());
+        dane.clear();
+    }
+    if (db != nullptr) {
+        delete db;
+        db = nullptr;
     }
 }
 
@@ -149,5 +157,9 @@ MNoweGrafiki::~MNoweGrafiki() {
         }
         delete tablicaDyzurantowTworzacych;
         tablicaDyzurantowTworzacych = nullptr;
+    }
+    if (db != nullptr) {
+        delete db;
+        db = nullptr;
     }
 }
