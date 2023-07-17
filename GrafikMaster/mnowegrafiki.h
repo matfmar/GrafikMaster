@@ -21,6 +21,7 @@ public:
     void usunDyzurantaTworzacego(std::string nick);
     XDyzurantTworzacy* pobierzDaneDyzurantaTworzacego(std::string nick);
     bool updateDyzurantaTworzacego(std::string nick, bool czyM, std::string m, std::string nm, std::string u, std::string ch, int maks, int min, int maksS, int maksN, int maksW, int c);
+    bool zapiszUstawieniaDoPliku();
     XGrafik* wypelnijGrafikPierwszymiDanymi();
     void wypelnijGrafikDyzurantami(bool& immediateResult);
 private:
