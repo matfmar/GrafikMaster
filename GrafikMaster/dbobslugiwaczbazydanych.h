@@ -21,6 +21,7 @@ public:
     bool zapiszUstawieniaDyzurantaTworzacego(std::vector<std::string> dane, std::string dyzurant);
     bool zapiszNicki(std::vector<std::string> nicki);
     std::vector<std::string> wczytajNicki(bool& result);
+    std::vector<std::string> wczytajDyzurantaTworzacego(std::string nick, bool& result);
 private:
     std::ifstream inputFileReader;
     std::ofstream outputFileReader;
