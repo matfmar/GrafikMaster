@@ -5,7 +5,7 @@
 #include <QDebug>
 
 MNoweGrafiki::MNoweGrafiki()
-    : nowyGrafik(nullptr), tablicaDyzurantowTworzacych(nullptr). db(nullptr) {
+    : nowyGrafik(nullptr), tablicaDyzurantowTworzacych(nullptr), db(nullptr) {
     wypelnijTabliceEnumeracyjne();
 }
 
@@ -103,7 +103,7 @@ bool MNoweGrafiki::zapiszUstawieniaDoPliku() {
         dane.push_back((*it)->getKiedyUnika());    //4. wers - kiedy unika
         dane.push_back(std::to_string((*it)->getMaksymalnie()));    //5. wers - maksymalnie
         dane.push_back(std::to_string((*it)->getMinimalnie()));       //6. wers - minimalnie
-        dane.push_back(std::to_string((*it)->getMaksymalnieSoboty()));    //7. wers- maks soboty
+        dane.push_back(std::to_string((*it)->getMaksymelnieSoboty()));    //7. wers- maks soboty
         dane.push_back(std::to_string((*it)->getMaksymalnieNiedziele()));    //8. wers - maks niedziele
         dane.push_back(std::to_string((*it)->getMaksymalnieWeekendy()));    //9. wers - maks weekendy
         dane.push_back(std::to_string((*it)->getUnikaniePodRzad()));        //10. wers - unikanie pod rząd
@@ -115,10 +115,10 @@ bool MNoweGrafiki::zapiszUstawieniaDoPliku() {
             }
             return false;
         }
-        nicki.push_bakc((*it)->getNick());
+        nicki.push_back((*it)->getNick());
         dane.clear();
     }
-    if (!(db->zapiszNicki(nicki)) {
+    if (!(db->zapiszNicki(nicki))) {
         if (db != nullptr) {
             delete db;
             db = nullptr;
@@ -132,7 +132,7 @@ bool MNoweGrafiki::zapiszUstawieniaDoPliku() {
     return true;
 }
 
-std::vector<std::string> XGrafik::wczytajUstawienia(std::vector<XDyzurant*>* tablicaDyzurantow) {
+std::vector<std::string> MNoweGrafiki::wczytajUstawienia(std::vector<XDyzurant*>* tablicaDyzurantow) {
     //czyszczenie tablicy dyżurantow tworzących
     for (auto it=tablicaDyzurantowTworzacych->begin(); it<tablicaDyzurantowTworzacych->end(); ++it) {
         if ((*it) != nullptr) {
@@ -148,7 +148,7 @@ std::vector<std::string> XGrafik::wczytajUstawienia(std::vector<XDyzurant*>* tab
     bool result(false);
     std::vector<std::string> nicki = db->wczytajNicki(result);
     if (!result) {
-        return;
+        return nicki;
     }
     std::vector<std::string> daneDyzurantaTworzacego;
     XDyzurant* dyzurantMaster(nullptr);

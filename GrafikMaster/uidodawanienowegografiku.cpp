@@ -299,7 +299,8 @@ void UIDodawanieNowegoGrafiku::onButtonWczytajUstawieniaClicked() {
         listaDyzurantowTworzacych->addItem(QString::fromStdString(*it));
         lista = listaDyzurantowDostepnych->findItems(QString::fromStdString(*it), Qt::MatchExactly);
         for (QListWidgetItem* item : lista) {    //powinien odpalić sie tylko jeden raz
-            delete (*item);        //więc tylko jeden element ulegnie usunięciu
+            QListWidgetItem* itemDoUsuniecia = item;        //więc tylko jeden element ulegnie usunięciu
+            delete itemDoUsuniecia;
         }
     }
     editMoze->clear();

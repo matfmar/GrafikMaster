@@ -50,11 +50,13 @@ static constexpr auto qt_meta_stringdata_CLASSUIDodawanieNowegoGrafikuENDCLASS =
     "onButtonWPrawoClicked",
     "onButtonWLewoClicked",
     "onWyborMozeClicked",
-    "onWyborNieMozeClicked"
+    "onWyborNieMozeClicked",
+    "onButtonZapiszUstawieniaClicked",
+    "onButtonWczytajUstawieniaClicked"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSUIDodawanieNowegoGrafikuENDCLASS_t {
-    uint offsetsAndSizes[24];
+    uint offsetsAndSizes[28];
     char stringdata0[25];
     char stringdata1[22];
     char stringdata2[1];
@@ -67,6 +69,8 @@ struct qt_meta_stringdata_CLASSUIDodawanieNowegoGrafikuENDCLASS_t {
     char stringdata9[21];
     char stringdata10[19];
     char stringdata11[22];
+    char stringdata12[32];
+    char stringdata13[33];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSUIDodawanieNowegoGrafikuENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -83,7 +87,9 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSUIDodawanieNowegoGrafikuENDCLAS
         QT_MOC_LITERAL(161, 21),  // "onButtonWPrawoClicked"
         QT_MOC_LITERAL(183, 20),  // "onButtonWLewoClicked"
         QT_MOC_LITERAL(204, 18),  // "onWyborMozeClicked"
-        QT_MOC_LITERAL(223, 21)   // "onWyborNieMozeClicked"
+        QT_MOC_LITERAL(223, 21),  // "onWyborNieMozeClicked"
+        QT_MOC_LITERAL(245, 31),  // "onButtonZapiszUstawieniaClicked"
+        QT_MOC_LITERAL(277, 32)   // "onButtonWczytajUstawieniaClicked"
     },
     "UIDodawanieNowegoGrafiku",
     "onButtonUpdateClicked",
@@ -96,7 +102,9 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSUIDodawanieNowegoGrafikuENDCLAS
     "onButtonWPrawoClicked",
     "onButtonWLewoClicked",
     "onWyborMozeClicked",
-    "onWyborNieMozeClicked"
+    "onWyborNieMozeClicked",
+    "onButtonZapiszUstawieniaClicked",
+    "onButtonWczytajUstawieniaClicked"
 };
 #undef QT_MOC_LITERAL
 #endif // !QT_MOC_HAS_STRING_DATA
@@ -108,7 +116,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSUIDodawanieNowegoGrafikuENDCLASS
       11,       // revision
        0,       // classname
        0,    0, // classinfo
-       8,   14, // methods
+      10,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -116,20 +124,24 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSUIDodawanieNowegoGrafikuENDCLASS
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   62,    2, 0x0a,    1 /* Public */,
-       3,    0,   63,    2, 0x0a,    2 /* Public */,
-       4,    1,   64,    2, 0x0a,    3 /* Public */,
-       7,    1,   67,    2, 0x0a,    5 /* Public */,
-       8,    0,   70,    2, 0x0a,    7 /* Public */,
-       9,    0,   71,    2, 0x0a,    8 /* Public */,
-      10,    0,   72,    2, 0x0a,    9 /* Public */,
-      11,    0,   73,    2, 0x0a,   10 /* Public */,
+       1,    0,   74,    2, 0x0a,    1 /* Public */,
+       3,    0,   75,    2, 0x0a,    2 /* Public */,
+       4,    1,   76,    2, 0x0a,    3 /* Public */,
+       7,    1,   79,    2, 0x0a,    5 /* Public */,
+       8,    0,   82,    2, 0x0a,    7 /* Public */,
+       9,    0,   83,    2, 0x0a,    8 /* Public */,
+      10,    0,   84,    2, 0x0a,    9 /* Public */,
+      11,    0,   85,    2, 0x0a,   10 /* Public */,
+      12,    0,   86,    2, 0x0a,   11 /* Public */,
+      13,    0,   87,    2, 0x0a,   12 /* Public */,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 5,    6,
     QMetaType::Void, 0x80000000 | 5,    6,
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -164,6 +176,10 @@ Q_CONSTINIT const QMetaObject UIDodawanieNowegoGrafiku::staticMetaObject = { {
         // method 'onWyborMozeClicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'onWyborNieMozeClicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'onButtonZapiszUstawieniaClicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'onButtonWczytajUstawieniaClicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
@@ -183,6 +199,8 @@ void UIDodawanieNowegoGrafiku::qt_static_metacall(QObject *_o, QMetaObject::Call
         case 5: _t->onButtonWLewoClicked(); break;
         case 6: _t->onWyborMozeClicked(); break;
         case 7: _t->onWyborNieMozeClicked(); break;
+        case 8: _t->onButtonZapiszUstawieniaClicked(); break;
+        case 9: _t->onButtonWczytajUstawieniaClicked(); break;
         default: ;
         }
     }
@@ -207,13 +225,13 @@ int UIDodawanieNowegoGrafiku::qt_metacall(QMetaObject::Call _c, int _id, void **
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 8)
+        if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 8;
+        _id -= 10;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 8)
+        if (_id < 10)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 8;
+        _id -= 10;
     }
     return _id;
 }
