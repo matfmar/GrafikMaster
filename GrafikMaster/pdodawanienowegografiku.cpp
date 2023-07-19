@@ -49,8 +49,8 @@ XDyzurantTworzacy* PDodawanieNowegoGrafiku::wybranoPobranieDanychDyzurantaTworza
     return xdt;
 }
 
-bool PDodawanieNowegoGrafiku::wybranoUpdateDyzurantaTworzacego(QString nick, bool czyM, QString m, QString nm, QString u, QString ch, int maks, int min, int maksS, int maksN, int maksW, int c) {
-    bool result = mNoweGrafiki->updateDyzurantaTworzacego(nick.toStdString(), czyM, m.toStdString(), nm.toStdString(), u.toStdString(), ch.toStdString(), maks, min, maksS, maksN, maksW, c);
+bool PDodawanieNowegoGrafiku::wybranoUpdateDyzurantaTworzacego(QString nick, bool czyM, QString m, QString nm, QString u, QString ch, int maks, int min, int maksS, int maksN, int maksW, int c, int maksP, int wyborT) {
+    bool result = mNoweGrafiki->updateDyzurantaTworzacego(nick.toStdString(), czyM, m.toStdString(), nm.toStdString(), u.toStdString(), ch.toStdString(), maks, min, maksS, maksN, maksW, c, maksP, wyborT);
     return result;
 }
 void PDodawanieNowegoGrafiku::wybranoProsbeOStworzenieGrafiku(bool& immediateResult) {
@@ -83,6 +83,10 @@ bool PDodawanieNowegoGrafiku::wybranoZapisanieUstawienDoPliku() {
 
 std::vector<std::string> PDodawanieNowegoGrafiku::wybranoWczytanieUstawien() {
     return (mNoweGrafiki->wczytajUstawienia(tablicaDyzurantow));
+}
+
+bool PDodawanieNowegoGrafiku::wybranoUsunWszystkieUstawienia() {
+    return (mNoweGrafiki->usunWszystkieUstawieniaZPlikow());
 }
 
 PDodawanieNowegoGrafiku::~PDodawanieNowegoGrafiku() {

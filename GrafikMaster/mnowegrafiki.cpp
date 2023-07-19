@@ -51,9 +51,10 @@ XDyzurantTworzacy* MNoweGrafiki::pobierzDaneDyzurantaTworzacego(std::string nick
             return (*it);
         }
     }
+    return nullptr;
 }
 
-bool MNoweGrafiki::updateDyzurantaTworzacego(std::string nick, bool czyM, std::string m, std::string nm, std::string u, std::string ch, int maks, int min, int maksS, int maksN, int maksW, int c) {
+bool MNoweGrafiki::updateDyzurantaTworzacego(std::string nick, bool czyM, std::string m, std::string nm, std::string u, std::string ch, int maks, int min, int maksS, int maksN, int maksW, int c, int maksP, int wyborT) {
     XDyzurantTworzacy* dyzurant(nullptr);
     for (auto it = tablicaDyzurantowTworzacych->begin(); it<tablicaDyzurantowTworzacych->end(); ++it) {
         if ((*it)->getNick() == nick) {
@@ -68,7 +69,9 @@ bool MNoweGrafiki::updateDyzurantaTworzacego(std::string nick, bool czyM, std::s
     dyzurant->setMaksymalnieNiedziele(maksN);
     dyzurant->setMaksymalnieSoboty(maksS);
     dyzurant->setMaksymalnieWeekendy(maksW);
+    dyzurant->setMaksymalniePiatki(maksP);
     dyzurant->setUnikaniePodRzad(c);
+    dyzurant->setUnikanieTrojek(wyborT);
     bool result(false);
     if (czyM) {
         dyzurant->setKiedyMoze(m, result);
@@ -107,6 +110,14 @@ bool MNoweGrafiki::zapiszUstawieniaDoPliku() {
         dane.push_back(std::to_string((*it)->getMaksymalnieNiedziele()));    //8. wers - maks niedziele
         dane.push_back(std::to_string((*it)->getMaksymalnieWeekendy()));    //9. wers - maks weekendy
         dane.push_back(std::to_string((*it)->getUnikaniePodRzad()));        //10. wers - unikanie pod rząd
+        dane.push_back(std::to_string((*it)->getMaksymalniePiatki()));      //11. wers - maks piatki
+        int unikanieTrojeczek = (*it)->getUnikanieTrojek();             //12. wers - unikanie trójek
+        if (unikanieTrojeczek == 1) {
+            dane.push_back("1");
+        }
+        else {
+            dane.push_back("0");
+        }
         
         if (!(db->zapiszUstawieniaDyzurantaTworzacego(dane, (*it)->getNick()))) {
             if (db != nullptr) {
@@ -130,6 +141,18 @@ bool MNoweGrafiki::zapiszUstawieniaDoPliku() {
         db = nullptr;
     }
     return true;
+}
+
+bool MNoweGrafiki::usunWszystkieUstawieniaZPlikow() {
+    if (db == nullptr) {
+        db = new DBObslugiwaczBazyDanych();
+    }
+    bool result = db->usunWszystkiePlikiZUstawieniami();
+    if (db != nullptr) {
+        delete db;
+        db = nullptr;
+    }
+    return result;
 }
 
 std::vector<std::string> MNoweGrafiki::wczytajUstawienia(std::vector<XDyzurant*>* tablicaDyzurantow) {
@@ -182,6 +205,8 @@ std::vector<std::string> MNoweGrafiki::wczytajUstawienia(std::vector<XDyzurant*>
         nowyDyzurantTworzacy->setMaksymalnieNiedziele(std::stoi(daneDyzurantaTworzacego[7]));
         nowyDyzurantTworzacy->setMaksymalnieWeekendy(std::stoi(daneDyzurantaTworzacego[8]));
         nowyDyzurantTworzacy->setUnikaniePodRzad(std::stoi(daneDyzurantaTworzacego[9]));
+        nowyDyzurantTworzacy->setMaksymalniePiatki(std::stoi(daneDyzurantaTworzacego[10]));
+        nowyDyzurantTworzacy->setUnikanieTrojek(std::stoi(daneDyzurantaTworzacego[11]));
         tablicaDyzurantowTworzacych -> push_back(nowyDyzurantTworzacy);
         daneDyzurantaTworzacego.clear();
         nowyDyzurantTworzacy = nullptr;
@@ -204,6 +229,9 @@ XGrafik* MNoweGrafiki::wypelnijGrafikPierwszymiDanymi() {
 bool MNoweGrafiki::sprawdzWstepnieZgodnosc() {
     for (auto it=tablicaDyzurantowTworzacych->begin(); it<tablicaDyzurantowTworzacych->end(); ++it) {
         if (!((*it)->liczniki->sprawdzZgodnoscLiczbySobotINiedzielIWeekendow() && (*it)->liczniki->sprawdzZgodnoscMaksymalnejLiczbyDyzurow())) {
+            return false;
+        }
+        if (!((*it)->liczniki->sprawdzZgodnoscLiczbyPiatkow())) {
             return false;
         }
     }

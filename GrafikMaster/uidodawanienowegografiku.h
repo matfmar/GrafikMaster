@@ -14,6 +14,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QGridLayout>
+#include <QCheckBox>
 #include <vector>
 
 class XDyzurant;
@@ -35,18 +36,21 @@ public slots:
     void onWyborNieMozeClicked();
     void onButtonZapiszUstawieniaClicked();
     void onButtonWczytajUstawieniaClicked();
+    void onButtonUsunWszystkieUstawieniaClicked();
 private:
     QWidget* mainWidget;
     QListWidget* listaDyzurantowDostepnych,* listaDyzurantowTworzacych;
     QLabel* labelDyzuranciDostepni,* labelDyzuranciTworzacy;
     QPushButton* buttonWPrawo,* buttonWLewo;
     QLabel* labelChce,* labelNieMoze,* labelMoze,* labelUnika,* labelMaks,* labelMin,* labelPodRzad;
-    QLabel* labelMaksSoboty,* labelMaksNiedziele,* labelMaksWeekendy;
+    QLabel* labelMaksSoboty,* labelMaksNiedziele,* labelMaksWeekendy,* labelMaksPiatki;
     QLineEdit* editChce,* editNieMoze,* editMoze,* editUnika,* editMaks,* editMin;
-    QLineEdit* editMaksSoboty,* editMaksNiedziele,* editMaksWeekendy;
+    QLineEdit* editMaksSoboty,* editMaksNiedziele,* editMaksWeekendy,* editMaksPiatki;
+    QCheckBox* wyborBezTrojek;
     QPushButton* buttonUpdate,* buttonStart;
     QPushButton* buttonZapiszUstawienia;
     QPushButton* buttonWczytajUstawienia;
+    QPushButton* buttonUsunZapisaneUstawienia;
     QRadioButton* wyborMoze,* wyborNieMoze;
     QRadioButton* wyborDwa,* wyborTrzy,* wyborCztery,* wyborNic;
     QVBoxLayout* layoutButtonsPrawoLewo,* layoutListLeft,* layoutListRight;

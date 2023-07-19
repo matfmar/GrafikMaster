@@ -71,6 +71,8 @@ UIDodawanieNowegoGrafiku::UIDodawanieNowegoGrafiku(std::vector<XDyzurant*>* td, 
     editMaksNiedziele = new QLineEdit(this);
     labelMaksWeekendy = new QLabel(tr("Maksymalna liczba weekendów:"), this);
     editMaksWeekendy = new QLineEdit(this);
+    labelMaksPiatki= new QLabel(tr("Maksymalna liczba piątków"), this);
+    editMaksPiatki = new QLineEdit(this);
     layoutLabelsEdits = new QGridLayout(this);
     layoutLabelsEdits->addWidget(labelChce, 0, 0);
     layoutLabelsEdits->addWidget(editChce, 0, 1);
@@ -86,6 +88,8 @@ UIDodawanieNowegoGrafiku::UIDodawanieNowegoGrafiku(std::vector<XDyzurant*>* td, 
     layoutLabelsEdits->addWidget(editMaksNiedziele, 5, 1);
     layoutLabelsEdits->addWidget(labelMaksWeekendy, 6, 0);
     layoutLabelsEdits->addWidget(editMaksWeekendy, 6, 1);
+    layoutLabelsEdits->addWidget(labelMaksPiatki, 7, 0);
+    layoutLabelsEdits->addWidget(editMaksPiatki, 7, 1);
 
     labelPodRzad = new QLabel(tr("Unikaj ciągów:"), this);
     wyborDwa = new QRadioButton(tr("Dwa i więcej pod rząd"), this);
@@ -97,6 +101,7 @@ UIDodawanieNowegoGrafiku::UIDodawanieNowegoGrafiku(std::vector<XDyzurant*>* td, 
     groupRadioPodRzad->addButton(wyborTrzy);
     groupRadioPodRzad->addButton(wyborCztery);
     groupRadioPodRzad->addButton(wyborNic);
+    wyborBezTrojek = new QCheckBox(tr("Unikaj dyżurów co trzy dni"), this);
     layoutPodRzad = new QVBoxLayout(this);
     layoutPodRzad->addWidget(labelPodRzad);
     layoutPodRzad->addWidget(wyborDwa);
@@ -111,15 +116,18 @@ UIDodawanieNowegoGrafiku::UIDodawanieNowegoGrafiku(std::vector<XDyzurant*>* td, 
     buttonUpdate->setEnabled(false);
     buttonZapiszUstawienia = new QPushButton(tr("Zapisz wszystkie warunki"), this);
     buttonWczytajUstawienia = new QPushButton(tr("Wczytaj wszystkie warunki"), this);
+    buttonUsunZapisaneUstawienia = new QPushButton(tr("Usuń zapisane ustawienia"), this);
 
     mainLayout = new QVBoxLayout(this);
     mainLayout -> addLayout(layoutListWidgetsButtons);
     mainLayout -> addWidget(groupMozeNieMoze);
     mainLayout -> addLayout(layoutLabelsEdits);
     mainLayout -> addWidget(groupPodRzad);
+    mainLayout -> addWidget(wyborBezTrojek);
     mainLayout -> addWidget(buttonUpdate);
     mainLayout -> addWidget(buttonZapiszUstawienia);
     mainLayout -> addWidget(buttonWczytajUstawienia);
+    mainLayout -> addWidget(buttonUsunZapisaneUstawienia);
 
     buttonStart = new QPushButton(tr("UŁÓŻ GRAFIK !"), this);
 
@@ -140,6 +148,16 @@ UIDodawanieNowegoGrafiku::UIDodawanieNowegoGrafiku(std::vector<XDyzurant*>* td, 
     QObject::connect(wyborNieMoze, SIGNAL(clicked()), this, SLOT(onWyborNieMozeClicked()));
     QObject::connect(buttonZapiszUstawienia, SIGNAL(clicked()), this, SLOT(onButtonZapiszUstawieniaClicked()));
     QObject::connect(buttonWczytajUstawienia, SIGNAL(clicked()), this, SLOT(onButtonWczytajUstawieniaClicked()));
+    QObject::connect(buttonUsunZapisaneUstawienia, SIGNAL(clicked()), this, SLOT(onButtonUsunWszystkieUstawieniaClicked()));
+
+    editChce->setEnabled(false);
+    editUnika->setEnabled(false);
+    editMaks->setEnabled(false);
+    editMin->setEnabled(false);
+    editMaksNiedziele->setEnabled(false);
+    editMaksSoboty->setEnabled(false);
+    editMaksPiatki->setEnabled(false);
+    editMaksWeekendy->setEnabled(false);
 
     wypelnijListeDyzurantami(td);
 }
@@ -190,13 +208,22 @@ void UIDodawanieNowegoGrafiku::onButtonUpdateClicked() {
     if (!result) return;
     int maksWeekendy = editMaksWeekendy->text().toInt(&result);
     if (!result) return;
+    int maksPiatki = editMaksPiatki->text().toInt(&result);
+    if (!result) return;
     int wyborCiagi(-1);
     if (wyborNic->isChecked()) wyborCiagi = 0;
     else if (wyborDwa->isChecked()) wyborCiagi = 2;
     else if (wyborTrzy->isChecked()) wyborCiagi = 3;
     else if (wyborCztery->isChecked()) wyborCiagi = 4;
     else wyborCiagi = -1;
-    result = pDodawanieNowegoGrafiku->wybranoUpdateDyzurantaTworzacego(nick, czyWpisywanieGdzieMoze, stringMoze, stringNieMoze, stringUnika, stringChce, maksymalnie, minimalnie, maksSoboty, maksNiedziele, maksWeekendy, wyborCiagi);
+    int wyborTrojki(-1);
+    if (wyborBezTrojek->isChecked()) {
+        wyborTrojki = 1;
+    }
+    else {
+        wyborTrojki = 0;
+    }
+    result = pDodawanieNowegoGrafiku->wybranoUpdateDyzurantaTworzacego(nick, czyWpisywanieGdzieMoze, stringMoze, stringNieMoze, stringUnika, stringChce, maksymalnie, minimalnie, maksSoboty, maksNiedziele, maksWeekendy, wyborCiagi, maksPiatki, wyborTrojki);
     if (!result) {
         QMessageBox::critical(this, tr("Błąd"), tr("Błędne dane!"), QMessageBox::Ok);
     }
@@ -244,6 +271,7 @@ void UIDodawanieNowegoGrafiku::onListaDyzurantowTworzacychClicked(QListWidgetIte
     editMaksSoboty->setText(QString::number(aktualnyDyzurant->getMaksymelnieSoboty()));
     editMaksNiedziele->setText(QString::number(aktualnyDyzurant->getMaksymalnieNiedziele()));
     editMaksWeekendy->setText(QString::number(aktualnyDyzurant->getMaksymalnieWeekendy()));
+    editMaksPiatki->setText(QString::number(aktualnyDyzurant->getMaksymalniePiatki()));
     switch (aktualnyDyzurant->getUnikaniePodRzad()) {
     case 0: wyborNic->setChecked(true); break;
     case 2: wyborDwa->setChecked(true); break;
@@ -251,9 +279,25 @@ void UIDodawanieNowegoGrafiku::onListaDyzurantowTworzacychClicked(QListWidgetIte
     case 4: wyborCztery->setChecked(true); break;
     default: wyborNic->setChecked(true); break;
     }
+    int unikanieTrojeczek = aktualnyDyzurant->getUnikanieTrojek();
+    if (unikanieTrojeczek == 1) {
+        wyborBezTrojek->setChecked(true);
+    }
+    else {
+        wyborBezTrojek->setChecked(false);
+    }
 
     buttonWLewo->setEnabled(true);
     buttonUpdate->setEnabled(true);
+
+    editChce->setEnabled(true);
+    editUnika->setEnabled(true);
+    editMaks->setEnabled(true);
+    editMin->setEnabled(true);
+    editMaksNiedziele->setEnabled(true);
+    editMaksSoboty->setEnabled(true);
+    editMaksPiatki->setEnabled(true);
+    editMaksWeekendy->setEnabled(true);
 }
 
 void UIDodawanieNowegoGrafiku::onButtonZapiszUstawieniaClicked() {
@@ -314,5 +358,14 @@ void UIDodawanieNowegoGrafiku::onButtonWczytajUstawieniaClicked() {
     editMaksNiedziele->clear();
     wyborNic->setChecked(true);
     wyborNieMoze->setChecked(true);
+}
+
+void UIDodawanieNowegoGrafiku::onButtonUsunWszystkieUstawieniaClicked() {
+    if (pDodawanieNowegoGrafiku->wybranoUsunWszystkieUstawienia()) {
+        QMessageBox::information(this, tr("Informacja"), tr("Usunięto wszystkie zapisane ustawienia"), QMessageBox::Ok);
+    }
+    else {
+        QMessageBox::critical(this, tr("Błąd"), tr("Nie udało się usunąć zapisanych ustawień"), QMessageBox::Ok);
+    }
 }
 

@@ -76,7 +76,7 @@ protected:
 class XDyzurantTworzacy : public XDyzurant {
 public:
     XDyzurantTworzacy();
-    XDyzurantTworzacy(int a, std::string s, int b, int c, int d, int e, int sb, int nd, int wk, bool wgm);
+    XDyzurantTworzacy(int a, std::string s, int b, int c, int d, int e, int sb, int nd, int wk, bool wgm, int mp, int ut);
     XDyzurantTworzacy(XDyzurant* d);
     ~XDyzurantTworzacy();
 
@@ -90,6 +90,7 @@ public:
         int liczbaSobot;
         int liczbaNiedziel;
         int liczbaWeekendow;
+        int liczbaPiatkow;
         std::vector<int> dyzury;
 
         void incLiczbaDyzurow(DzienTygodnia dt);
@@ -99,9 +100,11 @@ public:
         void dodajDyzur(int dzien);
         void sortujDyzury();
         std::vector<int> znajdzSekwencje(int krotnosc);
+        std::vector<int> zwrocDyzury();
         bool sprawdzZgodnoscMaksymalnejLiczbyDyzurow();    //wylacznie maksymalna liczba
         bool sprawdzZgodnoscMinimalnejLiczbyDyzurow();
         bool sprawdzZgodnoscLiczbySobotINiedzielIWeekendow();
+        bool sprawdzZgodnoscLiczbyPiatkow();
     };
     XLiczniki* liczniki;
 
@@ -120,6 +123,8 @@ public:
     int getMaksymelnieSoboty();
     int getMaksymalnieNiedziele();
     int getMaksymalnieWeekendy();
+    int getMaksymalniePiatki();
+    int getUnikanieTrojek();
     void setKiedyChce(std::string s, bool& result);
     void setKiedyNieMoze(std::string s, bool& result);
     void setKiedyMoze(std::string s, bool& result);
@@ -130,6 +135,8 @@ public:
     void setMaksymalnieSoboty(int a);
     void setMaksymalnieNiedziele(int a);
     void setMaksymalnieWeekendy(int a);
+    void setMaksymalniePiatki(int a);
+    void setUnikanieTrojek(int a);
     void setWpisywanieCzyMoze(bool b);
     void incLiczbaDyzurow(DzienTygodnia dt);
     void decLiczbaDyzurow(DzienTygodnia dt);
@@ -152,6 +159,8 @@ private:
     int maksymalnieSoboty;
     int maksymalnieNiedziele;
     int maksymalnieWeekendy;
+    int maksymalniePiatki;
+    int unikanieTrojek;
     bool wpisywanieGdzieMoze;
 
 
@@ -219,6 +228,7 @@ private:
     int* licznikOstatecznyStworzonychGrafikow;
 
     void dodajUnikanie(XDyzurantTworzacy::XLiczniki* licznikDt, XDyzurantTworzacy* dt, int klucz, int unikanieKrotnosc, bool& result, int dzien);
+    void dodajUnikanieTrojek(XDyzurantTworzacy::XLiczniki* licznikDt, XDyzurantTworzacy* dt, int klucz, bool& result, int dzien);
     bool sprawdzPustoscZbioruMozliwiNieUnikajacy(int dzien);
     bool sprawdzZgodnoscZMinimalnaLiczbaDyzurowDlaWszystkich();
 };

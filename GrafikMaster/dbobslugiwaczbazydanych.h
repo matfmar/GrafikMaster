@@ -22,6 +22,7 @@ public:
     bool zapiszNicki(std::vector<std::string> nicki);
     std::vector<std::string> wczytajNicki(bool& result);
     std::vector<std::string> wczytajDyzurantaTworzacego(std::string nick, bool& result);
+    bool usunWszystkiePlikiZUstawieniami();
 private:
     std::ifstream inputFileReader;
     std::ofstream outputFileReader;

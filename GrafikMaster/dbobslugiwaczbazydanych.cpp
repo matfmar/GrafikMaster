@@ -2,6 +2,7 @@
 #include "dbobslugiwaczbazydanych.h"
 #include "dto.h"
 #include <QDebug>
+#include <filesystem>
 
 DBObslugiwaczBazyDanych::DBObslugiwaczBazyDanych() {}
 
@@ -152,6 +153,13 @@ std::vector<std::string> DBObslugiwaczBazyDanych::wczytajNicki(bool& result) {
     inputFileReader.close();
     result = true;
     return v;
+}
+
+bool DBObslugiwaczBazyDanych::usunWszystkiePlikiZUstawieniami() {
+    std::string dir_path = "data/zapisane_warunki/";
+    for (const auto& entry : std::filesystem::directory_iterator(dir_path))
+        std::filesystem::remove_all(entry.path());
+    return true;
 }
 
 std::vector<std::string> DBObslugiwaczBazyDanych::wczytajDyzurantaTworzacego(std::string nick, bool& result) {
