@@ -117,6 +117,12 @@ UIDodawanieNowegoGrafiku::UIDodawanieNowegoGrafiku(std::vector<XDyzurant*>* td, 
     buttonZapiszUstawienia = new QPushButton(tr("Zapisz wszystkie warunki"), this);
     buttonWczytajUstawienia = new QPushButton(tr("Wczytaj wszystkie warunki"), this);
     buttonUsunZapisaneUstawienia = new QPushButton(tr("Usuń zapisane ustawienia"), this);
+    groupZapisywanieWczytywanie = new QGroupBox(tr("Zapisywanie/Wczytywanie ustawień"), this);
+    layoutZapisywanieWczytywanie = new QVBoxLayout(this);
+    layoutZapisywanieWczytywanie->addWidget(buttonZapiszUstawienia);
+    layoutZapisywanieWczytywanie->addWidget(buttonWczytajUstawienia);
+    layoutZapisywanieWczytywanie->addWidget(buttonUsunZapisaneUstawienia);
+    groupZapisywanieWczytywanie->setLayout(layoutZapisywanieWczytywanie);
 
     mainLayout = new QVBoxLayout(this);
     mainLayout -> addLayout(layoutListWidgetsButtons);
@@ -125,15 +131,22 @@ UIDodawanieNowegoGrafiku::UIDodawanieNowegoGrafiku(std::vector<XDyzurant*>* td, 
     mainLayout -> addWidget(groupPodRzad);
     mainLayout -> addWidget(wyborBezTrojek);
     mainLayout -> addWidget(buttonUpdate);
-    mainLayout -> addWidget(buttonZapiszUstawienia);
-    mainLayout -> addWidget(buttonWczytajUstawienia);
-    mainLayout -> addWidget(buttonUsunZapisaneUstawienia);
+    mainLayout -> addWidget(groupZapisywanieWczytywanie);
 
     buttonStart = new QPushButton(tr("UŁÓŻ GRAFIK !"), this);
+    buttonStart->setFixedSize(400, 80);
+    labelIleIteracji = new QLabel(tr("Przerywa pracę po ułożeniu tylu grafików:"), this);
+    editIleIteracji = new QLineEdit("10", this);
+    layoutRightLabelEdit = new QHBoxLayout(this);
+    layoutRightLabelEdit->addWidget(labelIleIteracji);
+    layoutRightLabelEdit->addWidget(editIleIteracji);
+    layoutRight = new QVBoxLayout(this);
+    layoutRight->addLayout(layoutRightLabelEdit);
+    layoutRight->addWidget(buttonStart);
 
     ultimateLayout = new QHBoxLayout(this);
     ultimateLayout -> addLayout(mainLayout);
-    ultimateLayout -> addWidget(buttonStart);
+    ultimateLayout -> addLayout(layoutRight);
 
     mainWidget -> setLayout(ultimateLayout);
     setCentralWidget(mainWidget);
@@ -188,6 +201,15 @@ void UIDodawanieNowegoGrafiku::onButtonWLewoClicked() {
     listaDyzurantowDostepnych->addItem(nick);
     delete (listaDyzurantowTworzacych->currentItem());
     buttonWLewo->setEnabled(false);
+
+    editChce->setEnabled(false);
+    editUnika->setEnabled(false);
+    editMaks->setEnabled(false);
+    editMin->setEnabled(false);
+    editMaksNiedziele->setEnabled(false);
+    editMaksSoboty->setEnabled(false);
+    editMaksPiatki->setEnabled(false);
+    editMaksWeekendy->setEnabled(false);
 }
 
 void UIDodawanieNowegoGrafiku::onButtonUpdateClicked() {
@@ -234,8 +256,14 @@ void UIDodawanieNowegoGrafiku::onButtonUpdateClicked() {
 }
 
 void UIDodawanieNowegoGrafiku::onButtonStartClicked() {
+    bool resultInt(false);
+    int liczbaIteracji = editIleIteracji->text().toInt(&resultInt);
+    if (!resultInt) {
+        QMessageBox::critical(this, tr("Błąd"), tr("Zła wartość w polu iteracji !"), QMessageBox::Ok);
+        return;
+    }
     bool immediateResult(true);
-    pDodawanieNowegoGrafiku->wybranoProsbeOStworzenieGrafiku(immediateResult);
+    pDodawanieNowegoGrafiku->wybranoProsbeOStworzenieGrafiku(immediateResult, liczbaIteracji);
     if (!immediateResult) {
         QMessageBox::critical(this, tr("Błąd"), tr("Podano wewnętrznie sprzecze kryteria!"), QMessageBox::Ok);
         //close();

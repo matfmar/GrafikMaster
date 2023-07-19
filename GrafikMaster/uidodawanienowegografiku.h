@@ -43,8 +43,8 @@ private:
     QLabel* labelDyzuranciDostepni,* labelDyzuranciTworzacy;
     QPushButton* buttonWPrawo,* buttonWLewo;
     QLabel* labelChce,* labelNieMoze,* labelMoze,* labelUnika,* labelMaks,* labelMin,* labelPodRzad;
-    QLabel* labelMaksSoboty,* labelMaksNiedziele,* labelMaksWeekendy,* labelMaksPiatki;
-    QLineEdit* editChce,* editNieMoze,* editMoze,* editUnika,* editMaks,* editMin;
+    QLabel* labelMaksSoboty,* labelMaksNiedziele,* labelMaksWeekendy,* labelMaksPiatki,* labelIleIteracji;
+    QLineEdit* editChce,* editNieMoze,* editMoze,* editUnika,* editMaks,* editMin,* editIleIteracji;
     QLineEdit* editMaksSoboty,* editMaksNiedziele,* editMaksWeekendy,* editMaksPiatki;
     QCheckBox* wyborBezTrojek;
     QPushButton* buttonUpdate,* buttonStart;
@@ -54,11 +54,11 @@ private:
     QRadioButton* wyborMoze,* wyborNieMoze;
     QRadioButton* wyborDwa,* wyborTrzy,* wyborCztery,* wyborNic;
     QVBoxLayout* layoutButtonsPrawoLewo,* layoutListLeft,* layoutListRight;
-    QHBoxLayout* layoutListWidgetsButtons;
-    QGroupBox* groupMozeNieMoze,* groupPodRzad;
+    QHBoxLayout* layoutListWidgetsButtons,* layoutRightLabelEdit;
+    QGroupBox* groupMozeNieMoze,* groupPodRzad,* groupZapisywanieWczytywanie;
     QButtonGroup* groupRadioMozeNieMoze,* groupRadioPodRzad;
     QGridLayout* layoutLabelsEdits,* layoutRadioGroup;
-    QVBoxLayout* layoutPodRzad;
+    QVBoxLayout* layoutPodRzad,* layoutZapisywanieWczytywanie,* layoutRight;
     QVBoxLayout* mainLayout;
     QHBoxLayout* ultimateLayout;
     PDodawanieNowegoGrafiku* pDodawanieNowegoGrafiku;

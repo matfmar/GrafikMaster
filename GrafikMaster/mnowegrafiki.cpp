@@ -238,12 +238,12 @@ bool MNoweGrafiki::sprawdzWstepnieZgodnosc() {
     return true;
 }
 
-void MNoweGrafiki::wypelnijGrafikDyzurantami(bool& immediateResult) {
+void MNoweGrafiki::wypelnijGrafikDyzurantami(bool& immediateResult, int ileIteracji) {
     immediateResult = sprawdzWstepnieZgodnosc();
     if (!immediateResult) {
         return;
     }
-    nowyGrafik -> wypelnijGrafikDyzurantami(tablicaDyzurantowTworzacych);
+    nowyGrafik -> wypelnijGrafikDyzurantami(tablicaDyzurantowTworzacych, ileIteracji);
 }
 
 MNoweGrafiki::~MNoweGrafiki() {

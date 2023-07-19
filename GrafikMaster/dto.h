@@ -200,7 +200,7 @@ public:
     void dodajPierwszeDaneDyzurantowKiedyChca(std::vector<XDyzurantTworzacy*>* tablicaDyzurantowTworzacych);
     void przeliczMozliwiNieUnikajacyDyzuranciDlaKazdegoDnia();
     void przeliczMozliwiNieUnikajacyDyzuranciDlaJednegoDnia(int dzien);
-    void wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt);
+    void wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt, int ileIteracji);
     std::vector<XDzien*> udostepnijTabliceDni();
     std::string getMiesiacRok();
 
@@ -226,6 +226,7 @@ private:
     int* licznikStworzonychGrafikow;    //wskaźnik do "globalnej" zmiennej zawierającej ilość stworzonych grafików
     bool* zakonczenieSzukania;          //wskaźnik do "globalnej" zmiennej zawierającej decyzję o sposobie wychodzenia z pętli (true -> kończymy, false -> szukamy dalej)
     int* licznikOstatecznyStworzonychGrafikow;
+    int* liczbaIteracji;
 
     void dodajUnikanie(XDyzurantTworzacy::XLiczniki* licznikDt, XDyzurantTworzacy* dt, int klucz, int unikanieKrotnosc, bool& result, int dzien);
     void dodajUnikanieTrojek(XDyzurantTworzacy::XLiczniki* licznikDt, XDyzurantTworzacy* dt, int klucz, bool& result, int dzien);

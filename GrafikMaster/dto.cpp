@@ -3,6 +3,9 @@
 #include <QDebug>
 #include "dbobslugiwaczbazydanych.h"
 #include "pdecydowanieokontynuacjiszukaniagrafikow.h"
+#include "tworker.h"
+#include <QThread>
+#include <QObject>
 
 //GENERAL===============================================================================================================================
 //----------------------------------------------------------------------
@@ -445,12 +448,13 @@ XDzien::XDzien(XDzien* xd) {
 XGrafik::XGrafik()
     : rok(0), miesiac(NIEZNANY_MIESIAC), status(NIEZNANY_STATUS_GRAFIKU), liczbaDni(0), pierwszyDzien(NIEZNANY_DZIEN), db(nullptr),
     tablicaDyzurantowTworzacych(nullptr), pDecydowanieOKontynuacjiSzukaniaGrafikow(nullptr),
-    licznikStworzonychGrafikow(nullptr), zakonczenieSzukania(nullptr), licznikOstatecznyStworzonychGrafikow(nullptr) {}
+    licznikStworzonychGrafikow(nullptr), zakonczenieSzukania(nullptr), licznikOstatecznyStworzonychGrafikow(nullptr),
+    liczbaIteracji(nullptr) {}
 
 XGrafik::XGrafik(int r, Miesiac m, StatusGrafiku st, int ld, DzienTygodnia pd)
     : rok(r), miesiac(m), status(st), liczbaDni(ld), pierwszyDzien(pd), db(nullptr), tablicaDyzurantowTworzacych(nullptr),
     pDecydowanieOKontynuacjiSzukaniaGrafikow(nullptr), licznikStworzonychGrafikow(nullptr), zakonczenieSzukania(nullptr),
-    licznikOstatecznyStworzonychGrafikow(nullptr) {}
+    licznikOstatecznyStworzonychGrafikow(nullptr), liczbaIteracji(nullptr) {}
 
 XGrafik::XGrafik(XGrafik& gr) {
     rok = gr.rok;
@@ -479,6 +483,7 @@ XGrafik::XGrafik(XGrafik& gr) {
     licznikStworzonychGrafikow = gr.licznikStworzonychGrafikow; //tylko kopiujemy wskaźnik, obiekt jest już stworzony
     zakonczenieSzukania = gr.zakonczenieSzukania;   //tylko kopiujemy wskaźnik, obiekt jest już stworzony
     licznikOstatecznyStworzonychGrafikow = gr.licznikOstatecznyStworzonychGrafikow; //jw.
+    liczbaIteracji = gr.liczbaIteracji; //jw.
 }
 
 XGrafik::XGrafik(XGrafik* gr) {
@@ -508,6 +513,7 @@ XGrafik::XGrafik(XGrafik* gr) {
     licznikStworzonychGrafikow = gr->licznikStworzonychGrafikow; //tylko kopiujemy wskaźnik, obiekt jest już stworzony
     zakonczenieSzukania = gr->zakonczenieSzukania;   //tylko kopiujemy wskaźnik, obiekt jest już stworzony
     licznikOstatecznyStworzonychGrafikow = gr->licznikOstatecznyStworzonychGrafikow;    //jw.
+    liczbaIteracji = gr->liczbaIteracji;    //jw.
 }
 
 void XGrafik::stworzPodstawyGrafiku() {
@@ -666,7 +672,7 @@ bool XGrafik::sprawdzZgodnoscZMinimalnaLiczbaDyzurowDlaWszystkich() {
     return true;
 }
 
-void XGrafik::wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt) {
+void XGrafik::wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt, int ileIteracji) {
     //uzupełnienie wskaźnika do tablicy dyżurantów tworzących (pochodzi z obiektu MNoweGrafiki)
     tablicaDyzurantowTworzacych = tdt;
     //stworzenie mapy licznikow dla odpowiednich dyzurantow tworzących
@@ -679,14 +685,27 @@ void XGrafik::wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt) {
     }
     //stworzenie klasy odpowiedzialnej za komunikację z użytkownikiem przy szukaniu tych grafików
     pDecydowanieOKontynuacjiSzukaniaGrafikow = new PDecydowanieOKontynuacjiSzukaniaGrafikow();
-    //stworzenie w "globalnej" przestrzeni licznika stworzonych grafików oraz zmiennej od decyzji dalszego szukania
+    //stworzenie w "globalnej" przestrzeni licznika stworzonych grafików oraz zmiennej od decyzji dalszego szukania i innych zmiennych sterujących
     licznikStworzonychGrafikow = new int(0);
     zakonczenieSzukania = new bool(false);  //false - czyli szukamy do oporu
     licznikOstatecznyStworzonychGrafikow = new int(0);
+    liczbaIteracji = new int(ileIteracji);
     //inicjalizacja funkcji pseudolosowej
     srand(time(0));
+
+    /*
     //ODPALAMY SZUKANIE !!!
+    QThread* thread = new QThread();
+    TWorker* tWorker = new TWorker(this);
+    tWorker->moveToThread(thread);
+    QObject::connect(thread, SIGNAL(started()), tWorker, SLOT(process()));
+    QObject::connect(tWorker, SIGNAL(finished()), thread, SLOT(quit()));
+    QObject::connect(tWorker, SIGNAL(finished()), tWorker, SLOT(deleteLater()));
+    QObject::connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+    */
+
     bool result = wypelnijDzien(1);
+
     //ten moment uruchamia się po powrocie z całego procesu wyszukiwania grafików
     //usuwamy powyższe zmienne sterujące
     delete licznikStworzonychGrafikow;
@@ -699,6 +718,8 @@ void XGrafik::wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt) {
     pDecydowanieOKontynuacjiSzukaniaGrafikow = nullptr;
     delete licznikOstatecznyStworzonychGrafikow;
     licznikOstatecznyStworzonychGrafikow = nullptr;
+    delete liczbaIteracji;
+    liczbaIteracji = nullptr;
     //chyba koniec ???
 
 }
@@ -854,7 +875,7 @@ bool XGrafik::wypelnijDzien(int dzien) {        //glowna funkcja wywolywana reku
         (*licznikStworzonychGrafikow)++;
         (*licznikOstatecznyStworzonychGrafikow)++;
         //... oraz sprawdzamy czy nie doszliśmy do progu decyzji o wyświetleniu okna co do dalszych poszukiwań
-        if (*licznikStworzonychGrafikow >= 10) {
+        if (*licznikStworzonychGrafikow >= (*liczbaIteracji)) {
             int wybor = pDecydowanieOKontynuacjiSzukaniaGrafikow->pokazOknoWyboruOpcji();   //nie będzie powrotu z tej funkcji przed decyzją użytkownika
             if (wybor == 1) {
                 *zakonczenieSzukania = false;

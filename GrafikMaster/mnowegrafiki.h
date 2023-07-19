@@ -25,7 +25,7 @@ public:
     bool zapiszUstawieniaDoPliku();
     std::vector<std::string> wczytajUstawienia(std::vector<XDyzurant*>* tablicaDyzurantow);
     XGrafik* wypelnijGrafikPierwszymiDanymi();
-    void wypelnijGrafikDyzurantami(bool& immediateResult);
+    void wypelnijGrafikDyzurantami(bool& immediateResult, int ileIteracji);
     bool usunWszystkieUstawieniaZPlikow();
 private:
     std::vector<Miesiac> tablicaMiesiecy;

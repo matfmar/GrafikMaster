@@ -18,7 +18,9 @@ SOURCES += \
     pdodawanienowegografiku.cpp \
     pedycjabazydyzurantow.cpp \
     pmain.cpp \
+    pprogress.cpp \
     pprzegladaniegrafikowroboczych.cpp \
+    tworker.cpp \
     uidecydowanieokoniecznosciszukaniagrafikow.cpp \
     uidodawanienowegodyzuranta.cpp \
     uidodawanienowegografiku.cpp \
@@ -26,6 +28,7 @@ SOURCES += \
     uiedycjabazydyzurantow.cpp \
     uimainwindow.cpp \
     uiprzegladaniegrafikowroboczych.cpp \
+    uitworzenieprogress.cpp \
     uitworzonegrafiki.cpp
 
 HEADERS += \
@@ -37,7 +40,9 @@ HEADERS += \
     pdodawanienowegografiku.h \
     pedycjabazydyzurantow.h \
     pmain.h \
+    pprogress.h \
     pprzegladaniegrafikowroboczych.h \
+    tworker.h \
     uidecydowanieokoniecznosciszukaniagrafikow.h \
     uidodawanienowegodyzuranta.h \
     uidodawanienowegografiku.h \
@@ -45,6 +50,7 @@ HEADERS += \
     uiedycjabazydyzurantow.h \
     uimainwindow.h \
     uiprzegladaniegrafikowroboczych.h \
+    uitworzenieprogress.h \
     uitworzonegrafiki.h
 
 # Default rules for deployment.
