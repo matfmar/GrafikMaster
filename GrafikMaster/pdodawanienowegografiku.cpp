@@ -71,6 +71,7 @@ void PDodawanieNowegoGrafiku::wybranoProsbeOStworzenieGrafiku(bool& immediateRes
         uiDodawanieNowegoGrafiku->close();
     }
 
+
 }
 
 void PDodawanieNowegoGrafiku::wybranoDecyzjeWarunkowPoczatkowychGrafiku(int decyzja) {

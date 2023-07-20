@@ -21,6 +21,7 @@ public slots:
     void onButtonDodajNowyGrafikClicked();
     void onButtonPrzegladajGrafikiRoboczeClicked();
     void onButtonPrzegladajGrafikiOstateczneClicked();
+    void onButtonZakonczBezpiecznieTworzenieGrafikowClicked();
 private:
     PMain* pMain;
     QWidget* mainWidget;
@@ -30,6 +31,7 @@ private:
     QPushButton* buttonDodajNowyGrafik;
     QPushButton* buttonPrzegladajGrafikiRobocze;
     QPushButton* buttonPrzegladajGrafikiOstateczne;
+    QPushButton* buttonZakonczBezpiecznieTworzenieGrafikow;
 
 
 };

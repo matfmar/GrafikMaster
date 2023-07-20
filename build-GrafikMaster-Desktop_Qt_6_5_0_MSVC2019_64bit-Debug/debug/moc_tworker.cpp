@@ -43,17 +43,31 @@ static constexpr auto qt_meta_stringdata_CLASSTWorkerENDCLASS = QtMocHelpers::st
     "",
     "error",
     "err",
+    "sendInt",
+    "hideProgressWindow",
+    "showProgressWindow",
+    "killProgressWindow",
+    "showAskWindow",
+    "int*",
+    "showEndCommunicate",
     "process"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSTWorkerENDCLASS_t {
-    uint offsetsAndSizes[12];
+    uint offsetsAndSizes[26];
     char stringdata0[8];
     char stringdata1[9];
     char stringdata2[1];
     char stringdata3[6];
     char stringdata4[4];
     char stringdata5[8];
+    char stringdata6[19];
+    char stringdata7[19];
+    char stringdata8[19];
+    char stringdata9[14];
+    char stringdata10[5];
+    char stringdata11[19];
+    char stringdata12[8];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSTWorkerENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -64,13 +78,27 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSTWorkerENDCLASS_t qt_meta_strin
         QT_MOC_LITERAL(17, 0),  // ""
         QT_MOC_LITERAL(18, 5),  // "error"
         QT_MOC_LITERAL(24, 3),  // "err"
-        QT_MOC_LITERAL(28, 7)   // "process"
+        QT_MOC_LITERAL(28, 7),  // "sendInt"
+        QT_MOC_LITERAL(36, 18),  // "hideProgressWindow"
+        QT_MOC_LITERAL(55, 18),  // "showProgressWindow"
+        QT_MOC_LITERAL(74, 18),  // "killProgressWindow"
+        QT_MOC_LITERAL(93, 13),  // "showAskWindow"
+        QT_MOC_LITERAL(107, 4),  // "int*"
+        QT_MOC_LITERAL(112, 18),  // "showEndCommunicate"
+        QT_MOC_LITERAL(131, 7)   // "process"
     },
     "TWorker",
     "finished",
     "",
     "error",
     "err",
+    "sendInt",
+    "hideProgressWindow",
+    "showProgressWindow",
+    "killProgressWindow",
+    "showAskWindow",
+    "int*",
+    "showEndCommunicate",
     "process"
 };
 #undef QT_MOC_LITERAL
@@ -83,23 +111,35 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSTWorkerENDCLASS[] = {
       11,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       9,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       2,       // signalCount
+       8,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   32,    2, 0x06,    1 /* Public */,
-       3,    1,   33,    2, 0x06,    2 /* Public */,
+       1,    0,   68,    2, 0x06,    1 /* Public */,
+       3,    1,   69,    2, 0x06,    2 /* Public */,
+       5,    1,   72,    2, 0x06,    4 /* Public */,
+       6,    0,   75,    2, 0x06,    6 /* Public */,
+       7,    0,   76,    2, 0x06,    7 /* Public */,
+       8,    0,   77,    2, 0x06,    8 /* Public */,
+       9,    1,   78,    2, 0x06,    9 /* Public */,
+      11,    2,   81,    2, 0x06,   11 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       5,    0,   36,    2, 0x0a,    4 /* Public */,
+      12,    0,   86,    2, 0x0a,   14 /* Public */,
 
  // signals: parameters
     QMetaType::Void,
     QMetaType::Void, QMetaType::QString,    4,
+    QMetaType::Void, QMetaType::Int,    2,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 10,    2,
+    QMetaType::Void, QMetaType::Bool, QMetaType::Int,    2,    2,
 
  // slots: parameters
     QMetaType::Void,
@@ -121,6 +161,22 @@ Q_CONSTINIT const QMetaObject TWorker::staticMetaObject = { {
         // method 'error'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QString, std::false_type>,
+        // method 'sendInt'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<int, std::false_type>,
+        // method 'hideProgressWindow'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'showProgressWindow'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'killProgressWindow'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'showAskWindow'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<int *, std::false_type>,
+        // method 'showEndCommunicate'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<bool, std::false_type>,
+        QtPrivate::TypeAndForceComplete<int, std::false_type>,
         // method 'process'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
@@ -135,7 +191,13 @@ void TWorker::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         switch (_id) {
         case 0: _t->finished(); break;
         case 1: _t->error((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
-        case 2: _t->process(); break;
+        case 2: _t->sendInt((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 3: _t->hideProgressWindow(); break;
+        case 4: _t->showProgressWindow(); break;
+        case 5: _t->killProgressWindow(); break;
+        case 6: _t->showAskWindow((*reinterpret_cast< std::add_pointer_t<int*>>(_a[1]))); break;
+        case 7: _t->showEndCommunicate((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[2]))); break;
+        case 8: _t->process(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -151,6 +213,48 @@ void TWorker::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
             using _t = void (TWorker::*)(QString );
             if (_t _q_method = &TWorker::error; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
                 *result = 1;
+                return;
+            }
+        }
+        {
+            using _t = void (TWorker::*)(int );
+            if (_t _q_method = &TWorker::sendInt; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+                *result = 2;
+                return;
+            }
+        }
+        {
+            using _t = void (TWorker::*)();
+            if (_t _q_method = &TWorker::hideProgressWindow; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+                *result = 3;
+                return;
+            }
+        }
+        {
+            using _t = void (TWorker::*)();
+            if (_t _q_method = &TWorker::showProgressWindow; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+                *result = 4;
+                return;
+            }
+        }
+        {
+            using _t = void (TWorker::*)();
+            if (_t _q_method = &TWorker::killProgressWindow; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+                *result = 5;
+                return;
+            }
+        }
+        {
+            using _t = void (TWorker::*)(int * );
+            if (_t _q_method = &TWorker::showAskWindow; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+                *result = 6;
+                return;
+            }
+        }
+        {
+            using _t = void (TWorker::*)(bool , int );
+            if (_t _q_method = &TWorker::showEndCommunicate; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+                *result = 7;
                 return;
             }
         }
@@ -176,13 +280,13 @@ int TWorker::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 9)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 9;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 3)
+        if (_id < 9)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 3;
+        _id -= 9;
     }
     return _id;
 }
@@ -198,5 +302,44 @@ void TWorker::error(QString _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 1, _a);
+}
+
+// SIGNAL 2
+void TWorker::sendInt(int _t1)
+{
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    QMetaObject::activate(this, &staticMetaObject, 2, _a);
+}
+
+// SIGNAL 3
+void TWorker::hideProgressWindow()
+{
+    QMetaObject::activate(this, &staticMetaObject, 3, nullptr);
+}
+
+// SIGNAL 4
+void TWorker::showProgressWindow()
+{
+    QMetaObject::activate(this, &staticMetaObject, 4, nullptr);
+}
+
+// SIGNAL 5
+void TWorker::killProgressWindow()
+{
+    QMetaObject::activate(this, &staticMetaObject, 5, nullptr);
+}
+
+// SIGNAL 6
+void TWorker::showAskWindow(int * _t1)
+{
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    QMetaObject::activate(this, &staticMetaObject, 6, _a);
+}
+
+// SIGNAL 7
+void TWorker::showEndCommunicate(bool _t1, int _t2)
+{
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))) };
+    QMetaObject::activate(this, &staticMetaObject, 7, _a);
 }
 QT_WARNING_POP

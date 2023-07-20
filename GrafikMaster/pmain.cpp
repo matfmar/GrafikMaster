@@ -39,6 +39,13 @@ void PMain::wybranoDodanieNowegoGrafiku() {
     }
 }
 
+void PMain::wybranoZakonczenieTworzeniaGrafikow() {
+    if (pDodawanieNowegoGrafiku != nullptr) {
+        delete pDodawanieNowegoGrafiku;
+        pDodawanieNowegoGrafiku = nullptr;
+    }
+}
+
 void PMain::wybranoPrzegladanieGrafikowRoboczych() {
 
 }

@@ -7,7 +7,7 @@
 #include <map>
 
 class DBObslugiwaczBazyDanych;
-class PDecydowanieOKontynuacjiSzukaniaGrafikow;
+class TWorker;
 
 //(enum)DzienTygodnia
 enum DzienTygodnia : int {
@@ -200,7 +200,7 @@ public:
     void dodajPierwszeDaneDyzurantowKiedyChca(std::vector<XDyzurantTworzacy*>* tablicaDyzurantowTworzacych);
     void przeliczMozliwiNieUnikajacyDyzuranciDlaKazdegoDnia();
     void przeliczMozliwiNieUnikajacyDyzuranciDlaJednegoDnia(int dzien);
-    void wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt, int ileIteracji);
+    void wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt, int ileIteracji, TWorker* pw);
     std::vector<XDzien*> udostepnijTabliceDni();
     std::string getMiesiacRok();
 
@@ -217,11 +217,10 @@ private:
     DzienTygodnia pierwszyDzien;
     std::vector<XDzien*> tablicaDni;    //numerowane od 1 do liczbaDni+1;
     DBObslugiwaczBazyDanych* db;        //do zapisywania wypelnionych w calosci grafikow
+    TWorker* parentWorker;      //do wysyłania syngałów międzywątkowych
 
     std::vector<XDyzurantTworzacy*>* tablicaDyzurantowTworzacych;
     std::map<int, XDyzurantTworzacy::XLiczniki*> mapaLicznikowDyzurantow;   //szeregowane po kluczach odpowiednich dyżurantów tworzących
-
-    PDecydowanieOKontynuacjiSzukaniaGrafikow* pDecydowanieOKontynuacjiSzukaniaGrafikow;
 
     int* licznikStworzonychGrafikow;    //wskaźnik do "globalnej" zmiennej zawierającej ilość stworzonych grafików
     bool* zakonczenieSzukania;          //wskaźnik do "globalnej" zmiennej zawierającej decyzję o sposobie wychodzenia z pętli (true -> kończymy, false -> szukamy dalej)

@@ -3,9 +3,14 @@
 #include "dto.h"
 #include "dbobslugiwaczbazydanych.h"
 #include <QDebug>
+#include "tworker.h"
+#include <QThread>
+#include <QObject>
+#include "pprogress.h"
 
 MNoweGrafiki::MNoweGrafiki()
-    : nowyGrafik(nullptr), tablicaDyzurantowTworzacych(nullptr), db(nullptr) {
+    : nowyGrafik(nullptr), tablicaDyzurantowTworzacych(nullptr), db(nullptr), progressManager(nullptr), semafor(nullptr), semafor2(nullptr),
+    tWorker(nullptr), thread(nullptr) {
     wypelnijTabliceEnumeracyjne();
 }
 
@@ -243,7 +248,28 @@ void MNoweGrafiki::wypelnijGrafikDyzurantami(bool& immediateResult, int ileItera
     if (!immediateResult) {
         return;
     }
-    nowyGrafik -> wypelnijGrafikDyzurantami(tablicaDyzurantowTworzacych, ileIteracji);
+    //uruchomienie zabawy związanej z wątkami
+    semafor = new QSemaphore(0);        //do pokazywania czy kontynuować tworzenie grafików
+    semafor2 = new QSemaphore(0);       //do kończenia pracy twórcy grafików
+    progressManager = new PProgress(semafor, semafor2);
+    thread = new QThread();
+    tWorker = new TWorker(nowyGrafik, tablicaDyzurantowTworzacych, ileIteracji, semafor, semafor2);
+    tWorker->moveToThread(thread);
+    //połączenia między tWorker i progressManager - wyświetlanie iteracji i przymykanie okna
+    QObject::connect(tWorker, SIGNAL(sendInt(int)), progressManager, SLOT(setLabelOknoProgress(int)));
+    QObject::connect(tWorker, SIGNAL(hideProgressWindow()), progressManager, SLOT(przymknijOknoProgress()));
+    QObject::connect(tWorker, SIGNAL(showProgressWindow()), progressManager, SLOT(showOknoProgress()));
+    QObject::connect(tWorker, SIGNAL(killProgressWindow()), progressManager, SLOT(killOknoProgress()));
+    QObject::connect(tWorker, SIGNAL(showAskWindow(int*)), progressManager, SLOT(showAskWindow(int*)));
+    QObject::connect(tWorker, SIGNAL(showEndCommunicate(bool,int)), progressManager, SLOT(showEndCommunicate(bool,int)));
+    //połączenia między thread i tWorker - żeby działał osobny wątek
+    QObject::connect(thread, SIGNAL(started()), tWorker, SLOT(process()));
+    QObject::connect(tWorker, SIGNAL(finished()), thread, SLOT(quit()));
+    QObject::connect(tWorker, SIGNAL(finished()), tWorker, SLOT(deleteLater()));
+    QObject::connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+    progressManager->pokazOknoProgress();
+    thread->start();
+    //nowyGrafik -> wypelnijGrafikDyzurantami(tablicaDyzurantowTworzacych, ileIteracji);
 }
 
 MNoweGrafiki::~MNoweGrafiki() {
@@ -264,5 +290,26 @@ MNoweGrafiki::~MNoweGrafiki() {
     if (db != nullptr) {
         delete db;
         db = nullptr;
+    }
+    if (tWorker != nullptr) {
+        delete tWorker;
+        tWorker = nullptr;
+    }
+    if (thread != nullptr) {
+        thread->terminate();
+        delete thread;
+        thread = nullptr;
+    }
+    if (semafor != nullptr) {
+        delete semafor;
+        semafor = nullptr;
+    }
+    if (semafor2 != nullptr) {
+        delete semafor2;
+        semafor2 = nullptr;
+    }
+    if (progressManager != nullptr) {
+        delete progressManager;
+        progressManager = nullptr;
     }
 }

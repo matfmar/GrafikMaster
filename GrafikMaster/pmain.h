@@ -15,6 +15,7 @@ public:
     void wybranoDodanieNowegoGrafiku();
     void wybranoPrzegladanieGrafikowRoboczych();
     void wybranoPrzegladanieGrafikowOstatecznych();
+    void wybranoZakonczenieTworzeniaGrafikow();
 private:
     UIMainWindow* uiMainWindow;
     PEdycjaBazyDyzurantow* pEdycjaBazyDyzurantow;

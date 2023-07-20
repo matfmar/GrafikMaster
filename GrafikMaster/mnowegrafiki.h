@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <string>
+#include <QSemaphore>
 
 enum Miesiac : int;
 enum DzienTygodnia : int;
@@ -11,6 +12,9 @@ class XGrafik;
 class XDyzurantTworzacy;
 class XDyzurant;
 class DBObslugiwaczBazyDanych;
+class PProgress;
+class TWorker;
+class QThread;
 
 class MNoweGrafiki {
 public:
@@ -33,6 +37,11 @@ private:
     XGrafik* nowyGrafik;
     std::vector<XDyzurantTworzacy*>* tablicaDyzurantowTworzacych;
     DBObslugiwaczBazyDanych* db;
+    PProgress* progressManager;
+
+    TWorker* tWorker;
+    QThread* thread;
+    QSemaphore* semafor,* semafor2;
 
     void wypelnijTabliceEnumeracyjne();
     void wypelnijDzien(int dzien);
