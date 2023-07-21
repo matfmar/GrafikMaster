@@ -51,11 +51,12 @@ static constexpr auto qt_meta_stringdata_CLASSTWorkerENDCLASS = QtMocHelpers::st
     "showAskWindow",
     "int*",
     "showEndCommunicate",
-    "process"
+    "process",
+    "timePassed"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSTWorkerENDCLASS_t {
-    uint offsetsAndSizes[28];
+    uint offsetsAndSizes[30];
     char stringdata0[8];
     char stringdata1[9];
     char stringdata2[1];
@@ -70,6 +71,7 @@ struct qt_meta_stringdata_CLASSTWorkerENDCLASS_t {
     char stringdata11[5];
     char stringdata12[19];
     char stringdata13[8];
+    char stringdata14[11];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSTWorkerENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -88,7 +90,8 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSTWorkerENDCLASS_t qt_meta_strin
         QT_MOC_LITERAL(107, 13),  // "showAskWindow"
         QT_MOC_LITERAL(121, 4),  // "int*"
         QT_MOC_LITERAL(126, 18),  // "showEndCommunicate"
-        QT_MOC_LITERAL(145, 7)   // "process"
+        QT_MOC_LITERAL(145, 7),  // "process"
+        QT_MOC_LITERAL(153, 10)   // "timePassed"
     },
     "TWorker",
     "finished",
@@ -103,7 +106,8 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSTWorkerENDCLASS_t qt_meta_strin
     "showAskWindow",
     "int*",
     "showEndCommunicate",
-    "process"
+    "process",
+    "timePassed"
 };
 #undef QT_MOC_LITERAL
 #endif // !QT_MOC_HAS_STRING_DATA
@@ -115,7 +119,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSTWorkerENDCLASS[] = {
       11,       // revision
        0,       // classname
        0,    0, // classinfo
-      10,   14, // methods
+      11,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -123,18 +127,19 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSTWorkerENDCLASS[] = {
        9,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   74,    2, 0x06,    1 /* Public */,
-       3,    1,   75,    2, 0x06,    2 /* Public */,
-       5,    1,   78,    2, 0x06,    4 /* Public */,
-       6,    1,   81,    2, 0x06,    6 /* Public */,
-       7,    0,   84,    2, 0x06,    8 /* Public */,
-       8,    0,   85,    2, 0x06,    9 /* Public */,
-       9,    0,   86,    2, 0x06,   10 /* Public */,
-      10,    1,   87,    2, 0x06,   11 /* Public */,
-      12,    2,   90,    2, 0x06,   13 /* Public */,
+       1,    0,   80,    2, 0x06,    1 /* Public */,
+       3,    1,   81,    2, 0x06,    2 /* Public */,
+       5,    1,   84,    2, 0x06,    4 /* Public */,
+       6,    1,   87,    2, 0x06,    6 /* Public */,
+       7,    0,   90,    2, 0x06,    8 /* Public */,
+       8,    0,   91,    2, 0x06,    9 /* Public */,
+       9,    0,   92,    2, 0x06,   10 /* Public */,
+      10,    1,   93,    2, 0x06,   11 /* Public */,
+      12,    2,   96,    2, 0x06,   13 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-      13,    0,   95,    2, 0x0a,   16 /* Public */,
+      13,    0,  101,    2, 0x0a,   16 /* Public */,
+      14,    0,  102,    2, 0x0a,   17 /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -148,6 +153,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSTWorkerENDCLASS[] = {
     QMetaType::Void, QMetaType::Bool, QMetaType::Int,    2,    2,
 
  // slots: parameters
+    QMetaType::Void,
     QMetaType::Void,
 
        0        // eod
@@ -187,6 +193,8 @@ Q_CONSTINIT const QMetaObject TWorker::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<bool, std::false_type>,
         QtPrivate::TypeAndForceComplete<int, std::false_type>,
         // method 'process'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'timePassed'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
@@ -208,6 +216,7 @@ void TWorker::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         case 7: _t->showAskWindow((*reinterpret_cast< std::add_pointer_t<int*>>(_a[1]))); break;
         case 8: _t->showEndCommunicate((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[2]))); break;
         case 9: _t->process(); break;
+        case 10: _t->timePassed(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -297,13 +306,13 @@ int TWorker::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 10)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 11;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 10)
+        if (_id < 11)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 10;
+        _id -= 11;
     }
     return _id;
 }

@@ -7,6 +7,7 @@
 #include <vector>
 #include <QSemaphore>
 #include <QThread>
+#include <QMutex>
 
 class XGrafik;
 class XDyzurantTworzacy;
@@ -25,7 +26,7 @@ public:
     void przymknijOknoProgresu();
     int zapytajOKontynuacje();
     void pokazKomunikatZakonczeniaSzukania(bool wynikTworzeniaGrafikow, int ileGrafikow);
-    void startTimer();
+    void startTimerX();
 public slots:
     //do obslugi QThread
     void process();
@@ -55,6 +56,7 @@ private:
     QThread* subThreadForTimer;
     bool* decyzjaOSkroceniu;
     int* licznikSkrocen;
+    QMutex* mutex;      //do dostępu do informacji czy wychodzić z pętli czy nie
 
 };
 

@@ -5,7 +5,8 @@
 
 TWorker::TWorker(XGrafik* g, std::vector<XDyzurantTworzacy*>* tdt, int ile, QSemaphore* sem, QSemaphore* sem2, QSemaphore* sem3, int sz, QObject* parent)
     : QObject(parent), grafikBazowy(g), tablicaDyzurantowTworzacych(tdt), ileIteracji(ile), semafor(sem), semafor2(sem2),
-    semaforLabel(sem3), szybkosc(sz), timerClass(nullptr), subThreadForTimer(nullptr), decyzjaOSkroceniu(nullptr), licznikSkrocen(nullptr) {
+    semaforLabel(sem3), szybkosc(sz), timerClass(nullptr), subThreadForTimer(nullptr), decyzjaOSkroceniu(nullptr), licznikSkrocen(nullptr),
+    mutex(nullptr) {
     result = new int(-1);
     if (szybkosc != 0) {
         //jeśli uwzględniamy szybkość, trzeba stworzyć klasę dla timera i przełożyć ją do nowego wątku, który potem uruchamiamy
@@ -17,8 +18,10 @@ TWorker::TWorker(XGrafik* g, std::vector<XDyzurantTworzacy*>* tdt, int ile, QSem
         QObject::connect(timerClass, SIGNAL(finished()), subThreadForTimer, SLOT(quit()));
         QObject::connect(timerClass, SIGNAL(finished()), timerClass, SLOT(deleteLater()));
         QObject::connect(timerClass, SIGNAL(finished()), subThreadForTimer, SLOT(deleteLater()));
-        //s-s dla komunikacji z TWorker
-        QObject::connect(timerClass, SIGNAL(timeFinishedSignal()), this, SLOT(timePassed()));
+        //s-s dla komunikacji z TTimerClass
+        QObject::connect(timerClass, SIGNAL(timeFinishedSignal()), this, SLOT(timePassed()), Qt::DirectConnection);     //żeby slot uruchamiał się w wątku timera
+        //tworzymy mutex dla grafików
+        mutex = new QMutex();
         //zaczynamy działanie wątku dla timera
         subThreadForTimer->start();
     }
@@ -31,19 +34,36 @@ void TWorker::process() {
         decyzjaOSkroceniu = new bool(false);
         licznikSkrocen = new int(0);
     }
+
     //uruchamiamy liczenie grafików
-    grafikBazowy -> wypelnijGrafikDyzurantami(tablicaDyzurantowTworzacych, ileIteracji, this, czyPrzyspieszenie, decyzjaOSkroceniu, licznikSkrocen);
+    grafikBazowy -> wypelnijGrafikDyzurantami(tablicaDyzurantowTworzacych, ileIteracji, this, czyPrzyspieszenie, decyzjaOSkroceniu, licznikSkrocen, mutex);
+
+    //teraz jesteśmy już po zakończeniu tworzenia grafików
+    //w razie działania z przyspieszaczem niszczymy TimerClass (czyli też i zegar) oraz zatrzymujemy wątek
+    if (szybkosc != 0) {
+        timerClass->stopTimerTC();
+        delete timerClass;
+        timerClass = nullptr;
+        subThreadForTimer->quit();
+    }
     //niszczymy okienko z progresem
     emit killProgressWindow();
 }
 
-void TWorker::startTimer() {
-    timerClass->startTimer();       //docelowo - na 3 sekundy, to też restartuje w razie czego
+void TWorker::startTimerX() {
+    timerClass->startTimerTC();       //docelowo - na 3 sekundy, to też restartuje w razie czego
 }
 
 void TWorker::timePassed() {
-    timerClass->stopTimer();
-
+    //przytrzymujemy timer
+    timerClass->stopTimerTC();
+    //blokujemy dostęp do danych
+    mutex->lock();
+    //ustawiamy odpowiednio zmienne sterujace
+    *decyzjaOSkroceniu = true;
+    *licznikSkrocen = szybkosc;     //czyli 3, 5 lub 10
+    //odblokowujemy dostęp
+    mutex->unlock();
 }
 
 void TWorker::pokazLiczbeInteracji(int a) {
@@ -66,7 +86,7 @@ void TWorker::pokazLiczbeObrotow(int a) {
     emit sendIntObroty(a);
     //a teraz czekamy jw.
     semaforLabel->acquire(1);
-    //QThread::msleep(200);   //for debugging
+    QThread::msleep(200);   //for debugging
 }
 
 void TWorker::pokazOknoProgresu() {
@@ -96,6 +116,10 @@ TWorker::~TWorker() {
         delete result;
         result = nullptr;
     }
+    if (mutex != nullptr) {
+        delete mutex;
+        mutex = nullptr;
+    }
     if (timerClass != nullptr) {
         delete timerClass;
         timerClass = nullptr;
@@ -106,6 +130,14 @@ TWorker::~TWorker() {
         }
         delete subThreadForTimer;
         subThreadForTimer = nullptr;
+    }
+    if (decyzjaOSkroceniu != nullptr) {
+        delete decyzjaOSkroceniu;
+        decyzjaOSkroceniu = nullptr;
+    }
+    if (licznikSkrocen != nullptr) {
+        delete licznikSkrocen;
+        licznikSkrocen = nullptr;
     }
 
 }

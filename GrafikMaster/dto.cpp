@@ -446,13 +446,15 @@ XGrafik::XGrafik()
     : rok(0), miesiac(NIEZNANY_MIESIAC), status(NIEZNANY_STATUS_GRAFIKU), liczbaDni(0), pierwszyDzien(NIEZNANY_DZIEN), db(nullptr),
     tablicaDyzurantowTworzacych(nullptr),
     licznikStworzonychGrafikow(nullptr), zakonczenieSzukania(nullptr), licznikOstatecznyStworzonychGrafikow(nullptr),
-    liczbaIteracji(nullptr), parentWorker(nullptr), czyPrzyspieszenie(false), licznikSkrocen(nullptr), decyzjaOSkroceniu(nullptr) {}
+    liczbaIteracji(nullptr), parentWorker(nullptr), czyPrzyspieszenie(false), licznikSkrocen(nullptr), decyzjaOSkroceniu(nullptr),
+    mutex(nullptr) {}
 
 XGrafik::XGrafik(int r, Miesiac m, StatusGrafiku st, int ld, DzienTygodnia pd)
     : rok(r), miesiac(m), status(st), liczbaDni(ld), pierwszyDzien(pd), db(nullptr), tablicaDyzurantowTworzacych(nullptr),
     licznikStworzonychGrafikow(nullptr), zakonczenieSzukania(nullptr),
     licznikOstatecznyStworzonychGrafikow(nullptr), liczbaIteracji(nullptr), parentWorker(nullptr),
-    licznikSkrocen(nullptr), czyPrzyspieszenie(false), decyzjaOSkroceniu(nullptr) {}
+    licznikSkrocen(nullptr), czyPrzyspieszenie(false), decyzjaOSkroceniu(nullptr),
+    mutex(nullptr) {}
 
 XGrafik::XGrafik(XGrafik& gr) {
     rok = gr.rok;
@@ -486,6 +488,7 @@ XGrafik::XGrafik(XGrafik& gr) {
     czyPrzyspieszenie = gr.czyPrzyspieszenie;
     licznikSkrocen = gr.licznikSkrocen;
     decyzjaOSkroceniu = gr.decyzjaOSkroceniu;
+    mutex = gr.mutex;
 }
 
 XGrafik::XGrafik(XGrafik* gr) {
@@ -520,6 +523,7 @@ XGrafik::XGrafik(XGrafik* gr) {
     czyPrzyspieszenie = gr->czyPrzyspieszenie;
     licznikSkrocen = gr->licznikSkrocen;
     decyzjaOSkroceniu = gr->decyzjaOSkroceniu;
+    mutex = gr->mutex;
 }
 
 void XGrafik::stworzPodstawyGrafiku() {
@@ -678,11 +682,12 @@ bool XGrafik::sprawdzZgodnoscZMinimalnaLiczbaDyzurowDlaWszystkich() {
     return true;
 }
 
-void XGrafik::wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt, int ileIteracji, TWorker* pw, bool czyP, bool* decS, int* licS) {
+void XGrafik::wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt, int ileIteracji, TWorker* pw, bool czyP, bool* decS, int* licS, QMutex* mut) {
     //ustawienie zmiennych odnośnie przyspieszenia (związane z timerem)
     czyPrzyspieszenie = czyP;
     decyzjaOSkroceniu = decS;
     licznikSkrocen = licS;
+    mutex = mut;
     //ustawienie wskaźnika do obiektu 'w którym' biegnie odpowiedni wątek
     parentWorker = pw;
     //uzupełnienie wskaźnika do tablicy dyżurantów tworzących (pochodzi z obiektu MNoweGrafiki)
@@ -703,6 +708,9 @@ void XGrafik::wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt, in
     //inicjalizacja funkcji pseudolosowej
     srand(time(0));
 
+    if (czyPrzyspieszenie) {        //jeśli działamy na przyspieszaczu, włączamy timer
+        parentWorker->startTimerX();
+    }
     bool result = wypelnijDzien(1);
 
     //ten moment uruchamia się po powrocie z całego procesu wyszukiwania grafików
@@ -877,6 +885,10 @@ bool XGrafik::wypelnijDzien(int dzien) {        //glowna funkcja wywolywana reku
         (*licznikStworzonychGrafikow)++;
         (*licznikOstatecznyStworzonychGrafikow)++;
         parentWorker->pokazLiczbeInteracji(*licznikOstatecznyStworzonychGrafikow);  //wysyłamy na ekran ilość zrobionych grafików
+        //.... oraz resetujemy timer, jeśli działamy na przyspieszaczu (co znalezienie grafiku to timer się resetuje
+        if (czyPrzyspieszenie) {
+            parentWorker->startTimerX();
+        }
         //... oraz sprawdzamy czy nie doszliśmy do progu decyzji o wyświetleniu okna co do dalszych poszukiwań
         if (*licznikStworzonychGrafikow >= (*liczbaIteracji)) {
             parentWorker->przymknijOknoProgresu();  //najpierw przymykamy okno progresu żeby nie zasłaniało
@@ -898,6 +910,32 @@ bool XGrafik::wypelnijDzien(int dzien) {        //glowna funkcja wywolywana reku
     bool resultDodania(false);
     int kluczWybranegoDyzurantaDoTegoDnia(-1);
     do {
+        //najpierw - o ile działamy na przyspieszaczu - trzeba sprawdzić czy może przypadkiem nie trzeba zakończyć procedury
+        //bo dokładnie w tym miejscu znajdzie się sterowanie jesli poprzednia skończyła jako false
+        if (czyPrzyspieszenie) {
+            //blokujemy dostęp do danych
+            mutex->lock();
+            if (*decyzjaOSkroceniu) {
+                if (*licznikSkrocen > 0 && dzien > 1) {     //czyli jesteśmy w jakiejś dalszej iteracji, czyli można śmiało skracać
+                    (*licznikSkrocen)--;
+                    mutex->unlock();    //odblokowujemy przed skróceniem
+                    return false;
+                }
+                else if (*licznikSkrocen > 0 && dzien <= 1) {   //drugie oznacza że jesteśmy w pierwszej iteracji, czyli lepiej nie wychodźmy z niej
+                    *licznikSkrocen = 0;
+                    *decyzjaOSkroceniu = false;
+                    parentWorker->startTimerX();     //ponieważ to już był ostatni skrót, na nowo włączamy timer
+                }
+                else {      //czyli *licznikSkrocen == 0. Więc koniec skracania.
+                    *licznikSkrocen = 0;    //redundantne, ale może lepiej niech zostanie
+                    *decyzjaOSkroceniu = false; //kończymy cykl skracania
+                    parentWorker->startTimerX(); //ponieważ był to już ostatni skrót, restartujemy timer
+                    mutex->unlock();    //odblokowujemy jw.
+                    return false;
+                }
+            }
+            mutex->unlock();    //odblokowujemy dostęp do zmiennych sterujących
+        }
         do {
             if (nowyGrafik != nullptr){         //robi się tylko gdy warunek pętli się schrzanił i trzeba liczyć jeszcze raz
                 //dla USTAWIONY_NIE_DO_RUSZENIA cała ta instrukcja warunkowa uruchomiona była została z drugiego warunku, czyli trzeba wrócić krok wstecz

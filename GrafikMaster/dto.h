@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <QMutex>
 
 class DBObslugiwaczBazyDanych;
 class TWorker;
@@ -200,7 +201,7 @@ public:
     void dodajPierwszeDaneDyzurantowKiedyChca(std::vector<XDyzurantTworzacy*>* tablicaDyzurantowTworzacych);
     void przeliczMozliwiNieUnikajacyDyzuranciDlaKazdegoDnia();
     void przeliczMozliwiNieUnikajacyDyzuranciDlaJednegoDnia(int dzien);
-    void wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt, int ileIteracji, TWorker* pw, bool czyP, bool* decS, int* licS);
+    void wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt, int ileIteracji, TWorker* pw, bool czyP, bool* decS, int* licS, QMutex* mut);
     std::vector<XDzien*> udostepnijTabliceDni();
     std::string getMiesiacRok();
 
@@ -222,14 +223,17 @@ private:
     std::vector<XDyzurantTworzacy*>* tablicaDyzurantowTworzacych;
     std::map<int, XDyzurantTworzacy::XLiczniki*> mapaLicznikowDyzurantow;   //szeregowane po kluczach odpowiednich dyżurantów tworzących
 
+    //zmienne sterujące pętlą oraz do komunikacji z TWorker
     int* licznikStworzonychGrafikow;    //wskaźnik do "globalnej" zmiennej zawierającej ilość stworzonych grafików
     bool* zakonczenieSzukania;          //wskaźnik do "globalnej" zmiennej zawierającej decyzję o sposobie wychodzenia z pętli (true -> kończymy, false -> szukamy dalej)
     int* licznikOstatecznyStworzonychGrafikow;
     int* liczbaIteracji;
 
+    //zmienne w razie działania z przyspieszczem
     bool czyPrzyspieszenie;
     bool* decyzjaOSkroceniu;
     int* licznikSkrocen;
+    QMutex* mutex;
 
     void dodajUnikanie(XDyzurantTworzacy::XLiczniki* licznikDt, XDyzurantTworzacy* dt, int klucz, int unikanieKrotnosc, bool& result, int dzien);
     void dodajUnikanieTrojek(XDyzurantTworzacy::XLiczniki* licznikDt, XDyzurantTworzacy* dt, int klucz, bool& result, int dzien);

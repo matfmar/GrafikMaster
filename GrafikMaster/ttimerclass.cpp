@@ -13,11 +13,11 @@ void TTimerClass::process() {
 
 }
 
-void TTimerClass::startTimer() {
+void TTimerClass::startTimerTC() {
     timer->start(3000);         //na 3 sekundy, UWAGA: ta funkcja restartuje, jeśli timer już był aktywny
 }
 
-void TTimerClass::stopTimer() {
+void TTimerClass::stopTimerTC() {
     timer->stop();
 }
 
