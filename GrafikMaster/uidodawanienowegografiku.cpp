@@ -140,7 +140,25 @@ UIDodawanieNowegoGrafiku::UIDodawanieNowegoGrafiku(std::vector<XDyzurant*>* td, 
     layoutRightLabelEdit = new QHBoxLayout(this);
     layoutRightLabelEdit->addWidget(labelIleIteracji);
     layoutRightLabelEdit->addWidget(editIleIteracji);
+    wyborNormalnie = new QRadioButton(tr("normalne (pełne szukanie)"), this);
+    wyborSzybko = new QRadioButton(tr("szybkie"), this);
+    wyborBardzoSzybko = new QRadioButton(tr("bardzo szybkie"), this);
+    wyborEkstremanlnieSzybko = new QRadioButton(tr("ekstremalnie szybkie"), this);
+    groupRadioSzybkosc = new QButtonGroup(this);
+    groupRadioSzybkosc->addButton(wyborNormalnie);
+    groupRadioSzybkosc->addButton(wyborSzybko);
+    groupRadioSzybkosc->addButton(wyborBardzoSzybko);
+    groupRadioSzybkosc->addButton(wyborEkstremanlnieSzybko);
+    layoutSzybkosc = new QVBoxLayout(this);
+    layoutSzybkosc->addWidget(wyborNormalnie);
+    layoutSzybkosc->addWidget(wyborSzybko);
+    layoutSzybkosc->addWidget(wyborBardzoSzybko);
+    layoutSzybkosc->addWidget(wyborEkstremanlnieSzybko);
+    groupSzybkosc = new QGroupBox(tr("Działanie algorytmu"), this);
+    groupSzybkosc->setLayout(layoutSzybkosc);
+    wyborNormalnie->setChecked(true);
     layoutRight = new QVBoxLayout(this);
+    layoutRight->addWidget(groupSzybkosc);
     layoutRight->addLayout(layoutRightLabelEdit);
     layoutRight->addWidget(buttonStart);
 
@@ -257,13 +275,22 @@ void UIDodawanieNowegoGrafiku::onButtonUpdateClicked() {
 
 void UIDodawanieNowegoGrafiku::onButtonStartClicked() {
     bool resultInt(false);
+
     int liczbaIteracji = editIleIteracji->text().toInt(&resultInt);
     if (!resultInt) {
         QMessageBox::critical(this, tr("Błąd"), tr("Zła wartość w polu iteracji !"), QMessageBox::Ok);
         return;
     }
+
+    int szybkosc(-1);
+    if (wyborNormalnie->isChecked()) szybkosc = 0;
+    else if (wyborSzybko->isChecked()) szybkosc = 3;
+    else if (wyborBardzoSzybko->isChecked()) szybkosc = 5;
+    else if (wyborEkstremanlnieSzybko->isChecked()) szybkosc = 10;
+    else szybkosc = 0;
+
     bool immediateResult(true);
-    pDodawanieNowegoGrafiku->wybranoProsbeOStworzenieGrafiku(immediateResult, liczbaIteracji);
+    pDodawanieNowegoGrafiku->wybranoProsbeOStworzenieGrafiku(immediateResult, liczbaIteracji, szybkosc);
     if (!immediateResult) {
         QMessageBox::critical(this, tr("Błąd"), tr("Podano wewnętrznie sprzecze kryteria!"), QMessageBox::Ok);
         //close();

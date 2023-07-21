@@ -3,8 +3,8 @@
 #include "uitworzenieprogress.h"
 #include "pdecydowanieokontynuacjiszukaniagrafikow.h"
 
-PProgress::PProgress(QSemaphore* sem, QSemaphore* sem2, QObject *parent)
-    : QObject{parent}, semafor(sem), semafor2(sem2)
+PProgress::PProgress(QSemaphore* sem, QSemaphore* sem2, QSemaphore* sem3, QObject *parent)
+    : QObject{parent}, semafor(sem), semafor2(sem2), semaforLabel(sem3)
 {
     uiTworzenieProgress = new UITworzenieProgress(this);
     pDecydowanieOKontynuacjiSzukaniaGrafikow = new PDecydowanieOKontynuacjiSzukaniaGrafikow();
@@ -22,6 +22,12 @@ void PProgress::pokazOknoProgress() {
 
 void PProgress::setLabelOknoProgress(int ileGrafikow) {
     uiTworzenieProgress->setLabelIleGrafikow(ileGrafikow);
+    semaforLabel->release(1);       //zwalniamy szukanie dalszych grafików
+}
+
+void PProgress::setLabelObrotyOknoProgress(int ileObrotow) {
+    uiTworzenieProgress->setLabelIleObrotow(ileObrotow);
+    semaforLabel->release(1);       //jw.
 }
 
 void PProgress::przymknijOknoProgress() {

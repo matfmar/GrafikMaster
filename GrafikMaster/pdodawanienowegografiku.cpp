@@ -53,7 +53,7 @@ bool PDodawanieNowegoGrafiku::wybranoUpdateDyzurantaTworzacego(QString nick, boo
     bool result = mNoweGrafiki->updateDyzurantaTworzacego(nick.toStdString(), czyM, m.toStdString(), nm.toStdString(), u.toStdString(), ch.toStdString(), maks, min, maksS, maksN, maksW, c, maksP, wyborT);
     return result;
 }
-void PDodawanieNowegoGrafiku::wybranoProsbeOStworzenieGrafiku(bool& immediateResult, int ileIteracji) {
+void PDodawanieNowegoGrafiku::wybranoProsbeOStworzenieGrafiku(bool& immediateResult, int ileIteracji, int szybkosc) {
     XGrafik* grafikWstepny = mNoweGrafiki->wypelnijGrafikPierwszymiDanymi();
 
     //pokazujemy efekt pierwszych danych na grafik
@@ -65,7 +65,7 @@ void PDodawanieNowegoGrafiku::wybranoProsbeOStworzenieGrafiku(bool& immediateRes
     }
 
     //jeśli jest ok, to idziemy dalej.
-    mNoweGrafiki->wypelnijGrafikDyzurantami(immediateResult, ileIteracji);
+    mNoweGrafiki->wypelnijGrafikDyzurantami(immediateResult, ileIteracji, szybkosc);
 
     if (immediateResult) {      //przy dobrej wstepnej weryfikacji zamykamy okno tworzenia grafikow
         uiDodawanieNowegoGrafiku->close();

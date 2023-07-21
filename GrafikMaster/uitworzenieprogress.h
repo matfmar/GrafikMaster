@@ -15,9 +15,10 @@ public:
     UITworzenieProgress(PProgress* p);
     ~UITworzenieProgress() {}
     void setLabelIleGrafikow(int ileGrafikow);
+    void setLabelIleObrotow(int ileObrotow);
 private:
-    QLabel* labelTekst;
-    QLabel* labelIleGrafikow;
+    QLabel* labelTekst,* labelTekstObroty;
+    QLabel* labelIleGrafikow,* labelIleObrotow;
     QVBoxLayout* layout;
 
     PProgress* parent;

@@ -13,11 +13,12 @@ class PProgress : public QObject
 {
     Q_OBJECT
 public:
-    explicit PProgress(QSemaphore* sem, QSemaphore* sem2, QObject *parent = nullptr);
+    explicit PProgress(QSemaphore* sem, QSemaphore* sem2, QSemaphore* sem3, QObject *parent = nullptr);
     ~PProgress();
     void pokazOknoProgress();
 public slots:
     void setLabelOknoProgress(int ileGrafikow);
+    void setLabelObrotyOknoProgress(int ileObrotow);
     void przymknijOknoProgress();
     void showOknoProgress();
     void killOknoProgress();
@@ -28,7 +29,7 @@ private:
     UITworzenieProgress* uiTworzenieProgress;
     //prezenter do decydowania o kontynuacji tworzenia grafikow
     PDecydowanieOKontynuacjiSzukaniaGrafikow* pDecydowanieOKontynuacjiSzukaniaGrafikow;
-    QSemaphore* semafor,* semafor2;
+    QSemaphore* semafor,* semafor2,* semaforLabel;
 };
 
 #endif // PPROGRESS_H

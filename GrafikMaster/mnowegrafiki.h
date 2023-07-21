@@ -29,7 +29,9 @@ public:
     bool zapiszUstawieniaDoPliku();
     std::vector<std::string> wczytajUstawienia(std::vector<XDyzurant*>* tablicaDyzurantow);
     XGrafik* wypelnijGrafikPierwszymiDanymi();
-    void wypelnijGrafikDyzurantami(bool& immediateResult, int ileIteracji);
+
+    void wypelnijGrafikDyzurantami(bool& immediateResult, int ileIteracji, int szybkosc);
+
     bool usunWszystkieUstawieniaZPlikow();
 private:
     std::vector<Miesiac> tablicaMiesiecy;
@@ -41,7 +43,7 @@ private:
 
     TWorker* tWorker;
     QThread* thread;
-    QSemaphore* semafor,* semafor2;
+    QSemaphore* semafor,* semafor2,* semaforLabel;
 
     void wypelnijTabliceEnumeracyjne();
     void wypelnijDzien(int dzien);

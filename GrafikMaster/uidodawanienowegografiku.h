@@ -53,12 +53,13 @@ private:
     QPushButton* buttonUsunZapisaneUstawienia;
     QRadioButton* wyborMoze,* wyborNieMoze;
     QRadioButton* wyborDwa,* wyborTrzy,* wyborCztery,* wyborNic;
+    QRadioButton* wyborNormalnie,* wyborSzybko,* wyborBardzoSzybko,* wyborEkstremanlnieSzybko;
     QVBoxLayout* layoutButtonsPrawoLewo,* layoutListLeft,* layoutListRight;
     QHBoxLayout* layoutListWidgetsButtons,* layoutRightLabelEdit;
-    QGroupBox* groupMozeNieMoze,* groupPodRzad,* groupZapisywanieWczytywanie;
-    QButtonGroup* groupRadioMozeNieMoze,* groupRadioPodRzad;
+    QGroupBox* groupMozeNieMoze,* groupPodRzad,* groupZapisywanieWczytywanie,* groupSzybkosc;
+    QButtonGroup* groupRadioMozeNieMoze,* groupRadioPodRzad,* groupRadioSzybkosc;
     QGridLayout* layoutLabelsEdits,* layoutRadioGroup;
-    QVBoxLayout* layoutPodRzad,* layoutZapisywanieWczytywanie,* layoutRight;
+    QVBoxLayout* layoutPodRzad,* layoutZapisywanieWczytywanie,* layoutRight,* layoutSzybkosc;
     QVBoxLayout* mainLayout;
     QHBoxLayout* ultimateLayout;
     PDodawanieNowegoGrafiku* pDodawanieNowegoGrafiku;

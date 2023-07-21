@@ -2,7 +2,6 @@
 #include <algorithm>
 #include <QDebug>
 #include "dbobslugiwaczbazydanych.h"
-#include "pdecydowanieokontynuacjiszukaniagrafikow.h"
 #include "tworker.h"
 
 //GENERAL===============================================================================================================================
@@ -447,12 +446,13 @@ XGrafik::XGrafik()
     : rok(0), miesiac(NIEZNANY_MIESIAC), status(NIEZNANY_STATUS_GRAFIKU), liczbaDni(0), pierwszyDzien(NIEZNANY_DZIEN), db(nullptr),
     tablicaDyzurantowTworzacych(nullptr),
     licznikStworzonychGrafikow(nullptr), zakonczenieSzukania(nullptr), licznikOstatecznyStworzonychGrafikow(nullptr),
-    liczbaIteracji(nullptr), parentWorker(nullptr) {}
+    liczbaIteracji(nullptr), parentWorker(nullptr), czyPrzyspieszenie(false), licznikSkrocen(nullptr), decyzjaOSkroceniu(nullptr) {}
 
 XGrafik::XGrafik(int r, Miesiac m, StatusGrafiku st, int ld, DzienTygodnia pd)
     : rok(r), miesiac(m), status(st), liczbaDni(ld), pierwszyDzien(pd), db(nullptr), tablicaDyzurantowTworzacych(nullptr),
     licznikStworzonychGrafikow(nullptr), zakonczenieSzukania(nullptr),
-    licznikOstatecznyStworzonychGrafikow(nullptr), liczbaIteracji(nullptr), parentWorker(nullptr) {}
+    licznikOstatecznyStworzonychGrafikow(nullptr), liczbaIteracji(nullptr), parentWorker(nullptr),
+    licznikSkrocen(nullptr), czyPrzyspieszenie(false), decyzjaOSkroceniu(nullptr) {}
 
 XGrafik::XGrafik(XGrafik& gr) {
     rok = gr.rok;
@@ -482,6 +482,10 @@ XGrafik::XGrafik(XGrafik& gr) {
     licznikOstatecznyStworzonychGrafikow = gr.licznikOstatecznyStworzonychGrafikow; //jw.
     liczbaIteracji = gr.liczbaIteracji; //jw.
     parentWorker = gr.parentWorker;   //jw.
+    //zmienne do ew. przyspieszacza (związane z timerem)
+    czyPrzyspieszenie = gr.czyPrzyspieszenie;
+    licznikSkrocen = gr.licznikSkrocen;
+    decyzjaOSkroceniu = gr.decyzjaOSkroceniu;
 }
 
 XGrafik::XGrafik(XGrafik* gr) {
@@ -512,6 +516,10 @@ XGrafik::XGrafik(XGrafik* gr) {
     licznikOstatecznyStworzonychGrafikow = gr->licznikOstatecznyStworzonychGrafikow;    //jw.
     liczbaIteracji = gr->liczbaIteracji;    //jw.
     parentWorker = gr->parentWorker;  //jw.
+    //zmienne do ew. przyspieszacza (związane z timerem)
+    czyPrzyspieszenie = gr->czyPrzyspieszenie;
+    licznikSkrocen = gr->licznikSkrocen;
+    decyzjaOSkroceniu = gr->decyzjaOSkroceniu;
 }
 
 void XGrafik::stworzPodstawyGrafiku() {
@@ -670,7 +678,11 @@ bool XGrafik::sprawdzZgodnoscZMinimalnaLiczbaDyzurowDlaWszystkich() {
     return true;
 }
 
-void XGrafik::wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt, int ileIteracji, TWorker* pw) {
+void XGrafik::wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt, int ileIteracji, TWorker* pw, bool czyP, bool* decS, int* licS) {
+    //ustawienie zmiennych odnośnie przyspieszenia (związane z timerem)
+    czyPrzyspieszenie = czyP;
+    decyzjaOSkroceniu = decS;
+    licznikSkrocen = licS;
     //ustawienie wskaźnika do obiektu 'w którym' biegnie odpowiedni wątek
     parentWorker = pw;
     //uzupełnienie wskaźnika do tablicy dyżurantów tworzących (pochodzi z obiektu MNoweGrafiki)
@@ -846,6 +858,10 @@ bool XGrafik::wypelnijDzien(int dzien) {        //glowna funkcja wywolywana reku
 //UWAGA: jeśli *zakończenieSzukania==false, to oznacza że traktujemy jakby grafik nie był znaleziony czyli szukamy do oporu
 //jeśli *zakończenieSzukania==true, to funkcja będzie wychodzić z pętli byle szybciej
 //ten "przełącznik" zakończenieSzukania służy do tego by w razie decyzji o zaprzestaniu poszukiwań móc posprzątać cały rekurencyjny bałagan który się stworzył
+
+    //najpierw pokazujemy który dzień właśnie ogarniamy
+    parentWorker->pokazLiczbeObrotow(dzien);
+    //teraz sprawdzamy warunek wyjścia z procedury
     if (dzien > liczbaDni) {
         //czyli ułożyliśmy cały grafik !!!!! - ale trzeba jeszcze sprawdzic czy zgadza sie minimalna liczba dyzurow dla kazdego dyzuranta
         if (!sprawdzZgodnoscZMinimalnaLiczbaDyzurowDlaWszystkich()) {

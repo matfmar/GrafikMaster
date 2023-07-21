@@ -20,6 +20,7 @@ SOURCES += \
     pmain.cpp \
     pprogress.cpp \
     pprzegladaniegrafikowroboczych.cpp \
+    ttimerclass.cpp \
     tworker.cpp \
     uidecydowanieokoniecznosciszukaniagrafikow.cpp \
     uidodawanienowegodyzuranta.cpp \
@@ -42,6 +43,7 @@ HEADERS += \
     pmain.h \
     pprogress.h \
     pprzegladaniegrafikowroboczych.h \
+    ttimerclass.h \
     tworker.h \
     uidecydowanieokoniecznosciszukaniagrafikow.h \
     uidodawanienowegodyzuranta.h \
