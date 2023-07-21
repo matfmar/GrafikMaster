@@ -284,9 +284,9 @@ void UIDodawanieNowegoGrafiku::onButtonStartClicked() {
 
     int szybkosc(-1);
     if (wyborNormalnie->isChecked()) szybkosc = 0;
-    else if (wyborSzybko->isChecked()) szybkosc = 3;
-    else if (wyborBardzoSzybko->isChecked()) szybkosc = 5;
-    else if (wyborEkstremanlnieSzybko->isChecked()) szybkosc = 10;
+    else if (wyborSzybko->isChecked()) szybkosc = 5;
+    else if (wyborBardzoSzybko->isChecked()) szybkosc = 10;
+    else if (wyborEkstremanlnieSzybko->isChecked()) szybkosc = 15;
     else szybkosc = 0;
 
     bool immediateResult(true);

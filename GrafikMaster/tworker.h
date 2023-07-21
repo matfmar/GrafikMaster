@@ -6,12 +6,13 @@
 #include <QObject>
 #include <vector>
 #include <QSemaphore>
-#include <QThread>
 #include <QMutex>
+#include <QTimer>
 
 class XGrafik;
 class XDyzurantTworzacy;
 class TTimerClass;
+class TTimerThread;
 
 class TWorker : public QObject
 {
@@ -27,6 +28,7 @@ public:
     int zapytajOKontynuacje();
     void pokazKomunikatZakonczeniaSzukania(bool wynikTworzeniaGrafikow, int ileGrafikow);
     void startTimerX();
+
 public slots:
     //do obslugi QThread
     void process();
@@ -44,6 +46,8 @@ signals:
     void killProgressWindow();
     void showAskWindow(int*);
     void showEndCommunicate(bool, int);
+    //do komunikacji z TimerClass
+    void startTheTimer();
 private:
     int szybkosc;
     XGrafik* grafikBazowy;
@@ -53,10 +57,11 @@ private:
     int* result;
 
     TTimerClass* timerClass;
-    QThread* subThreadForTimer;
+    TTimerThread* subThreadForTimer;
     bool* decyzjaOSkroceniu;
     int* licznikSkrocen;
     QMutex* mutex;      //do dostępu do informacji czy wychodzić z pętli czy nie
+    QTimer* timer;
 
 };
 

@@ -2,16 +2,19 @@
 #include "tworker.h"
 #include "dto.h"
 #include "ttimerclass.h"
+#include <QDebug>
+#include "ttimerthread.h"
 
 TWorker::TWorker(XGrafik* g, std::vector<XDyzurantTworzacy*>* tdt, int ile, QSemaphore* sem, QSemaphore* sem2, QSemaphore* sem3, int sz, QObject* parent)
     : QObject(parent), grafikBazowy(g), tablicaDyzurantowTworzacych(tdt), ileIteracji(ile), semafor(sem), semafor2(sem2),
     semaforLabel(sem3), szybkosc(sz), timerClass(nullptr), subThreadForTimer(nullptr), decyzjaOSkroceniu(nullptr), licznikSkrocen(nullptr),
-    mutex(nullptr) {
+    mutex(nullptr), timer(nullptr) {
+
     result = new int(-1);
     if (szybkosc != 0) {
         //jeśli uwzględniamy szybkość, trzeba stworzyć klasę dla timera i przełożyć ją do nowego wątku, który potem uruchamiamy
         timerClass = new TTimerClass();
-        subThreadForTimer = new QThread();
+        subThreadForTimer = new TTimerThread();
         timerClass->moveToThread(subThreadForTimer);
         //s-s dla QThread
         QObject::connect(subThreadForTimer, SIGNAL(started()), timerClass, SLOT(process()));
@@ -19,7 +22,8 @@ TWorker::TWorker(XGrafik* g, std::vector<XDyzurantTworzacy*>* tdt, int ile, QSem
         QObject::connect(timerClass, SIGNAL(finished()), timerClass, SLOT(deleteLater()));
         QObject::connect(timerClass, SIGNAL(finished()), subThreadForTimer, SLOT(deleteLater()));
         //s-s dla komunikacji z TTimerClass
-        QObject::connect(timerClass, SIGNAL(timeFinishedSignal()), this, SLOT(timePassed()), Qt::DirectConnection);     //żeby slot uruchamiał się w wątku timera
+        QObject::connect(timerClass, SIGNAL(timeFinishedSignal()), this, SLOT(timePassed()), Qt::DirectConnection); //zeby slot uruchamiał się w wątku timera
+        QObject::connect(this, SIGNAL(startTheTimer()), timerClass, SLOT(startTheTimerFromOutside()));
         //tworzymy mutex dla grafików
         mutex = new QMutex();
         //zaczynamy działanie wątku dla timera
@@ -51,12 +55,10 @@ void TWorker::process() {
 }
 
 void TWorker::startTimerX() {
-    timerClass->startTimerTC();       //docelowo - na 3 sekundy, to też restartuje w razie czego
+    emit startTheTimer();       //docelowo na 3 sekundy
 }
 
 void TWorker::timePassed() {
-    //przytrzymujemy timer
-    timerClass->stopTimerTC();
     //blokujemy dostęp do danych
     mutex->lock();
     //ustawiamy odpowiednio zmienne sterujace
@@ -67,26 +69,16 @@ void TWorker::timePassed() {
 }
 
 void TWorker::pokazLiczbeInteracji(int a) {
-    /*
-    if (a % 5 != 0) {
-        return;
-    }
-    */
     emit sendInt(a);
     //a teraz czekamy aż zwolni się semafor - czyli komunikat został wyświetlony, więc można jechać dalej
     semaforLabel->acquire(1);
 }
 
 void TWorker::pokazLiczbeObrotow(int a) {
-
-    if (a % 5 != 0) {
-        return;
-    }
-
     emit sendIntObroty(a);
     //a teraz czekamy jw.
     semaforLabel->acquire(1);
-    QThread::msleep(200);   //for debugging
+    //QThread::msleep(200);   //for debugging
 }
 
 void TWorker::pokazOknoProgresu() {
@@ -138,6 +130,13 @@ TWorker::~TWorker() {
     if (licznikSkrocen != nullptr) {
         delete licznikSkrocen;
         licznikSkrocen = nullptr;
+    }
+    if (timer != nullptr) {
+        if (timer->isActive()) {
+            timer->stop();
+        }
+        delete timer;
+        timer = nullptr;
     }
 
 }

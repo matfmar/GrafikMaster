@@ -1,20 +1,23 @@
 
 #include "ttimerclass.h"
-#include <QThread>
 
 TTimerClass::TTimerClass(QObject *parent)
     : QObject{parent}
 {
+    timer = nullptr;
+}
+
+void TTimerClass::process() {
     timer = new QTimer();
     QObject::connect(timer, SIGNAL(timeout()), this, SLOT(timeFinishedSlot()));
 }
 
-void TTimerClass::process() {
-
-}
-
 void TTimerClass::startTimerTC() {
     timer->start(3000);         //na 3 sekundy, UWAGA: ta funkcja restartuje, jeśli timer już był aktywny
+}
+
+void TTimerClass::startTheTimerFromOutside() {
+    timer->start(3000);
 }
 
 void TTimerClass::stopTimerTC() {
