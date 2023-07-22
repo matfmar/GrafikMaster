@@ -9,6 +9,18 @@ PPrzegladanieGrafikowRoboczych::PPrzegladanieGrafikowRoboczych()
     db = new DBObslugiwaczBazyDanych();
 }
 
+void PPrzegladanieGrafikowRoboczych::wyczyscAktualnaListeGrafikow() {
+    XWyswietlanyGrafik* grafikDoUsuniecia(nullptr);
+    for (auto it=aktualnaListaGrafikow->begin(); it<aktualnaListaGrafikow->end(); ++it) {
+        if ((*it) != nullptr) {
+            grafikDoUsuniecia = *it;
+            delete grafikDoUsuniecia;
+            grafikDoUsuniecia = nullptr;
+            *it = nullptr;
+        }
+    }    
+}
+
 void PPrzegladanieGrafikowRoboczych::wybranoSzukanieGrafikow(int miesiac, int rok) {
     bool result(false);
     std::string wzorNazwy = "w_grafik_" + std::to_string(miesiac) + "_" + std::to_string(rok) + "_";
