@@ -21,6 +21,7 @@ public:
     UIPrzegladanieGrafikowRoboczych(PPrzegladanieGrafikowRoboczych* p, QWidget *parent = nullptr);
     ~UIPrzegladanieGrafikowRoboczych() {}
     void ableRightButton(bool how);
+    void ableLeftButton(bool how);
 public slots:
     void onButtonSzukajClicked();
     void onButtonLeftClicked();
