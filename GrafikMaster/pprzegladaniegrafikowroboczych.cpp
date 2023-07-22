@@ -40,6 +40,8 @@ int PPrzegladanieGrafikowRoboczych::wybranoSzukanieGrafikow(int miesiac, int rok
         licznikGrafikow++;
     }
     ileGrafikowNaLiscie = licznikGrafikow;
+    uiPrzegladanieGrafikowRoboczych->ableLeftButton(false);
+    uiPrzegladanieGrafikowRoboczych->ableRightButton(true);
     return licznikGrafikow;
 }
     
