@@ -20,7 +20,7 @@ class UIPrzegladanieGrafikowRoboczych : public QMainWindow {
 public:
     UIPrzegladanieGrafikowRoboczych(PPrzegladanieGrafikowRoboczych* p, QWidget *parent = nullptr);
     ~UIPrzegladanieGrafikowRoboczych() {}
-    void disableRightButton();
+    void ableRightButton(bool how);
 public slots:
     void onButtonSzukajClicked();
     void onButtonLeftClicked();
