@@ -192,7 +192,6 @@ std::vector<std::string> DBObslugiwaczBazyDanych::wczytajListeNazwPlikowZGrafika
     for (auto it=listaNazwQ.begin(); it<listaNazwQ.end(); ++it) {
         listaNazw.push_back((*it).toStdString());
     }
-    
     delete dir;
     result = true;
     return listaNazw;
