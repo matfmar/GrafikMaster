@@ -4,7 +4,7 @@
 
 
 class UIPrzegladanieGrafikowRoboczych;
-class 
+class XWyswietlanyGrafik;
 
 class PPrzegladanieGrafikowRoboczych
 {
@@ -17,6 +17,7 @@ public:
     void wybranoZamkniecie();
 private:
     UIPrzegladanieGrafikowRoboczych* uiPrzegladanieGrafikowRoboczych;
+    std::vector<XWyswietlanyGrafik*>* aktualnaListaGrafikow;
 };
 
 #endif // PPRZEGLADANIEGRAFIKOWROBOCZYCH_H
