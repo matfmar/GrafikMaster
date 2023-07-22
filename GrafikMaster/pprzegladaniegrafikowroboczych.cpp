@@ -1,10 +1,11 @@
 
 #include "pprzegladaniegrafikowroboczych.h"
 #include "uiprzegladaniegrafikowroboczych.h"
+#include "dto.h"
 
 PPrzegladanieGrafikowRoboczych::PPrzegladanieGrafikowRoboczych()
-    : uiPrzegladanieGrafikowRoboczych(nullptr) {
-
+    : uiPrzegladanieGrafikowRoboczych(nullptr), aktualnaListaGrafikow(nullptr) {
+    aktualnaListaGrafikow = new std::vector<XWyswietlanyGrafik*>();
 }
 
 void PPrzegladanieGrafikowRoboczych::wybranoSzukanieGrafikow(int miesiac, int rok) {
