@@ -5,6 +5,7 @@
 
 class UIPrzegladanieGrafikowRoboczych;
 class XWyswietlanyGrafik;
+class DBObslugiwaczBazyDanych;
 
 class PPrzegladanieGrafikowRoboczych
 {
@@ -18,6 +19,7 @@ public:
 private:
     UIPrzegladanieGrafikowRoboczych* uiPrzegladanieGrafikowRoboczych;
     std::vector<XWyswietlanyGrafik*>* aktualnaListaGrafikow;
+    DBObslugiwaczBazyDanych* db;
 };
 
 #endif // PPRZEGLADANIEGRAFIKOWROBOCZYCH_H
