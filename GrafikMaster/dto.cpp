@@ -1004,4 +1004,30 @@ XGrafik::~XGrafik() {
     }
 }
 
+//XWyswietlanyGrafik===================================================================================================================================================================================
+
+XWyswietlanyGrafik::XWyswietlanyGrafik() : listaPozycjiGrafiku(nullptr) {
+    listaPozycjiGrafiku = new std::vector<XPozycjaGrafiku*>();
+}
+
+XWyswietlanyGrafik::~XWyswietlanyGrafik() {
+    XPozycjaGrafiku* doUsuniecia(nullptr);
+    if (listaPozycjiGrafiku != nullptr) {
+        for (auto it = listaPozycjiGrafiku->begin(); it<listaPozycjiGrafiku->end(); ++it) {
+            if ((*it) != nullptr) {
+                doUsuniecia = *it;
+                delete doUsuniecia;
+                doUsuniecia = nullptr;
+                *it = nullptr;
+            }
+        }
+    }
+}
+
+//XWyswietlanyGrafik::XPozycjaGrafiku=====================================================================================================================================================================
+
+XWyswietlanyGrafik::XPozycjaGrafiku::XPozycjaGrafiku(QString dz, QString dt, QString dy) 
+    : dzien(dz), dzienTygodnia(dt), dyzurant(dy) {}
+
+
 
