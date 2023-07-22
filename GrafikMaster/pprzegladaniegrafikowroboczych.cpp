@@ -5,7 +5,7 @@
 
 PPrzegladanieGrafikowRoboczych::PPrzegladanieGrafikowRoboczych()
     : uiPrzegladanieGrafikowRoboczych(nullptr), aktualnaListaGrafikow(nullptr), db(nullptr), 
-    ileGrafikowNaLiscie(0), ktoryWyswietlamy(0) {
+    ileGrafikowNaLiscie(0), ktoryWyswietlamy(-1) {
     aktualnaListaGrafikow = new std::vector<XWyswietlanyGrafik*>();
     db = new DBObslugiwaczBazyDanych();
 }
@@ -22,7 +22,7 @@ void PPrzegladanieGrafikowRoboczych::wyczyscAktualnaListeGrafikow() {
     }
     aktualnaListaGrafikow->clear();
     ileGrafikowNaLiscie = 0;
-    ktoryWyswietlamy = 0;
+    ktoryWyswietlamy = -1;
 }
 
 int PPrzegladanieGrafikowRoboczych::wybranoSzukanieGrafikow(int miesiac, int rok) {
@@ -48,7 +48,16 @@ void PPrzegladanieGrafikowRoboczych::wybranoGrafikWLewo() {
 }
 
 XWyswietlanyGrafik* PPrzegladanieGrafikowRoboczych::wybranoGrafikWPrawo(int& ktory, int& ileWszystkich) {
-    
+    if (aktualnaListaGrafikow == nullptr || aktualnaListaGrafikow[ktoryWyswietlamy+1] == nullptr) {
+        return nullptr;
+    }
+    ktoryWyswietlamy++;
+    if (ktoryWyswietlamy == ileGrafikowNaLiscie-1) {
+        uiPrzegladanieGrafikowRoboczych->disableRightButton();
+    }
+    ktory = ktoryWyswietlamy;
+    ileWszystkich = ileGrafikowNaLiscie;
+    return aktualnaListaGrafikow[ktoryWyswietlamy];
 }
  
 void PPrzegladanieGrafikowRoboczych::wybranoZamkniecie() {
