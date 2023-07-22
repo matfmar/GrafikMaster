@@ -68,6 +68,10 @@ void UIPrzegladanieGrafikowRoboczych::onButtonSzukajClicked() {
     number = pPrzegladanieGrafikowRoboczych->wybranoSzukanieGrafikow(miesiac, rok);
     labelNumber->setText("0 / " + QString::number(number));
 }
+
+void UIPrzegladanieGrafikowRoboczych::ableRightButton(bool how) {
+    buttonRight->setEnabled(how);
+}
     
 void UIPrzegladanieGrafikowRoboczych::onButtonLeftClicked() {
     
