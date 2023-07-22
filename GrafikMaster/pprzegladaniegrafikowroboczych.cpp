@@ -22,7 +22,7 @@ void PPrzegladanieGrafikowRoboczych::wyczyscAktualnaListeGrafikow() {
     aktualnaListaGrafikow->clear();
 }
 
-void PPrzegladanieGrafikowRoboczych::wybranoSzukanieGrafikow(int miesiac, int rok) {
+int PPrzegladanieGrafikowRoboczych::wybranoSzukanieGrafikow(int miesiac, int rok) {
     //najpierw czyscimy liste juz zaladowanych grafikow
     wyczyscAktualnaListeGrafikow();
     //teraz wczytujemy kolejne
@@ -30,10 +30,13 @@ void PPrzegladanieGrafikowRoboczych::wybranoSzukanieGrafikow(int miesiac, int ro
     std::string wzorNazwy = "w_grafik_" + std::to_string(miesiac) + "_" + std::to_string(rok) + "_";
     std::vector<std::string> listaNazwPlikow = db->wczytajListeNazwPlikowZGrafikamiRoboczymi(wzorNazwy, result);
     XWyswietlanyGrafik* nowyWyswietlanyGrafik(nullptr);
+    int licznikGrafikow(0);
     for (auto it=listaNazwPlikow.begin(); it<listaNazwPlikow.end(); ++it) {
         nowyWyswietlanyGrafik = db->zaladujGrafikOKonkretnejNazwie(*it);
         aktualnaListaGrafikow->push_back(nowyWyswietlanyGrafik);
+        licznikGrafikow++;
     }
+    return licznikGrafikow;
 }
     
 void PPrzegladanieGrafikowRoboczych::wybranoGrafikWLewo() {
