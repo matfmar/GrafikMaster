@@ -21,6 +21,8 @@ void PPrzegladanieGrafikowRoboczych::wyczyscAktualnaListeGrafikow() {
         }
     }
     aktualnaListaGrafikow->clear();
+    ileGrafikowNaLiscie = 0;
+    ktoryWyswietlamy = 0;
 }
 
 int PPrzegladanieGrafikowRoboczych::wybranoSzukanieGrafikow(int miesiac, int rok) {
