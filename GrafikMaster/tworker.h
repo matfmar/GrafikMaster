@@ -63,6 +63,11 @@ private:
     QMutex* mutex;      //do dostępu do informacji czy wychodzić z pętli czy nie
     QTimer* timer;
 
+    int licznikPowtorzenDanegoSkrocenia;
+    int aktualneSkrocenie;
+
+    int obliczIloscSkrocen();
+
 };
 
 #endif // TWORKER_H
