@@ -28,4 +28,16 @@ PPrzegladanieGrafikowRoboczych::~PPrzegladanieGrafikowRoboczych() {
         delete uiPrzegladanieGrafikowRoboczych;
         uiPrzegladanieGrafikowRoboczych = nullptr;
     }
+    if (aktualnaListaGrafikow != nullptr) {
+        XWyswietlanyGrafik* grafikDoUsuniecia(nullptr);
+        for (auto it=aktualnaListaGrafikow->begin(); it<aktualnaListaGrafikow->end(); ++it) {
+            if ((*it) != nullptr) {
+                grafikDoUsuniecia = *it;
+                delete grafikDoUsuniecia;
+                grafikDoUsuniecia = nullptr;
+                *it = nullptr;
+            }
+        }
+        delete aktualnaListaGrafikow;
+    }
 }
