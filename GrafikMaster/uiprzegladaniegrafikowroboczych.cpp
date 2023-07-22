@@ -67,6 +67,13 @@ void UIPrzegladanieGrafikowRoboczych::onButtonLeftClicked() {
 }
     
 void UIPrzegladanieGrafikowRoboczych::onButtonRightClicked() {
+    XWyswietlanyGrafik* grafikDoWyswietlenia(nullptr);
+    int ktory(-1), ileWszystkich(-1);
+    grafikDoWyswietlenia = pPrzegladanieGrafikowRoboczych->wybranoGrafikWPrawo(ktory, ileWszystkich);
+    if (grafikDoWyswietlenia == nullptr) {
+        QMessageBox::critical(this, tr("Błąd"), tr("Nie udało się wyświetlić grafiku."), QMessageBox::Ok);
+        return;
+    }
     
 }
     
