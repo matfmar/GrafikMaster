@@ -59,8 +59,19 @@ void TWorker::startTimerX() {
 }
 
 void TWorker::obliczIloscSkrocen() {
-    if (szybkosc == 3) {
-        
+
+    if (aktualneSkrocenie > 27) {
+        aktualneSkrocenie = szybkosc;
+        return aktualneSkrocenie;
+    }
+    if (licznikPowtorzenDanegoSkrocenia < 3) {
+        licznikPowtorzenDanegoSkrocenia++;
+        return aktualneSkrocenie;
+    }
+    else {
+        licznikPowtorzenDanegoSkrocenia = 0;
+        aktualneSkrocenie += szybkosc;
+        return aktualneSkrocenie;
     }
 }
 
