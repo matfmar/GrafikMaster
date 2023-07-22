@@ -20,6 +20,8 @@ private:
     UIPrzegladanieGrafikowRoboczych* uiPrzegladanieGrafikowRoboczych;
     std::vector<XWyswietlanyGrafik*>* aktualnaListaGrafikow;
     DBObslugiwaczBazyDanych* db;
+
+    void wyczyscAktualnaListeGrafikow();
 };
 
 #endif // PPRZEGLADANIEGRAFIKOWROBOCZYCH_H
