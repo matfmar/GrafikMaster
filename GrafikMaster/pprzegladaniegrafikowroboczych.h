@@ -4,6 +4,7 @@
 
 
 class UIPrzegladanieGrafikowRoboczych;
+class 
 
 class PPrzegladanieGrafikowRoboczych
 {
