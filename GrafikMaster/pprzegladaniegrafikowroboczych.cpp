@@ -18,10 +18,14 @@ void PPrzegladanieGrafikowRoboczych::wyczyscAktualnaListeGrafikow() {
             grafikDoUsuniecia = nullptr;
             *it = nullptr;
         }
-    }    
+    }
+    aktualnaListaGrafikow->clear();
 }
 
 void PPrzegladanieGrafikowRoboczych::wybranoSzukanieGrafikow(int miesiac, int rok) {
+    //najpierw czyscimy liste juz zaladowanych grafikow
+    wyczyscAktualnaListeGrafikow();
+    //teraz wczytujemy kolejne
     bool result(false);
     std::string wzorNazwy = "w_grafik_" + std::to_string(miesiac) + "_" + std::to_string(rok) + "_";
     std::vector<std::string> listaNazwPlikow = db->wczytajListeNazwPlikowZGrafikamiRoboczymi(wzorNazwy, result);
