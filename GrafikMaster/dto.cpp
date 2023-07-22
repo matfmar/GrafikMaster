@@ -1021,6 +1021,7 @@ XWyswietlanyGrafik::~XWyswietlanyGrafik() {
                 *it = nullptr;
             }
         }
+        delete listaPozycjiGrafiku;
     }
 }
 
