@@ -932,7 +932,7 @@ bool XGrafik::wypelnijDzien(int dzien) {        //glowna funkcja wywolywana reku
                     return *zakonczenieSzukania;
                 }
                 //teraz - jeśli jesteśmy na przyspieszaczu - sprawdzamy czy nie trzeba zakończyć procedury i skrócić (wrócić)
-                //odbywa się to PO usunięciu ostatniego (felernego)
+                //odbywa się to PO usunięciu najnowszego grafiku z którego nastąpił powrót - dzięki temu nie powinno być wycieku pamięci
                 if (czyPrzyspieszenie) {
                     //blokujemy dostęp do danych
                     mutex->lock();
