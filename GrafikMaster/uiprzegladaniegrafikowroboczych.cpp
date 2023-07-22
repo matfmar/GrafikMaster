@@ -72,7 +72,11 @@ void UIPrzegladanieGrafikowRoboczych::onButtonSzukajClicked() {
 void UIPrzegladanieGrafikowRoboczych::ableRightButton(bool how) {
     buttonRight->setEnabled(how);
 }
-    
+
+void UIPrzegladanieGrafikowRoboczych::ableLeftButton(bool how) {
+    buttonLeft->setEnabled(how);
+}
+
 void UIPrzegladanieGrafikowRoboczych::onButtonLeftClicked() {
     
 }
