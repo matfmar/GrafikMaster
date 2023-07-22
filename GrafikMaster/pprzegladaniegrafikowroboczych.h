@@ -14,7 +14,7 @@ public:
     ~PPrzegladanieGrafikowRoboczych();
     int wybranoSzukanieGrafikow(int miesiac, int rok);
     void wybranoGrafikWLewo();
-    void wybranoGrafikWPrawo();
+    XWyswietlanyGrafik* wybranoGrafikWPrawo(int& ktory, int& ileWszystkich);
     void wybranoZamkniecie();
 private:
     UIPrzegladanieGrafikowRoboczych* uiPrzegladanieGrafikowRoboczych;
