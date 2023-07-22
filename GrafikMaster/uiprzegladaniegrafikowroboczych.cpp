@@ -78,7 +78,21 @@ void UIPrzegladanieGrafikowRoboczych::ableLeftButton(bool how) {
 }
 
 void UIPrzegladanieGrafikowRoboczych::onButtonLeftClicked() {
-    
+    XWyswietlanyGrafik* grafikDoWyswietlenia(nullptr);
+    int ktory(-1), ileWszystkich(-1);
+    grafikDoWyswietlenia = pPrzegladanieGrafikowRoboczych->wybranoGrafikWLewo(ktory, ileWszystkich);
+    if (grafikDoWyswietlenia == nullptr || grafikDoWyswietlenia->listaPozycjiGrafiku == nullptr) {
+        QMessageBox::critical(this, tr("Błąd"), tr("Nie udało się wyświetlić grafiku."), QMessageBox::Ok);
+        return;
+    }
+    labelNumber->setText(QString::number(ktory) + " / " + QString::number(ileWszystkich));
+    int licznikWierszy(0);
+    for (auto it = grafikDoWyswietlenia->listaPozycjiGrafiku->begin(); it < grafikDoWyswietlenia->listaPozycjiGrafiku->end(); ++it) {
+        tableGrafik->setItem(licznikWierszy, 0, (*it)->dzien);
+        tableGrafik->setItem(licznikWierszy, 1, (*it)->dzienTygodnia);
+        tableGrafik->setItem(licznikWierszy, 2, (*it)->dyzurant);
+        licznikWierszy++;
+    }    
 }
     
 void UIPrzegladanieGrafikowRoboczych::onButtonRightClicked() {
