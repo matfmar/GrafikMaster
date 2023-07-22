@@ -182,7 +182,20 @@ std::vector<std::string> DBObslugiwaczBazyDanych::wczytajDyzurantaTworzacego(std
 }
 
 std::vector<std::string> DBObslugiwaczBazyDanych::wczytajListeNazwPlikowZGrafikamiRoboczymi(std::string wzorNazwy, bool& result) {
+    QDir* dir = new QDir("data/grafiki_robocze");
+    std::vector<std::string> listaNazw;
+    QStringList filters;
+    std::string filtr = wzorNazwy + "*.data";
+    filters << QString::fromStdString(filtr);
+    dir->setNameFilters(filters);
+    QStringList listaNazwQ = dir->entryList(QDir::Files);
+    for (auto it=listaNazwQ.begin(); it<listaNazwQ.end(); ++it) {
+        listaNazw.push_back((*it).toStdString());
+    }
     
+    delete dir;
+    result = true;
+    return listaNazw;
 }
 
 DBObslugiwaczBazyDanych::~DBObslugiwaczBazyDanych() {
