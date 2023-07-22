@@ -17,12 +17,19 @@ public:
     //ObslugaDyzurantow
     std::vector<XDyzurant*>* getTablicaDyzurantowFull();
     bool writeListaDyzurantowFull(std::vector<XDyzurant*>* tdf);
-    bool zapiszUlozonyGrafikDoPliku(XGrafik* grafik, int id);
-    bool zapiszUstawieniaDyzurantaTworzacego(std::vector<std::string> dane, std::string dyzurant);
     bool zapiszNicki(std::vector<std::string> nicki);
     std::vector<std::string> wczytajNicki(bool& result);
     std::vector<std::string> wczytajDyzurantaTworzacego(std::string nick, bool& result);
+
+    //ObslugaZapisywanychDanych
+    bool zapiszUstawieniaDyzurantaTworzacego(std::vector<std::string> dane, std::string dyzurant);
     bool usunWszystkiePlikiZUstawieniami();
+
+    //ObslugaSwiezoTworzonychGrafikow
+    bool zapiszUlozonyGrafikDoPliku(XGrafik* grafik, int id);
+
+    //ObslugaPrzegladaniaGrafikowRoboczych
+    std::vector<std::string> wczytajListeNazwPlikowZGrafikamiRoboczymi(bool& result);
 private:
     std::ifstream inputFileReader;
     std::ofstream outputFileReader;
