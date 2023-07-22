@@ -3,6 +3,8 @@
 #include "dto.h"
 #include <QDebug>
 #include <filesystem>
+#include <QDir>
+#include <QStringList>
 
 DBObslugiwaczBazyDanych::DBObslugiwaczBazyDanych() {}
 
@@ -177,6 +179,10 @@ std::vector<std::string> DBObslugiwaczBazyDanych::wczytajDyzurantaTworzacego(std
     inputFileReader.close();
     result = true;
     return v;
+}
+
+std::vector<std::string> DBObslugiwaczBazyDanych::wczytajListeNazwPlikowZGrafikamiRoboczymi(std::string wzorNazwy, bool& result) {
+    
 }
 
 DBObslugiwaczBazyDanych::~DBObslugiwaczBazyDanych() {
