@@ -29,7 +29,7 @@ public:
     bool zapiszUlozonyGrafikDoPliku(XGrafik* grafik, int id);
 
     //ObslugaPrzegladaniaGrafikowRoboczych
-    std::vector<std::string> wczytajListeNazwPlikowZGrafikamiRoboczymi(bool& result);
+    std::vector<std::string> wczytajListeNazwPlikowZGrafikamiRoboczymi(std::string wzorNazwy, bool& result);    //wzorNazwy do (i włącznie z) podkreślnikiem przed id
 private:
     std::ifstream inputFileReader;
     std::ofstream outputFileReader;
