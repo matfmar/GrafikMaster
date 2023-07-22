@@ -4,8 +4,9 @@
 #include "dto.h"
 
 PPrzegladanieGrafikowRoboczych::PPrzegladanieGrafikowRoboczych()
-    : uiPrzegladanieGrafikowRoboczych(nullptr), aktualnaListaGrafikow(nullptr) {
+    : uiPrzegladanieGrafikowRoboczych(nullptr), aktualnaListaGrafikow(nullptr), db(nullptr) {
     aktualnaListaGrafikow = new std::vector<XWyswietlanyGrafik*>();
+    db = new DBObslugiwaczBazyDanych();
 }
 
 void PPrzegladanieGrafikowRoboczych::wybranoSzukanieGrafikow(int miesiac, int rok) {
@@ -40,5 +41,9 @@ PPrzegladanieGrafikowRoboczych::~PPrzegladanieGrafikowRoboczych() {
             }
         }
         delete aktualnaListaGrafikow;
+    }
+    if (db != nullptr) {
+        delete db;
+        db = nullptr;
     }
 }
