@@ -2,6 +2,7 @@
 #include "uiprzegladaniegrafikowroboczych.h"
 #include "pprzegladaniegrafikowroboczych.h"
 #include <QMessageBox>
+#include <QStringList>
 
 UIPrzegladanieGrafikowRoboczych::UIPrzegladanieGrafikowRoboczych(PPrzegladanieGrafikowRoboczych* p, QWidget *parent)
     : QMainWindow{parent} {
@@ -31,7 +32,13 @@ UIPrzegladanieGrafikowRoboczych::UIPrzegladanieGrafikowRoboczych(PPrzegladanieGr
     layoutChoice->addWidget(labelNumber);
     layoutChoice->addWidget(buttonRight);
 
-    tableGrafik = new QTableWidget(31, 3, this);
+    tableGrafik = new QTableWidget(32, 3, this);
+    QStringList etykiety;
+    etykiety << "#" << "Dzień tygodnia" << "Dyżurant";
+    tableGrafik->setHorizontalHeaderLabels(etykiety);
+    tableGrafik->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    tableGrafik->setSelectionBehavior(QAbstractItemView::SelectRows);
+    tableGrafik->setSelectionMode(QAbstractItemView::SingleSelection);        
     buttonClose = new QPushButton(tr("Zamknij"), this);
 
     mainLayout = new QVBoxLayout(this);
@@ -70,12 +77,18 @@ void UIPrzegladanieGrafikowRoboczych::onButtonRightClicked() {
     XWyswietlanyGrafik* grafikDoWyswietlenia(nullptr);
     int ktory(-1), ileWszystkich(-1);
     grafikDoWyswietlenia = pPrzegladanieGrafikowRoboczych->wybranoGrafikWPrawo(ktory, ileWszystkich);
-    if (grafikDoWyswietlenia == nullptr) {
+    if (grafikDoWyswietlenia == nullptr || grafikDoWyswietlenia->listaPozycjiGrafiku == nullptr) {
         QMessageBox::critical(this, tr("Błąd"), tr("Nie udało się wyświetlić grafiku."), QMessageBox::Ok);
         return;
     }
     labelNumber->setText(QString::number(ktory) + " / " + QString::number(ileWszystkich));
-    for (auto it = 
+    int licznikWierszy(0);
+    for (auto it = grafikDoWyswietlenia->listaPozycjiGrafiku->begin(); it < grafikDoWyswietlenia->listaPozycjiGrafiku->end(); ++it) {
+        tableGrafik->setItem(licznikWierszy, 0, (*it)->dzien);
+        tableGrafik->setItem(licznikWierszy, 1, (*it)->dzienTygodnia);
+        tableGrafik->setItem(licznikWierszy, 2, (*it)->dyzurant);
+        licznikWierszy++;
+    }
 }
     
 void UIPrzegladanieGrafikowRoboczych::onButtonCloseClicked() {
