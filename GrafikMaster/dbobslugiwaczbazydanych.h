@@ -8,6 +8,7 @@
 
 class XDyzurant;
 class XGrafik;
+class XWyswietlanyGrafik;
 
 class DBObslugiwaczBazyDanych {
 public:
@@ -30,6 +31,7 @@ public:
 
     //ObslugaPrzegladaniaGrafikowRoboczych
     std::vector<std::string> wczytajListeNazwPlikowZGrafikamiRoboczymi(std::string wzorNazwy, bool& result);    //wzorNazwy do (i włącznie z) podkreślnikiem przed id
+    XWyswietlanyGrafik* zaladujGrafikOKonkretnejNazwie(std::string nazwa);
 private:
     std::ifstream inputFileReader;
     std::ofstream outputFileReader;
