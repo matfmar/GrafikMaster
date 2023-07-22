@@ -74,7 +74,8 @@ void UIPrzegladanieGrafikowRoboczych::onButtonRightClicked() {
         QMessageBox::critical(this, tr("Błąd"), tr("Nie udało się wyświetlić grafiku."), QMessageBox::Ok);
         return;
     }
-    
+    labelNumber->setText(QString::number(ktory) + " / " + QString::number(ileWszystkich));
+    for (auto it = 
 }
     
 void UIPrzegladanieGrafikowRoboczych::onButtonCloseClicked() {
