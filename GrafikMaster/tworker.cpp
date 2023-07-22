@@ -8,7 +8,7 @@
 TWorker::TWorker(XGrafik* g, std::vector<XDyzurantTworzacy*>* tdt, int ile, QSemaphore* sem, QSemaphore* sem2, QSemaphore* sem3, int sz, QObject* parent)
     : QObject(parent), grafikBazowy(g), tablicaDyzurantowTworzacych(tdt), ileIteracji(ile), semafor(sem), semafor2(sem2),
     semaforLabel(sem3), szybkosc(sz), timerClass(nullptr), subThreadForTimer(nullptr), decyzjaOSkroceniu(nullptr), licznikSkrocen(nullptr),
-    mutex(nullptr), timer(nullptr) {
+    mutex(nullptr), timer(nullptr), aktualneSkrocenie(sz), licznikPowtorzenDanegoSkrocenia(0) {
 
     result = new int(-1);
     if (szybkosc != 0) {
@@ -56,6 +56,12 @@ void TWorker::process() {
 
 void TWorker::startTimerX() {
     emit startTheTimer();       //docelowo na 3 sekundy
+}
+
+void TWorker::obliczIloscSkrocen() {
+    if (szybkosc == 3) {
+        
+    }
 }
 
 void TWorker::timePassed() {
