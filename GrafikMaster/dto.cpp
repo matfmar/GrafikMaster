@@ -910,32 +910,6 @@ bool XGrafik::wypelnijDzien(int dzien) {        //glowna funkcja wywolywana reku
     bool resultDodania(false);
     int kluczWybranegoDyzurantaDoTegoDnia(-1);
     do {
-        //najpierw - o ile działamy na przyspieszaczu - trzeba sprawdzić czy może przypadkiem nie trzeba zakończyć procedury
-        //bo dokładnie w tym miejscu znajdzie się sterowanie jesli poprzednia skończyła jako false
-        if (czyPrzyspieszenie) {
-            //blokujemy dostęp do danych
-            mutex->lock();
-            if (*decyzjaOSkroceniu) {
-                if (*licznikSkrocen > 0 && dzien > 1) {     //czyli jesteśmy w jakiejś dalszej iteracji, czyli można śmiało skracać
-                    (*licznikSkrocen)--;
-                    mutex->unlock();    //odblokowujemy przed skróceniem
-                    return false;
-                }
-                else if (*licznikSkrocen > 0 && dzien <= 1) {   //drugie oznacza że jesteśmy w pierwszej iteracji, czyli lepiej nie wychodźmy z niej
-                    *licznikSkrocen = 0;
-                    *decyzjaOSkroceniu = false;
-                    parentWorker->startTimerX();     //ponieważ to już był ostatni skrót, na nowo włączamy timer
-                }
-                else {      //czyli *licznikSkrocen == 0. Więc koniec skracania.
-                    *licznikSkrocen = 0;    //redundantne, ale może lepiej niech zostanie
-                    *decyzjaOSkroceniu = false; //kończymy cykl skracania
-                    parentWorker->startTimerX(); //ponieważ był to już ostatni skrót, restartujemy timer
-                    mutex->unlock();    //odblokowujemy jw.
-                    return false;
-                }
-            }
-            mutex->unlock();    //odblokowujemy dostęp do zmiennych sterujących
-        }
         do {
             if (nowyGrafik != nullptr){         //robi się tylko gdy warunek pętli się schrzanił i trzeba liczyć jeszcze raz
                 //dla USTAWIONY_NIE_DO_RUSZENIA cała ta instrukcja warunkowa uruchomiona była została z drugiego warunku, czyli trzeba wrócić krok wstecz
@@ -956,6 +930,32 @@ bool XGrafik::wypelnijDzien(int dzien) {        //glowna funkcja wywolywana reku
                 //a teraz BARDZO WAŻNE: tablica MOŻLIWI NIE UNIKAJĄCY mogła się właśnie wyczyścić, więc trzeba wtedy ZAKOŃCZYĆ DZIAŁANIE TEJ INSTANCJI
                 if (tablicaDni[dzien]->mozliwiNieUnikajacyDyzuranci.empty()) {
                     return *zakonczenieSzukania;
+                }
+                //teraz - jeśli jesteśmy na przyspieszaczu - sprawdzamy czy nie trzeba zakończyć procedury i skrócić (wrócić)
+                //odbywa się to PO usunięciu ostatniego (felernego)
+                if (czyPrzyspieszenie) {
+                    //blokujemy dostęp do danych
+                    mutex->lock();
+                    if (*decyzjaOSkroceniu) {
+                        if (*licznikSkrocen > 0 && dzien > 1) {     //czyli jesteśmy w jakiejś dalszej iteracji, czyli można śmiało skracać
+                            (*licznikSkrocen)--;
+                            mutex->unlock();    //odblokowujemy przed skróceniem
+                            return false;
+                        }
+                        else if (*licznikSkrocen > 0 && dzien <= 1) {   //drugie oznacza że jesteśmy w pierwszej iteracji, czyli lepiej nie wychodźmy z niej
+                            *licznikSkrocen = 0;
+                            *decyzjaOSkroceniu = false;
+                            parentWorker->startTimerX();     //ponieważ to już był ostatni skrót, na nowo włączamy timer
+                        }
+                        else {      //czyli *licznikSkrocen == 0. Więc koniec skracania.
+                            *licznikSkrocen = 0;    //redundantne, ale może lepiej niech zostanie
+                            *decyzjaOSkroceniu = false; //kończymy cykl skracania
+                            parentWorker->startTimerX(); //ponieważ był to już ostatni skrót, restartujemy timer
+                            mutex->unlock();    //odblokowujemy jw.
+                            return false;
+                        }
+                    }
+                    mutex->unlock();    //odblokowujemy dostęp do zmiennych sterujących
                 }
             }
             nowyGrafik = new XGrafik(this);
