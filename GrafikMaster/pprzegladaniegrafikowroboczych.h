@@ -19,6 +19,8 @@ public:
 private:
     UIPrzegladanieGrafikowRoboczych* uiPrzegladanieGrafikowRoboczych;
     std::vector<XWyswietlanyGrafik*>* aktualnaListaGrafikow;
+    int ileGrafikowNaLiscie;
+    int ktoryWyswietlamy;
     DBObslugiwaczBazyDanych* db;
 
     void wyczyscAktualnaListeGrafikow();
