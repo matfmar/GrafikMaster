@@ -6,6 +6,7 @@
 #include <vector>
 #include <map>
 #include <QMutex>
+#include <QString>
 
 class DBObslugiwaczBazyDanych;
 class TWorker;
@@ -239,6 +240,20 @@ private:
     void dodajUnikanieTrojek(XDyzurantTworzacy::XLiczniki* licznikDt, XDyzurantTworzacy* dt, int klucz, bool& result, int dzien);
     bool sprawdzPustoscZbioruMozliwiNieUnikajacy(int dzien);
     bool sprawdzZgodnoscZMinimalnaLiczbaDyzurowDlaWszystkich();
+};
+
+//XWyswietlanyGrafik
+
+struct XWyswietlanyGrafik {
+    XWyswietlanyGrafik();
+    ~XWyswietlanyGrafik();
+    struct XPozycjaGrafiku {
+        XPozycjaGrafiku(QString dz, QString dt, QString dy);
+        QString dzien;
+        QString dzienTygodnia;
+        QString dyzurant;
+    }
+    std::vector<XPozycjaGrafiku*>* listaPozycjiGrafiku;
 };
 
 //GENERAL
