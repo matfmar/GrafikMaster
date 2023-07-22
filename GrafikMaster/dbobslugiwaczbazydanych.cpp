@@ -85,7 +85,7 @@ bool DBObslugiwaczBazyDanych::zapiszUlozonyGrafikDoPliku(XGrafik* grafik, int id
     std::vector<XDzien*> tablicaDni = grafik->udostepnijTabliceDni();
     std::string strToWrite("");
     for (auto it = tablicaDni.begin()+1; it<tablicaDni.end()-1; ++it) { //nie bierzemy pod uwagę pustych dni dołożonych dla ułatwienia algorytmu
-        strToWrite = std::to_string((*it)->liczbaDnia) + ". (" + przeliczDzienTygodniaNaLancuch((*it)->dzienTygodnia) + "): " + (*it)->dyzurantWybrany->getNick();
+        strToWrite = std::to_string((*it)->liczbaDnia) + ";" + przeliczDzienTygodniaNaLancuch((*it)->dzienTygodnia) + ";" + (*it)->dyzurantWybrany->getNick() + ";";
         outputFileReader << strToWrite << std::endl;
     }
     outputFileReader.close();
@@ -179,6 +179,46 @@ std::vector<std::string> DBObslugiwaczBazyDanych::wczytajDyzurantaTworzacego(std
     inputFileReader.close();
     result = true;
     return v;
+}
+
+XWyswietlanyGrafik* DBObslugiwaczBazyDanych::zaladujGrafikOKonkretnejNazwie(std::string nazwa) {
+    inputFileReader.open(nazwa);
+    if (!inputFileReader.is_open()) {
+        return nullptr;
+    }
+    XWyswietlanyGrafik* nowyWyswietlanyGrafik = new XWyswietlanyGrafik();
+    XWyswietlanyGrafik::XPozycjaGrafiku* nowaPozycjaGrafiku(nullptr);
+    std::string line(""), subline(""), dz(""), dt(""), dy("");
+    int licznikSrednikow(0);
+    while (getline(inputFileReader, line)) {
+        for (char c : line) {
+            if (c != ';') {
+                subline += c;
+            }
+            else {
+                if (licznikSrednikow == 0) {
+                    dz = subline;
+                    subline = "";
+                    licznikSrednikow++;
+                }
+                else if (licznikSrednikow == 1) {
+                    dt = subline;
+                    subline = "";
+                    licznikSrednikow++;
+                }
+                else if (licznikSrednikow >= 2) {
+                    dy = subline;
+                    subline = "";
+                    licznikSrednikow++;
+                }
+            }
+        }
+        subline = "";
+        licznikSrednikow = 0;
+        nowaPozycjaGrafiku = new XWyswietlanyGrafik::XPozycjaGrafiku(dz, dt, dy);
+        nowyWyswietlanyGrafik->listaPozycjiGrafiku->push_back(nowaPozycjaGrafiku);
+    }
+    return nowyWyswietlanyGrafik;
 }
 
 std::vector<std::string> DBObslugiwaczBazyDanych::wczytajListeNazwPlikowZGrafikamiRoboczymi(std::string wzorNazwy, bool& result) {
