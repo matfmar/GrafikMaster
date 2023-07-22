@@ -53,7 +53,10 @@ XWyswietlanyGrafik* PPrzegladanieGrafikowRoboczych::wybranoGrafikWPrawo(int& kto
     }
     ktoryWyswietlamy++;
     if (ktoryWyswietlamy == ileGrafikowNaLiscie-1) {
-        uiPrzegladanieGrafikowRoboczych->disableRightButton();
+        uiPrzegladanieGrafikowRoboczych->ableRightButton(false);
+    }
+    else {
+        uiPrzegladanieGrafikowRoboczych->ableRightButton(true);
     }
     ktory = ktoryWyswietlamy;
     ileWszystkich = ileGrafikowNaLiscie;
