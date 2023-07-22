@@ -28,6 +28,12 @@ TWorker::TWorker(XGrafik* g, std::vector<XDyzurantTworzacy*>* tdt, int ile, QSem
         mutex = new QMutex();
         //zaczynamy działanie wątku dla timera
         subThreadForTimer->start();
+        switch (szybkosc) {
+            case 3: licznikPetliSkrocen = 3; break;
+            case 5: licznikPetliSkrocen = 2; break;
+            case 10: licznikPetliSkrocen = 1; break;
+            default: licznikPetliSkrocen = 3; break;
+        }
     }
 }
 
@@ -59,12 +65,14 @@ void TWorker::startTimerX() {
 }
 
 void TWorker::obliczIloscSkrocen() {
-
+//algorytm działa następująco: dla szybkosci 3,5,10 dane skrócenie powtarzane jest odp. 3,2,1 razy,
+//a następnie wielkość skrócenia jest zwiększana o odp. 3,5,10.
+//jeśli skrót przekracza 27, z powrotem zaczynamy od pierwszej wersji.
     if (aktualneSkrocenie > 27) {
         aktualneSkrocenie = szybkosc;
         return aktualneSkrocenie;
     }
-    if (licznikPowtorzenDanegoSkrocenia < 3) {
+    if (licznikPowtorzenDanegoSkrocenia < licznikPetliSkrocen) {
         licznikPowtorzenDanegoSkrocenia++;
         return aktualneSkrocenie;
     }
@@ -80,7 +88,7 @@ void TWorker::timePassed() {
     mutex->lock();
     //ustawiamy odpowiednio zmienne sterujace
     *decyzjaOSkroceniu = true;
-    *licznikSkrocen = szybkosc;     //czyli 3, 5 lub 10
+    *licznikSkrocen = obliczIloscSkrocen();     //czyli 3, 5 lub 10
     //odblokowujemy dostęp
     mutex->unlock();
 }
