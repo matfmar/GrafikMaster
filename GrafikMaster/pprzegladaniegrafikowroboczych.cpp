@@ -73,14 +73,17 @@ void PPrzegladanieGrafikowRoboczych::wybranoGrafikWLewo() {
     if (ktoryWyswietlamy == ileGrafikowNaLiscie-1) {
         uiPrzegladanieGrafikowRoboczych->ableRightButton(false);
         uiPrzegladanieGrafikowRoboczych->ableLeftButton(true);
+        uiPrzegladanieGrafikowRoboczych->ableUsunButton(true);
     }
     else if (ktoryWyswietlamy == 0) {
         uiPrzegladanieGrafikowRoboczych->ableRightButton(true);
-        uiPrzegladanieGrafikowRoboczych->ableLeftButton(false);        
+        uiPrzegladanieGrafikowRoboczych->ableLeftButton(false);
+        uiPrzegladanieGrafikowRoboczych->ableUsunButton(true);
     }
     else {
         uiPrzegladanieGrafikowRoboczych->ableRightButton(true);
         uiPrzegladanieGrafikowRoboczych->ableLeftButton(true);
+        uiPrzegladanieGrafikowRoboczych->ableUsunButton(true);
     }
     ktory = ktoryWyswietlamy+1;
     ileWszystkich = ileGrafikowNaLiscie;
@@ -95,18 +98,22 @@ XWyswietlanyGrafik* PPrzegladanieGrafikowRoboczych::wybranoGrafikWPrawo(int& kto
     if (ktoryWyswietlamy == ileGrafikowNaLiscie-1) {
         uiPrzegladanieGrafikowRoboczych->ableRightButton(false);
         uiPrzegladanieGrafikowRoboczych->ableLeftButton(true);
+        uiPrzegladanieGrafikowRoboczych->ableUsunButton(true);
     }
     else if (ktoryWyswietlamy == 0) {
         uiPrzegladanieGrafikowRoboczych->ableRightButton(true);
         uiPrzegladanieGrafikowRoboczych->ableLeftButton(false);        
+        uiPrzegladanieGrafikowRoboczych->ableUsunButton(true);
     }
     else if (ileGrafikowNaLiscie == 1) {
         uiPrzegladanieGrafikowRoboczych->ableRightButton(false);
         uiPrzegladanieGrafikowRoboczych->ableLeftButton(false);           
+        uiPrzegladanieGrafikowRoboczych->ableUsunButton(true);
     }
     else {
         uiPrzegladanieGrafikowRoboczych->ableRightButton(true);
         uiPrzegladanieGrafikowRoboczych->ableLeftButton(true);
+        uiPrzegladanieGrafikowRoboczych->ableUsunButton(true);
     }
     ktory = ktoryWyswietlamy+1;
     ileWszystkich = ileGrafikowNaLiscie;
