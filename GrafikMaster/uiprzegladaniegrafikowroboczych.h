@@ -23,6 +23,7 @@ public:
     void ableRightButton(bool how);
     void ableLeftButton(bool how);
     void ableUsunButton(bool how);
+    void wyswietlKonkretnyGrafik(XWyswietlanyGrafik* grafikDoWyswietlenia, int ktory, int ileWszystkich);
 public slots:
     void onButtonSzukajClicked();
     void onButtonLeftClicked();
