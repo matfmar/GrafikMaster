@@ -54,8 +54,12 @@ bool PPrzegladanieGrafikowRoboczych::wybranoUsuniecieGrafiku() {
     if (!resultUsunieciePliku) {
         return false;
     }
-    aktualnaListaGrafikow
-    if (ileGrafiko
+    auto itDoUsuniecia = aktualnaListaGrafikow->begin() + ktoryWyswietlamy;
+    aktualnaListaGrafikow->erase(itDoUsuniecia);
+    ileGrafikowNaLiscie--;
+    if (ileGrafikowNaLiscie == 0) {
+        
+    }
 }
     
 void PPrzegladanieGrafikowRoboczych::wybranoGrafikWLewo() {
