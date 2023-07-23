@@ -2,6 +2,7 @@
 #ifndef PPRZEGLADANIEGRAFIKOWROBOCZYCH_H
 #define PPRZEGLADANIEGRAFIKOWROBOCZYCH_H
 
+#include <vector>
 
 class UIPrzegladanieGrafikowRoboczych;
 class XWyswietlanyGrafik;
@@ -14,7 +15,7 @@ public:
     ~PPrzegladanieGrafikowRoboczych();
     void pokazOknoPrzegladaniaGrafikow();
     int wybranoSzukanieGrafikow(int miesiac, int rok);
-    void wybranoGrafikWLewo();
+    XWyswietlanyGrafik* wybranoGrafikWLewo(int& ktory, int& ileWszystkich);
     XWyswietlanyGrafik* wybranoGrafikWPrawo(int& ktory, int& ileWszystkich);
     void wybranoZamkniecie();
     bool wybranoUsuniecieGrafiku(bool& czyCosZostaje);

@@ -14,6 +14,7 @@
 #include <QTableWidget>
 
 class PPrzegladanieGrafikowRoboczych;
+class XWyswietlanyGrafik;
 
 class UIPrzegladanieGrafikowRoboczych : public QMainWindow {
     Q_OBJECT

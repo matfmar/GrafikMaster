@@ -1,6 +1,7 @@
 
 #include "pprzegladaniegrafikowroboczych.h"
 #include "uiprzegladaniegrafikowroboczych.h"
+#include "dbobslugiwaczbazydanych.h"
 #include "dto.h"
 
 PPrzegladanieGrafikowRoboczych::PPrzegladanieGrafikowRoboczych()
@@ -11,7 +12,7 @@ PPrzegladanieGrafikowRoboczych::PPrzegladanieGrafikowRoboczych()
     db = new DBObslugiwaczBazyDanych();
 }
 
-void PPrzegladanieGrafikowRoboczych::uiPrzegladanieGrafikowRoboczych() {
+void PPrzegladanieGrafikowRoboczych::pokazOknoPrzegladaniaGrafikow() {
     uiPrzegladanieGrafikowRoboczych->show();
 }
 
@@ -54,7 +55,7 @@ bool PPrzegladanieGrafikowRoboczych::wybranoUsuniecieGrafiku(bool& czyCosZostaje
     if (ktoryWyswietlamy == -1 || ktoryWyswietlamy >= ileGrafikowNaLiscie - 1) {
         return false;
     }
-    std::string nazwaPliku = aktualnaListaGrafikow[ktoryWyswietlamy]->nazwaPliku;
+    std::string nazwaPliku = (*aktualnaListaGrafikow)[ktoryWyswietlamy]->nazwaPliku;
     bool resultUsunieciePliku = db->usunPlikGrafikuRoboczego(nazwaPliku);
     if (!resultUsunieciePliku) {
         return false;
@@ -77,7 +78,7 @@ bool PPrzegladanieGrafikowRoboczych::wybranoUsuniecieGrafiku(bool& czyCosZostaje
         uiPrzegladanieGrafikowRoboczych->ableLeftButton(false);
         uiPrzegladanieGrafikowRoboczych->ableUsunButton(true);
         ktoryWyswietlamy = 0;
-        uiPrzegladanieGrafikowRoboczych->wyswietlKonkretnyGrafik(aktualnaListaGrafikow[0], 1, 1);
+        uiPrzegladanieGrafikowRoboczych->wyswietlKonkretnyGrafik((*aktualnaListaGrafikow)[0], 1, 1);
         return true;
     }
     else {
@@ -87,7 +88,7 @@ bool PPrzegladanieGrafikowRoboczych::wybranoUsuniecieGrafiku(bool& czyCosZostaje
             uiPrzegladanieGrafikowRoboczych->ableLeftButton(false);
             uiPrzegladanieGrafikowRoboczych->ableUsunButton(true);            
             ktoryWyswietlamy = 0;
-            uiPrzegladanieGrafikowRoboczych->wyswietlKonkretnyGrafik(aktualnaListaGrafikow[0], 1, ileGrafikowNaLiscie);
+            uiPrzegladanieGrafikowRoboczych->wyswietlKonkretnyGrafik((*aktualnaListaGrafikow)[0], 1, ileGrafikowNaLiscie);
         }
         else if (ktoryWyswietlamy == ileGrafikowNaLiscie) {
             czyCosZostaje = true;
@@ -95,22 +96,22 @@ bool PPrzegladanieGrafikowRoboczych::wybranoUsuniecieGrafiku(bool& czyCosZostaje
             uiPrzegladanieGrafikowRoboczych->ableLeftButton(true);
             uiPrzegladanieGrafikowRoboczych->ableUsunButton(true);                
             ktoryWyswietlamy = ileGrafikowNaLiscie - 1;
-            uiPrzegladanieGrafikowRoboczych->wyswietlKonkretnyGrafik(aktualnaListaGrafikow[ktoryWyswietlamy], ileGrafikowNaLiscie, ileGrafikowNaLiscie);
+            uiPrzegladanieGrafikowRoboczych->wyswietlKonkretnyGrafik((*aktualnaListaGrafikow)[ktoryWyswietlamy], ileGrafikowNaLiscie, ileGrafikowNaLiscie);
         }
         else {
             czyCosZostaje = true;
             uiPrzegladanieGrafikowRoboczych->ableRightButton(true);
             uiPrzegladanieGrafikowRoboczych->ableLeftButton(true);
-            uiPrzegladanieGrafikowRoboczych->ableUsunButton(true);                
-            uiPrzegladanieGrafikowRoboczych->wyswietlKonkretnyGrafik(aktualnaListaGrafikow[ktoryWyswietlamy], ktoryWyswietlamy+1, ileGrafikowNaLiscie);            
+            uiPrzegladanieGrafikowRoboczych->ableUsunButton(true);
+            uiPrzegladanieGrafikowRoboczych->wyswietlKonkretnyGrafik((*aktualnaListaGrafikow)[ktoryWyswietlamy], ktoryWyswietlamy+1, ileGrafikowNaLiscie);
         }
         return true;
     }
     return true;
 }
     
-void PPrzegladanieGrafikowRoboczych::wybranoGrafikWLewo(int& ktory, int& ileWszystkich) {
-    if ((aktualnaListaGrafikow == nullptr || ktoryWyswietlamy == 0) || aktualnaListaGrafikow[ktoryWyswietlamy-1] == nullptr) {
+XWyswietlanyGrafik* PPrzegladanieGrafikowRoboczych::wybranoGrafikWLewo(int& ktory, int& ileWszystkich) {
+    if ((aktualnaListaGrafikow == nullptr || ktoryWyswietlamy == 0) || (*aktualnaListaGrafikow)[ktoryWyswietlamy-1] == nullptr) {
         return nullptr;
     }
     ktoryWyswietlamy--;
@@ -131,11 +132,11 @@ void PPrzegladanieGrafikowRoboczych::wybranoGrafikWLewo(int& ktory, int& ileWszy
     }
     ktory = ktoryWyswietlamy+1;
     ileWszystkich = ileGrafikowNaLiscie;
-    return aktualnaListaGrafikow[ktoryWyswietlamy];        
+    return (*aktualnaListaGrafikow)[ktoryWyswietlamy];
 }
 
 XWyswietlanyGrafik* PPrzegladanieGrafikowRoboczych::wybranoGrafikWPrawo(int& ktory, int& ileWszystkich) {
-    if ((aktualnaListaGrafikow == nullptr || ktoryWyswietlamy == ileGrafikowNaLiscie-1) || aktualnaListaGrafikow[ktoryWyswietlamy+1] == nullptr) {
+    if ((aktualnaListaGrafikow == nullptr || ktoryWyswietlamy == ileGrafikowNaLiscie-1) || (*aktualnaListaGrafikow)[ktoryWyswietlamy+1] == nullptr) {
         return nullptr;
     }
     ktoryWyswietlamy++;
@@ -161,7 +162,7 @@ XWyswietlanyGrafik* PPrzegladanieGrafikowRoboczych::wybranoGrafikWPrawo(int& kto
     }
     ktory = ktoryWyswietlamy+1;
     ileWszystkich = ileGrafikowNaLiscie;
-    return aktualnaListaGrafikow[ktoryWyswietlamy];
+    return (*aktualnaListaGrafikow)[ktoryWyswietlamy];
 }
  
 void PPrzegladanieGrafikowRoboczych::wybranoZamkniecie() {

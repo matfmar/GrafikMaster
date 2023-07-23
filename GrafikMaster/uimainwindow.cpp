@@ -49,7 +49,7 @@ void UIMainWindow::onButtonZakonczBezpiecznieTworzenieGrafikowClicked() {
 }
 
 void UIMainWindow::onButtonPrzegladajGrafikiRoboczeClicked() {
-
+    pMain -> wybranoPrzegladanieGrafikowRoboczych();
 }
 
 void UIMainWindow::onButtonPrzegladajGrafikiOstateczneClicked() {

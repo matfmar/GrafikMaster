@@ -188,7 +188,8 @@ XWyswietlanyGrafik* DBObslugiwaczBazyDanych::zaladujGrafikOKonkretnejNazwie(std:
     }
     XWyswietlanyGrafik* nowyWyswietlanyGrafik = new XWyswietlanyGrafik(nazwa);
     XWyswietlanyGrafik::XPozycjaGrafiku* nowaPozycjaGrafiku(nullptr);
-    std::string line(""), subline(""), dz(""), dt(""), dy("");
+    std::string line(""), subline("");
+    QString dz(""), dt(""), dy("");
     int licznikSrednikow(0);
     while (getline(inputFileReader, line)) {
         for (char c : line) {
@@ -197,17 +198,17 @@ XWyswietlanyGrafik* DBObslugiwaczBazyDanych::zaladujGrafikOKonkretnejNazwie(std:
             }
             else {
                 if (licznikSrednikow == 0) {
-                    dz = subline;
+                    dz = QString::fromStdString(subline);
                     subline = "";
                     licznikSrednikow++;
                 }
                 else if (licznikSrednikow == 1) {
-                    dt = subline;
+                    dt = QString::fromStdString(subline);
                     subline = "";
                     licznikSrednikow++;
                 }
                 else if (licznikSrednikow >= 2) {
-                    dy = subline;
+                    dy = QString::fromStdString(subline);
                     subline = "";
                     licznikSrednikow++;
                 }

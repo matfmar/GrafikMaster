@@ -3,6 +3,7 @@
 #include "pprzegladaniegrafikowroboczych.h"
 #include <QMessageBox>
 #include <QStringList>
+#include "dto.h"
 
 UIPrzegladanieGrafikowRoboczych::UIPrzegladanieGrafikowRoboczych(PPrzegladanieGrafikowRoboczych* p, QWidget *parent)
     : QMainWindow{parent} {
@@ -115,10 +116,14 @@ void UIPrzegladanieGrafikowRoboczych::onButtonLeftClicked() {
     }
     labelNumber->setText(QString::number(ktory) + " / " + QString::number(ileWszystkich));
     int licznikWierszy(0);
+    QTableWidgetItem* item(nullptr);
     for (auto it = grafikDoWyswietlenia->listaPozycjiGrafiku->begin(); it < grafikDoWyswietlenia->listaPozycjiGrafiku->end(); ++it) {
-        tableGrafik->setItem(licznikWierszy, 0, (*it)->dzien);
-        tableGrafik->setItem(licznikWierszy, 1, (*it)->dzienTygodnia);
-        tableGrafik->setItem(licznikWierszy, 2, (*it)->dyzurant);
+        item = tableGrafik->item(licznikWierszy, 0);
+        item->setText((*it)->dzien);
+        item = tableGrafik->item(licznikWierszy, 1);
+        item->setText((*it)->dzienTygodnia);
+        item = tableGrafik->item(licznikWierszy, 2);
+        item->setText((*it)->dyzurant);
         licznikWierszy++;
     }    
 }
@@ -130,10 +135,14 @@ void UIPrzegladanieGrafikowRoboczych::wyswietlKonkretnyGrafik(XWyswietlanyGrafik
     }
     labelNumber->setText(QString::number(ktory) + " / " + QString::number(ileWszystkich));
     int licznikWierszy(0);
+    QTableWidgetItem* item(nullptr);
     for (auto it = grafikDoWyswietlenia->listaPozycjiGrafiku->begin(); it < grafikDoWyswietlenia->listaPozycjiGrafiku->end(); ++it) {
-        tableGrafik->setItem(licznikWierszy, 0, (*it)->dzien);
-        tableGrafik->setItem(licznikWierszy, 1, (*it)->dzienTygodnia);
-        tableGrafik->setItem(licznikWierszy, 2, (*it)->dyzurant);
+        item = tableGrafik->item(licznikWierszy, 0);
+        item->setText((*it)->dzien);
+        item = tableGrafik->item(licznikWierszy, 1);
+        item->setText((*it)->dzienTygodnia);
+        item = tableGrafik->item(licznikWierszy, 2);
+        item->setText((*it)->dyzurant);
         licznikWierszy++;
     }    
 }
@@ -148,10 +157,14 @@ void UIPrzegladanieGrafikowRoboczych::onButtonRightClicked() {
     }
     labelNumber->setText(QString::number(ktory) + " / " + QString::number(ileWszystkich));
     int licznikWierszy(0);
+    QTableWidgetItem* item(nullptr);
     for (auto it = grafikDoWyswietlenia->listaPozycjiGrafiku->begin(); it < grafikDoWyswietlenia->listaPozycjiGrafiku->end(); ++it) {
-        tableGrafik->setItem(licznikWierszy, 0, (*it)->dzien);
-        tableGrafik->setItem(licznikWierszy, 1, (*it)->dzienTygodnia);
-        tableGrafik->setItem(licznikWierszy, 2, (*it)->dyzurant);
+        item = tableGrafik->item(licznikWierszy, 0);
+        item->setText((*it)->dzien);
+        item = tableGrafik->item(licznikWierszy, 1);
+        item->setText((*it)->dzienTygodnia);
+        item = tableGrafik->item(licznikWierszy, 2);
+        item->setText((*it)->dyzurant);
         licznikWierszy++;
     }
 }

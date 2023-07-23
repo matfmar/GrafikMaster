@@ -64,7 +64,7 @@ void TWorker::startTimerX() {
     emit startTheTimer();       //docelowo na 3 sekundy
 }
 
-void TWorker::obliczIloscSkrocen() {
+int TWorker::obliczIloscSkrocen() {
 //algorytm działa następująco: dla szybkosci 3,5,10 dane skrócenie powtarzane jest odp. 3,2,1 razy,
 //a następnie wielkość skrócenia jest zwiększana o odp. 3,5,10.
 //jeśli skrót przekracza 27, z powrotem zaczynamy od pierwszej wersji.

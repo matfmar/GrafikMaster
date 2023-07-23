@@ -3,7 +3,7 @@
 #include "uimainwindow.h"
 #include "pedycjabazydyzurantow.h"
 #include "pdodawanienowegografiku.h"
-#include "pprzegladaniegrafikowroboczych"
+#include "pprzegladaniegrafikowroboczych.h"
 
 PMain::PMain()
     : uiMainWindow(nullptr), pEdycjaBazyDyzurantow(nullptr), pDodawanieNowegoGrafiku(nullptr),
