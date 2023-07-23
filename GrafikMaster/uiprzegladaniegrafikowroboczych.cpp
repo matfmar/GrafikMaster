@@ -98,8 +98,9 @@ void UIPrzegladanieGrafikowRoboczych::onButtonUsunClicked() {
         QMessageBox::critical(this, tr("Błąd"), tr("Nie udało się usunąć grafiku. Być może grafik nie został nawet wybrany."), QMessageBox::Ok);
         return;
     }
-    else {
-        QMessageBox::information(this, tr("Informacja"), tr("Usunięto dany grafik"), QMessageBox::Ok);
+    QMessageBox::information(this, tr("Informacja"), tr("Usunięto dany grafik"), QMessageBox::Ok);
+    if (!czyCosZostaje) {
+        wyczyscTabele();
     }
 }
 
