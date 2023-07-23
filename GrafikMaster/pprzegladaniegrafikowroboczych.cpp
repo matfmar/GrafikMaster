@@ -45,7 +45,7 @@ int PPrzegladanieGrafikowRoboczych::wybranoSzukanieGrafikow(int miesiac, int rok
     return licznikGrafikow;
 }
 
-bool PPrzegladanieGrafikowRoboczych::wybranoUsuniecieGrafiku() {
+bool PPrzegladanieGrafikowRoboczych::wybranoUsuniecieGrafiku(bool& czyCosZostaje) {
     if (ktoryWyswietlamy == -1 || ktoryWyswietlamy >= ileGrafikowNaLiscie - 1) {
         return false;
     }
@@ -58,7 +58,10 @@ bool PPrzegladanieGrafikowRoboczych::wybranoUsuniecieGrafiku() {
     aktualnaListaGrafikow->erase(itDoUsuniecia);
     ileGrafikowNaLiscie--;
     if (ileGrafikowNaLiscie == 0) {
-        
+        czyCosZostaje = false;
+        uiPrzegladanieGrafikowRoboczych->ableRightButton(false);
+        uiPrzegladanieGrafikowRoboczych->ableLeftButton(false);
+        uiPrzegladanieGrafikowRoboczych->ableUsunButton(false);
     }
 }
     
