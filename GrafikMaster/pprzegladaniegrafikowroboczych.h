@@ -16,6 +16,7 @@ public:
     void wybranoGrafikWLewo();
     XWyswietlanyGrafik* wybranoGrafikWPrawo(int& ktory, int& ileWszystkich);
     void wybranoZamkniecie();
+    bool wybranoUsuniecieGrafiku();
 private:
     UIPrzegladanieGrafikowRoboczych* uiPrzegladanieGrafikowRoboczych;
     std::vector<XWyswietlanyGrafik*>* aktualnaListaGrafikow;
