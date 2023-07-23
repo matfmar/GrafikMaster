@@ -26,6 +26,8 @@ UIPrzegladanieGrafikowRoboczych::UIPrzegladanieGrafikowRoboczych(PPrzegladanieGr
 
     buttonLeft = new QPushButton(tr("<<"), this);
     buttonRight = new QPushButton(tr(">>"), this);
+    buttonLeft->setEnabled(false);
+    buttonRight->setEnabled(false);
     labelNumber = new QLabel(tr("0"), this);
     layoutChoice = new QHBoxLayout(this);
     layoutChoice->addWidget(buttonLeft);
@@ -41,6 +43,7 @@ UIPrzegladanieGrafikowRoboczych::UIPrzegladanieGrafikowRoboczych(PPrzegladanieGr
     tableGrafik->setSelectionMode(QAbstractItemView::SingleSelection);        
     buttonUsun = new QPushButton(tr("Usuń ten grafik"), this);
     buttonClose = new QPushButton(tr("Zamknij"), this);
+    buttonUsun->setEnabled(false);
 
     mainLayout = new QVBoxLayout(this);
     mainLayout->addWidget(groupMiesiacRok);
