@@ -87,6 +87,10 @@ void UIPrzegladanieGrafikowRoboczych::ableUsunButton(bool how) {
     buttonUsun->setEnabled(how);
 }
 
+void UIPrzegladanieGrafikowRoboczych::wyczyscTabele() {
+    tableGrafik->clearContents();
+}
+
 void UIPrzegladanieGrafikowRoboczych::onButtonUsunClicked() {
     bool czyCosZostaje(false);
     bool result = pPrzegladanieGrafikowRoboczych->wybranoUsuniecieGrafiku(czyCosZostaje);
