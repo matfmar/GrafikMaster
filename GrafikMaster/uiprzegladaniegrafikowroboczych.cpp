@@ -54,13 +54,14 @@ UIPrzegladanieGrafikowRoboczych::UIPrzegladanieGrafikowRoboczych(PPrzegladanieGr
     mainLayout->addWidget(buttonClose);
     mainWidget->setLayout(mainLayout);
     setCentralWidget(mainWidget);
+    setFixedSize(600, 800);
 
     QObject::connect(buttonSzukaj, SIGNAL(clicked()), this, SLOT(onButtonSzukajClicked()));
     QObject::connect(buttonLeft, SIGNAL(clicked()), this, SLOT(onButtonLeftClicked()));
     QObject::connect(buttonRight, SIGNAL(clicked()), this, SLOT(onButtonRightClicked()));
     QObject::connect(buttonClose, SIGNAL(clicked()), this, SLOT(onButtonCloseClicked()));
     QObject::connect(buttonUsun, SIGNAL(clicked()), this, SLOT(onButtonUsunClicked()));
-            
+
 }
 
 void UIPrzegladanieGrafikowRoboczych::onButtonSzukajClicked() {
@@ -157,14 +158,11 @@ void UIPrzegladanieGrafikowRoboczych::onButtonRightClicked() {
     }
     labelNumber->setText(QString::number(ktory) + " / " + QString::number(ileWszystkich));
     int licznikWierszy(0);
-    QTableWidgetItem* item(nullptr);
     for (auto it = grafikDoWyswietlenia->listaPozycjiGrafiku->begin(); it < grafikDoWyswietlenia->listaPozycjiGrafiku->end(); ++it) {
-        item = tableGrafik->item(licznikWierszy, 0);
-        item->setText((*it)->dzien);
-        item = tableGrafik->item(licznikWierszy, 1);
-        item->setText((*it)->dzienTygodnia);
-        item = tableGrafik->item(licznikWierszy, 2);
-        item->setText((*it)->dyzurant);
+        //qDebug() << (*it)->dzien << " ; " << (*it)->dzienTygodnia << " ; " << (*it)->dyzurant;
+        tableGrafik->setItem(licznikWierszy, 0, new QTableWidgetItem((*it)->dzien));
+        tableGrafik->setItem(licznikWierszy, 1, new QTableWidgetItem((*it)->dzienTygodnia));
+        tableGrafik->setItem(licznikWierszy, 2, new QTableWidgetItem((*it)->dyzurant));
         licznikWierszy++;
     }
 }

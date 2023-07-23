@@ -182,7 +182,8 @@ std::vector<std::string> DBObslugiwaczBazyDanych::wczytajDyzurantaTworzacego(std
 }
 
 XWyswietlanyGrafik* DBObslugiwaczBazyDanych::zaladujGrafikOKonkretnejNazwie(std::string nazwa) {
-    inputFileReader.open(nazwa);
+    nazwa = "data/grafiki_robocze/" + nazwa;
+    inputFileReader.open(nazwa.c_str());
     if (!inputFileReader.is_open()) {
         return nullptr;
     }
