@@ -12,6 +12,7 @@ class PPrzegladanieGrafikowRoboczych
 public:
     PPrzegladanieGrafikowRoboczych();
     ~PPrzegladanieGrafikowRoboczych();
+    void pokazOknoPrzegladaniaGrafikow();
     int wybranoSzukanieGrafikow(int miesiac, int rok);
     void wybranoGrafikWLewo();
     XWyswietlanyGrafik* wybranoGrafikWPrawo(int& ktory, int& ileWszystkich);
