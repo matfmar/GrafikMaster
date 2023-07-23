@@ -62,6 +62,8 @@ bool PPrzegladanieGrafikowRoboczych::wybranoUsuniecieGrafiku(bool& czyCosZostaje
         uiPrzegladanieGrafikowRoboczych->ableRightButton(false);
         uiPrzegladanieGrafikowRoboczych->ableLeftButton(false);
         uiPrzegladanieGrafikowRoboczych->ableUsunButton(false);
+        uiPrzegladanieGrafikowRoboczych->wyczyscTabele();
+        return true;
     }
     else if (ileGrafikowNaLiscie == 1) {
         czyCosZostaje = true;
@@ -69,9 +71,8 @@ bool PPrzegladanieGrafikowRoboczych::wybranoUsuniecieGrafiku(bool& czyCosZostaje
         uiPrzegladanieGrafikowRoboczych->ableLeftButton(false);
         uiPrzegladanieGrafikowRoboczych->ableUsunButton(true);
         ktoryWyswietlamy = 0;
-        uiPrzegladanieGrafikowRoboczych->wyswietlGrafik
-        //uiPrzegladanieGrafikowRoboczych(grafik, ktory, ileWszystkich)
-        
+        uiPrzegladanieGrafikowRoboczych->wyswietlKonkretnyGrafik(aktualnaListaGrafikow[0], 1, 1);
+        return true;
     }
 }
     
