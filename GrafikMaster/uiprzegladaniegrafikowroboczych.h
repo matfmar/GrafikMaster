@@ -22,6 +22,7 @@ public:
     ~UIPrzegladanieGrafikowRoboczych() {}
     void ableRightButton(bool how);
     void ableLeftButton(bool how);
+    void ableUsunButton(bool how);
 public slots:
     void onButtonSzukajClicked();
     void onButtonLeftClicked();
