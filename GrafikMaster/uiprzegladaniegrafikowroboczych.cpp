@@ -116,6 +116,21 @@ void UIPrzegladanieGrafikowRoboczych::onButtonLeftClicked() {
         licznikWierszy++;
     }    
 }
+
+void UIPrzegladanieGrafikowRoboczych::wyswietlKonkretnyGrafik(XWyswietlanyGrafik* grafikDoWyswietlenia, int ktory, int ileWszystkich) {
+    if (grafikDoWyswietlenia->listaPozycjiGrafiku == nullptr) {
+        QMessageBox::critical(this, tr("Błąd"), tr("Nie udało się wyświetlić grafiku."), QMessageBox::Ok);
+        return;
+    }
+    labelNumber->setText(QString::number(ktory) + " / " + QString::number(ileWszystkich));
+    int licznikWierszy(0);
+    for (auto it = grafikDoWyswietlenia->listaPozycjiGrafiku->begin(); it < grafikDoWyswietlenia->listaPozycjiGrafiku->end(); ++it) {
+        tableGrafik->setItem(licznikWierszy, 0, (*it)->dzien);
+        tableGrafik->setItem(licznikWierszy, 1, (*it)->dzienTygodnia);
+        tableGrafik->setItem(licznikWierszy, 2, (*it)->dyzurant);
+        licznikWierszy++;
+    }    
+}
     
 void UIPrzegladanieGrafikowRoboczych::onButtonRightClicked() {
     XWyswietlanyGrafik* grafikDoWyswietlenia(nullptr);
