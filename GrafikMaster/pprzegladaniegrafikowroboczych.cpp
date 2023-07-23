@@ -68,7 +68,10 @@ bool PPrzegladanieGrafikowRoboczych::wybranoUsuniecieGrafiku(bool& czyCosZostaje
         uiPrzegladanieGrafikowRoboczych->ableRightButton(false);
         uiPrzegladanieGrafikowRoboczych->ableLeftButton(false);
         uiPrzegladanieGrafikowRoboczych->ableUsunButton(true);
-
+        ktoryWyswietlamy = 0;
+        uiPrzegladanieGrafikowRoboczych->wyswietlGrafik
+        //uiPrzegladanieGrafikowRoboczych(grafik, ktory, ileWszystkich)
+        
     }
 }
     
