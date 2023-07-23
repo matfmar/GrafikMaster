@@ -252,7 +252,8 @@ struct XWyswietlanyGrafik {
         QString dzien;
         QString dzienTygodnia;
         QString dyzurant;
-    }
+    };
+    std::string nazwaPliku;
     std::vector<XPozycjaGrafiku*>* listaPozycjiGrafiku;
 };
 
