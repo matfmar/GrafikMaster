@@ -85,7 +85,8 @@ void UIPrzegladanieGrafikowRoboczych::ableUsunButton(bool how) {
 }
 
 void UIPrzegladanieGrafikowRoboczych::onButtonUsunClicked() {
-    bool result = pPrzegladanieGrafikowRoboczych->wybranoUsuniecieGrafiku();
+    bool czyCosZostaje(false);
+    bool result = pPrzegladanieGrafikowRoboczych->wybranoUsuniecieGrafiku(czyCosZostaje);
     if (!result) {
         QMessageBox::critical(this, tr("Błąd"), tr("Nie udało się usunąć grafiku. Być może grafik nie został nawet wybrany."), QMessageBox::Ok);
         return;
