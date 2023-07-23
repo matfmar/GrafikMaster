@@ -27,6 +27,7 @@ public slots:
     void onButtonLeftClicked();
     void onButtonRightClicked();
     void onButtonCloseClicked();
+    void onButtonUsunClicked();
 private:
     PPrzegladanieGrafikowRoboczych* pPrzegladanieGrafikowRoboczych;
     QWidget* mainWidget;
