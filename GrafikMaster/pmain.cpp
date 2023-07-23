@@ -3,9 +3,11 @@
 #include "uimainwindow.h"
 #include "pedycjabazydyzurantow.h"
 #include "pdodawanienowegografiku.h"
+#include "pprzegladaniegrafikowroboczych"
 
 PMain::PMain()
-    : uiMainWindow(nullptr), pEdycjaBazyDyzurantow(nullptr), pDodawanieNowegoGrafiku(nullptr) {
+    : uiMainWindow(nullptr), pEdycjaBazyDyzurantow(nullptr), pDodawanieNowegoGrafiku(nullptr),
+    pPrzegladanieGrafikowRoboczych(nullptr) {
     uiMainWindow = new UIMainWindow(this, nullptr);
     uiMainWindow -> show();
 }
@@ -47,7 +49,8 @@ void PMain::wybranoZakonczenieTworzeniaGrafikow() {
 }
 
 void PMain::wybranoPrzegladanieGrafikowRoboczych() {
-
+    pPrzegladanieGrafikowRoboczych = new PPrzegladanieGrafikowRoboczych();
+    pPrzegladanieGrafikowRoboczych->pokazOknoWyswietlaniaGrafikow();
 }
 
 void PMain::wybranoPrzegladanieGrafikowOstatecznych() {
@@ -67,5 +70,9 @@ PMain::~PMain() {
     if (pDodawanieNowegoGrafiku != nullptr) {
         delete pDodawanieNowegoGrafiku;
         pDodawanieNowegoGrafiku = nullptr;
+    }
+    if (pPrzegladanieGrafikowRoboczych != nullptr) {
+        delete pPrzegladanieGrafikowRoboczych;
+        pPrzegladanieGrafikowRoboczych = nullptr;
     }
 }
