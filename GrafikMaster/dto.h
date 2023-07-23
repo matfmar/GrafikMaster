@@ -245,7 +245,7 @@ private:
 //XWyswietlanyGrafik
 
 struct XWyswietlanyGrafik {
-    XWyswietlanyGrafik();
+    XWyswietlanyGrafik(std::string np);
     ~XWyswietlanyGrafik();
     struct XPozycjaGrafiku {
         XPozycjaGrafiku(QString dz, QString dt, QString dy);
