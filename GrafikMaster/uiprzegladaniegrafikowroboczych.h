@@ -37,7 +37,7 @@ private:
     QPushButton* buttonSzukaj;
     QGridLayout* layoutGroup;
     
-    QPushButton* buttonLeft,* buttonRight;
+    QPushButton* buttonLeft,* buttonRight,* buttonUsun;
     QLabel* labelNumber;
     QHBoxLayout* layoutChoice;
 
