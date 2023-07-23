@@ -14,6 +14,14 @@ PMain::PMain()
 
 
 void PMain::wybranoEdycjeBazyDyzurantow() {
+    if (pPrzegladanieGrafikowRoboczych != nullptr) {
+        delete pPrzegladanieGrafikowRoboczych;
+        pPrzegladanieGrafikowRoboczych = nullptr;
+    }
+    if (pDodawanieNowegoGrafiku != nullptr) {
+        delete pDodawanieNowegoGrafiku;
+        pDodawanieNowegoGrafiku = nullptr;
+    }        
     if (pEdycjaBazyDyzurantow == nullptr) {
         pEdycjaBazyDyzurantow = new PEdycjaBazyDyzurantow();
     }
@@ -22,6 +30,7 @@ void PMain::wybranoEdycjeBazyDyzurantow() {
         pEdycjaBazyDyzurantow = nullptr;
         pEdycjaBazyDyzurantow = new PEdycjaBazyDyzurantow();
     }
+    
 }
 
 void PMain::wybranoDodanieNowegoGrafiku() {
@@ -29,6 +38,10 @@ void PMain::wybranoDodanieNowegoGrafiku() {
     if (pEdycjaBazyDyzurantow != nullptr) {
         delete pEdycjaBazyDyzurantow;
         pEdycjaBazyDyzurantow = nullptr;
+    }
+    if (pPrzegladanieGrafikowRoboczych != nullptr) {
+        delete pPrzegladanieGrafikowRoboczych;
+        pPrzegladanieGrafikowRoboczych = nullptr;
     }
     //...i tworzymy klasę prezentującą do tworzenia nowego grafiku
     if (pDodawanieNowegoGrafiku == nullptr) {
@@ -49,8 +62,20 @@ void PMain::wybranoZakonczenieTworzeniaGrafikow() {
 }
 
 void PMain::wybranoPrzegladanieGrafikowRoboczych() {
+    if (pEdycjaBazyDyzurantow != nullptr) {
+        delete pEdycjaBazyDyzurantow;
+        pEdycjaBazyDyzurantow = nullptr;
+    }    
+    if (pPrzegladanieGrafikowRoboczych != nullptr) {
+        delete pPrzegladanieGrafikowRoboczych;
+        pPrzegladanieGrafikowRoboczych = nullptr;
+    }
+    if (pDodawanieNowegoGrafiku != nullptr) {
+        delete pDodawanieNowegoGrafiku;
+        pDodawanieNowegoGrafiku = nullptr;
+    }    
     pPrzegladanieGrafikowRoboczych = new PPrzegladanieGrafikowRoboczych();
-    pPrzegladanieGrafikowRoboczych->pokazOknoWyswietlaniaGrafikow();
+    pPrzegladanieGrafikowRoboczych->pokazOknoPrzegladaniaGrafikow();
 }
 
 void PMain::wybranoPrzegladanieGrafikowOstatecznych() {
