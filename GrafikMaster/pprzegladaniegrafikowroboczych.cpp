@@ -6,8 +6,13 @@
 PPrzegladanieGrafikowRoboczych::PPrzegladanieGrafikowRoboczych()
     : uiPrzegladanieGrafikowRoboczych(nullptr), aktualnaListaGrafikow(nullptr), db(nullptr), 
     ileGrafikowNaLiscie(0), ktoryWyswietlamy(-1) {
+    uiPrzegladanieGrafikowRoboczych = new UIPrzegladanieGrafikowRoboczych(this);
     aktualnaListaGrafikow = new std::vector<XWyswietlanyGrafik*>();
     db = new DBObslugiwaczBazyDanych();
+}
+
+void PPrzegladanieGrafikowRoboczych::uiPrzegladanieGrafikowRoboczych() {
+    uiPrzegladanieGrafikowRoboczych->show();
 }
 
 void PPrzegladanieGrafikowRoboczych::wyczyscAktualnaListeGrafikow() {
