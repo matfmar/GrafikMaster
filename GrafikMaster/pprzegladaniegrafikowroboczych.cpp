@@ -63,9 +63,16 @@ bool PPrzegladanieGrafikowRoboczych::wybranoUsuniecieGrafiku(bool& czyCosZostaje
         uiPrzegladanieGrafikowRoboczych->ableLeftButton(false);
         uiPrzegladanieGrafikowRoboczych->ableUsunButton(false);
     }
+    else if (ileGrafikowNaLiscie == 1) {
+        czyCosZostaje = true;
+        uiPrzegladanieGrafikowRoboczych->ableRightButton(false);
+        uiPrzegladanieGrafikowRoboczych->ableLeftButton(false);
+        uiPrzegladanieGrafikowRoboczych->ableUsunButton(true);
+
+    }
 }
     
-void PPrzegladanieGrafikowRoboczych::wybranoGrafikWLewo() {
+void PPrzegladanieGrafikowRoboczych::wybranoGrafikWLewo(int& ktory, int& ileWszystkich) {
     if ((aktualnaListaGrafikow == nullptr || ktoryWyswietlamy == 0) || aktualnaListaGrafikow[ktoryWyswietlamy-1] == nullptr) {
         return nullptr;
     }
