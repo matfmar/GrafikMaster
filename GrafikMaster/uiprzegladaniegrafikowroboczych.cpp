@@ -89,6 +89,7 @@ void UIPrzegladanieGrafikowRoboczych::ableUsunButton(bool how) {
 
 void UIPrzegladanieGrafikowRoboczych::wyczyscTabele() {
     tableGrafik->clearContents();
+    labelNumber->setText(tr("BRAK"));
 }
 
 void UIPrzegladanieGrafikowRoboczych::onButtonUsunClicked() {
@@ -156,6 +157,6 @@ void UIPrzegladanieGrafikowRoboczych::onButtonRightClicked() {
 }
     
 void UIPrzegladanieGrafikowRoboczych::onButtonCloseClicked() {
-    
+    close();
 }
 
