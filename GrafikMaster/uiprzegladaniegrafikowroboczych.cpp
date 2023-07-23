@@ -81,7 +81,14 @@ void UIPrzegladanieGrafikowRoboczych::ableLeftButton(bool how) {
 }
 
 void UIPrzegladanieGrafikowRoboczych::onButtonUsunClicked() {
-    
+    bool result = pPrzegladanieGrafikowRoboczych->wybranoUsuniecieGrafiku();
+    if (!result) {
+        QMessageBox::critical(this, tr("Błąd"), tr("Nie udało się usunąć grafiku. Być może grafik nie został nawet wybrany."), QMessageBox::Ok);
+        return;
+    }
+    else {
+        QMessageBox::information(this, tr("Informacja"), tr("Usunięto dany grafik"), QMessageBox::Ok);
+    }
 }
 
 void UIPrzegladanieGrafikowRoboczych::onButtonLeftClicked() {
