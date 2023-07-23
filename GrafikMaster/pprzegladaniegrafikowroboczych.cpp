@@ -62,6 +62,7 @@ bool PPrzegladanieGrafikowRoboczych::wybranoUsuniecieGrafiku(bool& czyCosZostaje
         uiPrzegladanieGrafikowRoboczych->ableRightButton(false);
         uiPrzegladanieGrafikowRoboczych->ableLeftButton(false);
         uiPrzegladanieGrafikowRoboczych->ableUsunButton(false);
+        ktoryWyswietlamy = -1;
         uiPrzegladanieGrafikowRoboczych->wyczyscTabele();
         return true;
     }
@@ -74,6 +75,33 @@ bool PPrzegladanieGrafikowRoboczych::wybranoUsuniecieGrafiku(bool& czyCosZostaje
         uiPrzegladanieGrafikowRoboczych->wyswietlKonkretnyGrafik(aktualnaListaGrafikow[0], 1, 1);
         return true;
     }
+    else {
+        if (ktoryWyswietlamy == 0) {
+            czyCosZostaje = true;
+            uiPrzegladanieGrafikowRoboczych->ableRightButton(true);
+            uiPrzegladanieGrafikowRoboczych->ableLeftButton(false);
+            uiPrzegladanieGrafikowRoboczych->ableUsunButton(true);            
+            ktoryWyswietlamy = 0;
+            uiPrzegladanieGrafikowRoboczych->wyswietlKonkretnyGrafik(aktualnaListaGrafikow[0], 1, ileGrafikowNaLiscie);
+        }
+        else if (ktoryWyswietlamy == ileGrafikowNaLiscie) {
+            czyCosZostaje = true;
+            uiPrzegladanieGrafikowRoboczych->ableRightButton(false);
+            uiPrzegladanieGrafikowRoboczych->ableLeftButton(true);
+            uiPrzegladanieGrafikowRoboczych->ableUsunButton(true);                
+            ktoryWyswietlamy = ileGrafikowNaLiscie - 1;
+            uiPrzegladanieGrafikowRoboczych->wyswietlKonkretnyGrafik(aktualnaListaGrafikow[ktoryWyswietlamy], ileGrafikowNaLiscie, ileGrafikowNaLiscie);
+        }
+        else {
+            czyCosZostaje = true;
+            uiPrzegladanieGrafikowRoboczych->ableRightButton(true);
+            uiPrzegladanieGrafikowRoboczych->ableLeftButton(true);
+            uiPrzegladanieGrafikowRoboczych->ableUsunButton(true);                
+            uiPrzegladanieGrafikowRoboczych->wyswietlKonkretnyGrafik(aktualnaListaGrafikow[ktoryWyswietlamy], ktoryWyswietlamy+1, ileGrafikowNaLiscie);            
+        }
+        return true;
+    }
+    return true;
 }
     
 void PPrzegladanieGrafikowRoboczych::wybranoGrafikWLewo(int& ktory, int& ileWszystkich) {
