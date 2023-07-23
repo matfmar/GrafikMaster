@@ -186,7 +186,7 @@ XWyswietlanyGrafik* DBObslugiwaczBazyDanych::zaladujGrafikOKonkretnejNazwie(std:
     if (!inputFileReader.is_open()) {
         return nullptr;
     }
-    XWyswietlanyGrafik* nowyWyswietlanyGrafik = new XWyswietlanyGrafik();
+    XWyswietlanyGrafik* nowyWyswietlanyGrafik = new XWyswietlanyGrafik(nazwa);
     XWyswietlanyGrafik::XPozycjaGrafiku* nowaPozycjaGrafiku(nullptr);
     std::string line(""), subline(""), dz(""), dt(""), dy("");
     int licznikSrednikow(0);
