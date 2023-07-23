@@ -24,6 +24,7 @@ public:
     void ableLeftButton(bool how);
     void ableUsunButton(bool how);
     void wyswietlKonkretnyGrafik(XWyswietlanyGrafik* grafikDoWyswietlenia, int ktory, int ileWszystkich);
+    void wyczyscTabele();
 public slots:
     void onButtonSzukajClicked();
     void onButtonLeftClicked();
