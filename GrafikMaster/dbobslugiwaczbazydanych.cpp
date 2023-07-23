@@ -222,6 +222,12 @@ XWyswietlanyGrafik* DBObslugiwaczBazyDanych::zaladujGrafikOKonkretnejNazwie(std:
     return nowyWyswietlanyGrafik;
 }
 
+bool DBObslugiwaczBazyDanych::usunPlikGrafikuRoboczego(std::string nazwaPliku) {
+    QDir dir("data/grafiki_robocze");
+    bool resultUsunPlik = dir.remove(QString::fromStdString(nazwaPliku));
+    return resultUsunPlik;        
+}
+
 std::vector<std::string> DBObslugiwaczBazyDanych::wczytajListeNazwPlikowZGrafikamiRoboczymi(std::string wzorNazwy, bool& result) {
     QDir* dir = new QDir("data/grafiki_robocze");
     std::vector<std::string> listaNazw;
