@@ -44,6 +44,15 @@ int PPrzegladanieGrafikowRoboczych::wybranoSzukanieGrafikow(int miesiac, int rok
     uiPrzegladanieGrafikowRoboczych->ableRightButton(true);
     return licznikGrafikow;
 }
+
+bool PPrzegladanieGrafikowRoboczych::wybranoUsuniecieGrafiku() {
+    if (ktoryWyswietlamy == -1 || ktoryWyswietlamy >= ileGrafikowNaLiscie - 1) {
+        return false;
+    }
+    std::string nazwaPliku = aktualnaListaGrafikow[ktoryWyswietlamy]->nazwaPliku;
+    bool resultUsunieciePliku = db->usunPlikGrafikuRoboczego(nazwaPliku);
+    
+}
     
 void PPrzegladanieGrafikowRoboczych::wybranoGrafikWLewo() {
     if ((aktualnaListaGrafikow == nullptr || ktoryWyswietlamy == 0) || aktualnaListaGrafikow[ktoryWyswietlamy-1] == nullptr) {
