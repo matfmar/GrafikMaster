@@ -51,7 +51,11 @@ bool PPrzegladanieGrafikowRoboczych::wybranoUsuniecieGrafiku() {
     }
     std::string nazwaPliku = aktualnaListaGrafikow[ktoryWyswietlamy]->nazwaPliku;
     bool resultUsunieciePliku = db->usunPlikGrafikuRoboczego(nazwaPliku);
-    
+    if (!resultUsunieciePliku) {
+        return false;
+    }
+    aktualnaListaGrafikow
+    if (ileGrafiko
 }
     
 void PPrzegladanieGrafikowRoboczych::wybranoGrafikWLewo() {
