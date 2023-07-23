@@ -39,12 +39,14 @@ UIPrzegladanieGrafikowRoboczych::UIPrzegladanieGrafikowRoboczych(PPrzegladanieGr
     tableGrafik->setEditTriggers(QAbstractItemView::NoEditTriggers);
     tableGrafik->setSelectionBehavior(QAbstractItemView::SelectRows);
     tableGrafik->setSelectionMode(QAbstractItemView::SingleSelection);        
+    buttonUsun = new QPushButton(tr("Usuń ten grafik"), this);
     buttonClose = new QPushButton(tr("Zamknij"), this);
 
     mainLayout = new QVBoxLayout(this);
     mainLayout->addWidget(groupMiesiacRok);
     mainLayout->addLayout(layoutChoice);
     mainLayout->addWidget(tableGrafik);
+    mainLayout->addWidget(buttonUsun);
     mainLayout->addWidget(buttonClose);
     mainWidget->setLayout(mainLayout);
     setCentralWidget(mainWidget);
@@ -53,6 +55,7 @@ UIPrzegladanieGrafikowRoboczych::UIPrzegladanieGrafikowRoboczych(PPrzegladanieGr
     QObject::connect(buttonLeft, SIGNAL(clicked()), this, SLOT(onButtonLeftClicked()));
     QObject::connect(buttonRight, SIGNAL(clicked()), this, SLOT(onButtonRightClicked()));
     QObject::connect(buttonClose, SIGNAL(clicked()), this, SLOT(onButtonCloseClicked()));
+    QObject::connect(buttonUsun, SIGNAL(clicked()), this, SLOT(onButtonUsunClicked()));
             
 }
 
@@ -75,6 +78,10 @@ void UIPrzegladanieGrafikowRoboczych::ableRightButton(bool how) {
 
 void UIPrzegladanieGrafikowRoboczych::ableLeftButton(bool how) {
     buttonLeft->setEnabled(how);
+}
+
+void UIPrzegladanieGrafikowRoboczych::onButtonUsunClicked() {
+    
 }
 
 void UIPrzegladanieGrafikowRoboczych::onButtonLeftClicked() {
