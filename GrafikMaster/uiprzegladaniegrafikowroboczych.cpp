@@ -80,6 +80,10 @@ void UIPrzegladanieGrafikowRoboczych::ableLeftButton(bool how) {
     buttonLeft->setEnabled(how);
 }
 
+void UIPrzegladanieGrafikowRoboczych::ableUsunButton(bool how) {
+    buttonUsun->setEnabled(how);
+}
+
 void UIPrzegladanieGrafikowRoboczych::onButtonUsunClicked() {
     bool result = pPrzegladanieGrafikowRoboczych->wybranoUsuniecieGrafiku();
     if (!result) {
