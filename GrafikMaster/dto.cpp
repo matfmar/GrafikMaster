@@ -1006,7 +1006,7 @@ XGrafik::~XGrafik() {
 
 //XWyswietlanyGrafik===================================================================================================================================================================================
 
-XWyswietlanyGrafik::XWyswietlanyGrafik() : listaPozycjiGrafiku(nullptr) {
+XWyswietlanyGrafik::XWyswietlanyGrafik(std::string np) : listaPozycjiGrafiku(nullptr), nazwaPliku(np) {
     listaPozycjiGrafiku = new std::vector<XPozycjaGrafiku*>();
 }
 
