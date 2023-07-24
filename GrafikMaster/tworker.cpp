@@ -25,6 +25,7 @@ TWorker::TWorker(XGrafik* g, std::vector<XDyzurantTworzacy*>* tdt, int ile, QSem
         //s-s dla komunikacji z TTimerClass
         QObject::connect(timerClass, SIGNAL(timeFinishedSignal()), this, SLOT(timePassed()), Qt::DirectConnection); //zeby slot uruchamiał się w wątku timera
         QObject::connect(this, SIGNAL(startTheTimer()), timerClass, SLOT(startTheTimerFromOutside()));
+        QObject::connect(this, SIGNAL(stopTheTimer()), timerClass, SLOT(stopTheTimerFromOutside()));
         //tworzymy mutex dla grafików
         mutex = new QMutex();
         //zaczynamy działanie wątku dla timera
@@ -52,7 +53,7 @@ void TWorker::process() {
     //teraz jesteśmy już po zakończeniu tworzenia grafików
     //w razie działania z przyspieszaczem niszczymy TimerClass (czyli też i zegar) oraz zatrzymujemy wątek
     if (szybkosc != 0) {
-        timerClass->stopTimerTC();
+        emit stopTheTimer();
         delete timerClass;
         timerClass = nullptr;
         subThreadForTimer->quit();
