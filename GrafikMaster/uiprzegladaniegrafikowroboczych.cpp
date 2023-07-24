@@ -149,6 +149,7 @@ void UIPrzegladanieGrafikowRoboczych::onButtonLeftClicked() {
         tableGrafik->setItem(licznikWierszy, 2, new QTableWidgetItem((*it)->dyzurant));
         licznikWierszy++;
     }
+    buttonKlepnijGrafik->setEnabled(true);
 }
 
 void UIPrzegladanieGrafikowRoboczych::wyswietlKonkretnyGrafik(XWyswietlanyGrafik* grafikDoWyswietlenia, int ktory, int ileWszystkich) {
@@ -166,6 +167,7 @@ void UIPrzegladanieGrafikowRoboczych::wyswietlKonkretnyGrafik(XWyswietlanyGrafik
         tableGrafik->setItem(licznikWierszy, 2, new QTableWidgetItem((*it)->dyzurant));
         licznikWierszy++;
     }    
+    buttonKlepnijGrafik->setEnabled(true);
 }
     
 void UIPrzegladanieGrafikowRoboczych::onButtonRightClicked() {
@@ -186,10 +188,16 @@ void UIPrzegladanieGrafikowRoboczych::onButtonRightClicked() {
         tableGrafik->setItem(licznikWierszy, 2, new QTableWidgetItem((*it)->dyzurant));
         licznikWierszy++;
     }
+    buttonKlepnijGrafik->setEnabled(true);
 }
 
 void UIPrzegladanieGrafikowRoboczych::onButtonKlepnijGrafikClicked() {
-    
+    bool result = pPrzegladanieGrafikowRoboczych->wybranoKlepniecieGrafiku();
+    if (!result) {
+        QMessageBox::critical(this, tr("Błąd"), tr("Przyklepanie grafiku nie udało się. Być może już jakiś wcześniej został klepnięty."), QMessageBox::Ok);
+        return;
+    }
+    QMessageBox::information(this, tr("Informacja"), tr("Pomyślnie przyklepano grafik jako aktualny. Teraz możesz usunąć wszystkie z danego miesiąca i danego roku"), QMessageBox::Ok);
 }
     
 void UIPrzegladanieGrafikowRoboczych::onButtonCloseClicked() {
