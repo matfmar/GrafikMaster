@@ -46,7 +46,7 @@ private:
     QLabel* labelMaksSoboty,* labelMaksNiedziele,* labelMaksWeekendy,* labelMaksPiatki,* labelIleIteracji;
     QLineEdit* editChce,* editNieMoze,* editMoze,* editUnika,* editMaks,* editMin,* editIleIteracji;
     QLineEdit* editMaksSoboty,* editMaksNiedziele,* editMaksWeekendy,* editMaksPiatki;
-    QCheckBox* wyborBezTrojek;
+    QCheckBox* wyborBezTrojek,* wyborSkracajNiezaleznieOdUlozenia;
     QPushButton* buttonUpdate,* buttonStart;
     QPushButton* buttonZapiszUstawienia;
     QPushButton* buttonWczytajUstawienia;
