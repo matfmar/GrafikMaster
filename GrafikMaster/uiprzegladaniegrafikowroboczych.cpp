@@ -78,6 +78,9 @@ void UIPrzegladanieGrafikowRoboczych::onButtonSzukajClicked() {
     int number(-1);
     number = pPrzegladanieGrafikowRoboczych->wybranoSzukanieGrafikow(miesiac, rok);
     labelNumber->setText("0 / " + QString::number(number));
+    if (number >= 0) {
+        buttonUsunWszystko->setEnabled(true);
+    }
 }
 
 void UIPrzegladanieGrafikowRoboczych::ableRightButton(bool how) {
@@ -102,6 +105,12 @@ void UIPrzegladanieGrafikowRoboczych::onButtonUsunWszystkoClicked() {
         QMessageBox::critical(this, tr("Błąd"), tr("Nie udało się usunąć grafików. Być może grafiki nie zostały nawet wybrane."), QMessageBox::Ok);
         return;
     }
+    labelNumber->setText(tr("BRAK"));
+    tableGrafik->setRowCount(0);
+    buttonLeft->setEnabled(false);
+    buttonRight->setEnabled(false);
+    buttonUsun->setEnabled(false);
+    buttonUsunWszystko->setEnabled(false);
     QMessageBox::information(this, tr("Informacja"), tr("Usunięto WSZYSTKIE grafiki z danego miesiąca i danego roku."), QMessageBox::Ok);
 }
 
@@ -135,7 +144,7 @@ void UIPrzegladanieGrafikowRoboczych::onButtonLeftClicked() {
         tableGrafik->setItem(licznikWierszy, 1, new QTableWidgetItem((*it)->dzienTygodnia));
         tableGrafik->setItem(licznikWierszy, 2, new QTableWidgetItem((*it)->dyzurant));
         licznikWierszy++;
-    }    
+    }
 }
 
 void UIPrzegladanieGrafikowRoboczych::wyswietlKonkretnyGrafik(XWyswietlanyGrafik* grafikDoWyswietlenia, int ktory, int ileWszystkich) {
