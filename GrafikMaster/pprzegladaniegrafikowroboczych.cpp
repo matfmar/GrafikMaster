@@ -178,6 +178,10 @@ XWyswietlanyGrafik* PPrzegladanieGrafikowRoboczych::wybranoGrafikWPrawo(int& kto
     ileWszystkich = ileGrafikowNaLiscie;
     return (*aktualnaListaGrafikow)[ktoryWyswietlamy];
 }
+
+bool PPrzegladanieGrafikowRoboczych::wybranoKlepniecieGrafiku() {
+    
+}
  
 void PPrzegladanieGrafikowRoboczych::wybranoZamkniecie() {
 
