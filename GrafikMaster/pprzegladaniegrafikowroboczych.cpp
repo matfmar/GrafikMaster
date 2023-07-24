@@ -55,7 +55,10 @@ bool PPrzegladanieGrafikowRoboczych::wybranoUsuniecieWszystkichGrafikow() {
     if (ileGrafikowNaLiscie <= 0) {
         return false;
     }
-    
+    bool resultUsuniecia(false);
+    for (auto it=listaNazwPlikow.begin(); it<listaNazwPlikow.end(); ++it) {
+        resultUsuniecia = db->usunPlikGrafikuRoboczego
+    }
 }
 
 bool PPrzegladanieGrafikowRoboczych::wybranoUsuniecieGrafiku(bool& czyCosZostaje) {
