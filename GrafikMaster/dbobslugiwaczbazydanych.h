@@ -33,6 +33,7 @@ public:
     std::vector<std::string> wczytajListeNazwPlikowZGrafikamiRoboczymi(std::string wzorNazwy, bool& result);    //wzorNazwy do (i włącznie z) podkreślnikiem przed id
     XWyswietlanyGrafik* zaladujGrafikOKonkretnejNazwie(std::string nazwa);
     bool usunPlikGrafikuRoboczego(std::string nazwaPliku);
+    bool przekopiujPlikDoOstatecznych(std::string nazwaPliku);
 private:
     std::ifstream inputFileReader;
     std::ofstream outputFileReader;
