@@ -33,6 +33,7 @@ public slots:
     void onButtonCloseClicked();
     void onButtonUsunClicked();
     void onButtonUsunWszystkoClicked();
+    void onButtonKlepnijGrafikClicked();
 private:
     PPrzegladanieGrafikowRoboczych* pPrzegladanieGrafikowRoboczych;
     QWidget* mainWidget;
@@ -43,7 +44,7 @@ private:
     QPushButton* buttonSzukaj;
     QGridLayout* layoutGroup;
     
-    QPushButton* buttonLeft,* buttonRight,* buttonUsun,* buttonUsunWszystko;
+    QPushButton* buttonLeft,* buttonRight,* buttonUsun,* buttonUsunWszystko,* buttonKlepnijGrafik;
     QLabel* labelNumber;
     QHBoxLayout* layoutChoice;
 
