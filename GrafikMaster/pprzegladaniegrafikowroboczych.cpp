@@ -56,9 +56,13 @@ bool PPrzegladanieGrafikowRoboczych::wybranoUsuniecieWszystkichGrafikow() {
         return false;
     }
     bool resultUsuniecia(false);
-    for (auto it=listaNazwPlikow.begin(); it<listaNazwPlikow.end(); ++it) {
-        resultUsuniecia = db->usunPlikGrafikuRoboczego
+    for (auto it=aktualnaListaGrafikow->begin(); it<aktualnaListaGrafikow->end(); ++it) {
+        resultUsuniecia = db->usunPlikGrafikuRoboczego((*it)->nazwaPliku);
+        if (!resultUsuniecia) {
+            return false;
+        }
     }
+    return true;
 }
 
 bool PPrzegladanieGrafikowRoboczych::wybranoUsuniecieGrafiku(bool& czyCosZostaje) {
