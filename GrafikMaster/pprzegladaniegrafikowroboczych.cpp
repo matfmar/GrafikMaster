@@ -37,7 +37,7 @@ int PPrzegladanieGrafikowRoboczych::wybranoSzukanieGrafikow(int miesiac, int rok
     //teraz wczytujemy kolejne
     bool result(false);
     std::string wzorNazwy = "w_grafik_" + std::to_string(miesiac) + "_" + std::to_string(rok) + "_";
-    std::vector<std::string> listaNazwPlikow = db->wczytajListeNazwPlikowZGrafikamiRoboczymi(wzorNazwy, result);
+    listaNazwPlikow = db->wczytajListeNazwPlikowZGrafikamiRoboczymi(wzorNazwy, result);
     XWyswietlanyGrafik* nowyWyswietlanyGrafik(nullptr);
     int licznikGrafikow(0);
     for (auto it=listaNazwPlikow.begin(); it<listaNazwPlikow.end(); ++it) {
@@ -49,6 +49,13 @@ int PPrzegladanieGrafikowRoboczych::wybranoSzukanieGrafikow(int miesiac, int rok
     uiPrzegladanieGrafikowRoboczych->ableLeftButton(false);
     uiPrzegladanieGrafikowRoboczych->ableRightButton(true);
     return licznikGrafikow;
+}
+
+bool PPrzegladanieGrafikowRoboczych::wybranoUsuniecieWszystkichGrafikow() {
+    if (ileGrafikowNaLiscie <= 0) {
+        return false;
+    }
+    
 }
 
 bool PPrzegladanieGrafikowRoboczych::wybranoUsuniecieGrafiku(bool& czyCosZostaje) {
