@@ -17,6 +17,7 @@ UIMainWindow::UIMainWindow(PMain* pm, QWidget *parent)
     //buttonZakonczBezpiecznieTworzenieGrafikow->setEnabled(false);
     buttonPrzegladajGrafikiOstateczne = nullptr;
     buttonZakonczBezpiecznieTworzenieGrafikow = nullptr;
+    authorLabel = new QLabel(tr("Twórca algorytmu i programu: Mateusz Marzec SoftTech"), this);
 
     layout -> addWidget(mainLabel);
     layout -> addWidget(buttonEdytujBazeDyzurantow);
@@ -24,6 +25,7 @@ UIMainWindow::UIMainWindow(PMain* pm, QWidget *parent)
     //layout -> addWidget(buttonZakonczBezpiecznieTworzenieGrafikow);
     layout -> addWidget(buttonPrzegladajGrafikiRobocze);
     //layout -> addWidget(buttonPrzegladajGrafikiOstateczne);
+    layout -> addWidget(authorLabel);
 
     mainWidget -> setLayout(layout);
     setCentralWidget(mainWidget);
