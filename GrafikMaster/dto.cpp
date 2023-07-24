@@ -888,9 +888,11 @@ bool XGrafik::wypelnijDzien(int dzien) {        //glowna funkcja wywolywana reku
         (*licznikStworzonychGrafikow)++;
         (*licznikOstatecznyStworzonychGrafikow)++;
         parentWorker->pokazLiczbeInteracji(*licznikOstatecznyStworzonychGrafikow);  //wysyłamy na ekran ilość zrobionych grafików
-        //.... oraz resetujemy timer, jeśli działamy na przyspieszaczu (co znalezienie grafiku to timer się resetuje
+        //.... oraz resetujemy timer, jeśli działamy na przyspieszaczu I NIE SKRACAMY POMIMO ułożenia grafiku (co znalezienie grafiku to timer się resetuje
         if (czyPrzyspieszenie) {
-            parentWorker->startTimerX();
+            if (!skracamyPomimoUlozenia) {
+                parentWorker->startTimerX();
+            }
         }
         //... oraz sprawdzamy czy nie doszliśmy do progu decyzji o wyświetleniu okna co do dalszych poszukiwań
         if (*licznikStworzonychGrafikow >= (*liczbaIteracji)) {
