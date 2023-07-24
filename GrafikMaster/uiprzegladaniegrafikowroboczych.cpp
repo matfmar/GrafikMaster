@@ -45,12 +45,15 @@ UIPrzegladanieGrafikowRoboczych::UIPrzegladanieGrafikowRoboczych(PPrzegladanieGr
     buttonUsun = new QPushButton(tr("Usuń ten grafik"), this);
     buttonClose = new QPushButton(tr("Zamknij"), this);
     buttonUsun->setEnabled(false);
+    buttonUsunWszystko = new QPushButton(tr("Usuń WSZYSTKIE grafiki z danego miesiąca i danego roku"), this);
+    buttonUsunWszystko->setEnabled(false);
 
     mainLayout = new QVBoxLayout(this);
     mainLayout->addWidget(groupMiesiacRok);
     mainLayout->addLayout(layoutChoice);
     mainLayout->addWidget(tableGrafik);
     mainLayout->addWidget(buttonUsun);
+    mainLayout->addWidget(buttonUsunWszystko);
     mainLayout->addWidget(buttonClose);
     mainWidget->setLayout(mainLayout);
     setCentralWidget(mainWidget);
@@ -61,7 +64,7 @@ UIPrzegladanieGrafikowRoboczych::UIPrzegladanieGrafikowRoboczych(PPrzegladanieGr
     QObject::connect(buttonRight, SIGNAL(clicked()), this, SLOT(onButtonRightClicked()));
     QObject::connect(buttonClose, SIGNAL(clicked()), this, SLOT(onButtonCloseClicked()));
     QObject::connect(buttonUsun, SIGNAL(clicked()), this, SLOT(onButtonUsunClicked()));
-
+    QObject::connect(buttonUsunWszystko, SIGNAL(clicked()), this, SLOT(onButtonUsunWszystkoClicked()));
 }
 
 void UIPrzegladanieGrafikowRoboczych::onButtonSzukajClicked() {
@@ -91,6 +94,15 @@ void UIPrzegladanieGrafikowRoboczych::ableUsunButton(bool how) {
 
 void UIPrzegladanieGrafikowRoboczych::wyczyscTabele() {
     tableGrafik->setRowCount(0);
+}
+
+void UIPrzegladanieGrafikowRoboczych::onButtonUsunWszystkoClicked() {
+    bool result = pPrzegladanieGrafikowRoboczych->wybranoUsuniecieWszystkichGrafikow();
+    if (!result) {
+        QMessageBox::critical(this, tr("Błąd"), tr("Nie udało się usunąć grafików. Być może grafiki nie zostały nawet wybrane."), QMessageBox::Ok);
+        return;
+    }
+    QMessageBox::information(this, tr("Informacja"), tr("Usunięto WSZYSTKIE grafiki z danego miesiąca i danego roku."), QMessageBox::Ok);
 }
 
 void UIPrzegladanieGrafikowRoboczych::onButtonUsunClicked() {
