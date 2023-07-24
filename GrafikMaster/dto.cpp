@@ -447,14 +447,14 @@ XGrafik::XGrafik()
     tablicaDyzurantowTworzacych(nullptr),
     licznikStworzonychGrafikow(nullptr), zakonczenieSzukania(nullptr), licznikOstatecznyStworzonychGrafikow(nullptr),
     liczbaIteracji(nullptr), parentWorker(nullptr), czyPrzyspieszenie(false), licznikSkrocen(nullptr), decyzjaOSkroceniu(nullptr),
-    mutex(nullptr) {}
+    mutex(nullptr), skracaniePomimoUlozenia(false) {}
 
 XGrafik::XGrafik(int r, Miesiac m, StatusGrafiku st, int ld, DzienTygodnia pd)
     : rok(r), miesiac(m), status(st), liczbaDni(ld), pierwszyDzien(pd), db(nullptr), tablicaDyzurantowTworzacych(nullptr),
     licznikStworzonychGrafikow(nullptr), zakonczenieSzukania(nullptr),
     licznikOstatecznyStworzonychGrafikow(nullptr), liczbaIteracji(nullptr), parentWorker(nullptr),
     licznikSkrocen(nullptr), czyPrzyspieszenie(false), decyzjaOSkroceniu(nullptr),
-    mutex(nullptr) {}
+    mutex(nullptr), skracaniePomimoUlozenia(false) {}
 
 XGrafik::XGrafik(XGrafik& gr) {
     rok = gr.rok;
@@ -489,6 +489,7 @@ XGrafik::XGrafik(XGrafik& gr) {
     licznikSkrocen = gr.licznikSkrocen;
     decyzjaOSkroceniu = gr.decyzjaOSkroceniu;
     mutex = gr.mutex;
+    skracaniePomimoUlozenia = gr.skracaniePomimoUlozenia;
 }
 
 XGrafik::XGrafik(XGrafik* gr) {
@@ -524,6 +525,7 @@ XGrafik::XGrafik(XGrafik* gr) {
     licznikSkrocen = gr->licznikSkrocen;
     decyzjaOSkroceniu = gr->decyzjaOSkroceniu;
     mutex = gr->mutex;
+    skracaniePomimoUlozenia = gr->skracaniePomimoUlozenia;
 }
 
 void XGrafik::stworzPodstawyGrafiku() {
@@ -682,12 +684,13 @@ bool XGrafik::sprawdzZgodnoscZMinimalnaLiczbaDyzurowDlaWszystkich() {
     return true;
 }
 
-void XGrafik::wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt, int ileIteracji, TWorker* pw, bool czyP, bool* decS, int* licS, QMutex* mut) {
+void XGrafik::wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt, int ileIteracji, TWorker* pw, bool czyP, bool* decS, int* licS, QMutex* mut, bool spu) {
     //ustawienie zmiennych odnośnie przyspieszenia (związane z timerem)
     czyPrzyspieszenie = czyP;
     decyzjaOSkroceniu = decS;
     licznikSkrocen = licS;
     mutex = mut;
+    skracaniePomimoUlozenia = spu;
     //ustawienie wskaźnika do obiektu 'w którym' biegnie odpowiedni wątek
     parentWorker = pw;
     //uzupełnienie wskaźnika do tablicy dyżurantów tworzących (pochodzi z obiektu MNoweGrafiki)
