@@ -4,6 +4,7 @@
 #include <QMessageBox>
 #include <QStringList>
 #include "dto.h"
+#include <QFont>
 
 UIPrzegladanieGrafikowRoboczych::UIPrzegladanieGrafikowRoboczych(PPrzegladanieGrafikowRoboczych* p, QWidget *parent)
     : QMainWindow{parent} {
@@ -142,11 +143,24 @@ void UIPrzegladanieGrafikowRoboczych::onButtonLeftClicked() {
     }
     labelNumber->setText(QString::number(ktory) + " / " + QString::number(ileWszystkich));
     int licznikWierszy(0);
+    
+    QTableWidgetItem* twitem(nullptr);    
+    QFont fontForWeekend;
+    fontForWeekend.setBold(true);
+    
     for (auto it = grafikDoWyswietlenia->listaPozycjiGrafiku->begin(); it < grafikDoWyswietlenia->listaPozycjiGrafiku->end(); ++it) {
         tableGrafik->insertRow(licznikWierszy);
         tableGrafik->setItem(licznikWierszy, 0, new QTableWidgetItem((*it)->dzien));
         tableGrafik->setItem(licznikWierszy, 1, new QTableWidgetItem((*it)->dzienTygodnia));
         tableGrafik->setItem(licznikWierszy, 2, new QTableWidgetItem((*it)->dyzurant));
+        
+        if ((*it)->dzienTygodnia == "niedziela" || (*it)->dzienTygodnia == "sobota") {
+            for (int i=0; i<3; ++i) {
+                twitem = tableGrafik->item(licznikWierszy, i);
+                twitem->setFont(fontForWeekend);
+            }
+        }
+        
         licznikWierszy++;
     }
     buttonKlepnijGrafik->setEnabled(true);
