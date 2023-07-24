@@ -66,6 +66,7 @@ private:
     int licznikPowtorzenDanegoSkrocenia;
     int aktualneSkrocenie;
     int licznikPetliSkrocen;
+    bool skracanieZawsze;
 
     int obliczIloscSkrocen();
 
