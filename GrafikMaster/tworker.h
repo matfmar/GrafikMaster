@@ -18,7 +18,7 @@ class TWorker : public QObject
 {
     Q_OBJECT
 public:
-    TWorker(XGrafik* g, std::vector<XDyzurantTworzacy*>* tdt, int ile, QSemaphore* sem, QSemaphore* sem2, QSemaphore* sem3, int szybkosc, QObject* parent = nullptr);
+    TWorker(XGrafik* g, std::vector<XDyzurantTworzacy*>* tdt, int ile, QSemaphore* sem, QSemaphore* sem2, QSemaphore* sem3, int szybkosc, QObject* parent = nullptr, bool skracaniePomimoUlozenia);
     ~TWorker();
     //wywoływane przez obiekty XGrafik  - poniższe funkcje wysyłają odpowiednie sygnały
     void pokazLiczbeInteracji(int a);
