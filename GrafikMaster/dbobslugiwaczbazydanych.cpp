@@ -225,6 +225,11 @@ XWyswietlanyGrafik* DBObslugiwaczBazyDanych::zaladujGrafikOKonkretnejNazwie(std:
     return nowyWyswietlanyGrafik;
 }
 
+bool DBObslugiwaczBazyDanych::przekopiujPlikDoOstatecznych(std::string nazwaPliku) {
+    QString filename = QString::fromStdString(nazwaPliku);
+    
+}
+
 bool DBObslugiwaczBazyDanych::usunPlikGrafikuRoboczego(std::string nazwaPliku) {
     QString filename = QString::fromStdString(nazwaPliku);
     QFile file(filename);
