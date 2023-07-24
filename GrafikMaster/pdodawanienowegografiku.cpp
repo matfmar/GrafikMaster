@@ -53,10 +53,15 @@ bool PDodawanieNowegoGrafiku::wybranoUpdateDyzurantaTworzacego(QString nick, boo
     bool result = mNoweGrafiki->updateDyzurantaTworzacego(nick.toStdString(), czyM, m.toStdString(), nm.toStdString(), u.toStdString(), ch.toStdString(), maks, min, maksS, maksN, maksW, c, maksP, wyborT);
     return result;
 }
+
 void PDodawanieNowegoGrafiku::wybranoProsbeOStworzenieGrafiku(bool& immediateResult, int ileIteracji, int szybkosc, bool skracaniePomimoUlozenia) {
     XGrafik* grafikWstepny = mNoweGrafiki->wypelnijGrafikPierwszymiDanymi();
 
     //pokazujemy efekt pierwszych danych na grafik
+    if (uiTworzoneGrafiki != nullptr) {
+        delete uiTworzoneGrafiki;
+        uiTworzoneGrafiki = nullptr;
+    }
     uiTworzoneGrafiki = new UITworzoneGrafiki(grafikWstepny, this);
     uiTworzoneGrafiki->exec();  //blokujące program
 
@@ -65,7 +70,7 @@ void PDodawanieNowegoGrafiku::wybranoProsbeOStworzenieGrafiku(bool& immediateRes
     }
 
     //jeśli jest ok, to idziemy dalej.
-    mNoweGrafiki->wypelnijGrafikDyzurantami(immediateResult, ileIteracji, szybkosc);
+    mNoweGrafiki->wypelnijGrafikDyzurantami(immediateResult, ileIteracji, szybkosc, skracaniePomimoUlozenia);
 
     if (immediateResult) {      //przy dobrej wstepnej weryfikacji zamykamy okno tworzenia grafikow
         uiDodawanieNowegoGrafiku->close();
