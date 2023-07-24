@@ -65,6 +65,17 @@ bool PPrzegladanieGrafikowRoboczych::wybranoUsuniecieWszystkichGrafikow() {
     return true;
 }
 
+bool PPrzegladanieGrafikowRoboczych::wybranoKlepniecieGrafiku() {
+    if (ktoryWyswietlamy == -1 || ktoryWyswietlamy > ileGrafikowNaLiscie - 1) {
+        return false;
+    }
+    std::string nazwaPliku = (*aktualnaListaGrafikow)[ktoryWyswietlamy]->nazwaPliku;
+    bool resultPrzekopiowaniePlikuDoOstatecznych = db->przekopiujPlikDoOstatecznych(nazwaPliku);
+    
+
+    
+}
+
 bool PPrzegladanieGrafikowRoboczych::wybranoUsuniecieGrafiku(bool& czyCosZostaje) {
     if (ktoryWyswietlamy == -1 || ktoryWyswietlamy > ileGrafikowNaLiscie - 1) {
         return false;
@@ -177,10 +188,6 @@ XWyswietlanyGrafik* PPrzegladanieGrafikowRoboczych::wybranoGrafikWPrawo(int& kto
     ktory = ktoryWyswietlamy+1;
     ileWszystkich = ileGrafikowNaLiscie;
     return (*aktualnaListaGrafikow)[ktoryWyswietlamy];
-}
-
-bool PPrzegladanieGrafikowRoboczych::wybranoKlepniecieGrafiku() {
-    
 }
  
 void PPrzegladanieGrafikowRoboczych::wybranoZamkniecie() {
