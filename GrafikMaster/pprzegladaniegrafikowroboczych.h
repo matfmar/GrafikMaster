@@ -3,6 +3,7 @@
 #define PPRZEGLADANIEGRAFIKOWROBOCZYCH_H
 
 #include <vector>
+#include <string>
 
 class UIPrzegladanieGrafikowRoboczych;
 class XWyswietlanyGrafik;
@@ -26,6 +27,7 @@ private:
     int ileGrafikowNaLiscie;
     int ktoryWyswietlamy;
     DBObslugiwaczBazyDanych* db;
+    std::vector<std::string> listaNazwPlikow;
 
     void wyczyscAktualnaListeGrafikow();
 };
