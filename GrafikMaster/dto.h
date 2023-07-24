@@ -202,7 +202,7 @@ public:
     void dodajPierwszeDaneDyzurantowKiedyChca(std::vector<XDyzurantTworzacy*>* tablicaDyzurantowTworzacych);
     void przeliczMozliwiNieUnikajacyDyzuranciDlaKazdegoDnia();
     void przeliczMozliwiNieUnikajacyDyzuranciDlaJednegoDnia(int dzien);
-    void wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt, int ileIteracji, TWorker* pw, bool czyP, bool* decS, int* licS, QMutex* mut);
+    void wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt, int ileIteracji, TWorker* pw, bool czyP, bool* decS, int* licS, QMutex* mut, bool spu);
     std::vector<XDzien*> udostepnijTabliceDni();
     std::string getMiesiacRok();
 
@@ -234,6 +234,7 @@ private:
     bool czyPrzyspieszenie;
     bool* decyzjaOSkroceniu;
     int* licznikSkrocen;
+    bool skracaniePomimoUlozenia;
     QMutex* mutex;
 
     void dodajUnikanie(XDyzurantTworzacy::XLiczniki* licznikDt, XDyzurantTworzacy* dt, int klucz, int unikanieKrotnosc, bool& result, int dzien);
