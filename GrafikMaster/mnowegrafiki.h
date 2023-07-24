@@ -30,7 +30,7 @@ public:
     std::vector<std::string> wczytajUstawienia(std::vector<XDyzurant*>* tablicaDyzurantow);
     XGrafik* wypelnijGrafikPierwszymiDanymi();
 
-    void wypelnijGrafikDyzurantami(bool& immediateResult, int ileIteracji, int szybkosc);
+    void wypelnijGrafikDyzurantami(bool& immediateResult, int ileIteracji, int szybkosc, bool skracaniePomimoUlozenia);
 
     bool usunWszystkieUstawieniaZPlikow();
 private:
