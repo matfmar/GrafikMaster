@@ -227,7 +227,10 @@ XWyswietlanyGrafik* DBObslugiwaczBazyDanych::zaladujGrafikOKonkretnejNazwie(std:
 
 bool DBObslugiwaczBazyDanych::przekopiujPlikDoOstatecznych(std::string nazwaPliku) {
     QString filename = QString::fromStdString(nazwaPliku);
-    
+    QFile file(filename);
+    QString filename2 = filename.remove("data/grafiki_robocze/");
+    filename2 = "data/grafiki_ostateczne/" + filename2;
+    return (file.copy(filename2));
 }
 
 bool DBObslugiwaczBazyDanych::usunPlikGrafikuRoboczego(std::string nazwaPliku) {
