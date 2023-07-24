@@ -19,6 +19,7 @@ public slots:
     //do obsługi QThread
     void process();
     void startTheTimerFromOutside();
+    void stopTheTimerFromOutside();
 signals:
     void timeFinishedSignal();
     //do obsługi QThread
