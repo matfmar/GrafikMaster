@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <filesystem>
 #include <QDir>
+#include <QFile>
 #include <QStringList>
 
 DBObslugiwaczBazyDanych::DBObslugiwaczBazyDanych() {}
@@ -225,9 +226,10 @@ XWyswietlanyGrafik* DBObslugiwaczBazyDanych::zaladujGrafikOKonkretnejNazwie(std:
 }
 
 bool DBObslugiwaczBazyDanych::usunPlikGrafikuRoboczego(std::string nazwaPliku) {
-    QDir dir("data/grafiki_robocze");
-    bool resultUsunPlik = dir.remove(QString::fromStdString(nazwaPliku));
-    return resultUsunPlik;        
+    QString filename = QString::fromStdString(nazwaPliku);
+    QFile file(filename);
+    bool result = file.remove();
+    return result;
 }
 
 std::vector<std::string> DBObslugiwaczBazyDanych::wczytajListeNazwPlikowZGrafikamiRoboczymi(std::string wzorNazwy, bool& result) {

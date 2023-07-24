@@ -52,7 +52,7 @@ int PPrzegladanieGrafikowRoboczych::wybranoSzukanieGrafikow(int miesiac, int rok
 }
 
 bool PPrzegladanieGrafikowRoboczych::wybranoUsuniecieGrafiku(bool& czyCosZostaje) {
-    if (ktoryWyswietlamy == -1 || ktoryWyswietlamy >= ileGrafikowNaLiscie - 1) {
+    if (ktoryWyswietlamy == -1 || ktoryWyswietlamy > ileGrafikowNaLiscie - 1) {
         return false;
     }
     std::string nazwaPliku = (*aktualnaListaGrafikow)[ktoryWyswietlamy]->nazwaPliku;

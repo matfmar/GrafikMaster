@@ -35,7 +35,7 @@ UIPrzegladanieGrafikowRoboczych::UIPrzegladanieGrafikowRoboczych(PPrzegladanieGr
     layoutChoice->addWidget(labelNumber);
     layoutChoice->addWidget(buttonRight);
 
-    tableGrafik = new QTableWidget(32, 3, this);
+    tableGrafik = new QTableWidget(0, 3, this);
     QStringList etykiety;
     etykiety << "#" << "Dzień tygodnia" << "Dyżurant";
     tableGrafik->setHorizontalHeaderLabels(etykiety);
@@ -90,8 +90,7 @@ void UIPrzegladanieGrafikowRoboczych::ableUsunButton(bool how) {
 }
 
 void UIPrzegladanieGrafikowRoboczych::wyczyscTabele() {
-    tableGrafik->clearContents();
-    labelNumber->setText(tr("BRAK"));
+    tableGrafik->setRowCount(0);
 }
 
 void UIPrzegladanieGrafikowRoboczych::onButtonUsunClicked() {
@@ -108,6 +107,7 @@ void UIPrzegladanieGrafikowRoboczych::onButtonUsunClicked() {
 }
 
 void UIPrzegladanieGrafikowRoboczych::onButtonLeftClicked() {
+    tableGrafik->setRowCount(0);
     XWyswietlanyGrafik* grafikDoWyswietlenia(nullptr);
     int ktory(-1), ileWszystkich(-1);
     grafikDoWyswietlenia = pPrzegladanieGrafikowRoboczych->wybranoGrafikWLewo(ktory, ileWszystkich);
@@ -117,38 +117,34 @@ void UIPrzegladanieGrafikowRoboczych::onButtonLeftClicked() {
     }
     labelNumber->setText(QString::number(ktory) + " / " + QString::number(ileWszystkich));
     int licznikWierszy(0);
-    QTableWidgetItem* item(nullptr);
     for (auto it = grafikDoWyswietlenia->listaPozycjiGrafiku->begin(); it < grafikDoWyswietlenia->listaPozycjiGrafiku->end(); ++it) {
-        item = tableGrafik->item(licznikWierszy, 0);
-        item->setText((*it)->dzien);
-        item = tableGrafik->item(licznikWierszy, 1);
-        item->setText((*it)->dzienTygodnia);
-        item = tableGrafik->item(licznikWierszy, 2);
-        item->setText((*it)->dyzurant);
+        tableGrafik->insertRow(licznikWierszy);
+        tableGrafik->setItem(licznikWierszy, 0, new QTableWidgetItem((*it)->dzien));
+        tableGrafik->setItem(licznikWierszy, 1, new QTableWidgetItem((*it)->dzienTygodnia));
+        tableGrafik->setItem(licznikWierszy, 2, new QTableWidgetItem((*it)->dyzurant));
         licznikWierszy++;
     }    
 }
 
 void UIPrzegladanieGrafikowRoboczych::wyswietlKonkretnyGrafik(XWyswietlanyGrafik* grafikDoWyswietlenia, int ktory, int ileWszystkich) {
+    tableGrafik->setRowCount(0);
     if (grafikDoWyswietlenia->listaPozycjiGrafiku == nullptr) {
         QMessageBox::critical(this, tr("Błąd"), tr("Nie udało się wyświetlić grafiku."), QMessageBox::Ok);
         return;
     }
     labelNumber->setText(QString::number(ktory) + " / " + QString::number(ileWszystkich));
     int licznikWierszy(0);
-    QTableWidgetItem* item(nullptr);
     for (auto it = grafikDoWyswietlenia->listaPozycjiGrafiku->begin(); it < grafikDoWyswietlenia->listaPozycjiGrafiku->end(); ++it) {
-        item = tableGrafik->item(licznikWierszy, 0);
-        item->setText((*it)->dzien);
-        item = tableGrafik->item(licznikWierszy, 1);
-        item->setText((*it)->dzienTygodnia);
-        item = tableGrafik->item(licznikWierszy, 2);
-        item->setText((*it)->dyzurant);
+        tableGrafik->insertRow(licznikWierszy);
+        tableGrafik->setItem(licznikWierszy, 0, new QTableWidgetItem((*it)->dzien));
+        tableGrafik->setItem(licznikWierszy, 1, new QTableWidgetItem((*it)->dzienTygodnia));
+        tableGrafik->setItem(licznikWierszy, 2, new QTableWidgetItem((*it)->dyzurant));
         licznikWierszy++;
     }    
 }
     
 void UIPrzegladanieGrafikowRoboczych::onButtonRightClicked() {
+    tableGrafik->setRowCount(0);
     XWyswietlanyGrafik* grafikDoWyswietlenia(nullptr);
     int ktory(-1), ileWszystkich(-1);
     grafikDoWyswietlenia = pPrzegladanieGrafikowRoboczych->wybranoGrafikWPrawo(ktory, ileWszystkich);
@@ -159,7 +155,7 @@ void UIPrzegladanieGrafikowRoboczych::onButtonRightClicked() {
     labelNumber->setText(QString::number(ktory) + " / " + QString::number(ileWszystkich));
     int licznikWierszy(0);
     for (auto it = grafikDoWyswietlenia->listaPozycjiGrafiku->begin(); it < grafikDoWyswietlenia->listaPozycjiGrafiku->end(); ++it) {
-        //qDebug() << (*it)->dzien << " ; " << (*it)->dzienTygodnia << " ; " << (*it)->dyzurant;
+        tableGrafik->insertRow(licznikWierszy);
         tableGrafik->setItem(licznikWierszy, 0, new QTableWidgetItem((*it)->dzien));
         tableGrafik->setItem(licznikWierszy, 1, new QTableWidgetItem((*it)->dzienTygodnia));
         tableGrafik->setItem(licznikWierszy, 2, new QTableWidgetItem((*it)->dyzurant));
