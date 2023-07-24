@@ -48,6 +48,7 @@ signals:
     void showEndCommunicate(bool, int);
     //do komunikacji z TimerClass
     void startTheTimer();
+    void stopTheTimer();
 private:
     int szybkosc;
     XGrafik* grafikBazowy;
