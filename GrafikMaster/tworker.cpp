@@ -47,7 +47,7 @@ void TWorker::process() {
     }
 
     //uruchamiamy liczenie grafików
-    grafikBazowy -> wypelnijGrafikDyzurantami(tablicaDyzurantowTworzacych, ileIteracji, this, czyPrzyspieszenie, decyzjaOSkroceniu, licznikSkrocen, mutex);
+    grafikBazowy -> wypelnijGrafikDyzurantami(tablicaDyzurantowTworzacych, ileIteracji, this, czyPrzyspieszenie, decyzjaOSkroceniu, licznikSkrocen, mutex, skracanieZawsze);
 
     //teraz jesteśmy już po zakończeniu tworzenia grafików
     //w razie działania z przyspieszaczem niszczymy TimerClass (czyli też i zegar) oraz zatrzymujemy wątek
