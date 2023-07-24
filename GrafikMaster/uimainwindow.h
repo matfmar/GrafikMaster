@@ -26,7 +26,7 @@ private:
     PMain* pMain;
     QWidget* mainWidget;
     QVBoxLayout* layout;
-    QLabel* mainLabel;
+    QLabel* mainLabel,* authorLabel;
     QPushButton* buttonEdytujBazeDyzurantow;
     QPushButton* buttonDodajNowyGrafik;
     QPushButton* buttonPrzegladajGrafikiRobocze;
