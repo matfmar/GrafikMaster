@@ -42,7 +42,7 @@ private:
     QPushButton* buttonSzukaj;
     QGridLayout* layoutGroup;
     
-    QPushButton* buttonLeft,* buttonRight,* buttonUsun;
+    QPushButton* buttonLeft,* buttonRight,* buttonUsun,* buttonUsunWszystko;
     QLabel* labelNumber;
     QHBoxLayout* layoutChoice;
 
