@@ -47,11 +47,14 @@ UIPrzegladanieGrafikowRoboczych::UIPrzegladanieGrafikowRoboczych(PPrzegladanieGr
     buttonUsun->setEnabled(false);
     buttonUsunWszystko = new QPushButton(tr("Usuń WSZYSTKIE grafiki z danego miesiąca i danego roku"), this);
     buttonUsunWszystko->setEnabled(false);
+    buttonKlepnijGrafik = new QPushButton(tr("Klepnij grafik jako aktualny"), this);
+    buttonKlepnijGrafik->setEnabled(false);
 
     mainLayout = new QVBoxLayout(this);
     mainLayout->addWidget(groupMiesiacRok);
     mainLayout->addLayout(layoutChoice);
     mainLayout->addWidget(tableGrafik);
+    mainLayout->addWidget(buttonKlepnijGrafik);
     mainLayout->addWidget(buttonUsun);
     mainLayout->addWidget(buttonUsunWszystko);
     mainLayout->addWidget(buttonClose);
@@ -65,6 +68,7 @@ UIPrzegladanieGrafikowRoboczych::UIPrzegladanieGrafikowRoboczych(PPrzegladanieGr
     QObject::connect(buttonClose, SIGNAL(clicked()), this, SLOT(onButtonCloseClicked()));
     QObject::connect(buttonUsun, SIGNAL(clicked()), this, SLOT(onButtonUsunClicked()));
     QObject::connect(buttonUsunWszystko, SIGNAL(clicked()), this, SLOT(onButtonUsunWszystkoClicked()));
+    QObject::connect(buttonKlepnijGrafik, SIGNAL(clicked()), this, SLOT(onButtonKlepnijGrafikClicked()));
 }
 
 void UIPrzegladanieGrafikowRoboczych::onButtonSzukajClicked() {
@@ -182,6 +186,10 @@ void UIPrzegladanieGrafikowRoboczych::onButtonRightClicked() {
         tableGrafik->setItem(licznikWierszy, 2, new QTableWidgetItem((*it)->dyzurant));
         licznikWierszy++;
     }
+}
+
+void UIPrzegladanieGrafikowRoboczych::onButtonKlepnijGrafikClicked() {
+    
 }
     
 void UIPrzegladanieGrafikowRoboczych::onButtonCloseClicked() {
