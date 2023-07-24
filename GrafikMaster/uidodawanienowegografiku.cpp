@@ -157,9 +157,11 @@ UIDodawanieNowegoGrafiku::UIDodawanieNowegoGrafiku(std::vector<XDyzurant*>* td, 
     groupSzybkosc = new QGroupBox(tr("Działanie algorytmu"), this);
     groupSzybkosc->setLayout(layoutSzybkosc);
     wyborNormalnie->setChecked(true);
+    wyborSkracajNiezaleznieOdUlozenia = new QCheckBox(tr("Przyspiesz również wtedy gdy grafiki są tworzone"));
     layoutRight = new QVBoxLayout(this);
     layoutRight->addWidget(groupSzybkosc);
     layoutRight->addLayout(layoutRightLabelEdit);
+    layoutRight->addWidget(wyborSkracajNiezaleznieOdUlozenia);
     layoutRight->addWidget(buttonStart);
 
     ultimateLayout = new QHBoxLayout(this);
@@ -288,9 +290,10 @@ void UIDodawanieNowegoGrafiku::onButtonStartClicked() {
     else if (wyborBardzoSzybko->isChecked()) szybkosc = 10;
     else if (wyborEkstremanlnieSzybko->isChecked()) szybkosc = 15;
     else szybkosc = 0;
+    bool skracaniePomimoUlozenia = wyborSkracajNiezaleznieOdUlozenia->isChecked();
 
     bool immediateResult(true);
-    pDodawanieNowegoGrafiku->wybranoProsbeOStworzenieGrafiku(immediateResult, liczbaIteracji, szybkosc);
+    pDodawanieNowegoGrafiku->wybranoProsbeOStworzenieGrafiku(immediateResult, liczbaIteracji, szybkosc, skracaniePomimoUlozenia);
     if (!immediateResult) {
         QMessageBox::critical(this, tr("Błąd"), tr("Podano wewnętrznie sprzecze kryteria!"), QMessageBox::Ok);
         //close();
