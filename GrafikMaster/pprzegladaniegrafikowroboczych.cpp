@@ -70,10 +70,7 @@ bool PPrzegladanieGrafikowRoboczych::wybranoKlepniecieGrafiku() {
         return false;
     }
     std::string nazwaPliku = (*aktualnaListaGrafikow)[ktoryWyswietlamy]->nazwaPliku;
-    bool resultPrzekopiowaniePlikuDoOstatecznych = db->przekopiujPlikDoOstatecznych(nazwaPliku);
-    
-
-    
+    return (resultPrzekopiowaniePlikuDoOstatecznych = db->przekopiujPlikDoOstatecznych(nazwaPliku));    
 }
 
 bool PPrzegladanieGrafikowRoboczych::wybranoUsuniecieGrafiku(bool& czyCosZostaje) {
