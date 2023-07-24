@@ -53,7 +53,7 @@ bool PDodawanieNowegoGrafiku::wybranoUpdateDyzurantaTworzacego(QString nick, boo
     bool result = mNoweGrafiki->updateDyzurantaTworzacego(nick.toStdString(), czyM, m.toStdString(), nm.toStdString(), u.toStdString(), ch.toStdString(), maks, min, maksS, maksN, maksW, c, maksP, wyborT);
     return result;
 }
-void PDodawanieNowegoGrafiku::wybranoProsbeOStworzenieGrafiku(bool& immediateResult, int ileIteracji, int szybkosc) {
+void PDodawanieNowegoGrafiku::wybranoProsbeOStworzenieGrafiku(bool& immediateResult, int ileIteracji, int szybkosc, bool skracaniePomimoUlozenia) {
     XGrafik* grafikWstepny = mNoweGrafiki->wypelnijGrafikPierwszymiDanymi();
 
     //pokazujemy efekt pierwszych danych na grafik
