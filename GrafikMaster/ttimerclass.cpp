@@ -20,6 +20,10 @@ void TTimerClass::startTheTimerFromOutside() {
     timer->start(3000);
 }
 
+void TTimerClass::stopTheTimerFromOutside() {
+    timer->stop();
+}
+
 void TTimerClass::stopTimerTC() {
     timer->stop();
 }
