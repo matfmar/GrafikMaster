@@ -243,7 +243,7 @@ bool MNoweGrafiki::sprawdzWstepnieZgodnosc() {
     return true;
 }
 
-void MNoweGrafiki::wypelnijGrafikDyzurantami(bool& immediateResult, int ileIteracji, int szybkosc) {
+void MNoweGrafiki::wypelnijGrafikDyzurantami(bool& immediateResult, int ileIteracji, int szybkosc, bool skracaniePomimoUlozenia) {
     immediateResult = sprawdzWstepnieZgodnosc();
     if (!immediateResult) {
         return;
@@ -254,7 +254,7 @@ void MNoweGrafiki::wypelnijGrafikDyzurantami(bool& immediateResult, int ileItera
     semaforLabel = new QSemaphore(0);   //do wyświetlania liczby stworzonych grafików na ekranie
     progressManager = new PProgress(semafor, semafor2, semaforLabel);
     thread = new QThread();
-    tWorker = new TWorker(nowyGrafik, tablicaDyzurantowTworzacych, ileIteracji, semafor, semafor2, semaforLabel, szybkosc);
+    tWorker = new TWorker(nowyGrafik, tablicaDyzurantowTworzacych, ileIteracji, semafor, semafor2, semaforLabel, szybkosc, skracaniePomimoUlozenia);
     tWorker->moveToThread(thread);
     //połączenia między tWorker i progressManager - wyświetlanie iteracji i przymykanie okna
     QObject::connect(tWorker, SIGNAL(sendInt(int)), progressManager, SLOT(setLabelOknoProgress(int)));
