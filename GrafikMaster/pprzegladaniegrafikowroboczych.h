@@ -22,6 +22,7 @@ public:
     bool wybranoUsuniecieGrafiku(bool& czyCosZostaje);
     bool wybranoUsuniecieWszystkichGrafikow();
     bool wybranoKlepniecieGrafiku();
+    bool zapiszJakoPDF();
 private:
     UIPrzegladanieGrafikowRoboczych* uiPrzegladanieGrafikowRoboczych;
     std::vector<XWyswietlanyGrafik*>* aktualnaListaGrafikow;

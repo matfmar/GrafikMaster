@@ -50,11 +50,14 @@ UIPrzegladanieGrafikowRoboczych::UIPrzegladanieGrafikowRoboczych(PPrzegladanieGr
     buttonUsunWszystko->setEnabled(false);
     buttonKlepnijGrafik = new QPushButton(tr("Klepnij grafik jako aktualny"), this);
     buttonKlepnijGrafik->setEnabled(false);
+    buttonDrukujPDF = new QPushButton(tr("Zapiszj ten grafik jako PDF"), this);
+    buttonDrukujPDF->setEnabled(false);
 
     mainLayout = new QVBoxLayout(this);
     mainLayout->addWidget(groupMiesiacRok);
     mainLayout->addLayout(layoutChoice);
     mainLayout->addWidget(tableGrafik);
+    mainLayout->addWidget(buttonDrukujPDF);
     mainLayout->addWidget(buttonKlepnijGrafik);
     mainLayout->addWidget(buttonUsun);
     mainLayout->addWidget(buttonUsunWszystko);
@@ -70,6 +73,7 @@ UIPrzegladanieGrafikowRoboczych::UIPrzegladanieGrafikowRoboczych(PPrzegladanieGr
     QObject::connect(buttonUsun, SIGNAL(clicked()), this, SLOT(onButtonUsunClicked()));
     QObject::connect(buttonUsunWszystko, SIGNAL(clicked()), this, SLOT(onButtonUsunWszystkoClicked()));
     QObject::connect(buttonKlepnijGrafik, SIGNAL(clicked()), this, SLOT(onButtonKlepnijGrafikClicked()));
+    QObject::connect(buttonDrukujPDF, SIGNAL(clicked()), this, SLOT(onButtonZapiszJakoPDFClicked()));
 }
 
 void UIPrzegladanieGrafikowRoboczych::onButtonSzukajClicked() {
@@ -115,6 +119,7 @@ void UIPrzegladanieGrafikowRoboczych::onButtonUsunWszystkoClicked() {
     buttonLeft->setEnabled(false);
     buttonRight->setEnabled(false);
     buttonUsun->setEnabled(false);
+    buttonDrukujPDF->setEnabled(false);
     buttonUsunWszystko->setEnabled(false);
     QMessageBox::information(this, tr("Informacja"), tr("Usunięto WSZYSTKIE grafiki z danego miesiąca i danego roku."), QMessageBox::Ok);
 }
@@ -130,6 +135,25 @@ void UIPrzegladanieGrafikowRoboczych::onButtonUsunClicked() {
     if (!czyCosZostaje) {
         wyczyscTabele();
     }
+    if (!czyCosZostaje) {
+        buttonUsun->setEnabled(false);
+        buttonDrukujPDF->setEnabled(false);
+        buttonKlepnijGrafik->setEnabled(false);
+    }
+    else {
+        buttonUsun->setEnabled(true);
+        buttonDrukujPDF->setEnabled(true);
+        buttonKlepnijGrafik->setEnabled(true);
+    }
+}
+
+void UIPrzegladanieGrafikowRoboczych::onButtonZapiszJakoPDFClicked() {
+    bool result = pPrzegladanieGrafikowRoboczych->zapiszJakoPDF();
+    if (!result) {
+        QMessageBox::critical(this, tr("Błąd"), tr("Nie udało się zapisać jako PDF"), QMessageBox::Ok);
+        return;
+    }
+    QMessageBox::information(this, tr("Informacja"), tr("Pomyślnie zapisano grafik jako PDF"), QMessageBox::Ok);
 }
 
 void UIPrzegladanieGrafikowRoboczych::onButtonLeftClicked() {
@@ -164,6 +188,7 @@ void UIPrzegladanieGrafikowRoboczych::onButtonLeftClicked() {
         licznikWierszy++;
     }
     buttonKlepnijGrafik->setEnabled(true);
+    buttonDrukujPDF->setEnabled(true);
 }
 
 void UIPrzegladanieGrafikowRoboczych::wyswietlKonkretnyGrafik(XWyswietlanyGrafik* grafikDoWyswietlenia, int ktory, int ileWszystkich) {
@@ -182,6 +207,7 @@ void UIPrzegladanieGrafikowRoboczych::wyswietlKonkretnyGrafik(XWyswietlanyGrafik
         licznikWierszy++;
     }    
     buttonKlepnijGrafik->setEnabled(true);
+    buttonDrukujPDF->setEnabled(true);
 }
     
 void UIPrzegladanieGrafikowRoboczych::onButtonRightClicked() {
@@ -203,6 +229,7 @@ void UIPrzegladanieGrafikowRoboczych::onButtonRightClicked() {
         licznikWierszy++;
     }
     buttonKlepnijGrafik->setEnabled(true);
+    buttonDrukujPDF->setEnabled(true);
 }
 
 void UIPrzegladanieGrafikowRoboczych::onButtonKlepnijGrafikClicked() {

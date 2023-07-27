@@ -34,6 +34,7 @@ public slots:
     void onButtonUsunClicked();
     void onButtonUsunWszystkoClicked();
     void onButtonKlepnijGrafikClicked();
+    void onButtonZapiszJakoPDFClicked();
 private:
     PPrzegladanieGrafikowRoboczych* pPrzegladanieGrafikowRoboczych;
     QWidget* mainWidget;
@@ -44,7 +45,7 @@ private:
     QPushButton* buttonSzukaj;
     QGridLayout* layoutGroup;
     
-    QPushButton* buttonLeft,* buttonRight,* buttonUsun,* buttonUsunWszystko,* buttonKlepnijGrafik;
+    QPushButton* buttonLeft,* buttonRight,* buttonUsun,* buttonUsunWszystko,* buttonKlepnijGrafik,* buttonDrukujPDF;
     QLabel* labelNumber;
     QHBoxLayout* layoutChoice;
 

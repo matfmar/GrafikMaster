@@ -3,6 +3,8 @@
 #include "uiprzegladaniegrafikowroboczych.h"
 #include "dbobslugiwaczbazydanych.h"
 #include "dto.h"
+#include <QTextDocument>
+#include <QPrinter>
 
 PPrzegladanieGrafikowRoboczych::PPrzegladanieGrafikowRoboczych()
     : uiPrzegladanieGrafikowRoboczych(nullptr), aktualnaListaGrafikow(nullptr), db(nullptr), 
@@ -70,7 +72,7 @@ bool PPrzegladanieGrafikowRoboczych::wybranoKlepniecieGrafiku() {
         return false;
     }
     std::string nazwaPliku = (*aktualnaListaGrafikow)[ktoryWyswietlamy]->nazwaPliku;
-    return (resultPrzekopiowaniePlikuDoOstatecznych = db->przekopiujPlikDoOstatecznych(nazwaPliku));    
+    return (db->przekopiujPlikDoOstatecznych(nazwaPliku));
 }
 
 bool PPrzegladanieGrafikowRoboczych::wybranoUsuniecieGrafiku(bool& czyCosZostaje) {
@@ -189,6 +191,39 @@ XWyswietlanyGrafik* PPrzegladanieGrafikowRoboczych::wybranoGrafikWPrawo(int& kto
  
 void PPrzegladanieGrafikowRoboczych::wybranoZamkniecie() {
 
+}
+
+bool PPrzegladanieGrafikowRoboczych::zapiszJakoPDF() {
+    if (ktoryWyswietlamy < 0 || (*aktualnaListaGrafikow)[ktoryWyswietlamy] == nullptr) {
+        return false;
+    }
+    QString html("<center><table border=\"1\" align=\"center\">");
+    html += "<caption>Lista dyżurowa na miesiąc " + (*aktualnaListaGrafikow)[ktoryWyswietlamy]->nazwaPliku + "</caption>";
+    html += "<tr><th><b>Dzień</b></th><th><b>Dzień Tygodnia</b></th><th><b>Lekarz Dyżurny</b></th></tr>";
+    for (auto it = (*aktualnaListaGrafikow)[ktoryWyswietlamy]->listaPozycjiGrafiku->begin(); it<(*aktualnaListaGrafikow)[ktoryWyswietlamy]->listaPozycjiGrafiku->end(); ++it) {
+        if ((*it)->dzienTygodnia == "sobota") {
+            html += "<tr bgcolor=\"grey\">";
+        }
+        else if ((*it)->dzienTygodnia == "niedziela") {
+            html += "<tr bgcolor=\"red\">";
+        }
+        else {
+            html += "<tr>";
+        }
+        html += "<td>" + (*it)->dzien + "</td>";
+        html += "<td>" + (*it)->dzienTygodnia + "</td>";
+        html += "<td>" + (*it)->dyzurant + "</td>";
+        html += "</tr>";
+    }
+    html += "</table></center>";
+
+    QTextDocument document;
+    document.setHtml(html);
+    QPrinter printer(QPrinter::HighResolution);
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    printer.setOutputFileName("data/plik.pdf");
+    document.print(&printer);
+    return true;
 }
 
 PPrzegladanieGrafikowRoboczych::~PPrzegladanieGrafikowRoboczych() {

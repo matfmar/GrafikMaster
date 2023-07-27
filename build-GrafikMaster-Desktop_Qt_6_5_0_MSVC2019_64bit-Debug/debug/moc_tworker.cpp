@@ -52,12 +52,13 @@ static constexpr auto qt_meta_stringdata_CLASSTWorkerENDCLASS = QtMocHelpers::st
     "int*",
     "showEndCommunicate",
     "startTheTimer",
+    "stopTheTimer",
     "process",
     "timePassed"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSTWorkerENDCLASS_t {
-    uint offsetsAndSizes[32];
+    uint offsetsAndSizes[34];
     char stringdata0[8];
     char stringdata1[9];
     char stringdata2[1];
@@ -72,8 +73,9 @@ struct qt_meta_stringdata_CLASSTWorkerENDCLASS_t {
     char stringdata11[5];
     char stringdata12[19];
     char stringdata13[14];
-    char stringdata14[8];
-    char stringdata15[11];
+    char stringdata14[13];
+    char stringdata15[8];
+    char stringdata16[11];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSTWorkerENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -93,8 +95,9 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSTWorkerENDCLASS_t qt_meta_strin
         QT_MOC_LITERAL(121, 4),  // "int*"
         QT_MOC_LITERAL(126, 18),  // "showEndCommunicate"
         QT_MOC_LITERAL(145, 13),  // "startTheTimer"
-        QT_MOC_LITERAL(159, 7),  // "process"
-        QT_MOC_LITERAL(167, 10)   // "timePassed"
+        QT_MOC_LITERAL(159, 12),  // "stopTheTimer"
+        QT_MOC_LITERAL(172, 7),  // "process"
+        QT_MOC_LITERAL(180, 10)   // "timePassed"
     },
     "TWorker",
     "finished",
@@ -110,6 +113,7 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSTWorkerENDCLASS_t qt_meta_strin
     "int*",
     "showEndCommunicate",
     "startTheTimer",
+    "stopTheTimer",
     "process",
     "timePassed"
 };
@@ -123,28 +127,29 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSTWorkerENDCLASS[] = {
       11,       // revision
        0,       // classname
        0,    0, // classinfo
-      12,   14, // methods
+      13,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-      10,       // signalCount
+      11,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   86,    2, 0x06,    1 /* Public */,
-       3,    1,   87,    2, 0x06,    2 /* Public */,
-       5,    1,   90,    2, 0x06,    4 /* Public */,
-       6,    1,   93,    2, 0x06,    6 /* Public */,
-       7,    0,   96,    2, 0x06,    8 /* Public */,
-       8,    0,   97,    2, 0x06,    9 /* Public */,
-       9,    0,   98,    2, 0x06,   10 /* Public */,
-      10,    1,   99,    2, 0x06,   11 /* Public */,
-      12,    2,  102,    2, 0x06,   13 /* Public */,
-      13,    0,  107,    2, 0x06,   16 /* Public */,
+       1,    0,   92,    2, 0x06,    1 /* Public */,
+       3,    1,   93,    2, 0x06,    2 /* Public */,
+       5,    1,   96,    2, 0x06,    4 /* Public */,
+       6,    1,   99,    2, 0x06,    6 /* Public */,
+       7,    0,  102,    2, 0x06,    8 /* Public */,
+       8,    0,  103,    2, 0x06,    9 /* Public */,
+       9,    0,  104,    2, 0x06,   10 /* Public */,
+      10,    1,  105,    2, 0x06,   11 /* Public */,
+      12,    2,  108,    2, 0x06,   13 /* Public */,
+      13,    0,  113,    2, 0x06,   16 /* Public */,
+      14,    0,  114,    2, 0x06,   17 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-      14,    0,  108,    2, 0x0a,   17 /* Public */,
-      15,    0,  109,    2, 0x0a,   18 /* Public */,
+      15,    0,  115,    2, 0x0a,   18 /* Public */,
+      16,    0,  116,    2, 0x0a,   19 /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -156,6 +161,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSTWorkerENDCLASS[] = {
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 11,    2,
     QMetaType::Void, QMetaType::Bool, QMetaType::Int,    2,    2,
+    QMetaType::Void,
     QMetaType::Void,
 
  // slots: parameters
@@ -200,6 +206,8 @@ Q_CONSTINIT const QMetaObject TWorker::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<int, std::false_type>,
         // method 'startTheTimer'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'stopTheTimer'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'process'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'timePassed'
@@ -224,8 +232,9 @@ void TWorker::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         case 7: _t->showAskWindow((*reinterpret_cast< std::add_pointer_t<int*>>(_a[1]))); break;
         case 8: _t->showEndCommunicate((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[2]))); break;
         case 9: _t->startTheTimer(); break;
-        case 10: _t->process(); break;
-        case 11: _t->timePassed(); break;
+        case 10: _t->stopTheTimer(); break;
+        case 11: _t->process(); break;
+        case 12: _t->timePassed(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -300,6 +309,13 @@ void TWorker::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
                 return;
             }
         }
+        {
+            using _t = void (TWorker::*)();
+            if (_t _q_method = &TWorker::stopTheTimer; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+                *result = 10;
+                return;
+            }
+        }
     }
 }
 
@@ -322,13 +338,13 @@ int TWorker::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 12)
+        if (_id < 13)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 12;
+        _id -= 13;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 12)
+        if (_id < 13)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 12;
+        _id -= 13;
     }
     return _id;
 }
@@ -396,5 +412,11 @@ void TWorker::showEndCommunicate(bool _t1, int _t2)
 void TWorker::startTheTimer()
 {
     QMetaObject::activate(this, &staticMetaObject, 9, nullptr);
+}
+
+// SIGNAL 10
+void TWorker::stopTheTimer()
+{
+    QMetaObject::activate(this, &staticMetaObject, 10, nullptr);
 }
 QT_WARNING_POP

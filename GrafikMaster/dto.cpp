@@ -890,7 +890,7 @@ bool XGrafik::wypelnijDzien(int dzien) {        //glowna funkcja wywolywana reku
         parentWorker->pokazLiczbeInteracji(*licznikOstatecznyStworzonychGrafikow);  //wysyłamy na ekran ilość zrobionych grafików
         //.... oraz resetujemy timer, jeśli działamy na przyspieszaczu I NIE SKRACAMY POMIMO ułożenia grafiku (co znalezienie grafiku to timer się resetuje
         if (czyPrzyspieszenie) {
-            if (!skracamyPomimoUlozenia) {
+            if (!skracaniePomimoUlozenia) {
                 parentWorker->startTimerX();
             }
         }

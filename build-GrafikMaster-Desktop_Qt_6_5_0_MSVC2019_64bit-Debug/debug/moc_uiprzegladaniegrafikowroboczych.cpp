@@ -45,11 +45,14 @@ static constexpr auto qt_meta_stringdata_CLASSUIPrzegladanieGrafikowRoboczychEND
     "onButtonLeftClicked",
     "onButtonRightClicked",
     "onButtonCloseClicked",
-    "onButtonUsunClicked"
+    "onButtonUsunClicked",
+    "onButtonUsunWszystkoClicked",
+    "onButtonKlepnijGrafikClicked",
+    "onButtonZapiszJakoPDFClicked"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSUIPrzegladanieGrafikowRoboczychENDCLASS_t {
-    uint offsetsAndSizes[14];
+    uint offsetsAndSizes[20];
     char stringdata0[32];
     char stringdata1[22];
     char stringdata2[1];
@@ -57,6 +60,9 @@ struct qt_meta_stringdata_CLASSUIPrzegladanieGrafikowRoboczychENDCLASS_t {
     char stringdata4[21];
     char stringdata5[21];
     char stringdata6[20];
+    char stringdata7[28];
+    char stringdata8[29];
+    char stringdata9[29];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSUIPrzegladanieGrafikowRoboczychENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -68,7 +74,10 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSUIPrzegladanieGrafikowRoboczych
         QT_MOC_LITERAL(55, 19),  // "onButtonLeftClicked"
         QT_MOC_LITERAL(75, 20),  // "onButtonRightClicked"
         QT_MOC_LITERAL(96, 20),  // "onButtonCloseClicked"
-        QT_MOC_LITERAL(117, 19)   // "onButtonUsunClicked"
+        QT_MOC_LITERAL(117, 19),  // "onButtonUsunClicked"
+        QT_MOC_LITERAL(137, 27),  // "onButtonUsunWszystkoClicked"
+        QT_MOC_LITERAL(165, 28),  // "onButtonKlepnijGrafikClicked"
+        QT_MOC_LITERAL(194, 28)   // "onButtonZapiszJakoPDFClicked"
     },
     "UIPrzegladanieGrafikowRoboczych",
     "onButtonSzukajClicked",
@@ -76,7 +85,10 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSUIPrzegladanieGrafikowRoboczych
     "onButtonLeftClicked",
     "onButtonRightClicked",
     "onButtonCloseClicked",
-    "onButtonUsunClicked"
+    "onButtonUsunClicked",
+    "onButtonUsunWszystkoClicked",
+    "onButtonKlepnijGrafikClicked",
+    "onButtonZapiszJakoPDFClicked"
 };
 #undef QT_MOC_LITERAL
 #endif // !QT_MOC_HAS_STRING_DATA
@@ -88,7 +100,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSUIPrzegladanieGrafikowRoboczychE
       11,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+       8,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -96,13 +108,19 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSUIPrzegladanieGrafikowRoboczychE
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   44,    2, 0x0a,    1 /* Public */,
-       3,    0,   45,    2, 0x0a,    2 /* Public */,
-       4,    0,   46,    2, 0x0a,    3 /* Public */,
-       5,    0,   47,    2, 0x0a,    4 /* Public */,
-       6,    0,   48,    2, 0x0a,    5 /* Public */,
+       1,    0,   62,    2, 0x0a,    1 /* Public */,
+       3,    0,   63,    2, 0x0a,    2 /* Public */,
+       4,    0,   64,    2, 0x0a,    3 /* Public */,
+       5,    0,   65,    2, 0x0a,    4 /* Public */,
+       6,    0,   66,    2, 0x0a,    5 /* Public */,
+       7,    0,   67,    2, 0x0a,    6 /* Public */,
+       8,    0,   68,    2, 0x0a,    7 /* Public */,
+       9,    0,   69,    2, 0x0a,    8 /* Public */,
 
  // slots: parameters
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -130,6 +148,12 @@ Q_CONSTINIT const QMetaObject UIPrzegladanieGrafikowRoboczych::staticMetaObject 
         // method 'onButtonCloseClicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'onButtonUsunClicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'onButtonUsunWszystkoClicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'onButtonKlepnijGrafikClicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'onButtonZapiszJakoPDFClicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
@@ -146,6 +170,9 @@ void UIPrzegladanieGrafikowRoboczych::qt_static_metacall(QObject *_o, QMetaObjec
         case 2: _t->onButtonRightClicked(); break;
         case 3: _t->onButtonCloseClicked(); break;
         case 4: _t->onButtonUsunClicked(); break;
+        case 5: _t->onButtonUsunWszystkoClicked(); break;
+        case 6: _t->onButtonKlepnijGrafikClicked(); break;
+        case 7: _t->onButtonZapiszJakoPDFClicked(); break;
         default: ;
         }
     }
@@ -171,13 +198,13 @@ int UIPrzegladanieGrafikowRoboczych::qt_metacall(QMetaObject::Call _c, int _id, 
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 8)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 8;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 5)
+        if (_id < 8)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 5;
+        _id -= 8;
     }
     return _id;
 }
