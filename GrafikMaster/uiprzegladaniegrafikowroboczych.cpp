@@ -15,13 +15,15 @@ UIPrzegladanieGrafikowRoboczych::UIPrzegladanieGrafikowRoboczych(PPrzegladanieGr
 
     labelMiesiac = new QLabel(tr("Miesiąc:"), this);
     labelRok = new QLabel(tr("Rok"), this);
-    editMiesiac = new QLineEdit(this);
+    comboDniTygodnia = new QComboBox(this);
+    //editMiesiac = new QLineEdit(this);
     editRok = new QLineEdit(this);
     buttonSzukaj = new QPushButton(tr("Szukaj grafików"), this);
     groupMiesiacRok = new QGroupBox(tr("Wyszukiwanie grup grafików"), this);
     layoutGroup = new QGridLayout(this);
     layoutGroup->addWidget(labelMiesiac, 0, 0);
-    layoutGroup->addWidget(editMiesiac, 0, 1);
+    layoutGroup->addWidget(comboDniTygodnia, 0, 1);
+    //layoutGroup->addWidget(editMiesiac, 0, 1);
     layoutGroup->addWidget(labelRok, 1, 0);
     layoutGroup->addWidget(editRok, 1, 1);
     layoutGroup->addWidget(buttonSzukaj, 2, 0);
@@ -75,13 +77,39 @@ UIPrzegladanieGrafikowRoboczych::UIPrzegladanieGrafikowRoboczych(PPrzegladanieGr
     QObject::connect(buttonUsunWszystko, SIGNAL(clicked()), this, SLOT(onButtonUsunWszystkoClicked()));
     QObject::connect(buttonKlepnijGrafik, SIGNAL(clicked()), this, SLOT(onButtonKlepnijGrafikClicked()));
     QObject::connect(buttonDrukujPDF, SIGNAL(clicked()), this, SLOT(onButtonZapiszJakoPDFClicked()));
+
+    tablicaMiesiecy = {STYCZEN, LUTY, MARZEC, KWIECIEN, MAJ, CZERWIEC, LIPIEC, SIERPIEN, WRZESIEN, PAZDZIERNIK, LISTOPAD, GRUDZIEN};
+    for (auto it=tablicaMiesiecy.begin(); it<tablicaMiesiecy.end(); ++it) {
+        comboDniTygodnia->addItem(translateEnumToQString(*it));
+    }
+}
+
+QString UIPrzegladanieGrafikowRoboczych::translateEnumToQString(Miesiac m) {
+    QString s("");
+    switch (m) {
+    case STYCZEN: s = tr("Styczeń"); break;
+    case LUTY: s = tr("Luty"); break;
+    case MARZEC: s = tr("Marzec"); break;
+    case KWIECIEN: s = tr("Kwiecień"); break;
+    case MAJ: s = tr("Maj"); break;
+    case CZERWIEC: s = tr("Czerwiec"); break;
+    case LIPIEC: s = tr("Lipiec"); break;
+    case SIERPIEN: s = tr("Sierpień"); break;
+    case WRZESIEN: s = tr("Wrzesień"); break;
+    case PAZDZIERNIK: s = tr("Październik"); break;
+    case LISTOPAD: s = tr("Listopad"); break;
+    case GRUDZIEN: s = tr("Grudzień"); break;
+    default: s = tr("NIEZNANY_MIESIĄC"); break;
+    }
+    return s;
 }
 
 void UIPrzegladanieGrafikowRoboczych::onButtonSzukajClicked() {
-    bool result1(false), result2(false);
-    int miesiac = editMiesiac->text().toInt(&result1);
+    bool result2(false);
+    int miesiac = comboDniTygodnia->currentIndex() + 1;
+    //int miesiac = editMiesiac->text().toInt(&result1);
     int rok = editRok->text().toInt(&result2);
-    if (!(result1 && result2)) {
+    if (!(result2)) {
         QMessageBox::critical(this, tr("Błąd"), tr("Nieprawidłowe dane!"), QMessageBox::Ok);
         return;
     }

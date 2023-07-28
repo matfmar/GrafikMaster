@@ -8,20 +8,24 @@ UIDecydowanieOKoniecznosciSzukaniaGrafikow::UIDecydowanieOKoniecznosciSzukaniaGr
     parent = p;
 
     buttonSzukajDalej = new QPushButton(tr("SZUKAJ DALEJ"), this);
-    buttonWyswietlGrafiki = new QPushButton(tr("WYŚWIETL ZNALEZIONE GRAFIKI"), this);
-    buttonZakonczSzukanie = new QPushButton(tr("ZAKOŃCZ SZUKANIE"), this);\
+    buttonZakonczSzukanie = new QPushButton(tr("ZAKOŃCZ SZUKANIE"), this);
+    label = new QLabel(labelText, this);
 
     mainLayout = new QVBoxLayout(this);
+    mainLayout->addWidget(label);
     mainLayout->addWidget(buttonSzukajDalej);
-    mainLayout->addWidget(buttonWyswietlGrafiki);
     mainLayout->addWidget(buttonZakonczSzukanie);
 
     setLayout(mainLayout);
 
     QObject::connect(buttonSzukajDalej, SIGNAL(clicked()), this, SLOT(onButtonSzukajDalejClicked()));
-    QObject::connect(buttonWyswietlGrafiki, SIGNAL(clicked()), this, SLOT(onButtonWyswietlGrafikiClicked()));
     QObject::connect(buttonZakonczSzukanie, SIGNAL(clicked()), this, SLOT(onButtonZakonczSzukanieClicked()));
 
+    setFixedSize(300, 300);
+}
+
+void UIDecydowanieOKoniecznosciSzukaniaGrafikow::setLabel(int ileGrafikow) {
+    label->setText(labelText + QString::number(ileGrafikow));
 }
 
 void UIDecydowanieOKoniecznosciSzukaniaGrafikow::onButtonSzukajDalejClicked() {
@@ -32,10 +36,6 @@ void UIDecydowanieOKoniecznosciSzukaniaGrafikow::onButtonSzukajDalejClicked() {
 void UIDecydowanieOKoniecznosciSzukaniaGrafikow::onButtonZakonczSzukanieClicked() {
     parent->setDecyzjaUzytkownika(2);
     close();
-}
-
-void UIDecydowanieOKoniecznosciSzukaniaGrafikow::onButtonWyswietlGrafikiClicked() {
-    parent->przegladajGrafiki();
 }
 
 void UIDecydowanieOKoniecznosciSzukaniaGrafikow::wyswietlKomunikatZakonczeniaSzukania(bool result, int ileGrafikow) {
@@ -50,4 +50,8 @@ void UIDecydowanieOKoniecznosciSzukaniaGrafikow::wyswietlKomunikatZakonczeniaSzu
         QMessageBox::information(this, tr("Informacja"), msg, QMessageBox::Ok);
     }
     close();
+}
+
+UIDecydowanieOKoniecznosciSzukaniaGrafikow::~UIDecydowanieOKoniecznosciSzukaniaGrafikow() {
+
 }

@@ -25,7 +25,7 @@ public:
     void pokazLiczbeObrotow(int a);
     void pokazOknoProgresu();
     void przymknijOknoProgresu();
-    int zapytajOKontynuacje();
+    int zapytajOKontynuacje(int ileGrafikow);
     void pokazKomunikatZakonczeniaSzukania(bool wynikTworzeniaGrafikow, int ileGrafikow);
     void startTimerX();
     void stopTimerX();
@@ -46,7 +46,7 @@ signals:
     void hideProgressWindow();
     void showProgressWindow();
     void killProgressWindow();
-    void showAskWindow(int*);
+    void showAskWindow(int*, int);
     void showEndCommunicate(bool, int);
     //do komunikacji z TimerClass
     void startTheTimer();

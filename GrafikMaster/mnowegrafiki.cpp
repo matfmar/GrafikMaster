@@ -291,7 +291,7 @@ void MNoweGrafiki::wypelnijGrafikDyzurantami(bool& immediateResult, int ileItera
     QObject::connect(tWorker, SIGNAL(hideProgressWindow()), progressManager, SLOT(przymknijOknoProgress()));
     QObject::connect(tWorker, SIGNAL(showProgressWindow()), progressManager, SLOT(showOknoProgress()));
     QObject::connect(tWorker, SIGNAL(killProgressWindow()), progressManager, SLOT(killOknoProgress()));
-    QObject::connect(tWorker, SIGNAL(showAskWindow(int*)), progressManager, SLOT(showAskWindow(int*)));
+    QObject::connect(tWorker, SIGNAL(showAskWindow(int*, int)), progressManager, SLOT(showAskWindow(int*, int)));
     QObject::connect(tWorker, SIGNAL(showEndCommunicate(bool,int)), progressManager, SLOT(showEndCommunicate(bool,int)));
     QObject::connect(tWorker, SIGNAL(sendIntObroty(int)), progressManager, SLOT(setLabelObrotyOknoProgress(int)));
     QObject::connect(progressManager, SIGNAL(sygnalizujeWymuszenieZakonczeniaTworzenia()), tWorker, SLOT(zasygnalizowanoZakonczenieTworzenia()), Qt::DirectConnection);

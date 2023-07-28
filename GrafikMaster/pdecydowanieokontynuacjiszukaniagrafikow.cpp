@@ -11,12 +11,13 @@ PDecydowanieOKontynuacjiSzukaniaGrafikow::PDecydowanieOKontynuacjiSzukaniaGrafik
     uiDecydowanieOKoniecznosciSzukaniaGrafikow = new UIDecydowanieOKoniecznosciSzukaniaGrafikow(this);
 }
 
-int PDecydowanieOKontynuacjiSzukaniaGrafikow::pokazOknoWyboruOpcji() {
+int PDecydowanieOKontynuacjiSzukaniaGrafikow::pokazOknoWyboruOpcji(int ileGrafikow) {
     if (uiDecydowanieOKoniecznosciSzukaniaGrafikow != nullptr) {
         delete uiDecydowanieOKoniecznosciSzukaniaGrafikow;
         uiDecydowanieOKoniecznosciSzukaniaGrafikow = nullptr;
     }
     uiDecydowanieOKoniecznosciSzukaniaGrafikow = new UIDecydowanieOKoniecznosciSzukaniaGrafikow(this);
+    uiDecydowanieOKoniecznosciSzukaniaGrafikow->setLabel(ileGrafikow);
     uiDecydowanieOKoniecznosciSzukaniaGrafikow->exec(); //BLOKUJE PROGRAM, dając użytkownikowi czas na decyzję
     if (pPrzegladanieGrafikowRoboczych != nullptr) {
         delete pPrzegladanieGrafikowRoboczych;
@@ -31,6 +32,7 @@ void PDecydowanieOKontynuacjiSzukaniaGrafikow::pokazKomunikatZakonczeniaSzukania
         uiDecydowanieOKoniecznosciSzukaniaGrafikow = nullptr;
     }
     uiDecydowanieOKoniecznosciSzukaniaGrafikow = new UIDecydowanieOKoniecznosciSzukaniaGrafikow(this);
+    uiDecydowanieOKoniecznosciSzukaniaGrafikow->setLabel(ileGrafikow);
     uiDecydowanieOKoniecznosciSzukaniaGrafikow->show();
     uiDecydowanieOKoniecznosciSzukaniaGrafikow->wyswietlKomunikatZakonczeniaSzukania(result, ileGrafikow);
 }

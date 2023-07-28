@@ -10,7 +10,7 @@ class PDecydowanieOKontynuacjiSzukaniaGrafikow {
 public:
     PDecydowanieOKontynuacjiSzukaniaGrafikow();
     ~PDecydowanieOKontynuacjiSzukaniaGrafikow();
-    int pokazOknoWyboruOpcji(); //zwraca decyzję użytkownika (1-kontynuacja, 2-stop)
+    int pokazOknoWyboruOpcji(int ileGrafikow); //zwraca decyzję użytkownika (1-kontynuacja, 2-stop)
     void pokazKomunikatZakonczeniaSzukania(bool result, int ileGrafikow);
     void setDecyzjaUzytkownika(int d);
     void przegladajGrafiki();

@@ -139,9 +139,9 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSPProgressENDCLASS[] = {
        7,    0,   75,    2, 0x0a,    6 /* Public */,
        8,    0,   76,    2, 0x0a,    7 /* Public */,
        9,    0,   77,    2, 0x0a,    8 /* Public */,
-      10,    1,   78,    2, 0x0a,    9 /* Public */,
-      13,    2,   81,    2, 0x0a,   11 /* Public */,
-      15,    0,   86,    2, 0x0a,   14 /* Public */,
+      10,    2,   78,    2, 0x0a,    9 /* Public */,
+      13,    2,   83,    2, 0x0a,   12 /* Public */,
+      15,    0,   88,    2, 0x0a,   15 /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -152,7 +152,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSPProgressENDCLASS[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 11,   12,
+    QMetaType::Void, 0x80000000 | 11, QMetaType::Int,   12,    4,
     QMetaType::Void, QMetaType::Bool, QMetaType::Int,   12,   14,
     QMetaType::Void,
 
@@ -185,6 +185,7 @@ Q_CONSTINIT const QMetaObject PProgress::staticMetaObject = { {
         // method 'showAskWindow'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<int *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<int, std::false_type>,
         // method 'showEndCommunicate'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<bool, std::false_type>,
@@ -207,7 +208,7 @@ void PProgress::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         case 3: _t->przymknijOknoProgress(); break;
         case 4: _t->showOknoProgress(); break;
         case 5: _t->killOknoProgress(); break;
-        case 6: _t->showAskWindow((*reinterpret_cast< std::add_pointer_t<int*>>(_a[1]))); break;
+        case 6: _t->showAskWindow((*reinterpret_cast< std::add_pointer_t<int*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[2]))); break;
         case 7: _t->showEndCommunicate((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[2]))); break;
         case 8: _t->zakonczTworzenie(); break;
         default: ;

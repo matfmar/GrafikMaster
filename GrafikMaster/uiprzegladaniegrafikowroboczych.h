@@ -12,9 +12,11 @@
 #include <QPushButton>
 #include <QGroupBox>
 #include <QTableWidget>
+#include <QComboBox>
 
 class PPrzegladanieGrafikowRoboczych;
 class XWyswietlanyGrafik;
+enum Miesiac : int;
 
 class UIPrzegladanieGrafikowRoboczych : public QMainWindow {
     Q_OBJECT
@@ -36,6 +38,7 @@ public slots:
     void onButtonKlepnijGrafikClicked();
     void onButtonZapiszJakoPDFClicked();
 private:
+    std::vector<Miesiac> tablicaMiesiecy;
     PPrzegladanieGrafikowRoboczych* pPrzegladanieGrafikowRoboczych;
     QWidget* mainWidget;
 
@@ -47,11 +50,14 @@ private:
     
     QPushButton* buttonLeft,* buttonRight,* buttonUsun,* buttonUsunWszystko,* buttonKlepnijGrafik,* buttonDrukujPDF;
     QLabel* labelNumber;
+    QComboBox* comboDniTygodnia;
     QHBoxLayout* layoutChoice;
 
     QTableWidget* tableGrafik;
     QPushButton* buttonClose;
     QVBoxLayout* mainLayout;
+
+    QString translateEnumToQString(Miesiac m);
 
 };
 

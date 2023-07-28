@@ -124,8 +124,8 @@ void TWorker::przymknijOknoProgresu() {
     emit hideProgressWindow();
 }
 
-int TWorker::zapytajOKontynuacje() {
-    emit showAskWindow(result);
+int TWorker::zapytajOKontynuacje(int ileGrafikow) {
+    emit showAskWindow(result, ileGrafikow);
     //a teraz czekamy aż się zwolni semafor - czyli zmienna result będzie gotowa
     semafor->acquire(1);
     //zmienna result jest gotowa, więc...

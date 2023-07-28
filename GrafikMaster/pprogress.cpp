@@ -64,11 +64,11 @@ void PProgress::killOknoProgress() {
     }
 }
 
-void PProgress::showAskWindow(int* result) {
+void PProgress::showAskWindow(int* result, int ileGrafikow) {
     if (result == nullptr) {
         return;
     }
-    int wynik = pDecydowanieOKontynuacjiSzukaniaGrafikow->pokazOknoWyboruOpcji();
+    int wynik = pDecydowanieOKontynuacjiSzukaniaGrafikow->pokazOknoWyboruOpcji(ileGrafikow);
     *result = wynik;
     semafor->release(1);    //tym sposobem wynik będzie gotowy do zjedzenia
 }

@@ -924,7 +924,7 @@ bool XGrafik::wypelnijDzien(int dzien) {        //glowna funkcja wywolywana reku
         //... oraz sprawdzamy czy nie doszliśmy do progu decyzji o wyświetleniu okna co do dalszych poszukiwań
         if (*licznikStworzonychGrafikow >= (*liczbaIteracji)) {
             parentWorker->przymknijOknoProgresu();  //najpierw przymykamy okno progresu żeby nie zasłaniało
-            int wybor = parentWorker->zapytajOKontynuacje();   //nie będzie powrotu z tej funkcji przed decyzją użytkownika
+            int wybor = parentWorker->zapytajOKontynuacje(*licznikOstatecznyStworzonychGrafikow);   //nie będzie powrotu z tej funkcji przed decyzją użytkownika
             if (wybor == 1) {
                 *zakonczenieSzukania = false;
             }

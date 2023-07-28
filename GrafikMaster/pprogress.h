@@ -23,7 +23,7 @@ public slots:
     void przymknijOknoProgress();
     void showOknoProgress();
     void killOknoProgress();
-    void showAskWindow(int* result);
+    void showAskWindow(int* result, int ileGrafikow);
     void showEndCommunicate(bool result, int ile);
     void zakonczTworzenie();
 signals:
