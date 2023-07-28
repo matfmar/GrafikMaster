@@ -110,6 +110,7 @@ public:
         bool sprawdzZgodnoscLiczbySobotINiedzielIWeekendow();
         bool sprawdzZgodnoscLiczbyPiatkow();
         bool sprawdzZgodnoscLiczbySwiatBezNiedzielIWeekendowZPiatkami();
+        int zwrocIleDyzurowBrakuje();
     };
     XLiczniki* liczniki;
 
@@ -254,6 +255,7 @@ private:
     bool sprawdzPustoscZbioruMozliwiNieUnikajacy(int dzien);
     bool sprawdzZgodnoscZMinimalnaLiczbaDyzurowDlaWszystkich();
     bool sprawdzCzySwieto(int dzien, DzienTygodnia dt);
+    bool sprawdzCzyJestSzansaWepchnieciaDyzurantaOkreslonaLiczbeRazy(int odKiedy, int ileJeszczeTrzeba, int id);
 };
 
 //XWyswietlanyGrafik

@@ -429,6 +429,10 @@ bool XDyzurantTworzacy::XLiczniki::sprawdzZgodnoscLiczbySwiatBezNiedzielIWeekend
     return (liczbaSwiatBezNiedziel<=parent->getMaksymalnieSwietaBezNiedziel() && liczbaWeekendowZPiatkami<=parent->getMaksymalnieWeekendyZPiatkami());
 }
 
+int XDyzurantTworzacy::XLiczniki::zwrocIleDyzurowBrakuje() {
+    return (-(liczbaDyzurow - (parent->getMinimalnie())));
+}
+
 //XDzien==============================================================================================================================
 XDzien::XDzien()
     : dzienTygodnia(NIEZNANY_DZIEN), liczbaDnia(0), czySwieto(false), statusUstawiania(NIEZNANY_STATUS), dyzurantWybrany(nullptr) {}
@@ -780,6 +784,22 @@ void XGrafik::wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt, in
 
 }
 
+bool XGrafik::sprawdzCzyJestSzansaWepchnieciaDyzurantaOkreslonaLiczbeRazy(int odKiedy, int ileJeszczeTrzeba, int id) {
+    if (ileJeszczeTrzeba <= 0) {
+        return true;
+    }
+    int licznik(0);
+    for (auto it = tablicaDni.begin()+odKiedy+1; it < tablicaDni.begin()+liczbaDni+1; ++it) {
+        if ((*it)->mozliwiNieUnikajacyDyzuranci.find(id) != (*it)->mozliwiNieUnikajacyDyzuranci.end()) {
+            licznik++;
+        }
+        if (licznik >= ileJeszczeTrzeba) {
+            return true;
+        }
+    }
+    return false;
+}
+
 void XGrafik::dodajUnikanieTrojek(XDyzurantTworzacy::XLiczniki* licznikDt, XDyzurantTworzacy* dt, int klucz, bool& result, int dzien) {
     licznikDt->sortujDyzury();
     result = true;
@@ -875,6 +895,11 @@ bool XGrafik::losujDyzurantaDoDyzuruPoKluczu(int dzien, int& kluczWybranegoDyzur
         return false;
     }
     if (!(licznikDt->sprawdzZgodnoscLiczbySwiatBezNiedzielIWeekendowZPiatkami())) {
+        return false;
+    }
+    //a teraz sprawdzamy czy - jeśli jest ustawiona minimalna liczba dyżurów - jest w ogóle szansa na ich osiągnięcie w przyszłości
+    int ileDyzurowBrakuje = licznikDt->zwrocIleDyzurowBrakuje();
+    if (!sprawdzCzyJestSzansaWepchnieciaDyzurantaOkreslonaLiczbeRazy(dzien, ileDyzurowBrakuje, klucz)) {
         return false;
     }
     //liczniki nie zostały przekroczone, więc dodajemy do listy dyżurów
