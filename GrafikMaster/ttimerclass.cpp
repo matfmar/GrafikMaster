@@ -21,7 +21,9 @@ void TTimerClass::startTheTimerFromOutside() {
 }
 
 void TTimerClass::stopTheTimerFromOutside() {
-    timer->stop();
+    if (timer->isActive()) {
+        timer->stop();
+    }
 }
 
 void TTimerClass::stopTimerTC() {

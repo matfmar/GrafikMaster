@@ -20,6 +20,8 @@ public:
     void setLabelIleObrotow(int ileObrotow);
 public slots:
     void onButtonZakonczClicked();
+signals:
+    void buttonZakonczClicked();
 private:
     QLabel* labelTekst,* labelTekstObroty;
     QLabel* labelIleGrafikow,* labelIleObrotow;

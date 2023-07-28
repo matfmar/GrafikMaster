@@ -286,7 +286,7 @@ void MNoweGrafiki::wypelnijGrafikDyzurantami(bool& immediateResult, int ileItera
     thread = new QThread();
     tWorker = new TWorker(nowyGrafik, tablicaDyzurantowTworzacych, ileIteracji, semafor, semafor2, semaforLabel, szybkosc, skracaniePomimoUlozenia);
     tWorker->moveToThread(thread);
-    //połączenia między tWorker i progressManager - wyświetlanie iteracji i przymykanie okna
+    //połączenia między tWorker i progressManager - wyświetlanie iteracji i przymykanie okna oraz kończenie szukania
     QObject::connect(tWorker, SIGNAL(sendInt(int)), progressManager, SLOT(setLabelOknoProgress(int)));
     QObject::connect(tWorker, SIGNAL(hideProgressWindow()), progressManager, SLOT(przymknijOknoProgress()));
     QObject::connect(tWorker, SIGNAL(showProgressWindow()), progressManager, SLOT(showOknoProgress()));
@@ -294,6 +294,7 @@ void MNoweGrafiki::wypelnijGrafikDyzurantami(bool& immediateResult, int ileItera
     QObject::connect(tWorker, SIGNAL(showAskWindow(int*)), progressManager, SLOT(showAskWindow(int*)));
     QObject::connect(tWorker, SIGNAL(showEndCommunicate(bool,int)), progressManager, SLOT(showEndCommunicate(bool,int)));
     QObject::connect(tWorker, SIGNAL(sendIntObroty(int)), progressManager, SLOT(setLabelObrotyOknoProgress(int)));
+    QObject::connect(progressManager, SIGNAL(sygnalizujeWymuszenieZakonczeniaTworzenia()), tWorker, SLOT(zasygnalizowanoZakonczenieTworzenia()), Qt::DirectConnection);
     //połączenia między thread i tWorker - żeby działał osobny wątek
     QObject::connect(thread, SIGNAL(started()), tWorker, SLOT(process()));
     QObject::connect(tWorker, SIGNAL(finished()), thread, SLOT(quit()));

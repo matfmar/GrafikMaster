@@ -447,14 +447,14 @@ XGrafik::XGrafik()
     tablicaDyzurantowTworzacych(nullptr),
     licznikStworzonychGrafikow(nullptr), zakonczenieSzukania(nullptr), licznikOstatecznyStworzonychGrafikow(nullptr),
     liczbaIteracji(nullptr), parentWorker(nullptr), czyPrzyspieszenie(false), licznikSkrocen(nullptr), decyzjaOSkroceniu(nullptr),
-    mutex(nullptr), skracaniePomimoUlozenia(false) {}
+    mutex(nullptr), skracaniePomimoUlozenia(false), mutexWymuszenieZakonczenia(nullptr), wymuszenieZakonczenia(nullptr) {}
 
 XGrafik::XGrafik(int r, Miesiac m, StatusGrafiku st, int ld, DzienTygodnia pd, std::vector<int> swieta)
     : rok(r), miesiac(m), status(st), liczbaDni(ld), pierwszyDzien(pd), listaSwiat(swieta), db(nullptr), tablicaDyzurantowTworzacych(nullptr),
     licznikStworzonychGrafikow(nullptr), zakonczenieSzukania(nullptr),
     licznikOstatecznyStworzonychGrafikow(nullptr), liczbaIteracji(nullptr), parentWorker(nullptr),
     licznikSkrocen(nullptr), czyPrzyspieszenie(false), decyzjaOSkroceniu(nullptr),
-    mutex(nullptr), skracaniePomimoUlozenia(false) {}
+    mutex(nullptr), skracaniePomimoUlozenia(false), mutexWymuszenieZakonczenia(nullptr), wymuszenieZakonczenia(nullptr) {}
 
 XGrafik::XGrafik(XGrafik& gr) {
     rok = gr.rok;
@@ -491,6 +491,8 @@ XGrafik::XGrafik(XGrafik& gr) {
     decyzjaOSkroceniu = gr.decyzjaOSkroceniu;
     mutex = gr.mutex;
     skracaniePomimoUlozenia = gr.skracaniePomimoUlozenia;
+    mutexWymuszenieZakonczenia = gr.mutexWymuszenieZakonczenia;
+    wymuszenieZakonczenia = gr.wymuszenieZakonczenia;
 }
 
 XGrafik::XGrafik(XGrafik* gr) {
@@ -528,6 +530,8 @@ XGrafik::XGrafik(XGrafik* gr) {
     decyzjaOSkroceniu = gr->decyzjaOSkroceniu;
     mutex = gr->mutex;
     skracaniePomimoUlozenia = gr->skracaniePomimoUlozenia;
+    mutexWymuszenieZakonczenia = gr->mutexWymuszenieZakonczenia;
+    wymuszenieZakonczenia = gr->wymuszenieZakonczenia;
 }
 
 bool XGrafik::sprawdzCzySwieto(int dzien, DzienTygodnia dt) {
@@ -698,13 +702,15 @@ bool XGrafik::sprawdzZgodnoscZMinimalnaLiczbaDyzurowDlaWszystkich() {
     return true;
 }
 
-void XGrafik::wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt, int ileIteracji, TWorker* pw, bool czyP, bool* decS, int* licS, QMutex* mut, bool spu) {
+void XGrafik::wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt, int ileIteracji, TWorker* pw, bool czyP, bool* decS, int* licS, QMutex* mut, bool spu, QMutex* mwz, bool* wz) {
     //ustawienie zmiennych odnośnie przyspieszenia (związane z timerem)
     czyPrzyspieszenie = czyP;
     decyzjaOSkroceniu = decS;
     licznikSkrocen = licS;
     mutex = mut;
     skracaniePomimoUlozenia = spu;
+    mutexWymuszenieZakonczenia = mwz;
+    wymuszenieZakonczenia = wz;
     //ustawienie wskaźnika do obiektu 'w którym' biegnie odpowiedni wątek
     parentWorker = pw;
     //uzupełnienie wskaźnika do tablicy dyżurantów tworzących (pochodzi z obiektu MNoweGrafiki)
@@ -728,6 +734,7 @@ void XGrafik::wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt, in
     if (czyPrzyspieszenie) {        //jeśli działamy na przyspieszaczu, włączamy timer
         parentWorker->startTimerX();
     }
+
     bool result = wypelnijDzien(1);
 
     //ten moment uruchamia się po powrocie z całego procesu wyszukiwania grafików
@@ -884,7 +891,13 @@ bool XGrafik::wypelnijDzien(int dzien) {        //glowna funkcja wywolywana reku
 //jeśli *zakończenieSzukania==true, to funkcja będzie wychodzić z pętli byle szybciej
 //ten "przełącznik" zakończenieSzukania służy do tego by w razie decyzji o zaprzestaniu poszukiwań móc posprzątać cały rekurencyjny bałagan który się stworzył
 
-    //najpierw pokazujemy który dzień właśnie ogarniamy
+    //w pierwszej, ale to pierwszej kolejnosci sprawdzamy czy nie zostala wydana komenda o zakonczeniu poszukiwan
+    mutexWymuszenieZakonczenia->lock();
+    if ((*wymuszenieZakonczenia)) {
+        *zakonczenieSzukania = true;    //to jest zawsze thread-safe, bo tylko ta funkcja zmienia wartość tej zmiennej !
+    }
+    mutexWymuszenieZakonczenia->unlock();
+    //a teraz pokazujemy który dzień właśnie ogarniamy
     parentWorker->pokazLiczbeObrotow(dzien);
     //teraz sprawdzamy warunek wyjścia z procedury
     if (dzien > liczbaDni) {
@@ -917,6 +930,10 @@ bool XGrafik::wypelnijDzien(int dzien) {        //glowna funkcja wywolywana reku
             }
             else if (wybor == 2) {
                 *zakonczenieSzukania = true;
+                //a teraz, ponieważ zdecydowaliśmy o zakończeniu, zatrzymujemy timer, żeby nam nie popsuł czegoś
+                if (czyPrzyspieszenie) {
+                    parentWorker->stopTimerX();
+                }
             }
             *licznikStworzonychGrafikow = 0;        //zerujemy licznik, od nowa liczymy "dziesiątkę grafików"
             parentWorker->pokazOknoProgresu();      //z powrotem pokazujemy okno progresu

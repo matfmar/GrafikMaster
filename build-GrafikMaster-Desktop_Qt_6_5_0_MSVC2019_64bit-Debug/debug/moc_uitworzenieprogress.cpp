@@ -40,27 +40,31 @@ namespace {
 struct qt_meta_stringdata_CLASSUITworzenieProgressENDCLASS_t {};
 static constexpr auto qt_meta_stringdata_CLASSUITworzenieProgressENDCLASS = QtMocHelpers::stringData(
     "UITworzenieProgress",
-    "onButtonZakonczClicked",
-    ""
+    "buttonZakonczClicked",
+    "",
+    "onButtonZakonczClicked"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSUITworzenieProgressENDCLASS_t {
-    uint offsetsAndSizes[6];
+    uint offsetsAndSizes[8];
     char stringdata0[20];
-    char stringdata1[23];
+    char stringdata1[21];
     char stringdata2[1];
+    char stringdata3[23];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSUITworzenieProgressENDCLASS_t::offsetsAndSizes) + ofs), len 
 Q_CONSTINIT static const qt_meta_stringdata_CLASSUITworzenieProgressENDCLASS_t qt_meta_stringdata_CLASSUITworzenieProgressENDCLASS = {
     {
         QT_MOC_LITERAL(0, 19),  // "UITworzenieProgress"
-        QT_MOC_LITERAL(20, 22),  // "onButtonZakonczClicked"
-        QT_MOC_LITERAL(43, 0)   // ""
+        QT_MOC_LITERAL(20, 20),  // "buttonZakonczClicked"
+        QT_MOC_LITERAL(41, 0),  // ""
+        QT_MOC_LITERAL(42, 22)   // "onButtonZakonczClicked"
     },
     "UITworzenieProgress",
-    "onButtonZakonczClicked",
-    ""
+    "buttonZakonczClicked",
+    "",
+    "onButtonZakonczClicked"
 };
 #undef QT_MOC_LITERAL
 #endif // !QT_MOC_HAS_STRING_DATA
@@ -72,15 +76,21 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSUITworzenieProgressENDCLASS[] = 
       11,       // revision
        0,       // classname
        0,    0, // classinfo
-       1,   14, // methods
+       2,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       0,       // signalCount
+       1,       // signalCount
+
+ // signals: name, argc, parameters, tag, flags, initial metatype offsets
+       1,    0,   26,    2, 0x06,    1 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   20,    2, 0x0a,    1 /* Public */,
+       3,    0,   27,    2, 0x0a,    2 /* Public */,
+
+ // signals: parameters
+    QMetaType::Void,
 
  // slots: parameters
     QMetaType::Void,
@@ -97,6 +107,8 @@ Q_CONSTINIT const QMetaObject UITworzenieProgress::staticMetaObject = { {
     qt_incomplete_metaTypeArray<qt_meta_stringdata_CLASSUITworzenieProgressENDCLASS_t,
         // Q_OBJECT / Q_GADGET
         QtPrivate::TypeAndForceComplete<UITworzenieProgress, std::true_type>,
+        // method 'buttonZakonczClicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'onButtonZakonczClicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
@@ -109,8 +121,18 @@ void UITworzenieProgress::qt_static_metacall(QObject *_o, QMetaObject::Call _c, 
         auto *_t = static_cast<UITworzenieProgress *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->onButtonZakonczClicked(); break;
+        case 0: _t->buttonZakonczClicked(); break;
+        case 1: _t->onButtonZakonczClicked(); break;
         default: ;
+        }
+    } else if (_c == QMetaObject::IndexOfMethod) {
+        int *result = reinterpret_cast<int *>(_a[0]);
+        {
+            using _t = void (UITworzenieProgress::*)();
+            if (_t _q_method = &UITworzenieProgress::buttonZakonczClicked; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+                *result = 0;
+                return;
+            }
         }
     }
     (void)_a;
@@ -135,14 +157,20 @@ int UITworzenieProgress::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 1)
+        if (_id < 2)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 1;
+        _id -= 2;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 1)
+        if (_id < 2)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 1;
+        _id -= 2;
     }
     return _id;
+}
+
+// SIGNAL 0
+void UITworzenieProgress::buttonZakonczClicked()
+{
+    QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
 }
 QT_WARNING_POP

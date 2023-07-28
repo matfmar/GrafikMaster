@@ -30,5 +30,5 @@ void UITworzenieProgress::setLabelIleObrotow(int ileObrotow) {
 }
 
 void UITworzenieProgress::onButtonZakonczClicked() {
-
+    emit buttonZakonczClicked();
 }

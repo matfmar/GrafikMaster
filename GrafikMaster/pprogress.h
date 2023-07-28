@@ -16,6 +16,7 @@ public:
     explicit PProgress(QSemaphore* sem, QSemaphore* sem2, QSemaphore* sem3, QObject *parent = nullptr);
     ~PProgress();
     void pokazOknoProgress();
+    void wybranoZakonczenieTworzeniaGrafikow();
 public slots:
     void setLabelOknoProgress(int ileGrafikow);
     void setLabelObrotyOknoProgress(int ileObrotow);
@@ -24,6 +25,9 @@ public slots:
     void killOknoProgress();
     void showAskWindow(int* result);
     void showEndCommunicate(bool result, int ile);
+    void zakonczTworzenie();
+signals:
+    void sygnalizujeWymuszenieZakonczeniaTworzenia();
 private:
     //okno do pokazywania progresu
     UITworzenieProgress* uiTworzenieProgress;

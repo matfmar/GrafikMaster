@@ -39,8 +39,9 @@ namespace {
 struct qt_meta_stringdata_CLASSPProgressENDCLASS_t {};
 static constexpr auto qt_meta_stringdata_CLASSPProgressENDCLASS = QtMocHelpers::stringData(
     "PProgress",
-    "setLabelOknoProgress",
+    "sygnalizujeWymuszenieZakonczeniaTworzenia",
     "",
+    "setLabelOknoProgress",
     "ileGrafikow",
     "setLabelObrotyOknoProgress",
     "ileObrotow",
@@ -51,48 +52,54 @@ static constexpr auto qt_meta_stringdata_CLASSPProgressENDCLASS = QtMocHelpers::
     "int*",
     "result",
     "showEndCommunicate",
-    "ile"
+    "ile",
+    "zakonczTworzenie"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSPProgressENDCLASS_t {
-    uint offsetsAndSizes[28];
+    uint offsetsAndSizes[32];
     char stringdata0[10];
-    char stringdata1[21];
+    char stringdata1[42];
     char stringdata2[1];
-    char stringdata3[12];
-    char stringdata4[27];
-    char stringdata5[11];
-    char stringdata6[22];
-    char stringdata7[17];
+    char stringdata3[21];
+    char stringdata4[12];
+    char stringdata5[27];
+    char stringdata6[11];
+    char stringdata7[22];
     char stringdata8[17];
-    char stringdata9[14];
-    char stringdata10[5];
-    char stringdata11[7];
-    char stringdata12[19];
-    char stringdata13[4];
+    char stringdata9[17];
+    char stringdata10[14];
+    char stringdata11[5];
+    char stringdata12[7];
+    char stringdata13[19];
+    char stringdata14[4];
+    char stringdata15[17];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSPProgressENDCLASS_t::offsetsAndSizes) + ofs), len 
 Q_CONSTINIT static const qt_meta_stringdata_CLASSPProgressENDCLASS_t qt_meta_stringdata_CLASSPProgressENDCLASS = {
     {
         QT_MOC_LITERAL(0, 9),  // "PProgress"
-        QT_MOC_LITERAL(10, 20),  // "setLabelOknoProgress"
-        QT_MOC_LITERAL(31, 0),  // ""
-        QT_MOC_LITERAL(32, 11),  // "ileGrafikow"
-        QT_MOC_LITERAL(44, 26),  // "setLabelObrotyOknoProgress"
-        QT_MOC_LITERAL(71, 10),  // "ileObrotow"
-        QT_MOC_LITERAL(82, 21),  // "przymknijOknoProgress"
-        QT_MOC_LITERAL(104, 16),  // "showOknoProgress"
-        QT_MOC_LITERAL(121, 16),  // "killOknoProgress"
-        QT_MOC_LITERAL(138, 13),  // "showAskWindow"
-        QT_MOC_LITERAL(152, 4),  // "int*"
-        QT_MOC_LITERAL(157, 6),  // "result"
-        QT_MOC_LITERAL(164, 18),  // "showEndCommunicate"
-        QT_MOC_LITERAL(183, 3)   // "ile"
+        QT_MOC_LITERAL(10, 41),  // "sygnalizujeWymuszenieZakoncze..."
+        QT_MOC_LITERAL(52, 0),  // ""
+        QT_MOC_LITERAL(53, 20),  // "setLabelOknoProgress"
+        QT_MOC_LITERAL(74, 11),  // "ileGrafikow"
+        QT_MOC_LITERAL(86, 26),  // "setLabelObrotyOknoProgress"
+        QT_MOC_LITERAL(113, 10),  // "ileObrotow"
+        QT_MOC_LITERAL(124, 21),  // "przymknijOknoProgress"
+        QT_MOC_LITERAL(146, 16),  // "showOknoProgress"
+        QT_MOC_LITERAL(163, 16),  // "killOknoProgress"
+        QT_MOC_LITERAL(180, 13),  // "showAskWindow"
+        QT_MOC_LITERAL(194, 4),  // "int*"
+        QT_MOC_LITERAL(199, 6),  // "result"
+        QT_MOC_LITERAL(206, 18),  // "showEndCommunicate"
+        QT_MOC_LITERAL(225, 3),  // "ile"
+        QT_MOC_LITERAL(229, 16)   // "zakonczTworzenie"
     },
     "PProgress",
-    "setLabelOknoProgress",
+    "sygnalizujeWymuszenieZakonczeniaTworzenia",
     "",
+    "setLabelOknoProgress",
     "ileGrafikow",
     "setLabelObrotyOknoProgress",
     "ileObrotow",
@@ -103,7 +110,8 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSPProgressENDCLASS_t qt_meta_str
     "int*",
     "result",
     "showEndCommunicate",
-    "ile"
+    "ile",
+    "zakonczTworzenie"
 };
 #undef QT_MOC_LITERAL
 #endif // !QT_MOC_HAS_STRING_DATA
@@ -115,30 +123,38 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSPProgressENDCLASS[] = {
       11,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+       9,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       0,       // signalCount
+       1,       // signalCount
+
+ // signals: name, argc, parameters, tag, flags, initial metatype offsets
+       1,    0,   68,    2, 0x06,    1 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,   56,    2, 0x0a,    1 /* Public */,
-       4,    1,   59,    2, 0x0a,    3 /* Public */,
-       6,    0,   62,    2, 0x0a,    5 /* Public */,
-       7,    0,   63,    2, 0x0a,    6 /* Public */,
-       8,    0,   64,    2, 0x0a,    7 /* Public */,
-       9,    1,   65,    2, 0x0a,    8 /* Public */,
-      12,    2,   68,    2, 0x0a,   10 /* Public */,
+       3,    1,   69,    2, 0x0a,    2 /* Public */,
+       5,    1,   72,    2, 0x0a,    4 /* Public */,
+       7,    0,   75,    2, 0x0a,    6 /* Public */,
+       8,    0,   76,    2, 0x0a,    7 /* Public */,
+       9,    0,   77,    2, 0x0a,    8 /* Public */,
+      10,    1,   78,    2, 0x0a,    9 /* Public */,
+      13,    2,   81,    2, 0x0a,   11 /* Public */,
+      15,    0,   86,    2, 0x0a,   14 /* Public */,
+
+ // signals: parameters
+    QMetaType::Void,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::Int,    3,
-    QMetaType::Void, QMetaType::Int,    5,
+    QMetaType::Void, QMetaType::Int,    4,
+    QMetaType::Void, QMetaType::Int,    6,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 10,   11,
-    QMetaType::Void, QMetaType::Bool, QMetaType::Int,   11,   13,
+    QMetaType::Void, 0x80000000 | 11,   12,
+    QMetaType::Void, QMetaType::Bool, QMetaType::Int,   12,   14,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -152,6 +168,8 @@ Q_CONSTINIT const QMetaObject PProgress::staticMetaObject = { {
     qt_incomplete_metaTypeArray<qt_meta_stringdata_CLASSPProgressENDCLASS_t,
         // Q_OBJECT / Q_GADGET
         QtPrivate::TypeAndForceComplete<PProgress, std::true_type>,
+        // method 'sygnalizujeWymuszenieZakonczeniaTworzenia'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'setLabelOknoProgress'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<int, std::false_type>,
@@ -170,7 +188,9 @@ Q_CONSTINIT const QMetaObject PProgress::staticMetaObject = { {
         // method 'showEndCommunicate'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<bool, std::false_type>,
-        QtPrivate::TypeAndForceComplete<int, std::false_type>
+        QtPrivate::TypeAndForceComplete<int, std::false_type>,
+        // method 'zakonczTworzenie'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
 } };
@@ -181,14 +201,25 @@ void PProgress::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         auto *_t = static_cast<PProgress *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->setLabelOknoProgress((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
-        case 1: _t->setLabelObrotyOknoProgress((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
-        case 2: _t->przymknijOknoProgress(); break;
-        case 3: _t->showOknoProgress(); break;
-        case 4: _t->killOknoProgress(); break;
-        case 5: _t->showAskWindow((*reinterpret_cast< std::add_pointer_t<int*>>(_a[1]))); break;
-        case 6: _t->showEndCommunicate((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[2]))); break;
+        case 0: _t->sygnalizujeWymuszenieZakonczeniaTworzenia(); break;
+        case 1: _t->setLabelOknoProgress((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 2: _t->setLabelObrotyOknoProgress((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 3: _t->przymknijOknoProgress(); break;
+        case 4: _t->showOknoProgress(); break;
+        case 5: _t->killOknoProgress(); break;
+        case 6: _t->showAskWindow((*reinterpret_cast< std::add_pointer_t<int*>>(_a[1]))); break;
+        case 7: _t->showEndCommunicate((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[2]))); break;
+        case 8: _t->zakonczTworzenie(); break;
         default: ;
+        }
+    } else if (_c == QMetaObject::IndexOfMethod) {
+        int *result = reinterpret_cast<int *>(_a[0]);
+        {
+            using _t = void (PProgress::*)();
+            if (_t _q_method = &PProgress::sygnalizujeWymuszenieZakonczeniaTworzenia; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+                *result = 0;
+                return;
+            }
         }
     }
 }
@@ -212,14 +243,20 @@ int PProgress::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 9)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 9;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
+        if (_id < 9)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 7;
+        _id -= 9;
     }
     return _id;
+}
+
+// SIGNAL 0
+void PProgress::sygnalizujeWymuszenieZakonczeniaTworzenia()
+{
+    QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
 }
 QT_WARNING_POP

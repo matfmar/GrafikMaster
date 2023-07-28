@@ -28,12 +28,14 @@ public:
     int zapytajOKontynuacje();
     void pokazKomunikatZakonczeniaSzukania(bool wynikTworzeniaGrafikow, int ileGrafikow);
     void startTimerX();
+    void stopTimerX();
 
 public slots:
     //do obslugi QThread
     void process();
     //do obslugi QTimer
     void timePassed();
+    void zasygnalizowanoZakonczenieTworzenia();
 signals:
     //do obsługi QThread
     void finished();
@@ -56,6 +58,8 @@ private:
     int ileIteracji;
     QSemaphore* semafor,* semafor2,* semaforLabel;
     int* result;
+    QMutex* mutexWymuszenieZakonczenia;
+    bool* wymuszenieZakonczenia;
 
     TTimerClass* timerClass;
     TTimerThread* subThreadForTimer;

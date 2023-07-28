@@ -7,6 +7,7 @@ PProgress::PProgress(QSemaphore* sem, QSemaphore* sem2, QSemaphore* sem3, QObjec
     : QObject{parent}, semafor(sem), semafor2(sem2), semaforLabel(sem3)
 {
     uiTworzenieProgress = new UITworzenieProgress(this);
+    QObject::connect(uiTworzenieProgress, SIGNAL(buttonZakonczClicked()), this, SLOT(zakonczTworzenie()), Qt::QueuedConnection);    //zeby nie blokowac okna progresu
     pDecydowanieOKontynuacjiSzukaniaGrafikow = new PDecydowanieOKontynuacjiSzukaniaGrafikow();
 }
 
@@ -16,8 +17,13 @@ void PProgress::pokazOknoProgress() {
     }
     else {
         uiTworzenieProgress = new UITworzenieProgress(this);
+        QObject::connect(uiTworzenieProgress, SIGNAL(buttonZakonczClicked()), this, SLOT(zakonczTworzenie()), Qt::QueuedConnection);
         uiTworzenieProgress->show();
     }
+}
+
+void PProgress::zakonczTworzenie() {
+    emit sygnalizujeWymuszenieZakonczeniaTworzenia();
 }
 
 void PProgress::setLabelOknoProgress(int ileGrafikow) {
@@ -36,6 +42,7 @@ void PProgress::przymknijOknoProgress() {
     }
     else {
         uiTworzenieProgress = new UITworzenieProgress(this);
+        QObject::connect(uiTworzenieProgress, SIGNAL(buttonZakonczClicked()), this, SLOT(zakonczTworzenie()), Qt::QueuedConnection);
     }
 }
 
@@ -45,6 +52,7 @@ void PProgress::showOknoProgress() {
     }
     else {
         uiTworzenieProgress = new UITworzenieProgress(this);
+        QObject::connect(uiTworzenieProgress, SIGNAL(buttonZakonczClicked()), this, SLOT(zakonczTworzenie()), Qt::QueuedConnection);
         uiTworzenieProgress->show();
     }
 }

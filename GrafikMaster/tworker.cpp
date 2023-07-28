@@ -9,7 +9,7 @@ TWorker::TWorker(XGrafik* g, std::vector<XDyzurantTworzacy*>* tdt, int ile, QSem
     : QObject(parent), grafikBazowy(g), tablicaDyzurantowTworzacych(tdt), ileIteracji(ile), semafor(sem), semafor2(sem2),
     semaforLabel(sem3), szybkosc(sz), timerClass(nullptr), subThreadForTimer(nullptr), decyzjaOSkroceniu(nullptr), licznikSkrocen(nullptr),
     mutex(nullptr), timer(nullptr), aktualneSkrocenie(sz), licznikPowtorzenDanegoSkrocenia(0), licznikPetliSkrocen(0),
-    skracanieZawsze(skracaniePomimoUlozenia) {
+    skracanieZawsze(skracaniePomimoUlozenia), mutexWymuszenieZakonczenia(nullptr), wymuszenieZakonczenia(nullptr) {
 
     result = new int(-1);
     if (szybkosc != 0) {
@@ -37,6 +37,7 @@ TWorker::TWorker(XGrafik* g, std::vector<XDyzurantTworzacy*>* tdt, int ile, QSem
             default: licznikPetliSkrocen = 3; break;
         }
     }
+    //poniższe do możliwości wymuszenia zakończenia tworzenia grafików w każdej chwili przez usera
 }
 
 void TWorker::process() {
@@ -46,9 +47,11 @@ void TWorker::process() {
         decyzjaOSkroceniu = new bool(false);
         licznikSkrocen = new int(0);
     }
+    mutexWymuszenieZakonczenia = new QMutex();
+    wymuszenieZakonczenia = new bool(false);
 
     //uruchamiamy liczenie grafików
-    grafikBazowy -> wypelnijGrafikDyzurantami(tablicaDyzurantowTworzacych, ileIteracji, this, czyPrzyspieszenie, decyzjaOSkroceniu, licznikSkrocen, mutex, skracanieZawsze);
+    grafikBazowy -> wypelnijGrafikDyzurantami(tablicaDyzurantowTworzacych, ileIteracji, this, czyPrzyspieszenie, decyzjaOSkroceniu, licznikSkrocen, mutex, skracanieZawsze, mutexWymuszenieZakonczenia, wymuszenieZakonczenia);
 
     //teraz jesteśmy już po zakończeniu tworzenia grafików
     //w razie działania z przyspieszaczem niszczymy TimerClass (czyli też i zegar) oraz zatrzymujemy wątek
@@ -64,6 +67,10 @@ void TWorker::process() {
 
 void TWorker::startTimerX() {
     emit startTheTimer();       //docelowo na 3 sekundy
+}
+
+void TWorker::stopTimerX() {
+    emit stopTheTimer();
 }
 
 int TWorker::obliczIloscSkrocen() {
@@ -87,6 +94,7 @@ int TWorker::obliczIloscSkrocen() {
 
 void TWorker::timePassed() {
     //blokujemy dostęp do danych
+    //uwaga - ta funkcja wywołuje się w wątku zegara!!!
     mutex->lock();
     //ustawiamy odpowiednio zmienne sterujace
     *decyzjaOSkroceniu = true;
@@ -130,6 +138,15 @@ void TWorker::pokazKomunikatZakonczeniaSzukania(bool wynikTworzeniaGrafikow, int
     semafor2->acquire(1);
 }
 
+void TWorker::zasygnalizowanoZakonczenieTworzenia() {   //uwaga - to wykonuje się w wątku z gui
+    mutexWymuszenieZakonczenia->lock();
+    if (szybkosc != 0) {
+        emit stopTheTimer();
+    }
+    *wymuszenieZakonczenia = true;
+    mutexWymuszenieZakonczenia->unlock();
+}
+
 TWorker::~TWorker() {
     if (result != nullptr) {
         delete result;
@@ -165,6 +182,13 @@ TWorker::~TWorker() {
         delete timer;
         timer = nullptr;
     }
-
+    if (mutexWymuszenieZakonczenia != nullptr) {
+        delete mutexWymuszenieZakonczenia;
+        mutexWymuszenieZakonczenia = nullptr;
+    }
+    if (wymuszenieZakonczenia != nullptr) {
+        delete wymuszenieZakonczenia;
+        wymuszenieZakonczenia = nullptr;
+    }
 }
 

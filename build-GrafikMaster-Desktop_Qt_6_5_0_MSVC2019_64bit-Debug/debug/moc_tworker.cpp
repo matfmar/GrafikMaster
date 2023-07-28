@@ -54,11 +54,12 @@ static constexpr auto qt_meta_stringdata_CLASSTWorkerENDCLASS = QtMocHelpers::st
     "startTheTimer",
     "stopTheTimer",
     "process",
-    "timePassed"
+    "timePassed",
+    "zasygnalizowanoZakonczenieTworzenia"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSTWorkerENDCLASS_t {
-    uint offsetsAndSizes[34];
+    uint offsetsAndSizes[36];
     char stringdata0[8];
     char stringdata1[9];
     char stringdata2[1];
@@ -76,6 +77,7 @@ struct qt_meta_stringdata_CLASSTWorkerENDCLASS_t {
     char stringdata14[13];
     char stringdata15[8];
     char stringdata16[11];
+    char stringdata17[36];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSTWorkerENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -97,7 +99,8 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSTWorkerENDCLASS_t qt_meta_strin
         QT_MOC_LITERAL(145, 13),  // "startTheTimer"
         QT_MOC_LITERAL(159, 12),  // "stopTheTimer"
         QT_MOC_LITERAL(172, 7),  // "process"
-        QT_MOC_LITERAL(180, 10)   // "timePassed"
+        QT_MOC_LITERAL(180, 10),  // "timePassed"
+        QT_MOC_LITERAL(191, 35)   // "zasygnalizowanoZakonczenieTwo..."
     },
     "TWorker",
     "finished",
@@ -115,7 +118,8 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSTWorkerENDCLASS_t qt_meta_strin
     "startTheTimer",
     "stopTheTimer",
     "process",
-    "timePassed"
+    "timePassed",
+    "zasygnalizowanoZakonczenieTworzenia"
 };
 #undef QT_MOC_LITERAL
 #endif // !QT_MOC_HAS_STRING_DATA
@@ -127,7 +131,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSTWorkerENDCLASS[] = {
       11,       // revision
        0,       // classname
        0,    0, // classinfo
-      13,   14, // methods
+      14,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -135,21 +139,22 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSTWorkerENDCLASS[] = {
       11,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   92,    2, 0x06,    1 /* Public */,
-       3,    1,   93,    2, 0x06,    2 /* Public */,
-       5,    1,   96,    2, 0x06,    4 /* Public */,
-       6,    1,   99,    2, 0x06,    6 /* Public */,
-       7,    0,  102,    2, 0x06,    8 /* Public */,
-       8,    0,  103,    2, 0x06,    9 /* Public */,
-       9,    0,  104,    2, 0x06,   10 /* Public */,
-      10,    1,  105,    2, 0x06,   11 /* Public */,
-      12,    2,  108,    2, 0x06,   13 /* Public */,
-      13,    0,  113,    2, 0x06,   16 /* Public */,
-      14,    0,  114,    2, 0x06,   17 /* Public */,
+       1,    0,   98,    2, 0x06,    1 /* Public */,
+       3,    1,   99,    2, 0x06,    2 /* Public */,
+       5,    1,  102,    2, 0x06,    4 /* Public */,
+       6,    1,  105,    2, 0x06,    6 /* Public */,
+       7,    0,  108,    2, 0x06,    8 /* Public */,
+       8,    0,  109,    2, 0x06,    9 /* Public */,
+       9,    0,  110,    2, 0x06,   10 /* Public */,
+      10,    1,  111,    2, 0x06,   11 /* Public */,
+      12,    2,  114,    2, 0x06,   13 /* Public */,
+      13,    0,  119,    2, 0x06,   16 /* Public */,
+      14,    0,  120,    2, 0x06,   17 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-      15,    0,  115,    2, 0x0a,   18 /* Public */,
-      16,    0,  116,    2, 0x0a,   19 /* Public */,
+      15,    0,  121,    2, 0x0a,   18 /* Public */,
+      16,    0,  122,    2, 0x0a,   19 /* Public */,
+      17,    0,  123,    2, 0x0a,   20 /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -165,6 +170,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSTWorkerENDCLASS[] = {
     QMetaType::Void,
 
  // slots: parameters
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
 
@@ -211,6 +217,8 @@ Q_CONSTINIT const QMetaObject TWorker::staticMetaObject = { {
         // method 'process'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'timePassed'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'zasygnalizowanoZakonczenieTworzenia'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
@@ -235,6 +243,7 @@ void TWorker::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         case 10: _t->stopTheTimer(); break;
         case 11: _t->process(); break;
         case 12: _t->timePassed(); break;
+        case 13: _t->zasygnalizowanoZakonczenieTworzenia(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -338,13 +347,13 @@ int TWorker::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 13)
+        if (_id < 14)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 13;
+        _id -= 14;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 13)
+        if (_id < 14)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 13;
+        _id -= 14;
     }
     return _id;
 }

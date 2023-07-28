@@ -202,7 +202,7 @@ public:
     void dodajPierwszeDaneDyzurantowKiedyChca(std::vector<XDyzurantTworzacy*>* tablicaDyzurantowTworzacych);
     void przeliczMozliwiNieUnikajacyDyzuranciDlaKazdegoDnia();
     void przeliczMozliwiNieUnikajacyDyzuranciDlaJednegoDnia(int dzien);
-    void wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt, int ileIteracji, TWorker* pw, bool czyP, bool* decS, int* licS, QMutex* mut, bool spu);
+    void wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt, int ileIteracji, TWorker* pw, bool czyP, bool* decS, int* licS, QMutex* mut, bool spu, QMutex* mwz, bool* wz);
     std::vector<XDzien*> udostepnijTabliceDni();
     std::string getMiesiacRok();
 
@@ -230,6 +230,8 @@ private:
     bool* zakonczenieSzukania;          //wskaźnik do "globalnej" zmiennej zawierającej decyzję o sposobie wychodzenia z pętli (true -> kończymy, false -> szukamy dalej)
     int* licznikOstatecznyStworzonychGrafikow;
     int* liczbaIteracji;
+    QMutex* mutexWymuszenieZakonczenia;
+    bool* wymuszenieZakonczenia;
 
     //zmienne w razie działania z przyspieszczem
     bool czyPrzyspieszenie;
