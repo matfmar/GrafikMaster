@@ -25,7 +25,10 @@ public:
     std::string utworzDyzurantaTworzacego(XDyzurant* dyzurant);
     void usunDyzurantaTworzacego(std::string nick);
     XDyzurantTworzacy* pobierzDaneDyzurantaTworzacego(std::string nick);
-    bool updateDyzurantaTworzacego(std::string nick, bool czyM, std::string m, std::string nm, std::string u, std::string ch, int maks, int min, int maksS, int maksN, int maksW, int c, int maksP, int wyborT);
+    bool updateDyzurantaTworzacego(std::string nick, bool czyM, std::string m, std::string nm, std::string u,
+                                   std::string ch, int maks, int min, int maksS,
+                                   int maksN, int maksW, int c, int maksP,
+                                   int wyborT, int msbn, int mwzp);
     bool zapiszUstawieniaDoPliku();
     std::vector<std::string> wczytajUstawienia(std::vector<XDyzurant*>* tablicaDyzurantow);
     XGrafik* wypelnijGrafikPierwszymiDanymi();

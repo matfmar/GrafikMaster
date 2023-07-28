@@ -88,21 +88,21 @@ void XDyzurant::setPriorytet(int a) {
 XDyzurantTworzacy::XDyzurantTworzacy()
     : XDyzurant(), maksymalnie(0), minimalnie(0), unikaniePodRzad(0),
     maksymalnieSoboty(0), maksymalnieNiedziele(0), maksymalnieWeekendy(0), wpisywanieGdzieMoze(false),
-    liczniki(nullptr), maksymalniePiatki(0), unikanieTrojek(0) {
+    liczniki(nullptr), maksymalniePiatki(0), unikanieTrojek(0), maksymalnieSwietaBezNiedziel(0), maksymalnieWeekendyZPiatkami(0) {
     liczniki = new XDyzurantTworzacy::XLiczniki(this);
 }
 
-XDyzurantTworzacy::XDyzurantTworzacy(int a, std::string s, int b, int c, int d, int e, int sb, int nd, int wk, bool wgm, int mp, int ut)
+XDyzurantTworzacy::XDyzurantTworzacy(int a, std::string s, int b, int c, int d, int e, int sb, int nd, int wk, bool wgm, int mp, int ut, int msbn, int mwzp)
     : XDyzurant(a, s, b), maksymalnie(c), minimalnie(d), unikaniePodRzad(e),
     maksymalnieSoboty(sb), maksymalnieNiedziele(nd), maksymalnieWeekendy(wk), wpisywanieGdzieMoze(wgm),
-    liczniki(nullptr), maksymalniePiatki(mp), unikanieTrojek(ut) {
+    liczniki(nullptr), maksymalniePiatki(mp), unikanieTrojek(ut), maksymalnieSwietaBezNiedziel(msbn), maksymalnieWeekendyZPiatkami(mwzp) {
     liczniki = new XDyzurantTworzacy::XLiczniki(this);
 }
 
 XDyzurantTworzacy::XDyzurantTworzacy(XDyzurant* d)
     : XDyzurant(d), maksymalnie(0), minimalnie(0), unikaniePodRzad(0),
     maksymalnieSoboty(0), maksymalnieNiedziele(0), maksymalnieWeekendy(0), wpisywanieGdzieMoze(false),
-    liczniki(nullptr), maksymalniePiatki(0), unikanieTrojek(0) {
+    liczniki(nullptr), maksymalniePiatki(0), unikanieTrojek(0), maksymalnieSwietaBezNiedziel(0), maksymalnieWeekendyZPiatkami(0) {
     liczniki = new XDyzurantTworzacy::XLiczniki(this);
 }
 
@@ -166,6 +166,10 @@ int XDyzurantTworzacy::getMaksymalnieWeekendy() {return maksymalnieWeekendy;}
 
 int XDyzurantTworzacy::getMaksymalniePiatki() {return maksymalniePiatki;}
 
+int XDyzurantTworzacy::getMaksymalnieSwietaBezNiedziel() {return maksymalnieSwietaBezNiedziel;}
+
+int XDyzurantTworzacy::getMaksymalnieWeekendyZPiatkami() {return maksymalnieWeekendyZPiatkami;}
+
 int XDyzurantTworzacy::getUnikanieTrojek() {return unikanieTrojek;}
 
 std::vector<int> XDyzurantTworzacy::convertStringToVectorOfInts(std::string s, bool& result) {
@@ -226,6 +230,10 @@ void XDyzurantTworzacy::setWpisywanieCzyMoze(bool b) {wpisywanieGdzieMoze = b;}
 
 void XDyzurantTworzacy::setMaksymalniePiatki(int a) {maksymalniePiatki = a;}
 
+void XDyzurantTworzacy::setMaksymalnieSwietaBezNiedziel(int a) {maksymalnieSwietaBezNiedziel = a;}
+
+void XDyzurantTworzacy::setMaksymalnieWeekendyZPiatkami(int a) {maksymalnieWeekendyZPiatkami = a;}
+
 void XDyzurantTworzacy::setUnikanieTrojek(int a) {unikanieTrojek = a;}
 
 bool XDyzurantTworzacy::sprawdzCzyMozeDanegoDnia(int dzien) {
@@ -283,7 +291,7 @@ XDyzurantTworzacy::~XDyzurantTworzacy() {
 //XDyzurantTworzacy::XLiczniki===========================================================================================================================
 
 XDyzurantTworzacy::XLiczniki::XLiczniki(XDyzurantTworzacy* p)
-    : parent(p), liczbaDyzurow(0), liczbaSobot(0), liczbaNiedziel(0), liczbaWeekendow(0), liczbaPiatkow(0) {}
+    : parent(p), liczbaDyzurow(0), liczbaSobot(0), liczbaNiedziel(0), liczbaWeekendow(0), liczbaPiatkow(0), liczbaSwiatBezNiedziel(0), liczbaWeekendowZPiatkami(0) {}
 
 XDyzurantTworzacy::XLiczniki::XLiczniki(XDyzurantTworzacy::XLiczniki* l) {
     parent = l->parent;
@@ -292,35 +300,49 @@ XDyzurantTworzacy::XLiczniki::XLiczniki(XDyzurantTworzacy::XLiczniki* l) {
     liczbaNiedziel = l->liczbaNiedziel;
     liczbaWeekendow = l->liczbaWeekendow;
     liczbaPiatkow = l->liczbaPiatkow;
+    liczbaSwiatBezNiedziel = l->liczbaSwiatBezNiedziel;
+    liczbaWeekendowZPiatkami = l->liczbaWeekendowZPiatkami;
     dyzury = l->dyzury;
 }
 
-void XDyzurantTworzacy::XLiczniki::incLiczbaDyzurow(DzienTygodnia dt) {    //zwieksza licznik dyzurow oraz odpowiednio liczniki sobot niedziel i weekendow jesli trzeba
+void XDyzurantTworzacy::XLiczniki::incLiczbaDyzurow(DzienTygodnia dt, bool czySwieto) {    //zwieksza licznik dyzurow oraz odpowiednio liczniki sobot niedziel i weekendow jesli trzeba
     if (dt == SOBOTA) {
         liczbaSobot++;
         liczbaWeekendow++;
+        liczbaWeekendowZPiatkami++;
     }
     else if (dt == NIEDZIELA) {
         liczbaNiedziel++;
         liczbaWeekendow++;
+        liczbaWeekendowZPiatkami++;
     }
     else if (dt == PIATEK) {
         liczbaPiatkow++;
+        liczbaWeekendowZPiatkami++;
+    }
+    if (czySwieto && dt != NIEDZIELA) {
+        liczbaSwiatBezNiedziel++;
     }
     liczbaDyzurow++;
 }
 
-void XDyzurantTworzacy::XLiczniki::decLiczbaDyzurow(DzienTygodnia dt) {
+void XDyzurantTworzacy::XLiczniki::decLiczbaDyzurow(DzienTygodnia dt, bool czySwieto) {
     if (dt == SOBOTA) {
         liczbaSobot--;
         liczbaWeekendow--;
+        liczbaWeekendowZPiatkami--;
     }
     else if (dt == NIEDZIELA) {
         liczbaNiedziel--;
         liczbaWeekendow--;
+        liczbaWeekendowZPiatkami--;
     }
     else if (dt == PIATEK) {
         liczbaPiatkow--;
+        liczbaWeekendowZPiatkami--;
+    }
+    if (czySwieto && dt != NIEDZIELA) {
+        liczbaSwiatBezNiedziel--;
     }
     liczbaDyzurow--;
 }
@@ -401,6 +423,10 @@ bool XDyzurantTworzacy::XLiczniki::sprawdzZgodnoscLiczbySobotINiedzielIWeekendow
 
 bool XDyzurantTworzacy::XLiczniki::sprawdzZgodnoscLiczbyPiatkow() {
     return (liczbaPiatkow <= parent->getMaksymalniePiatki());
+}
+
+bool XDyzurantTworzacy::XLiczniki::sprawdzZgodnoscLiczbySwiatBezNiedzielIWeekendowZPiatkami() {
+    return (liczbaSwiatBezNiedziel<=parent->getMaksymalnieSwietaBezNiedziel() && liczbaWeekendowZPiatkami<=parent->getMaksymalnieWeekendyZPiatkami());
 }
 
 //XDzien==============================================================================================================================
@@ -628,7 +654,7 @@ void XGrafik::dodajPierwszeDaneDyzurantowKiedyChca(std::vector<XDyzurantTworzacy
         (*it)->mozliwiDyzuranci.clear();	//nikt inny tego dnia nie dostanie
         (*it)->mozliwiDyzuranci.insert(std::pair<int,XDyzurantTworzacy*>(lider->getId(), lider));	//jw. cd.
         (*it)->statusUstawiania = USTAWIONY_NIE_DO_RUSZENIA;
-        lider->liczniki->incLiczbaDyzurow((*it)->dzienTygodnia);
+        lider->liczniki->incLiczbaDyzurow((*it)->dzienTygodnia, (*it)->czySwieto);
         lider->liczniki->dodajDyzur((*it)->liczbaDnia);
         (*(it-1))->mozliwiDyzuranci.erase(lider->getId());  //usuniecie z mozliwosci dnia poprzedniego
         (*(it+1))->mozliwiDyzuranci.erase(lider->getId());  //usuniecie z mozliwosci dnia nastepnego
@@ -839,13 +865,16 @@ bool XGrafik::losujDyzurantaDoDyzuruPoKluczu(int dzien, int& kluczWybranegoDyzur
     kluczWybranegoDyzuranta = klucz;    //też klucz, ale przekazywany na zewnątrz procedury
     XDyzurantTworzacy::XLiczniki* licznikDt = mapaLicznikowDyzurantow[klucz];
     //w pierwszej kolejności zwiekszamy liczniki danego dyzuranta
-    licznikDt->incLiczbaDyzurow(tablicaDni[dzien]->dzienTygodnia);
+    licznikDt->incLiczbaDyzurow(tablicaDni[dzien]->dzienTygodnia, tablicaDni[dzien]->czySwieto);
     //i sprawdzamy czy liczniki nie zostały przekroczone
     if (!(licznikDt->sprawdzZgodnoscMaksymalnejLiczbyDyzurow() && licznikDt->sprawdzZgodnoscLiczbySobotINiedzielIWeekendow())) {
         //dt->decLiczbaDyzurow(tablicaDni[dzien]->dzienTygodnia);   //niepotrzebne, przy return false i tak liczniki są niszczone
         return false;
     }
     if (!(licznikDt->sprawdzZgodnoscLiczbyPiatkow())) {
+        return false;
+    }
+    if (!(licznikDt->sprawdzZgodnoscLiczbySwiatBezNiedzielIWeekendowZPiatkami())) {
         return false;
     }
     //liczniki nie zostały przekroczone, więc dodajemy do listy dyżurów

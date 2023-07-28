@@ -25,7 +25,9 @@ public:
     QString wybranoDodanieDyzurantaTworzacego(QString nick);
     void wybranoUsuniecieDyzurantaTworzacego(QString nick);
     XDyzurantTworzacy* wybranoPobranieDanychDyzurantaTworzacego(QString nick);
-    bool wybranoUpdateDyzurantaTworzacego(QString nick, bool czyM, QString m, QString nm, QString u, QString ch, int maks, int min, int maksS, int maksN, int maksW, int c, int maksP, int wyborT);
+    bool wybranoUpdateDyzurantaTworzacego(QString nick, bool czyM, QString m, QString nm, QString u,
+                                          QString ch, int maks, int min, int maksS, int maksN,
+                                          int maksW, int c, int maksP, int wyborT, int msbn, int mwzp);
 
     void wybranoProsbeOStworzenieGrafiku(bool& immediateResult, int ileIteracji, int szybkosc, bool skracaniePomimoUlozenia);
 

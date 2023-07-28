@@ -89,7 +89,10 @@ XDyzurantTworzacy* MNoweGrafiki::pobierzDaneDyzurantaTworzacego(std::string nick
     return nullptr;
 }
 
-bool MNoweGrafiki::updateDyzurantaTworzacego(std::string nick, bool czyM, std::string m, std::string nm, std::string u, std::string ch, int maks, int min, int maksS, int maksN, int maksW, int c, int maksP, int wyborT) {
+bool MNoweGrafiki::updateDyzurantaTworzacego(std::string nick, bool czyM, std::string m, std::string nm,
+                                             std::string u, std::string ch, int maks, int min, int maksS,
+                                             int maksN, int maksW, int c, int maksP,
+                                             int wyborT, int msbn, int mwzp) {
     XDyzurantTworzacy* dyzurant(nullptr);
     for (auto it = tablicaDyzurantowTworzacych->begin(); it<tablicaDyzurantowTworzacych->end(); ++it) {
         if ((*it)->getNick() == nick) {
@@ -105,6 +108,8 @@ bool MNoweGrafiki::updateDyzurantaTworzacego(std::string nick, bool czyM, std::s
     dyzurant->setMaksymalnieSoboty(maksS);
     dyzurant->setMaksymalnieWeekendy(maksW);
     dyzurant->setMaksymalniePiatki(maksP);
+    dyzurant->setMaksymalnieWeekendyZPiatkami(mwzp);
+    dyzurant->setMaksymalnieSwietaBezNiedziel(msbn);
     dyzurant->setUnikaniePodRzad(c);
     dyzurant->setUnikanieTrojek(wyborT);
     bool result(false);
@@ -146,7 +151,9 @@ bool MNoweGrafiki::zapiszUstawieniaDoPliku() {
         dane.push_back(std::to_string((*it)->getMaksymalnieWeekendy()));    //9. wers - maks weekendy
         dane.push_back(std::to_string((*it)->getUnikaniePodRzad()));        //10. wers - unikanie pod rząd
         dane.push_back(std::to_string((*it)->getMaksymalniePiatki()));      //11. wers - maks piatki
-        int unikanieTrojeczek = (*it)->getUnikanieTrojek();             //12. wers - unikanie trójek
+        dane.push_back(std::to_string((*it)->getMaksymalnieWeekendyZPiatkami()));      //12. wers - maks weekendy z piatkami
+        dane.push_back(std::to_string((*it)->getMaksymalnieSwietaBezNiedziel()));      //13. wers - maks swieta bez niedziel
+        int unikanieTrojeczek = (*it)->getUnikanieTrojek();             //14. wers - unikanie trójek
         if (unikanieTrojeczek == 1) {
             dane.push_back("1");
         }
@@ -241,7 +248,9 @@ std::vector<std::string> MNoweGrafiki::wczytajUstawienia(std::vector<XDyzurant*>
         nowyDyzurantTworzacy->setMaksymalnieWeekendy(std::stoi(daneDyzurantaTworzacego[8]));
         nowyDyzurantTworzacy->setUnikaniePodRzad(std::stoi(daneDyzurantaTworzacego[9]));
         nowyDyzurantTworzacy->setMaksymalniePiatki(std::stoi(daneDyzurantaTworzacego[10]));
-        nowyDyzurantTworzacy->setUnikanieTrojek(std::stoi(daneDyzurantaTworzacego[11]));
+        nowyDyzurantTworzacy->setMaksymalnieWeekendyZPiatkami(std::stoi(daneDyzurantaTworzacego[11]));
+        nowyDyzurantTworzacy->setMaksymalnieSwietaBezNiedziel(std::stoi(daneDyzurantaTworzacego[12]));
+        nowyDyzurantTworzacy->setUnikanieTrojek(std::stoi(daneDyzurantaTworzacego[13]));
         tablicaDyzurantowTworzacych -> push_back(nowyDyzurantTworzacy);
         daneDyzurantaTworzacego.clear();
         nowyDyzurantTworzacy = nullptr;
@@ -267,6 +276,9 @@ bool MNoweGrafiki::sprawdzWstepnieZgodnosc() {
             return false;
         }
         if (!((*it)->liczniki->sprawdzZgodnoscLiczbyPiatkow())) {
+            return false;
+        }
+        if (!((*it)->liczniki->sprawdzZgodnoscLiczbySwiatBezNiedzielIWeekendowZPiatkami())) {
             return false;
         }
     }

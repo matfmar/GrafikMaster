@@ -78,7 +78,7 @@ protected:
 class XDyzurantTworzacy : public XDyzurant {
 public:
     XDyzurantTworzacy();
-    XDyzurantTworzacy(int a, std::string s, int b, int c, int d, int e, int sb, int nd, int wk, bool wgm, int mp, int ut);
+    XDyzurantTworzacy(int a, std::string s, int b, int c, int d, int e, int sb, int nd, int wk, bool wgm, int mp, int ut, int msbn, int mwzp);
     XDyzurantTworzacy(XDyzurant* d);
     ~XDyzurantTworzacy();
 
@@ -93,10 +93,12 @@ public:
         int liczbaNiedziel;
         int liczbaWeekendow;
         int liczbaPiatkow;
+        int liczbaWeekendowZPiatkami;
+        int liczbaSwiatBezNiedziel;
         std::vector<int> dyzury;
 
-        void incLiczbaDyzurow(DzienTygodnia dt);
-        void decLiczbaDyzurow(DzienTygodnia dt);
+        void incLiczbaDyzurow(DzienTygodnia dt, bool czySwieto);
+        void decLiczbaDyzurow(DzienTygodnia dt, bool czySwieto);
         void usunDyzur(int dzien);
         void usunDyzurPrzedPopBack();
         void dodajDyzur(int dzien);
@@ -107,6 +109,7 @@ public:
         bool sprawdzZgodnoscMinimalnejLiczbyDyzurow();
         bool sprawdzZgodnoscLiczbySobotINiedzielIWeekendow();
         bool sprawdzZgodnoscLiczbyPiatkow();
+        bool sprawdzZgodnoscLiczbySwiatBezNiedzielIWeekendowZPiatkami();
     };
     XLiczniki* liczniki;
 
@@ -126,6 +129,8 @@ public:
     int getMaksymalnieNiedziele();
     int getMaksymalnieWeekendy();
     int getMaksymalniePiatki();
+    int getMaksymalnieWeekendyZPiatkami();
+    int getMaksymalnieSwietaBezNiedziel();
     int getUnikanieTrojek();
     void setKiedyChce(std::string s, bool& result);
     void setKiedyNieMoze(std::string s, bool& result);
@@ -138,6 +143,8 @@ public:
     void setMaksymalnieNiedziele(int a);
     void setMaksymalnieWeekendy(int a);
     void setMaksymalniePiatki(int a);
+    void setMaksymalnieSwietaBezNiedziel(int a);
+    void setMaksymalnieWeekendyZPiatkami(int a);
     void setUnikanieTrojek(int a);
     void setWpisywanieCzyMoze(bool b);
     void incLiczbaDyzurow(DzienTygodnia dt);
@@ -162,6 +169,8 @@ private:
     int maksymalnieNiedziele;
     int maksymalnieWeekendy;
     int maksymalniePiatki;
+    int maksymalnieWeekendyZPiatkami;
+    int maksymalnieSwietaBezNiedziel;
     int unikanieTrojek;
     bool wpisywanieGdzieMoze;
 

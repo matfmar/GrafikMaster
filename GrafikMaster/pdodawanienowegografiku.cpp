@@ -52,8 +52,12 @@ XDyzurantTworzacy* PDodawanieNowegoGrafiku::wybranoPobranieDanychDyzurantaTworza
     return xdt;
 }
 
-bool PDodawanieNowegoGrafiku::wybranoUpdateDyzurantaTworzacego(QString nick, bool czyM, QString m, QString nm, QString u, QString ch, int maks, int min, int maksS, int maksN, int maksW, int c, int maksP, int wyborT) {
-    bool result = mNoweGrafiki->updateDyzurantaTworzacego(nick.toStdString(), czyM, m.toStdString(), nm.toStdString(), u.toStdString(), ch.toStdString(), maks, min, maksS, maksN, maksW, c, maksP, wyborT);
+bool PDodawanieNowegoGrafiku::wybranoUpdateDyzurantaTworzacego(QString nick, bool czyM, QString m, QString nm, QString u,
+                                                               QString ch, int maks, int min, int maksS, int maksN,
+                                                               int maksW, int c, int maksP, int wyborT, int msbn, int mwzp) {
+    bool result = mNoweGrafiki->updateDyzurantaTworzacego(nick.toStdString(), czyM, m.toStdString(), nm.toStdString(),
+                                                          u.toStdString(), ch.toStdString(), maks, min,
+                                                          maksS, maksN, maksW, c, maksP, wyborT, msbn, mwzp);
     return result;
 }
 
