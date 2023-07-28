@@ -20,6 +20,8 @@ UIDodawanieNowegoGrafikuWstep::UIDodawanieNowegoGrafikuWstep(std::vector<Miesiac
     boxPierwszyDzien = new QComboBox(this);
     buttonDodaj = new QPushButton(tr("Dalej"), this);
     buttonAnuluj = new QPushButton(tr("Anuluj"), this);
+    labelSwieta = new QLabel(tr("Dni świąteczne:"), this);
+    editSwieta = new QLineEdit(this);
 
     gridLayout = new QGridLayout(this);
     gridLayout -> addWidget(labelRok, 0, 0);
@@ -30,8 +32,10 @@ UIDodawanieNowegoGrafikuWstep::UIDodawanieNowegoGrafikuWstep(std::vector<Miesiac
     gridLayout -> addWidget(editLiczbaDni, 2, 1);
     gridLayout -> addWidget(labelPierwszyDzien, 3, 0);
     gridLayout -> addWidget(boxPierwszyDzien, 3, 1);
-    gridLayout -> addWidget(buttonDodaj, 5, 0);
-    gridLayout -> addWidget(buttonAnuluj, 5, 1);
+    gridLayout -> addWidget(labelSwieta, 4, 0);
+    gridLayout -> addWidget(editSwieta, 4, 1);
+    gridLayout -> addWidget(buttonDodaj, 6, 0);
+    gridLayout -> addWidget(buttonAnuluj, 6, 1);
     setLayout(gridLayout);
 
     QObject::connect(buttonDodaj, SIGNAL(clicked()), this, SLOT(onButtonDodajClicked()));
@@ -102,7 +106,13 @@ void UIDodawanieNowegoGrafikuWstep::onButtonDodajClicked() {
     }
     Miesiac miesiac = tablicaMiesiecy[boxMiesiac->currentIndex()];
     DzienTygodnia pierwszyDzien = tablicaDniTygodnia[boxPierwszyDzien->currentIndex()];
-    pDodawanieNowegoGrafiku ->wybranoDodanieInformacjiWstepnychNowegoGrafiku(rok, liczbaDni, miesiac, pierwszyDzien);
+    QString listaSwiat = editSwieta->text();
+    bool resultDodaniaWstepnego(false);
+    pDodawanieNowegoGrafiku ->wybranoDodanieInformacjiWstepnychNowegoGrafiku(rok, liczbaDni, miesiac, pierwszyDzien, listaSwiat, resultDodaniaWstepnego);
+    if (!resultDodaniaWstepnego) {
+        QMessageBox::critical(this, tr("Błąd"), tr("Wprowadzono nieprawidłowo dane dotyczące świąt."), QMessageBox::Ok);
+        return;
+    }
 }
 
 void UIDodawanieNowegoGrafikuWstep::onButtonAnulujClicked() {

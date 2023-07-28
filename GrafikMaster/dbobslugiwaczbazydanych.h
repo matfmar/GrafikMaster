@@ -31,7 +31,7 @@ public:
 
     //ObslugaPrzegladaniaGrafikowRoboczych
     std::vector<std::string> wczytajListeNazwPlikowZGrafikamiRoboczymi(std::string wzorNazwy, bool& result);    //wzorNazwy do (i włącznie z) podkreślnikiem przed id
-    XWyswietlanyGrafik* zaladujGrafikOKonkretnejNazwie(std::string nazwa);
+    XWyswietlanyGrafik* zaladujGrafikOKonkretnejNazwie(std::string nazwa, int miesiac, int rok);
     bool usunPlikGrafikuRoboczego(std::string nazwaPliku);
     bool przekopiujPlikDoOstatecznych(std::string nazwaPliku);
 private:

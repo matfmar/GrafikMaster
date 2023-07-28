@@ -43,7 +43,7 @@ int PPrzegladanieGrafikowRoboczych::wybranoSzukanieGrafikow(int miesiac, int rok
     XWyswietlanyGrafik* nowyWyswietlanyGrafik(nullptr);
     int licznikGrafikow(0);
     for (auto it=listaNazwPlikow.begin(); it<listaNazwPlikow.end(); ++it) {
-        nowyWyswietlanyGrafik = db->zaladujGrafikOKonkretnejNazwie(*it);
+        nowyWyswietlanyGrafik = db->zaladujGrafikOKonkretnejNazwie(*it, miesiac, rok);
         aktualnaListaGrafikow->push_back(nowyWyswietlanyGrafik);
         licznikGrafikow++;
     }
@@ -193,18 +193,39 @@ void PPrzegladanieGrafikowRoboczych::wybranoZamkniecie() {
 
 }
 
+QString PPrzegladanieGrafikowRoboczych::odczytajMiesiac(int m) {
+    QString s("");
+    switch (m) {
+    case 1: s = "styczeń"; break;
+    case 2: s = "luty"; break;
+    case 3: s = "marzec"; break;
+    case 4: s = "kwiecień"; break;
+    case 5: s = "maj"; break;
+    case 6: s = "czerwiec"; break;
+    case 7: s = "lipiec"; break;
+    case 8: s = "sierpień"; break;
+    case 9: s = "wrzesień"; break;
+    case 10: s = "październik"; break;
+    case 11: s = "listopad"; break;
+    case 12: s = "grudzień"; break;
+    default: s = "nie-wiadomo-jaki"; break;
+    }
+    return s;
+}
+
 bool PPrzegladanieGrafikowRoboczych::zapiszJakoPDF() {
     if (ktoryWyswietlamy < 0 || (*aktualnaListaGrafikow)[ktoryWyswietlamy] == nullptr) {
         return false;
     }
+    QString miesiacRok = odczytajMiesiac((*aktualnaListaGrafikow)[ktoryWyswietlamy]->miesiac) + " " + QString::number((*aktualnaListaGrafikow)[ktoryWyswietlamy]->rok);
     QString html("<center><table border=\"1\" align=\"center\">");
-    html += "<caption>Lista dyżurowa na miesiąc " + (*aktualnaListaGrafikow)[ktoryWyswietlamy]->nazwaPliku + "</caption>";
+    html += "<caption>Lista dyżurowa na " + miesiacRok + ": </caption>";
     html += "<tr><th><b>Dzień</b></th><th><b>Dzień Tygodnia</b></th><th><b>Lekarz Dyżurny</b></th></tr>";
     for (auto it = (*aktualnaListaGrafikow)[ktoryWyswietlamy]->listaPozycjiGrafiku->begin(); it<(*aktualnaListaGrafikow)[ktoryWyswietlamy]->listaPozycjiGrafiku->end(); ++it) {
         if ((*it)->dzienTygodnia == "sobota") {
             html += "<tr bgcolor=\"grey\">";
         }
-        else if ((*it)->dzienTygodnia == "niedziela") {
+        else if ((*it)->czySwieto) {
             html += "<tr bgcolor=\"red\">";
         }
         else {

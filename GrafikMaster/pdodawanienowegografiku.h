@@ -21,7 +21,7 @@ class PDodawanieNowegoGrafiku {
 public:
     PDodawanieNowegoGrafiku();
     ~PDodawanieNowegoGrafiku();
-    void wybranoDodanieInformacjiWstepnychNowegoGrafiku(int r, int ld, Miesiac m, DzienTygodnia dt);
+    void wybranoDodanieInformacjiWstepnychNowegoGrafiku(int r, int ld, Miesiac m, DzienTygodnia dt, QString listaSwiat, bool& result);
     QString wybranoDodanieDyzurantaTworzacego(QString nick);
     void wybranoUsuniecieDyzurantaTworzacego(QString nick);
     XDyzurantTworzacy* wybranoPobranieDanychDyzurantaTworzacego(QString nick);
@@ -41,7 +41,7 @@ private:
     std::vector<XDyzurant*>* tablicaDyzurantow;
     int decyzjaWarunkowPoczatkowychGrafiku;
 
-    UITworzoneGrafiki* uiTworzoneGrafiki;   //debug only
+    UITworzoneGrafiki* uiTworzoneGrafiki;
 };
 
 #endif // PDODAWANIENOWEGOGRAFIKU_H

@@ -449,8 +449,8 @@ XGrafik::XGrafik()
     liczbaIteracji(nullptr), parentWorker(nullptr), czyPrzyspieszenie(false), licznikSkrocen(nullptr), decyzjaOSkroceniu(nullptr),
     mutex(nullptr), skracaniePomimoUlozenia(false) {}
 
-XGrafik::XGrafik(int r, Miesiac m, StatusGrafiku st, int ld, DzienTygodnia pd)
-    : rok(r), miesiac(m), status(st), liczbaDni(ld), pierwszyDzien(pd), db(nullptr), tablicaDyzurantowTworzacych(nullptr),
+XGrafik::XGrafik(int r, Miesiac m, StatusGrafiku st, int ld, DzienTygodnia pd, std::vector<int> swieta)
+    : rok(r), miesiac(m), status(st), liczbaDni(ld), pierwszyDzien(pd), listaSwiat(swieta), db(nullptr), tablicaDyzurantowTworzacych(nullptr),
     licznikStworzonychGrafikow(nullptr), zakonczenieSzukania(nullptr),
     licznikOstatecznyStworzonychGrafikow(nullptr), liczbaIteracji(nullptr), parentWorker(nullptr),
     licznikSkrocen(nullptr), czyPrzyspieszenie(false), decyzjaOSkroceniu(nullptr),
@@ -462,6 +462,7 @@ XGrafik::XGrafik(XGrafik& gr) {
     status = gr.status;
     liczbaDni = gr.liczbaDni;
     pierwszyDzien = gr.pierwszyDzien;
+    listaSwiat = gr.listaSwiat;
     XDzien* nowyDzien(nullptr);
     //kopiowanie każdego dnia z osobna
     for (auto it=gr.tablicaDni.begin(); it<gr.tablicaDni.end(); ++it) {
@@ -498,6 +499,7 @@ XGrafik::XGrafik(XGrafik* gr) {
     status = gr->status;
     liczbaDni = gr->liczbaDni;
     pierwszyDzien = gr->pierwszyDzien;
+    listaSwiat = gr->listaSwiat;
     XDzien* nowyDzien(nullptr);
     //kopiowanie każdego dnia z osobna
     for (auto it=gr->tablicaDni.begin(); it<gr->tablicaDni.end(); ++it) {
@@ -528,6 +530,18 @@ XGrafik::XGrafik(XGrafik* gr) {
     skracaniePomimoUlozenia = gr->skracaniePomimoUlozenia;
 }
 
+bool XGrafik::sprawdzCzySwieto(int dzien, DzienTygodnia dt) {
+    if (dt == NIEDZIELA) {
+        return true;
+    }
+    for (auto it=listaSwiat.begin(); it<listaSwiat.end(); ++it) {
+        if (dzien == (*it)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 void XGrafik::stworzPodstawyGrafiku() {
     DzienTygodnia dt;
     bool czySwieto(false);
@@ -542,7 +556,7 @@ void XGrafik::stworzPodstawyGrafiku() {
         else {
             dt = incDzien(dt);
         }
-        czySwieto = (dt == NIEDZIELA);
+        czySwieto = sprawdzCzySwieto(i+1, dt);
         dzien = new XDzien(dt, i+1, czySwieto, NIEUSTAWIONY_W_TRAKCIE, nullptr);
         tablicaDni.push_back(dzien);
     }
@@ -1011,7 +1025,8 @@ XGrafik::~XGrafik() {
 
 //XWyswietlanyGrafik===================================================================================================================================================================================
 
-XWyswietlanyGrafik::XWyswietlanyGrafik(std::string np) : listaPozycjiGrafiku(nullptr), nazwaPliku(np) {
+XWyswietlanyGrafik::XWyswietlanyGrafik(std::string np, int m, int r)
+    : listaPozycjiGrafiku(nullptr), nazwaPliku(np), miesiac(m), rok(r) {
     listaPozycjiGrafiku = new std::vector<XPozycjaGrafiku*>();
 }
 
@@ -1032,8 +1047,8 @@ XWyswietlanyGrafik::~XWyswietlanyGrafik() {
 
 //XWyswietlanyGrafik::XPozycjaGrafiku=====================================================================================================================================================================
 
-XWyswietlanyGrafik::XPozycjaGrafiku::XPozycjaGrafiku(QString dz, QString dt, QString dy) 
-    : dzien(dz), dzienTygodnia(dt), dyzurant(dy) {}
+XWyswietlanyGrafik::XPozycjaGrafiku::XPozycjaGrafiku(QString dz, QString dt, QString dy, bool cS)
+    : dzien(dz), dzienTygodnia(dt), dyzurant(dy), czySwieto(cS) {}
 
 
 

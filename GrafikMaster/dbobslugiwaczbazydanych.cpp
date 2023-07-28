@@ -87,34 +87,17 @@ bool DBObslugiwaczBazyDanych::zapiszUlozonyGrafikDoPliku(XGrafik* grafik, int id
     std::string strToWrite("");
     for (auto it = tablicaDni.begin()+1; it<tablicaDni.end()-1; ++it) { //nie bierzemy pod uwagę pustych dni dołożonych dla ułatwienia algorytmu
         strToWrite = std::to_string((*it)->liczbaDnia) + ";" + przeliczDzienTygodniaNaLancuch((*it)->dzienTygodnia) + ";" + (*it)->dyzurantWybrany->getNick() + ";";
+        if ((*it)->czySwieto) {
+            strToWrite += "1;";
+        }
+        else {
+            strToWrite += "0;";
+        }
         outputFileReader << strToWrite << std::endl;
     }
     outputFileReader.close();
     return true;
 }
-
-
-/*
-        if ((*it)->getCzyWpisywanieGdzieMoze()) {
-            dane.push_back("1");    //1. wers - czy moze czy nie moze
-            s = (*it)->getKiedyMoze();
-        }
-        else {
-            dane.push_back("0");    //1. wers
-            s = (*it)->getKiedyNieMoze();
-        }
-        dane.push_back(s);        //2. wers - kiedy moze lub kiedy nie moze
-        dane.push_back((*it)->getKiedyChce());    //3. wers - kiedy chce
-        dane.push_back((*it)->getKiedyUnika());    //4. wers - kiedy unika
-        dane.push_back(std::to_string((*it)->getMaksymalnie()));    //5. wers - maksymalnie
-        dane.push_back(std::to_string((*it)->getMinimalnie()));       //6. wers - minimalnie
-        dane.push_back(std::to_string((*it)->getMaksymalnieSoboty()));    //7. wers- maks soboty
-        dane.push_back(std::to_string((*it)->getMaksymalnieNiedziele()));    //8. wers - maks niedziele
-        dane.push_back(std::to_string((*it)->getMaksymalnieWeekendy()));    //9. wers - maks weekendy
-        dane.push_back(std::to_string((*it)->getUnikaniePodRzad()));        //10. wers - unikanie pod rząd
-*/
-
-
 
 bool DBObslugiwaczBazyDanych::zapiszUstawieniaDyzurantaTworzacego(std::vector<std::string> dane, std::string dyzurant) {
     std::string filename = dyzurant + ".data";
@@ -182,16 +165,17 @@ std::vector<std::string> DBObslugiwaczBazyDanych::wczytajDyzurantaTworzacego(std
     return v;
 }
 
-XWyswietlanyGrafik* DBObslugiwaczBazyDanych::zaladujGrafikOKonkretnejNazwie(std::string nazwa) {
+XWyswietlanyGrafik* DBObslugiwaczBazyDanych::zaladujGrafikOKonkretnejNazwie(std::string nazwa, int miesiac, int rok) {
     nazwa = "data/grafiki_robocze/" + nazwa;
     inputFileReader.open(nazwa.c_str());
     if (!inputFileReader.is_open()) {
         return nullptr;
     }
-    XWyswietlanyGrafik* nowyWyswietlanyGrafik = new XWyswietlanyGrafik(nazwa);
+    XWyswietlanyGrafik* nowyWyswietlanyGrafik = new XWyswietlanyGrafik(nazwa, miesiac, rok);
     XWyswietlanyGrafik::XPozycjaGrafiku* nowaPozycjaGrafiku(nullptr);
     std::string line(""), subline("");
     QString dz(""), dt(""), dy("");
+    bool cs(false);
     int licznikSrednikow(0);
     while (getline(inputFileReader, line)) {
         for (char c : line) {
@@ -209,8 +193,18 @@ XWyswietlanyGrafik* DBObslugiwaczBazyDanych::zaladujGrafikOKonkretnejNazwie(std:
                     subline = "";
                     licznikSrednikow++;
                 }
-                else if (licznikSrednikow >= 2) {
+                else if (licznikSrednikow == 2) {
                     dy = QString::fromStdString(subline);
+                    subline = "";
+                    licznikSrednikow++;
+                }
+                else if (licznikSrednikow >= 3) {
+                    if (subline == "0") {
+                        cs = false;
+                    }
+                    else {
+                        cs = true;
+                    }
                     subline = "";
                     licznikSrednikow++;
                 }
@@ -218,7 +212,7 @@ XWyswietlanyGrafik* DBObslugiwaczBazyDanych::zaladujGrafikOKonkretnejNazwie(std:
         }
         subline = "";
         licznikSrednikow = 0;
-        nowaPozycjaGrafiku = new XWyswietlanyGrafik::XPozycjaGrafiku(dz, dt, dy);
+        nowaPozycjaGrafiku = new XWyswietlanyGrafik::XPozycjaGrafiku(dz, dt, dy, cs);
         nowyWyswietlanyGrafik->listaPozycjiGrafiku->push_back(nowaPozycjaGrafiku);
     }
     inputFileReader.close();

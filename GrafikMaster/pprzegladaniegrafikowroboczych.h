@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <string>
+#include <QString>
 
 class UIPrzegladanieGrafikowRoboczych;
 class XWyswietlanyGrafik;
@@ -32,6 +33,7 @@ private:
     std::vector<std::string> listaNazwPlikow;
 
     void wyczyscAktualnaListeGrafikow();
+    QString odczytajMiesiac(int m);
 };
 
 #endif // PPRZEGLADANIEGRAFIKOWROBOCZYCH_H

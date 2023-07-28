@@ -25,8 +25,8 @@ public slots:
 private:
     PDodawanieNowegoGrafiku* pDodawanieNowegoGrafiku;
     QGridLayout* gridLayout;
-    QLabel* labelRok,* labelMiesiac,* labelLiczbaDni,* labelPierwszyDzien;
-    QLineEdit* editRok,* editLiczbaDni;
+    QLabel* labelRok,* labelMiesiac,* labelLiczbaDni,* labelPierwszyDzien,* labelSwieta;
+    QLineEdit* editRok,* editLiczbaDni,* editSwieta;
     QComboBox* boxMiesiac,* boxPierwszyDzien;
     QPushButton* buttonDodaj,* buttonAnuluj;
     std::vector<Miesiac> tablicaMiesiecy;

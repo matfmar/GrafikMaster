@@ -25,8 +25,38 @@ void MNoweGrafiki::wyciagnijTabliceMiesiecyIDniTygodnia(std::vector<Miesiac>& ta
     tabDT = tablicaDniTygodnia;
 }
 
-XGrafik* MNoweGrafiki::utworzNowyGrafik(int r, int ld, Miesiac m, DzienTygodnia dt) {
-    nowyGrafik = new XGrafik(r, m, ROBOCZY, ld, dt);
+std::vector<int> MNoweGrafiki::convertStringToVectorOfInts(std::string s, bool& result) {
+    std::string temp("");
+    std::vector<int> v;
+    if (s.empty() || s == "") {
+        result = true;
+        return v;
+    }
+    s += ',';
+    for (char c : s) {
+        if (c >= '0' && c <= '9') {
+            temp += c;
+        }
+        else if (c == ',') {
+            v.push_back(std::stoi(temp));
+            temp = "";
+        }
+        else {
+            result = false;
+            v.clear();
+            return v;
+        }
+    }
+    result = true;
+    return v;
+}
+
+XGrafik* MNoweGrafiki::utworzNowyGrafik(int r, int ld, Miesiac m, DzienTygodnia dt, QString listaSwiat, bool& result) {
+    std::vector<int> swieta = convertStringToVectorOfInts(listaSwiat.toStdString(), result);
+    if (!result) {
+        return nullptr;
+    }
+    nowyGrafik = new XGrafik(r, m, ROBOCZY, ld, dt, swieta);
     tablicaDyzurantowTworzacych = new std::vector<XDyzurantTworzacy*>();
     return nowyGrafik;
 }

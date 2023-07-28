@@ -194,7 +194,7 @@ struct XDzien {
 class XGrafik {
 public:
     XGrafik();
-    XGrafik(int r, Miesiac m, StatusGrafiku st, int ld, DzienTygodnia pd);
+    XGrafik(int r, Miesiac m, StatusGrafiku st, int ld, DzienTygodnia pd, std::vector<int> swieta);
     XGrafik(XGrafik& gr);
     XGrafik(XGrafik* gr);
     void stworzPodstawyGrafiku();
@@ -217,6 +217,7 @@ private:
     StatusGrafiku status;
     int liczbaDni;
     DzienTygodnia pierwszyDzien;
+    std::vector<int> listaSwiat;
     std::vector<XDzien*> tablicaDni;    //numerowane od 1 do liczbaDni+1;
     DBObslugiwaczBazyDanych* db;        //do zapisywania wypelnionych w calosci grafikow
     TWorker* parentWorker;      //do wysyłania syngałów międzywątkowych
@@ -241,20 +242,24 @@ private:
     void dodajUnikanieTrojek(XDyzurantTworzacy::XLiczniki* licznikDt, XDyzurantTworzacy* dt, int klucz, bool& result, int dzien);
     bool sprawdzPustoscZbioruMozliwiNieUnikajacy(int dzien);
     bool sprawdzZgodnoscZMinimalnaLiczbaDyzurowDlaWszystkich();
+    bool sprawdzCzySwieto(int dzien, DzienTygodnia dt);
 };
 
 //XWyswietlanyGrafik
 
 struct XWyswietlanyGrafik {
-    XWyswietlanyGrafik(std::string np);
+    XWyswietlanyGrafik(std::string np, int m, int r);
     ~XWyswietlanyGrafik();
     struct XPozycjaGrafiku {
-        XPozycjaGrafiku(QString dz, QString dt, QString dy);
+        XPozycjaGrafiku(QString dz, QString dt, QString dy, bool cS);
         QString dzien;
         QString dzienTygodnia;
         QString dyzurant;
+        bool czySwieto;
     };
     std::string nazwaPliku;
+    int miesiac;
+    int rok;
     std::vector<XPozycjaGrafiku*>* listaPozycjiGrafiku;
 };
 

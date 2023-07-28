@@ -21,7 +21,7 @@ public:
     MNoweGrafiki();
     ~MNoweGrafiki();
     void wyciagnijTabliceMiesiecyIDniTygodnia(std::vector<Miesiac>& tabM, std::vector<DzienTygodnia>& tabDT);
-    XGrafik* utworzNowyGrafik(int r, int ld, Miesiac m, DzienTygodnia dt);
+    XGrafik* utworzNowyGrafik(int r, int ld, Miesiac m, DzienTygodnia dt, QString listaSwiat, bool& result);
     std::string utworzDyzurantaTworzacego(XDyzurant* dyzurant);
     void usunDyzurantaTworzacego(std::string nick);
     XDyzurantTworzacy* pobierzDaneDyzurantaTworzacego(std::string nick);
@@ -48,6 +48,7 @@ private:
     void wypelnijTabliceEnumeracyjne();
     void wypelnijDzien(int dzien);
     bool sprawdzWstepnieZgodnosc();
+    std::vector<int> convertStringToVectorOfInts(std::string s, bool& result);
 };
 
 #endif // MNOWEGRAFIKI_H

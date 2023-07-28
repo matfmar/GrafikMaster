@@ -19,8 +19,11 @@ PDodawanieNowegoGrafiku::PDodawanieNowegoGrafiku()
     uiDodawanieNowegoGrafikuWstep -> show();
 }
 
-void PDodawanieNowegoGrafiku::wybranoDodanieInformacjiWstepnychNowegoGrafiku(int r, int ld, Miesiac m, DzienTygodnia dt) {
-    XGrafik* nowyGrafik = mNoweGrafiki ->utworzNowyGrafik(r, ld, m, dt);
+void PDodawanieNowegoGrafiku::wybranoDodanieInformacjiWstepnychNowegoGrafiku(int r, int ld, Miesiac m, DzienTygodnia dt, QString listaSwiat, bool& result) {
+    XGrafik* nowyGrafik = mNoweGrafiki ->utworzNowyGrafik(r, ld, m, dt, listaSwiat, result);
+    if (!result) {
+        return;
+    }
     uiDodawanieNowegoGrafikuWstep -> close();
     mDyzuranci = new MDyzuranci();
     tablicaDyzurantow = mDyzuranci -> wyciagnijTabliceDyzurantow();
