@@ -35,7 +35,7 @@ void UIDecydowanieOKoniecznosciSzukaniaGrafikow::onButtonZakonczSzukanieClicked(
 }
 
 void UIDecydowanieOKoniecznosciSzukaniaGrafikow::onButtonWyswietlGrafikiClicked() {
-
+    parent->przegladajGrafiki();
 }
 
 void UIDecydowanieOKoniecznosciSzukaniaGrafikow::wyswietlKomunikatZakonczeniaSzukania(bool result, int ileGrafikow) {

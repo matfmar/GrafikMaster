@@ -7,18 +7,23 @@
 #include <QDialog>
 #include <QLabel>
 #include <QVBoxLayout>
+#include <QPushButton>
 
 class PProgress;
 
 class UITworzenieProgress : public QDialog {
+    Q_OBJECT
 public:
     UITworzenieProgress(PProgress* p);
     ~UITworzenieProgress() {}
     void setLabelIleGrafikow(int ileGrafikow);
     void setLabelIleObrotow(int ileObrotow);
+public slots:
+    void onButtonZakonczClicked();
 private:
     QLabel* labelTekst,* labelTekstObroty;
     QLabel* labelIleGrafikow,* labelIleObrotow;
+    QPushButton* buttonZakoncz;
     QVBoxLayout* layout;
 
     PProgress* parent;

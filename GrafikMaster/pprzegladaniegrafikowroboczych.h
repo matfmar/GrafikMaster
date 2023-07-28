@@ -23,7 +23,7 @@ public:
     bool wybranoUsuniecieGrafiku(bool& czyCosZostaje);
     bool wybranoUsuniecieWszystkichGrafikow();
     bool wybranoKlepniecieGrafiku();
-    bool zapiszJakoPDF();
+    bool zapiszJakoPDF(QString f);
 private:
     UIPrzegladanieGrafikowRoboczych* uiPrzegladanieGrafikowRoboczych;
     std::vector<XWyswietlanyGrafik*>* aktualnaListaGrafikow;

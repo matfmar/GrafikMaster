@@ -213,7 +213,7 @@ QString PPrzegladanieGrafikowRoboczych::odczytajMiesiac(int m) {
     return s;
 }
 
-bool PPrzegladanieGrafikowRoboczych::zapiszJakoPDF() {
+bool PPrzegladanieGrafikowRoboczych::zapiszJakoPDF(QString f) {
     if (ktoryWyswietlamy < 0 || (*aktualnaListaGrafikow)[ktoryWyswietlamy] == nullptr) {
         return false;
     }
@@ -242,7 +242,7 @@ bool PPrzegladanieGrafikowRoboczych::zapiszJakoPDF() {
     document.setHtml(html);
     QPrinter printer(QPrinter::HighResolution);
     printer.setOutputFormat(QPrinter::PdfFormat);
-    printer.setOutputFileName("data/plik.pdf");
+    printer.setOutputFileName(f);
     document.print(&printer);
     return true;
 }

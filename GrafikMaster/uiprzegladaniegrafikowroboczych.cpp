@@ -5,6 +5,7 @@
 #include <QStringList>
 #include "dto.h"
 #include <QFont>
+#include <QFileDialog>
 
 UIPrzegladanieGrafikowRoboczych::UIPrzegladanieGrafikowRoboczych(PPrzegladanieGrafikowRoboczych* p, QWidget *parent)
     : QMainWindow{parent} {
@@ -148,7 +149,11 @@ void UIPrzegladanieGrafikowRoboczych::onButtonUsunClicked() {
 }
 
 void UIPrzegladanieGrafikowRoboczych::onButtonZapiszJakoPDFClicked() {
-    bool result = pPrzegladanieGrafikowRoboczych->zapiszJakoPDF();
+    QString filename = QFileDialog::getSaveFileName(this, tr("Wybierz miejsce i nazwę pliku PDF"), "C:\\", tr("Dokumenty PDF (*.pdf)"));
+    if (filename.isEmpty()) {
+        return;
+    }
+    bool result = pPrzegladanieGrafikowRoboczych->zapiszJakoPDF(filename);
     if (!result) {
         QMessageBox::critical(this, tr("Błąd"), tr("Nie udało się zapisać jako PDF"), QMessageBox::Ok);
         return;
