@@ -25,6 +25,8 @@ public:
     //ObslugaZapisywanychDanych
     bool zapiszUstawieniaDyzurantaTworzacego(std::vector<std::string> dane, std::string dyzurant);
     bool usunWszystkiePlikiZUstawieniami();
+    bool zapiszParametryGrafikuDoPliku(std::vector<QString> daneDoZapisu);
+    std::vector<QString> wczytajParametryGrafikuZPliku(bool& result);
 
     //ObslugaSwiezoTworzonychGrafikow
     bool zapiszUlozonyGrafikDoPliku(XGrafik* grafik, int id);
