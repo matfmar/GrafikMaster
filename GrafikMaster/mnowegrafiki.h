@@ -36,6 +36,8 @@ public:
     void wypelnijGrafikDyzurantami(bool& immediateResult, int ileIteracji, int szybkosc, bool skracaniePomimoUlozenia);
 
     bool usunWszystkieUstawieniaZPlikow();
+    bool zapiszParametryGrafiku(std::vector<QString> daneDoZapisu);
+    std::vector<QString> wczytajParametryGrafiku(bool& result):
 private:
     std::vector<Miesiac> tablicaMiesiecy;
     std::vector<DzienTygodnia> tablicaDniTygodnia;
