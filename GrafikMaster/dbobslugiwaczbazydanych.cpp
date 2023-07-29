@@ -148,6 +148,36 @@ bool DBObslugiwaczBazyDanych::usunWszystkiePlikiZUstawieniami() {
     return true;
 }
 
+bool DBObslugiwaczBazyDanych::zapiszParametryGrafikuDoPliku(std::vector<QString> daneDoZapisu) {
+    outputFileReader.open("data/zapisane_warunki_grafikow/warunki.data", std::ofstream::out | std::ofstream::trunc);
+    if (!outputFileReader.is_open()) {
+        return false;
+    }
+    std::string s("");
+    for (auto it=daneDoZapisu.begin(); it<daneDoZapisu.end(); ++it) {
+        s = (*it).toStdString();
+        outputFileReader << s << std::endl;
+    }
+    outputFileReader.close();
+    return true;
+}
+
+std::vector<QString> std::ofstream::out | std::ofstream::trunc::wczytajParametryGrafikuZPliku(bool& result) {
+    std::vector<QString> v;
+    std::string s("");
+    inputFileReader.open("data/zapisane_warunki_grafikow/warunki.data");
+    if (!inputFileReader.is_open()) {
+        result = false;
+        return v;
+    }
+    while (getline(inputFileReader, s)) {
+        v.push_back(QString::fromStdString(s));
+    }
+    inputFileReader.close();
+    result = true;
+    return v;
+}
+
 std::vector<std::string> DBObslugiwaczBazyDanych::wczytajDyzurantaTworzacego(std::string nick, bool& result) {
     std::vector<std::string> v;
     std::string filename = nick + ".data";
