@@ -22,6 +22,8 @@ public:
 public slots:
     void onButtonDodajClicked();
     void onButtonAnulujClicked();
+    void onButtonZapiszClicked();
+    void onButtonWczytajClicked();
 private:
     PDodawanieNowegoGrafiku* pDodawanieNowegoGrafiku;
     QGridLayout* gridLayout;
@@ -29,6 +31,7 @@ private:
     QLineEdit* editRok,* editLiczbaDni,* editSwieta;
     QComboBox* boxMiesiac,* boxPierwszyDzien;
     QPushButton* buttonDodaj,* buttonAnuluj;
+    QPushButton* buttonZapisz,* buttonWczytaj;
     std::vector<Miesiac> tablicaMiesiecy;
     std::vector<DzienTygodnia> tablicaDniTygodnia;
 
