@@ -36,6 +36,11 @@ public:
     XWyswietlanyGrafik* zaladujGrafikOKonkretnejNazwie(std::string nazwa, int miesiac, int rok);
     bool usunPlikGrafikuRoboczego(std::string nazwaPliku);
     bool przekopiujPlikDoOstatecznych(std::string nazwaPliku);
+
+    //ObslugaPrzegladaniaGrafikowOstatecznych
+    std::vector<std::string> wczytajListeNazwPlikowZGrafikamiOstatecznymi(std::string wzorNazwy, bool& result);    //wzorNazwy do (i włącznie z) podkreślnikiem przed id
+    XWyswietlanyGrafik* zaladujGrafikOstatecznyOKonkretnejNazwie(std::string nazwa, int miesiac, int rok);
+    bool usunPlikGrafikuOstatecznego(std::string nazwaPliku);
 private:
     std::ifstream inputFileReader;
     std::ofstream outputFileReader;
