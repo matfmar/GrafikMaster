@@ -35,6 +35,8 @@ public:
     bool wybranoZapisanieUstawienDoPliku();
     std::vector<std::string> wybranoWczytanieUstawien();
     bool wybranoUsunWszystkieUstawienia();
+    bool wybranoZapisanieParametrowGrafiku(std::vector<QString> daneDoZapisu);    
+    std::vector<QString> wybranoWczytanieParametrowGrafiku(bool& result);
 private:
     UIDodawanieNowegoGrafikuWstep* uiDodawanieNowegoGrafikuWstep;
     UIDodawanieNowegoGrafiku* uiDodawanieNowegoGrafiku;
