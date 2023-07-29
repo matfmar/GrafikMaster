@@ -91,6 +91,7 @@ void PDodawanieNowegoGrafiku::wybranoDecyzjeWarunkowPoczatkowychGrafiku(int decy
 }
 
 bool PDodawanieNowegoGrafiku::wybranoZapisanieUstawienDoPliku() {
+    bool najpierwUsuniecie = mNoweGrafiki->usunWszystkieUstawieniaZPlikow();
     return (mNoweGrafiki->zapiszUstawieniaDoPliku());
 }
 
