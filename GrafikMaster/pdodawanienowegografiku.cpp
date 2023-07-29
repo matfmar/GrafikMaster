@@ -19,6 +19,14 @@ PDodawanieNowegoGrafiku::PDodawanieNowegoGrafiku()
     uiDodawanieNowegoGrafikuWstep -> show();
 }
 
+bool PDodawanieNowegoGrafiku::wybranoZapisanieParametrowGrafiku(std::vector<QString> daneDoZapisu) {
+    return (mNoweGrafiki
+}
+
+std::vector<QString> PDodawanieNowegoGrafiku::wybranoWczytanieParametrowGrafiku(bool& result) {
+    
+}
+
 void PDodawanieNowegoGrafiku::wybranoDodanieInformacjiWstepnychNowegoGrafiku(int r, int ld, Miesiac m, DzienTygodnia dt, QString listaSwiat, bool& result) {
     XGrafik* nowyGrafik = mNoweGrafiki ->utworzNowyGrafik(r, ld, m, dt, listaSwiat, result);
     if (!result) {
