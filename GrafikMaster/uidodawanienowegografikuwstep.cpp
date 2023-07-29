@@ -93,11 +93,33 @@ QString UIDodawanieNowegoGrafikuWstep::translateEnumToQString(DzienTygodnia dt) 
 }
 
 void UIDodawanieNowegoGrafikuWstep::onButtonZapiszClicked() {
-    
+    QString editRokString = editRok->text();    //1. wiersz
+    QString liczbaDniString = editLiczbaDni->text();      //2. wiersz
+    int boxMiesiacIndex = boxMiesiac->currentIndex();    //3. wiersz
+    int boxPierwszyDzienIndex = boxPierwszyDzien->currentIndex();    //4. wiersz
+    QString editSwietaString = editSwieta->text();    //5. wiersz
+    std::vector<QString> daneDoZapisu;
+    daneDoZapisu.push_back(editRokString);
+    daneDoZapisu.push_back(liczbaDniString);
+    daneDoZapisu.push_back(QString::number(boxMiesiacIndex));
+    daneDoZapisu.push_back(QString::number(boxPierwszyDzienIndex));
+    daneDoZapisu.push_back(editSwietaString);
+    bool result = pDodawanieNowegoGrafiku->wybranoZapisanieParametrowGrafiku(daneDoZapisu);
+    if (!result) {
+        QMessageBox::critical(this, tr("Błąd"), tr("Nie udano się zapisać danych."), QMessageBox::Ok);
+    }
+    else {
+        QMessageBox::information(this, tr("Informacja"), tr("Pomyślnie zachowano dane."), QMessageBox::Ok);
+    }
 }
 
 void UIDodawanieNowegoGrafikuWstep::onButtonWczytajClicked() {
-    
+    std::vector<QString> daneWczytane = pDodawanieNowegoGrafiku->wybranoWczytanieParametrowGrafiku();
+    editRok->setText(daneWczytane[0]);
+    editLiczbaDni->setText(daneWczytane[1]);
+    boxMiesiac->setCurrentIndex(daneWczytane[2].toInt());
+    boxPierwszyDzien->setCurrentIndex(daneWczytane[3].toInt());
+    editSwieta->setText(daneWczytane[4]);
 }
 
 void UIDodawanieNowegoGrafikuWstep::onButtonDodajClicked() {
