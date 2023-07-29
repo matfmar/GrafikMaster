@@ -4,10 +4,11 @@
 #include "pedycjabazydyzurantow.h"
 #include "pdodawanienowegografiku.h"
 #include "pprzegladaniegrafikowroboczych.h"
+#include "pprzegladaniegrafikowostatecznych.h"
 
 PMain::PMain()
     : uiMainWindow(nullptr), pEdycjaBazyDyzurantow(nullptr), pDodawanieNowegoGrafiku(nullptr),
-    pPrzegladanieGrafikowRoboczych(nullptr) {
+    pPrzegladanieGrafikowRoboczych(nullptr), pPrzegladanieGrafikowOstatecznych(nullptr) {
     uiMainWindow = new UIMainWindow(this, nullptr);
     uiMainWindow -> show();
 }
@@ -22,6 +23,10 @@ void PMain::wybranoEdycjeBazyDyzurantow() {
         delete pDodawanieNowegoGrafiku;
         pDodawanieNowegoGrafiku = nullptr;
     }        
+    if (pPrzegladanieGrafikowOstatecznych != nullptr) {
+        delete pPrzegladanieGrafikowOstatecznych;
+        pPrzegladanieGrafikowOstatecznych = nullptr;
+    }       
     if (pEdycjaBazyDyzurantow == nullptr) {
         pEdycjaBazyDyzurantow = new PEdycjaBazyDyzurantow();
     }
@@ -43,6 +48,10 @@ void PMain::wybranoDodanieNowegoGrafiku() {
         delete pPrzegladanieGrafikowRoboczych;
         pPrzegladanieGrafikowRoboczych = nullptr;
     }
+    if (pPrzegladanieGrafikowOstatecznych != nullptr) {
+        delete pPrzegladanieGrafikowOstatecznych;
+        pPrzegladanieGrafikowOstatecznych = nullptr;
+    }       
     //...i tworzymy klasę prezentującą do tworzenia nowego grafiku
     if (pDodawanieNowegoGrafiku == nullptr) {
         pDodawanieNowegoGrafiku = new PDodawanieNowegoGrafiku();
@@ -70,6 +79,10 @@ void PMain::wybranoPrzegladanieGrafikowRoboczych() {
         delete pPrzegladanieGrafikowRoboczych;
         pPrzegladanieGrafikowRoboczych = nullptr;
     }
+    if (pPrzegladanieGrafikowOstatecznych != nullptr) {
+        delete pPrzegladanieGrafikowOstatecznych;
+        pPrzegladanieGrafikowOstatecznych = nullptr;
+    }       
     if (pDodawanieNowegoGrafiku != nullptr) {
         delete pDodawanieNowegoGrafiku;
         pDodawanieNowegoGrafiku = nullptr;
@@ -79,7 +92,24 @@ void PMain::wybranoPrzegladanieGrafikowRoboczych() {
 }
 
 void PMain::wybranoPrzegladanieGrafikowOstatecznych() {
-
+    if (pEdycjaBazyDyzurantow != nullptr) {
+        delete pEdycjaBazyDyzurantow;
+        pEdycjaBazyDyzurantow = nullptr;
+    }    
+    if (pPrzegladanieGrafikowRoboczych != nullptr) {
+        delete pPrzegladanieGrafikowRoboczych;
+        pPrzegladanieGrafikowRoboczych = nullptr;
+    }
+    if (pPrzegladanieGrafikowOstatecznych != nullptr) {
+        delete pPrzegladanieGrafikowOstatecznych;
+        pPrzegladanieGrafikowOstatecznych = nullptr;
+    }    
+    if (pDodawanieNowegoGrafiku != nullptr) {
+        delete pDodawanieNowegoGrafiku;
+        pDodawanieNowegoGrafiku = nullptr;
+    }    
+    pPrzegladanieGrafikowOstatecznych = new PPrzegladanieGrafikowOstatecznych();
+    pPrzegladanieGrafikowOstatecznych->pokazOknoPrzegladaniaGrafikow();
 }
 
 
@@ -100,4 +130,8 @@ PMain::~PMain() {
         delete pPrzegladanieGrafikowRoboczych;
         pPrzegladanieGrafikowRoboczych = nullptr;
     }
+    if (pPrzegladanieGrafikowOstatecznych != nullptr) {
+        delete pPrzegladanieGrafikowOstatecznych;
+        pPrzegladanieGrafikowOstatecznych = nullptr;
+    }       
 }
