@@ -22,6 +22,8 @@ UIDodawanieNowegoGrafikuWstep::UIDodawanieNowegoGrafikuWstep(std::vector<Miesiac
     buttonAnuluj = new QPushButton(tr("Anuluj"), this);
     labelSwieta = new QLabel(tr("Dni świąteczne:"), this);
     editSwieta = new QLineEdit(this);
+    buttonZapisz = new QPushButton(tr("Zapamiętaj te parametry"), this);
+    buttonWczytaj = new QPushButton(tr("Wczytaj zapamiętane parametry"), this);
 
     gridLayout = new QGridLayout(this);
     gridLayout -> addWidget(labelRok, 0, 0);
@@ -36,10 +38,14 @@ UIDodawanieNowegoGrafikuWstep::UIDodawanieNowegoGrafikuWstep(std::vector<Miesiac
     gridLayout -> addWidget(editSwieta, 4, 1);
     gridLayout -> addWidget(buttonDodaj, 6, 0);
     gridLayout -> addWidget(buttonAnuluj, 6, 1);
+    gridLayout -> addWidget(buttonZapisz, 7, 0);
+    gridLayout -> addWidget(buttonWczytaj, 8, 0);
     setLayout(gridLayout);
 
     QObject::connect(buttonDodaj, SIGNAL(clicked()), this, SLOT(onButtonDodajClicked()));
     QObject::connect(buttonAnuluj, SIGNAL(clicked()), this, SLOT(onButtonAnulujClicked()));
+    QObject::connect(buttonZapisz, SIGNAL(clicked()), this, SLOT(onButtonZapiszClicked()));
+    QObject::connect(buttonWczytaj, SIGNAL(clicked()), this, SLOT(onButtonWczytajClicked()));
 
     for (auto it = tM.begin(); it<tM.end(); ++it) {
         boxMiesiac -> addItem(translateEnumToQString(*it));
@@ -84,6 +90,14 @@ QString UIDodawanieNowegoGrafikuWstep::translateEnumToQString(DzienTygodnia dt) 
         default: s = "NIEZNANY_DZIEŃ"; break;
     }
     return s;
+}
+
+void UIDodawanieNowegoGrafikuWstep::onButtonZapiszClicked() {
+    
+}
+
+void UIDodawanieNowegoGrafikuWstep::onButtonWczytajClicked() {
+    
 }
 
 void UIDodawanieNowegoGrafikuWstep::onButtonDodajClicked() {
