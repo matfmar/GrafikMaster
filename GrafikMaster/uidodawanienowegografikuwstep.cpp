@@ -114,7 +114,12 @@ void UIDodawanieNowegoGrafikuWstep::onButtonZapiszClicked() {
 }
 
 void UIDodawanieNowegoGrafikuWstep::onButtonWczytajClicked() {
-    std::vector<QString> daneWczytane = pDodawanieNowegoGrafiku->wybranoWczytanieParametrowGrafiku();
+    bool result(false);
+    std::vector<QString> daneWczytane = pDodawanieNowegoGrafiku->wybranoWczytanieParametrowGrafiku(result);
+    if (!result) {
+        QMessageBox::critical(this, tr("Błąd"), tr("Nie udało się wczytać danych."), QMessageBox::Ok);
+        return;
+    }
     editRok->setText(daneWczytane[0]);
     editLiczbaDni->setText(daneWczytane[1]);
     boxMiesiac->setCurrentIndex(daneWczytane[2].toInt());
