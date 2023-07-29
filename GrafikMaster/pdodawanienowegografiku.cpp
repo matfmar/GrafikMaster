@@ -20,11 +20,11 @@ PDodawanieNowegoGrafiku::PDodawanieNowegoGrafiku()
 }
 
 bool PDodawanieNowegoGrafiku::wybranoZapisanieParametrowGrafiku(std::vector<QString> daneDoZapisu) {
-    return (mNoweGrafiki
+    return (mNoweGrafiki->zapiszParametryGrafiku(daneDoZapisu));
 }
 
 std::vector<QString> PDodawanieNowegoGrafiku::wybranoWczytanieParametrowGrafiku(bool& result) {
-    
+    return (mNoweGrafiki->wczytajParametryGrafiku(result));
 }
 
 void PDodawanieNowegoGrafiku::wybranoDodanieInformacjiWstepnychNowegoGrafiku(int r, int ld, Miesiac m, DzienTygodnia dt, QString listaSwiat, bool& result) {
