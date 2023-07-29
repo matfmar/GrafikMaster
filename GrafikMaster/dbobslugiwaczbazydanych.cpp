@@ -280,6 +280,83 @@ std::vector<std::string> DBObslugiwaczBazyDanych::wczytajListeNazwPlikowZGrafika
     return listaNazw;
 }
 
+XWyswietlanyGrafik* DBObslugiwaczBazyDanych::zaladujGrafikOstatecznyOKonkretnejNazwie(std::string nazwa, int miesiac, int rok) {
+    nazwa = "data/grafiki_ostateczne/" + nazwa;
+    inputFileReader.open(nazwa.c_str());
+    if (!inputFileReader.is_open()) {
+        return nullptr;
+    }
+    XWyswietlanyGrafik* nowyWyswietlanyGrafik = new XWyswietlanyGrafik(nazwa, miesiac, rok);
+    XWyswietlanyGrafik::XPozycjaGrafiku* nowaPozycjaGrafiku(nullptr);
+    std::string line(""), subline("");
+    QString dz(""), dt(""), dy("");
+    bool cs(false);
+    int licznikSrednikow(0);
+    while (getline(inputFileReader, line)) {
+        for (char c : line) {
+            if (c != ';') {
+                subline += c;
+            }
+            else {
+                if (licznikSrednikow == 0) {
+                    dz = QString::fromStdString(subline);
+                    subline = "";
+                    licznikSrednikow++;
+                }
+                else if (licznikSrednikow == 1) {
+                    dt = QString::fromStdString(subline);
+                    subline = "";
+                    licznikSrednikow++;
+                }
+                else if (licznikSrednikow == 2) {
+                    dy = QString::fromStdString(subline);
+                    subline = "";
+                    licznikSrednikow++;
+                }
+                else if (licznikSrednikow >= 3) {
+                    if (subline == "0") {
+                        cs = false;
+                    }
+                    else {
+                        cs = true;
+                    }
+                    subline = "";
+                    licznikSrednikow++;
+                }
+            }
+        }
+        subline = "";
+        licznikSrednikow = 0;
+        nowaPozycjaGrafiku = new XWyswietlanyGrafik::XPozycjaGrafiku(dz, dt, dy, cs);
+        nowyWyswietlanyGrafik->listaPozycjiGrafiku->push_back(nowaPozycjaGrafiku);
+    }
+    inputFileReader.close();
+    return nowyWyswietlanyGrafik;
+}
+
+bool DBObslugiwaczBazyDanych::usunPlikGrafikuOstatecznego(std::string nazwaPliku) {
+    QString filename = QString::fromStdString(nazwaPliku);
+    QFile file(filename);
+    bool result = file.remove();
+    return result;
+}
+
+std::vector<std::string> DBObslugiwaczBazyDanych::wczytajListeNazwPlikowZGrafikamiOstatecznymi(std::string wzorNazwy, bool& result) {
+    QDir* dir = new QDir("data/grafiki_ostateczne");
+    std::vector<std::string> listaNazw;
+    QStringList filters;
+    std::string filtr = wzorNazwy + "*.data";
+    filters << QString::fromStdString(filtr);
+    dir->setNameFilters(filters);
+    QStringList listaNazwQ = dir->entryList(QDir::Files);
+    for (auto it=listaNazwQ.begin(); it<listaNazwQ.end(); ++it) {
+        listaNazw.push_back((*it).toStdString());
+    }
+    delete dir;
+    result = true;
+    return listaNazw;
+}
+
 DBObslugiwaczBazyDanych::~DBObslugiwaczBazyDanych() {
 
 }
