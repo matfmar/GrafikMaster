@@ -6,6 +6,7 @@ class UIMainWindow;
 class PEdycjaBazyDyzurantow;
 class PDodawanieNowegoGrafiku;
 class PPrzegladanieGrafikowRoboczych;
+class PPrzegladanieGrafikowOstatecznych;
 
 class PMain {
 public:
@@ -22,6 +23,7 @@ private:
     PEdycjaBazyDyzurantow* pEdycjaBazyDyzurantow;
     PDodawanieNowegoGrafiku* pDodawanieNowegoGrafiku;
     PPrzegladanieGrafikowRoboczych* pPrzegladanieGrafikowRoboczych;
+    PPrzegladanieGrafikowOstatecznych* pPrzegladanieGrafikowOstatecznych;
 };
 
 #endif // PMAIN_H
