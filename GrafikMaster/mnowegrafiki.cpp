@@ -127,6 +127,26 @@ bool MNoweGrafiki::updateDyzurantaTworzacego(std::string nick, bool czyM, std::s
     return true;
 }
 
+bool MNoweGrafiki::zapiszParametryGrafiku(std::vector<QString> daneDoZapisu) {
+    db = new DBObslugiwaczBazyDanych();
+    bool result = db->zapiszParametryGrafikuDoPliku(daneDoZapisu);
+    if (db != nullptr) {
+        delete db;
+        db = nullptr;
+    }
+    return result;
+}
+
+std::vector<QString> MNoweGrafiki::czytajParametryGrafiku(bool& result) {
+    db = new DBObslugiwaczBazyDanych();
+    std::vector<QString> v = db->wczytajParametryGrafikuZPliku(result);
+    if (db != nullptr) {
+        delete db;
+        db = nullptr;
+    }
+    return v;
+}
+
 bool MNoweGrafiki::zapiszUstawieniaDoPliku() {
     db = new DBObslugiwaczBazyDanych();
     std::vector<std::string> dane;
