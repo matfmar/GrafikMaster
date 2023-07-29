@@ -13,7 +13,7 @@ UIMainWindow::UIMainWindow(PMain* pm, QWidget *parent)
     buttonDodajNowyGrafik = new QPushButton(tr("Dodaj nowy grafik"), this);
     //buttonZakonczBezpiecznieTworzenieGrafikow = new QPushButton(tr("Kliknij, aby bezpiecznie zakończyć tworzenie grafików"), this);
     buttonPrzegladajGrafikiRobocze = new QPushButton(tr("Przeglądaj grafiki robocze"), this);
-    //buttonPrzegladajGrafikiOstateczne = new QPushButton(tr("Przeglądaj grafiki ostateczne"), this);
+    buttonPrzegladajGrafikiOstateczne = new QPushButton(tr("Przeglądaj grafiki ostateczne"), this);
     //buttonZakonczBezpiecznieTworzenieGrafikow->setEnabled(false);
     buttonPrzegladajGrafikiOstateczne = nullptr;
     buttonZakonczBezpiecznieTworzenieGrafikow = nullptr;
@@ -24,7 +24,7 @@ UIMainWindow::UIMainWindow(PMain* pm, QWidget *parent)
     layout -> addWidget(buttonDodajNowyGrafik);
     //layout -> addWidget(buttonZakonczBezpiecznieTworzenieGrafikow);
     layout -> addWidget(buttonPrzegladajGrafikiRobocze);
-    //layout -> addWidget(buttonPrzegladajGrafikiOstateczne);
+    layout -> addWidget(buttonPrzegladajGrafikiOstateczne);
     layout -> addWidget(authorLabel);
 
     mainWidget -> setLayout(layout);
@@ -33,7 +33,7 @@ UIMainWindow::UIMainWindow(PMain* pm, QWidget *parent)
     QObject::connect(buttonEdytujBazeDyzurantow, SIGNAL(clicked()), this, SLOT(onButtonEdytujBazeDyzurantowClicked()));
     QObject::connect(buttonDodajNowyGrafik, SIGNAL(clicked()), this, SLOT(onButtonDodajNowyGrafikClicked()));
     QObject::connect(buttonPrzegladajGrafikiRobocze, SIGNAL(clicked()), this, SLOT(onButtonPrzegladajGrafikiRoboczeClicked()));
-    //QObject::connect(buttonPrzegladajGrafikiOstateczne, SIGNAL(clicked()), this, SLOT(onButtonPrzegladajGrafikiOstateczneClicked()));
+    QObject::connect(buttonPrzegladajGrafikiOstateczne, SIGNAL(clicked()), this, SLOT(onButtonPrzegladajGrafikiOstateczneClicked()));
     //QObject::connect(buttonZakonczBezpiecznieTworzenieGrafikow, SIGNAL(clicked()), this, SLOT(onButtonZakonczBezpiecznieTworzenieGrafikowClicked()));
 
 }
@@ -57,7 +57,7 @@ void UIMainWindow::onButtonPrzegladajGrafikiRoboczeClicked() {
 }
 
 void UIMainWindow::onButtonPrzegladajGrafikiOstateczneClicked() {
-
+    pMain -> wybranoPrzegladanieGrafikowOstatecznych();
 }
 
 UIMainWindow::~UIMainWindow() {
