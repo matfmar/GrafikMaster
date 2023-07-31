@@ -53,7 +53,7 @@ UIPrzegladanieGrafikowRoboczych::UIPrzegladanieGrafikowRoboczych(PPrzegladanieGr
     buttonUsunWszystko->setEnabled(false);
     buttonKlepnijGrafik = new QPushButton(tr("Klepnij grafik jako aktualny"), this);
     buttonKlepnijGrafik->setEnabled(false);
-    buttonDrukujPDF = new QPushButton(tr("Zapiszj ten grafik jako PDF"), this);
+    buttonDrukujPDF = new QPushButton(tr("Zapisz ten grafik jako PDF"), this);
     buttonDrukujPDF->setEnabled(false);
 
     mainLayout = new QVBoxLayout(this);
@@ -67,7 +67,6 @@ UIPrzegladanieGrafikowRoboczych::UIPrzegladanieGrafikowRoboczych(PPrzegladanieGr
     mainLayout->addWidget(buttonClose);
     mainWidget->setLayout(mainLayout);
     setCentralWidget(mainWidget);
-    setFixedSize(600, 800);
 
     QObject::connect(buttonSzukaj, SIGNAL(clicked()), this, SLOT(onButtonSzukajClicked()));
     QObject::connect(buttonLeft, SIGNAL(clicked()), this, SLOT(onButtonLeftClicked()));
@@ -150,6 +149,8 @@ void UIPrzegladanieGrafikowRoboczych::onButtonUsunWszystkoClicked() {
     buttonUsun->setEnabled(false);
     buttonDrukujPDF->setEnabled(false);
     buttonUsunWszystko->setEnabled(false);
+    buttonKlepnijGrafik->setEnabled(false);
+    wyczyscTabele();
     QMessageBox::information(this, tr("Informacja"), tr("Usunięto WSZYSTKIE grafiki z danego miesiąca i danego roku."), QMessageBox::Ok);
 }
 

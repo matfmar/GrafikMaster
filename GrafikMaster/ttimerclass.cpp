@@ -12,9 +12,9 @@ void TTimerClass::process() {
     QObject::connect(timer, SIGNAL(timeout()), this, SLOT(timeFinishedSlot()));
 }
 
-void TTimerClass::startTimerTC() {
+/*void TTimerClass::startTimerTC() {
     timer->start(3000);         //na 3 sekundy, UWAGA: ta funkcja restartuje, jeśli timer już był aktywny
-}
+}*/
 
 void TTimerClass::startTheTimerFromOutside() {
     timer->start(3000);
@@ -26,9 +26,9 @@ void TTimerClass::stopTheTimerFromOutside() {
     }
 }
 
-void TTimerClass::stopTimerTC() {
+/*void TTimerClass::stopTimerTC() {
     timer->stop();
-}
+}*/
 
 void TTimerClass::timeFinishedSlot() {
     emit timeFinishedSignal();

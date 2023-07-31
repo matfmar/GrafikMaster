@@ -139,8 +139,10 @@ UIDodawanieNowegoGrafiku::UIDodawanieNowegoGrafiku(std::vector<XDyzurant*>* td, 
     mainLayout -> addLayout(layoutLabelsEdits);
     mainLayout -> addWidget(groupPodRzad);
     mainLayout -> addWidget(wyborBezTrojek);
-    mainLayout -> addWidget(buttonUpdate);
-    mainLayout -> addWidget(groupZapisywanieWczytywanie);
+
+    layoutPrzyciski = new QVBoxLayout(this);
+    layoutPrzyciski -> addWidget(buttonUpdate);
+    layoutPrzyciski -> addWidget(groupZapisywanieWczytywanie);
 
     buttonStart = new QPushButton(tr("UŁÓŻ GRAFIK !"), this);
     buttonStart->setFixedSize(400, 80);
@@ -175,6 +177,7 @@ UIDodawanieNowegoGrafiku::UIDodawanieNowegoGrafiku(std::vector<XDyzurant*>* td, 
 
     ultimateLayout = new QHBoxLayout(this);
     ultimateLayout -> addLayout(mainLayout);
+    ultimateLayout -> addLayout(layoutPrzyciski);
     ultimateLayout -> addLayout(layoutRight);
 
     mainWidget -> setLayout(ultimateLayout);
@@ -208,7 +211,7 @@ UIDodawanieNowegoGrafiku::UIDodawanieNowegoGrafiku(std::vector<XDyzurant*>* td, 
 
 void UIDodawanieNowegoGrafiku::wypelnijListeDyzurantami(std::vector<XDyzurant*>* tab) {
     if (tab == nullptr) {
-        int ret = QMessageBox::critical(this, tr("BŁĄD"), tr("Błąd odczytu listy dyżurantów z bazy!"), QMessageBox::Ok);
+        QMessageBox::critical(this, tr("BŁĄD"), tr("Błąd odczytu listy dyżurantów z bazy!"), QMessageBox::Ok);
         return;
     }
     QString item("");
@@ -314,10 +317,14 @@ void UIDodawanieNowegoGrafiku::onButtonStartClicked() {
     bool skracaniePomimoUlozenia = wyborSkracajNiezaleznieOdUlozenia->isChecked();
 
     bool immediateResult(true);
-    pDodawanieNowegoGrafiku->wybranoProsbeOStworzenieGrafiku(immediateResult, liczbaIteracji, szybkosc, skracaniePomimoUlozenia);
+    bool decisionResult(true);
+    pDodawanieNowegoGrafiku->wybranoProsbeOStworzenieGrafiku(decisionResult, immediateResult, liczbaIteracji, szybkosc, skracaniePomimoUlozenia);
     if (!immediateResult) {
         QMessageBox::critical(this, tr("Błąd"), tr("Podano wewnętrznie sprzecze kryteria!"), QMessageBox::Ok);
         //close();
+    }
+    if (!immediateResult || !decisionResult) {
+        close();
     }
 }
 

@@ -15,7 +15,6 @@ UIMainWindow::UIMainWindow(PMain* pm, QWidget *parent)
     buttonPrzegladajGrafikiRobocze = new QPushButton(tr("Przeglądaj grafiki robocze"), this);
     buttonPrzegladajGrafikiOstateczne = new QPushButton(tr("Przeglądaj grafiki ostateczne"), this);
     //buttonZakonczBezpiecznieTworzenieGrafikow->setEnabled(false);
-    buttonPrzegladajGrafikiOstateczne = nullptr;
     buttonZakonczBezpiecznieTworzenieGrafikow = nullptr;
     authorLabel = new QLabel(tr("Twórca algorytmu i programu: Mateusz Marzec SoftTech"), this);
 

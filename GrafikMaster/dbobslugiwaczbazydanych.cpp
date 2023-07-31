@@ -30,7 +30,6 @@ std::vector<XDyzurant*>* DBObslugiwaczBazyDanych::getTablicaDyzurantowFull() {
     std::vector<XDyzurant*>* tablicaDyzurantowFull = new std::vector<XDyzurant*>();
     inputFileReader.open("data/dyzuranci/dyzuranci.data");
     if (!inputFileReader.is_open()) {
-        qDebug() << "plik nie istnieje";
         return nullptr;
     }
     std::string line("");
@@ -162,7 +161,7 @@ bool DBObslugiwaczBazyDanych::zapiszParametryGrafikuDoPliku(std::vector<QString>
     return true;
 }
 
-std::vector<QString> std::ofstream::out | std::ofstream::trunc::wczytajParametryGrafikuZPliku(bool& result) {
+std::vector<QString> DBObslugiwaczBazyDanych::wczytajParametryGrafikuZPliku(bool& result) {
     std::vector<QString> v;
     std::string s("");
     inputFileReader.open("data/zapisane_warunki_grafikow/warunki.data");

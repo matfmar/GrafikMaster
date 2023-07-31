@@ -65,8 +65,8 @@ public:
     std::string getNick();
     int getPriorytet();
     int getId();
-    void setNick(std::string s);
-    void setPriorytet(int a);
+    //void setNick(std::string s);
+    //void setPriorytet(int a);
     virtual ~XDyzurant() {}
 protected:
     int id;
@@ -106,7 +106,7 @@ public:
         std::vector<int> znajdzSekwencje(int krotnosc);
         std::vector<int> zwrocDyzury();
         bool sprawdzZgodnoscMaksymalnejLiczbyDyzurow();    //wylacznie maksymalna liczba
-        bool sprawdzZgodnoscMinimalnejLiczbyDyzurow();
+        //bool sprawdzZgodnoscMinimalnejLiczbyDyzurow();
         bool sprawdzZgodnoscLiczbySobotINiedzielIWeekendow();
         bool sprawdzZgodnoscLiczbyPiatkow();
         bool sprawdzZgodnoscLiczbySwiatBezNiedzielIWeekendowZPiatkami();
@@ -118,7 +118,7 @@ public:
     std::string getKiedyNieMoze();
     std::string getKiedyMoze();
     std::string getKiedyUnika();
-    std::vector<int> getKiedyChce2();
+    //std::vector<int> getKiedyChce2();
     std::vector<int> getKiedyMoze2();
     std::vector<int> getKiedyNieMoze2();
     std::vector<int> getKiedyUnika2();
@@ -149,11 +149,11 @@ public:
     void setUnikanieTrojek(int a);
     void setWpisywanieCzyMoze(bool b);
     void incLiczbaDyzurow(DzienTygodnia dt);
-    void decLiczbaDyzurow(DzienTygodnia dt);
-    bool sprawdzCzyMozeDanegoDnia(int dzien);
+    //void decLiczbaDyzurow(DzienTygodnia dt);
+    //bool sprawdzCzyMozeDanegoDnia(int dzien);
     bool sprawdzCzyChceDanegoDnia(int dzien);
-    void usunDyzur(int dzien);
-    void usunDyzurPrzedPopBack();
+    //void usunDyzur(int dzien);
+    //void usunDyzurPrzedPopBack();
     void dodajDyzur(int dzien);
     void sortujDyzury();
 
@@ -211,7 +211,7 @@ public:
     void dodajPierwszeDaneDyzurantaMozeUnika(XDyzurantTworzacy* dyzurant);
     void dodajPierwszeDaneDyzurantowKiedyChca(std::vector<XDyzurantTworzacy*>* tablicaDyzurantowTworzacych);
     void przeliczMozliwiNieUnikajacyDyzuranciDlaKazdegoDnia();
-    void przeliczMozliwiNieUnikajacyDyzuranciDlaJednegoDnia(int dzien);
+    //void przeliczMozliwiNieUnikajacyDyzuranciDlaJednegoDnia(int dzien);
     void wypelnijGrafikDyzurantami(std::vector<XDyzurantTworzacy*>* tdt, int ileIteracji, TWorker* pw, bool czyP, bool* decS, int* licS, QMutex* mut, bool spu, QMutex* mwz, bool* wz);
     std::vector<XDzien*> udostepnijTabliceDni();
     std::string getMiesiacRok();
@@ -252,7 +252,7 @@ private:
 
     void dodajUnikanie(XDyzurantTworzacy::XLiczniki* licznikDt, XDyzurantTworzacy* dt, int klucz, int unikanieKrotnosc, bool& result, int dzien);
     void dodajUnikanieTrojek(XDyzurantTworzacy::XLiczniki* licznikDt, XDyzurantTworzacy* dt, int klucz, bool& result, int dzien);
-    bool sprawdzPustoscZbioruMozliwiNieUnikajacy(int dzien);
+    //bool sprawdzPustoscZbioruMozliwiNieUnikajacy(int dzien);
     bool sprawdzZgodnoscZMinimalnaLiczbaDyzurowDlaWszystkich();
     bool sprawdzCzySwieto(int dzien, DzienTygodnia dt);
     bool sprawdzCzyJestSzansaWepchnieciaDyzurantaOkreslonaLiczbeRazy(int odKiedy, int ileJeszczeTrzeba, int id);

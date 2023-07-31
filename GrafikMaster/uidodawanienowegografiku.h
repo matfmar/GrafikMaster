@@ -56,7 +56,7 @@ private:
     QRadioButton* wyborMoze,* wyborNieMoze;
     QRadioButton* wyborDwa,* wyborTrzy,* wyborCztery,* wyborNic;
     QRadioButton* wyborNormalnie,* wyborSzybko,* wyborBardzoSzybko,* wyborEkstremanlnieSzybko;
-    QVBoxLayout* layoutButtonsPrawoLewo,* layoutListLeft,* layoutListRight;
+    QVBoxLayout* layoutButtonsPrawoLewo,* layoutListLeft,* layoutListRight,* layoutPrzyciski;
     QHBoxLayout* layoutListWidgetsButtons,* layoutRightLabelEdit;
     QGroupBox* groupMozeNieMoze,* groupPodRzad,* groupZapisywanieWczytywanie,* groupSzybkosc;
     QButtonGroup* groupRadioMozeNieMoze,* groupRadioPodRzad,* groupRadioSzybkosc;

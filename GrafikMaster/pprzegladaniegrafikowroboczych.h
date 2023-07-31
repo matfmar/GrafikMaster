@@ -19,7 +19,7 @@ public:
     int wybranoSzukanieGrafikow(int miesiac, int rok);
     XWyswietlanyGrafik* wybranoGrafikWLewo(int& ktory, int& ileWszystkich);
     XWyswietlanyGrafik* wybranoGrafikWPrawo(int& ktory, int& ileWszystkich);
-    void wybranoZamkniecie();
+    //void wybranoZamkniecie();
     bool wybranoUsuniecieGrafiku(bool& czyCosZostaje);
     bool wybranoUsuniecieWszystkichGrafikow();
     bool wybranoKlepniecieGrafiku();

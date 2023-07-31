@@ -69,7 +69,7 @@ bool PDodawanieNowegoGrafiku::wybranoUpdateDyzurantaTworzacego(QString nick, boo
     return result;
 }
 
-void PDodawanieNowegoGrafiku::wybranoProsbeOStworzenieGrafiku(bool& immediateResult, int ileIteracji, int szybkosc, bool skracaniePomimoUlozenia) {
+void PDodawanieNowegoGrafiku::wybranoProsbeOStworzenieGrafiku(bool& decisionResult, bool& immediateResult, int ileIteracji, int szybkosc, bool skracaniePomimoUlozenia) {
     XGrafik* grafikWstepny = mNoweGrafiki->wypelnijGrafikPierwszymiDanymi();
 
     //pokazujemy efekt pierwszych danych na grafik
@@ -81,7 +81,11 @@ void PDodawanieNowegoGrafiku::wybranoProsbeOStworzenieGrafiku(bool& immediateRes
     uiTworzoneGrafiki->exec();  //blokujące program
 
     if (decyzjaWarunkowPoczatkowychGrafiku == 0) {
+        decisionResult = false;
         return;
+    }
+    else {
+        decisionResult = true;
     }
 
     //jeśli jest ok, to idziemy dalej.

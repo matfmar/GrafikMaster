@@ -31,9 +31,8 @@ UIDodawanieNowegoDyzuranta::UIDodawanieNowegoDyzuranta(PEdycjaBazyDyzurantow* pe
 void UIDodawanieNowegoDyzuranta::onButtonOKClicked() {
     QString nick = editNick -> text();
     QString idText = editPriorytet -> text();
-    int ret(-1);
     if (nick.isEmpty() || idText.isEmpty()) {
-        ret = QMessageBox::critical(this, tr("Błąd"), tr("Niewłaściwe dane!"), QMessageBox::Ok);
+        QMessageBox::critical(this, tr("Błąd"), tr("Niewłaściwe dane!"), QMessageBox::Ok);
         close();
         return;
     }
@@ -41,7 +40,7 @@ void UIDodawanieNowegoDyzuranta::onButtonOKClicked() {
     bool result(false);
     priorytet = idText.toInt(&result);
     if (!result) {
-        ret = QMessageBox::critical(this, tr("Błąd"), tr("Niewłaściwe dane!"), QMessageBox::Ok);
+        QMessageBox::critical(this, tr("Błąd"), tr("Niewłaściwe dane!"), QMessageBox::Ok);
         close();
         return;
     }

@@ -12,8 +12,8 @@ class TTimerClass : public QObject
 public:
     explicit TTimerClass(QObject *parent = nullptr);
     ~TTimerClass();
-    void startTimerTC();
-    void stopTimerTC();
+    //void startTimerTC();
+    //void stopTimerTC();
 public slots:
     void timeFinishedSlot();
     //do obsługi QThread

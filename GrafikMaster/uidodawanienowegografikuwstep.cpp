@@ -39,7 +39,7 @@ UIDodawanieNowegoGrafikuWstep::UIDodawanieNowegoGrafikuWstep(std::vector<Miesiac
     gridLayout -> addWidget(buttonDodaj, 6, 0);
     gridLayout -> addWidget(buttonAnuluj, 6, 1);
     gridLayout -> addWidget(buttonZapisz, 7, 0);
-    gridLayout -> addWidget(buttonWczytaj, 8, 0);
+    gridLayout -> addWidget(buttonWczytaj, 7, 1);
     setLayout(gridLayout);
 
     QObject::connect(buttonDodaj, SIGNAL(clicked()), this, SLOT(onButtonDodajClicked()));
@@ -128,21 +128,20 @@ void UIDodawanieNowegoGrafikuWstep::onButtonWczytajClicked() {
 }
 
 void UIDodawanieNowegoGrafikuWstep::onButtonDodajClicked() {
-    int ret(0);
     if (editRok->text().isEmpty() || editLiczbaDni->text().isEmpty()) {
-        ret = QMessageBox::critical(this, tr("Błąd"), tr("Za mało danych!"), QMessageBox::Ok);
+        QMessageBox::critical(this, tr("Błąd"), tr("Za mało danych!"), QMessageBox::Ok);
         return;
     }
     bool result(false);
     int rok = editRok->text().toInt(&result);
     if (!result) {
-        ret = QMessageBox::critical(this, tr("Błąd"), tr("Zły rok!"), QMessageBox::Ok);
+        QMessageBox::critical(this, tr("Błąd"), tr("Zły rok!"), QMessageBox::Ok);
         return;
     }
     int liczbaDni(0);
     liczbaDni = editLiczbaDni->text().toInt(&result);
     if ((!result) || ((liczbaDni < 28) || (liczbaDni > 31))) {
-        ret = QMessageBox::critical(this, tr("Błąd"), tr("Zła liczba dni!"), QMessageBox::Ok);
+        QMessageBox::critical(this, tr("Błąd"), tr("Zła liczba dni!"), QMessageBox::Ok);
         return;
     }
     Miesiac miesiac = tablicaMiesiecy[boxMiesiac->currentIndex()];

@@ -137,7 +137,7 @@ bool MNoweGrafiki::zapiszParametryGrafiku(std::vector<QString> daneDoZapisu) {
     return result;
 }
 
-std::vector<QString> MNoweGrafiki::czytajParametryGrafiku(bool& result) {
+std::vector<QString> MNoweGrafiki::wczytajParametryGrafiku(bool& result) {
     db = new DBObslugiwaczBazyDanych();
     std::vector<QString> v = db->wczytajParametryGrafikuZPliku(result);
     if (db != nullptr) {

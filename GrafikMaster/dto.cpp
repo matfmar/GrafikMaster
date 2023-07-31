@@ -76,13 +76,13 @@ int XDyzurant::getPriorytet() {
     return priorytet;
 }
 
-void XDyzurant::setNick(std::string s) {
+/*void XDyzurant::setNick(std::string s) {
     nick = s;
-}
+}*/
 
-void XDyzurant::setPriorytet(int a) {
+/*void XDyzurant::setPriorytet(int a) {
     priorytet = a;
-}
+}*/
 
 //XDyzurantTworzacy==============================================================================================================================
 XDyzurantTworzacy::XDyzurantTworzacy()
@@ -236,7 +236,7 @@ void XDyzurantTworzacy::setMaksymalnieWeekendyZPiatkami(int a) {maksymalnieWeeke
 
 void XDyzurantTworzacy::setUnikanieTrojek(int a) {unikanieTrojek = a;}
 
-bool XDyzurantTworzacy::sprawdzCzyMozeDanegoDnia(int dzien) {
+/*bool XDyzurantTworzacy::sprawdzCzyMozeDanegoDnia(int dzien) {
     if (wpisywanieGdzieMoze) {
         for (auto it=kiedyMoze.begin(); it<kiedyMoze.end(); ++it) {
             if (*it == dzien) {
@@ -253,7 +253,7 @@ bool XDyzurantTworzacy::sprawdzCzyMozeDanegoDnia(int dzien) {
         }
         return true;
     }
-}
+}*/
 
 bool XDyzurantTworzacy::sprawdzCzyChceDanegoDnia(int dzien) {
     for (auto it=kiedyChce.begin(); it<kiedyChce.end(); ++it) {
@@ -264,9 +264,9 @@ bool XDyzurantTworzacy::sprawdzCzyChceDanegoDnia(int dzien) {
     return false;
 }
 
-std::vector<int> XDyzurantTworzacy::getKiedyChce2() {
+/*std::vector<int> XDyzurantTworzacy::getKiedyChce2() {
     return kiedyChce;
-}
+}*/
 
 std::vector<int> XDyzurantTworzacy::getKiedyMoze2() {
     return kiedyMoze;
@@ -326,7 +326,7 @@ void XDyzurantTworzacy::XLiczniki::incLiczbaDyzurow(DzienTygodnia dt, bool czySw
     liczbaDyzurow++;
 }
 
-void XDyzurantTworzacy::XLiczniki::decLiczbaDyzurow(DzienTygodnia dt, bool czySwieto) {
+/*void XDyzurantTworzacy::XLiczniki::decLiczbaDyzurow(DzienTygodnia dt, bool czySwieto) {
     if (dt == SOBOTA) {
         liczbaSobot--;
         liczbaWeekendow--;
@@ -346,19 +346,20 @@ void XDyzurantTworzacy::XLiczniki::decLiczbaDyzurow(DzienTygodnia dt, bool czySw
     }
     liczbaDyzurow--;
 }
+*/
 
-void XDyzurantTworzacy::XLiczniki::usunDyzur(int dzien) {
+/*void XDyzurantTworzacy::XLiczniki::usunDyzur(int dzien) {
     for (auto it=dyzury.begin(); it<dyzury.end(); ++it) {
         if (*it == dzien) {
             dyzury.erase(it);
             return;
         }
     }
-}
+}*/
 
-void XDyzurantTworzacy::XLiczniki::usunDyzurPrzedPopBack() {
+/*void XDyzurantTworzacy::XLiczniki::usunDyzurPrzedPopBack() {
     dyzury.pop_back();
-}
+}*/
 
 void XDyzurantTworzacy::XLiczniki::dodajDyzur(int dzien) { //zwieksza wylacznie tabelke z dyzurami
     dyzury.push_back(dzien);
@@ -413,9 +414,9 @@ bool XDyzurantTworzacy::XLiczniki::sprawdzZgodnoscMaksymalnejLiczbyDyzurow() {
     return (liczbaDyzurow <= parent->getMaksymalnie());
 }
 
-bool XDyzurantTworzacy::XLiczniki::sprawdzZgodnoscMinimalnejLiczbyDyzurow() {
+/*bool XDyzurantTworzacy::XLiczniki::sprawdzZgodnoscMinimalnejLiczbyDyzurow() {
     return (liczbaDyzurow >= parent->getMinimalnie());
-}
+}*/
 
 bool XDyzurantTworzacy::XLiczniki::sprawdzZgodnoscLiczbySobotINiedzielIWeekendow() {
     return (liczbaSobot <= parent->getMaksymelnieSoboty() && (liczbaNiedziel <= parent->getMaksymalnieNiedziele() && liczbaWeekendow <= parent->getMaksymalnieWeekendy()));
@@ -711,13 +712,13 @@ void XGrafik::przeliczMozliwiNieUnikajacyDyzuranciDlaKazdegoDnia() {
     }
 }
 
-void XGrafik::przeliczMozliwiNieUnikajacyDyzuranciDlaJednegoDnia(int dzien) {
+/*void XGrafik::przeliczMozliwiNieUnikajacyDyzuranciDlaJednegoDnia(int dzien) {
     tablicaDni[dzien]->przeliczMozliwiNieUnikajacyDyzuranci();
-}
+}*/
 
-bool XGrafik::sprawdzPustoscZbioruMozliwiNieUnikajacy(int dzien) {  //true gdy pusty
+/*bool XGrafik::sprawdzPustoscZbioruMozliwiNieUnikajacy(int dzien) {  //true gdy pusty
     return (tablicaDni[dzien]->mozliwiNieUnikajacyDyzuranci.empty());
-}
+}*/
 
 std::vector<XDzien*> XGrafik::udostepnijTabliceDni() {
     return tablicaDni;

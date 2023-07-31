@@ -21,6 +21,7 @@ SOURCES += \
     pedycjabazydyzurantow.cpp \
     pmain.cpp \
     pprogress.cpp \
+    pprzegladaniegrafikowostatecznych.cpp \
     pprzegladaniegrafikowroboczych.cpp \
     ttimerclass.cpp \
     ttimerthread.cpp \
@@ -31,6 +32,7 @@ SOURCES += \
     uidodawanienowegografikuwstep.cpp \
     uiedycjabazydyzurantow.cpp \
     uimainwindow.cpp \
+    uiprzegladaniegrafikowostatecznych.cpp \
     uiprzegladaniegrafikowroboczych.cpp \
     uitworzenieprogress.cpp \
     uitworzonegrafiki.cpp
@@ -45,6 +47,7 @@ HEADERS += \
     pedycjabazydyzurantow.h \
     pmain.h \
     pprogress.h \
+    pprzegladaniegrafikowostatecznych.h \
     pprzegladaniegrafikowroboczych.h \
     ttimerclass.h \
     ttimerthread.h \
@@ -55,9 +58,12 @@ HEADERS += \
     uidodawanienowegografikuwstep.h \
     uiedycjabazydyzurantow.h \
     uimainwindow.h \
+    uiprzegladaniegrafikowostatecznych.h \
     uiprzegladaniegrafikowroboczych.h \
     uitworzenieprogress.h \
     uitworzonegrafiki.h
+
+RC_ICONS = icon.ico
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

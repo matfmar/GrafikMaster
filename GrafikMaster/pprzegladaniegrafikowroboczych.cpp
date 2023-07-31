@@ -189,9 +189,6 @@ XWyswietlanyGrafik* PPrzegladanieGrafikowRoboczych::wybranoGrafikWPrawo(int& kto
     return (*aktualnaListaGrafikow)[ktoryWyswietlamy];
 }
  
-void PPrzegladanieGrafikowRoboczych::wybranoZamkniecie() {
-
-}
 
 QString PPrzegladanieGrafikowRoboczych::odczytajMiesiac(int m) {
     QString s("");

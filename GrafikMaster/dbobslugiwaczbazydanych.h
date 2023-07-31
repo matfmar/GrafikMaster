@@ -5,6 +5,7 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <QString>
 
 class XDyzurant;
 class XGrafik;

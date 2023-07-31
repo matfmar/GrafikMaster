@@ -37,7 +37,7 @@ public:
 
     bool usunWszystkieUstawieniaZPlikow();
     bool zapiszParametryGrafiku(std::vector<QString> daneDoZapisu);
-    std::vector<QString> wczytajParametryGrafiku(bool& result):
+    std::vector<QString> wczytajParametryGrafiku(bool& result);
 private:
     std::vector<Miesiac> tablicaMiesiecy;
     std::vector<DzienTygodnia> tablicaDniTygodnia;
@@ -51,7 +51,7 @@ private:
     QSemaphore* semafor,* semafor2,* semaforLabel;
 
     void wypelnijTabliceEnumeracyjne();
-    void wypelnijDzien(int dzien);
+    //void wypelnijDzien(int dzien);
     bool sprawdzWstepnieZgodnosc();
     std::vector<int> convertStringToVectorOfInts(std::string s, bool& result);
 };
