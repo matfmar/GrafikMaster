@@ -1,0 +1,3 @@
+Program Grafik Master is distributed under GNU GPL license.
+The author and owner of program Grafik Master is Mateusz Marzec SoftTech.
+All rights reserved.
