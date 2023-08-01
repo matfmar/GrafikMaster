@@ -1,10 +1,15 @@
 # GrafikMaster
 
 ## SAFETY ISSUES
-Jedynym autoryzowanym przeze mnie plikiem służącym do uruchomienia tego programu jest plik Grafik Master.exe znajdujący się w podfolderze release.
+Jedynym autoryzowanym przeze mnie plikiem służącym do URUCHOMIENIA tego programu jest plik "Grafik Master.exe" znajdujący się w podfolderze release.
 Bezwzględnie przed jego uruchomieniem zaleca się weryfikację jego autentyczności poprzez obliczenie funkcji skrótu algorytmem SHA512.
 Wartość funkcji skrótu powinna wynosić:
 b41bfffd6ba1283b6d8f56f5a312020e173f320e77b407400d1c8ba074eaede0875d8cd9a09dd7096c890d12dcbd29e7d07313a90b70cd047949384f01bae25e
+Jeśli wartość funkcji skrótu jest odmienna od powyższej, plik wykonywalny nie został zbudowany przeze mnie i odradzam jego uruchamianie.
+
+Analogicznie, jedynym autoryzowanym przeze mnie plikiem służącym do INSTALACJI tego programu jest plik "Grafik Master Setup.exe". Bezwzględnie przed jego uruchomieniem zaleca się weryfikację jego autentyczności przez obliczenie funkcji skrótu algorytmem SHA521.
+Wartość funkcji skrótu powinna wynosić:
+1d50f82155b5d32cea5b6fa8bd0cb18b8e2d39c420455c85709d82cca8a9429ac1839408b1eba47fcc4c35eda5b342dbf5de01d46b89229a9e855eeb3ec277a0
 Jeśli wartość funkcji skrótu jest odmienna od powyższej, plik wykonywalny nie został zbudowany przeze mnie i odradzam jego uruchamianie.
 
 ## INSTRUKCJA OBSŁUGI DLA PROGRAMU GRAFIK MASTER v1.0
