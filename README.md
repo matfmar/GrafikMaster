@@ -4,7 +4,7 @@
 Jedynym autoryzowanym przeze mnie plikiem służącym do URUCHOMIENIA tego programu jest plik "Grafik Master.exe" znajdujący się w podfolderze release.
 Bezwzględnie przed jego uruchomieniem zaleca się weryfikację jego autentyczności poprzez obliczenie funkcji skrótu algorytmem SHA512.
 Wartość funkcji skrótu powinna wynosić:
-b41bfffd6ba1283b6d8f56f5a312020e173f320e77b407400d1c8ba074eaede0875d8cd9a09dd7096c890d12dcbd29e7d07313a90b70cd047949384f01bae25e
+6e3660dad3ac3adc7ad7d11efdf9d8f76109a006c543f09c4fec8381b81e90b6aa3a4b1fc26a52d022f5d93e54a80db4b211ccb7510942eb21cc69aec32f8446
 Jeśli wartość funkcji skrótu jest odmienna od powyższej, plik wykonywalny nie został zbudowany przeze mnie i odradzam jego uruchamianie.
 
 Analogicznie, jedynym autoryzowanym przeze mnie plikiem służącym do INSTALACJI tego programu jest plik "Grafik Master Setup.exe". Bezwzględnie przed jego uruchomieniem zaleca się weryfikację jego autentyczności przez obliczenie funkcji skrótu algorytmem SHA512.
