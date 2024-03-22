@@ -26,7 +26,7 @@ public:
     bool zapiszJakoPDF(QString f);
 private:
     UIPrzegladanieGrafikowRoboczych* uiPrzegladanieGrafikowRoboczych;
-    std::vector<XWyswietlanyGrafik*>* aktualnaListaGrafikow;
+    std::vector<XWyswietlanyGrafik*>* aktualnaListaGrafikow;//materiał do sortowania
     int ileGrafikowNaLiscie;
     int ktoryWyswietlamy;
     DBObslugiwaczBazyDanych* db;

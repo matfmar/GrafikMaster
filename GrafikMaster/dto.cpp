@@ -1098,8 +1098,68 @@ XGrafik::~XGrafik() {
 //XWyswietlanyGrafik===================================================================================================================================================================================
 
 XWyswietlanyGrafik::XWyswietlanyGrafik(std::string np, int m, int r)
-    : listaPozycjiGrafiku(nullptr), nazwaPliku(np), miesiac(m), rok(r) {
+    : listaPozycjiGrafiku(nullptr), nazwaPliku(np), miesiac(m), rok(r),
+    miaraBeznadziejnosci(0.0) {
     listaPozycjiGrafiku = new std::vector<XPozycjaGrafiku*>();
+}
+
+void XWyswietlanyGrafik::obliczMiareBeznadziejnosci() {
+    std::vector<QString> dyzuranci;
+    std::map<QString, double> tablicaMiar;
+    XPozycjaGrafiku* pozycja;
+    double miaraOdleglosci(0.0);
+    for (auto it = listaPozycjiGrafiku->begin(); it<listaPozycjiGrafiku->end(); ++it) {
+        pozycja = *it;
+        if (std::find(dyzuranci.begin(), dyzuranci.end(), pozycja->dyzurant) == dyzuranci.end()) {  //jesli jeszcze w 'bazie' dyzurantow nie ma tego z dnia obecnego
+            dyzuranci.push_back(pozycja->dyzurant); //...to dodajemy nowego
+            tablicaMiar[pozycja->dyzurant] = 0.0;//...i oczywiście odpowiednią  miarę. Indeksy miar i dyżurantów się zgadzają
+        }
+        //sprawdzamy odległość tego dyżuru od poprzedniego
+        if (it - listaPozycjiGrafiku->begin() >= 3) {
+            if ((*(it-2))->dyzurant == pozycja->dyzurant) {
+                miaraOdleglosci = 2.0;
+            }
+            else if ((*(it-3))->dyzurant == pozycja->dyzurant) {
+                miaraOdleglosci = 1.5;
+            }
+            else {
+                miaraOdleglosci = 1.0;
+            }
+        }
+        else if (it - listaPozycjiGrafiku->begin() == 2) {
+            if ((*(it-2))->dyzurant == pozycja->dyzurant) {
+                miaraOdleglosci = 2.0;
+            }
+        }
+        tablicaMiar[pozycja->dyzurant] += (miaraOdleglosci * ((double) podajMiareDniaTygodniaLubSwieta(pozycja->dzienTygodnia, pozycja->czySwieto)));
+    }
+    //teraz liczymy ogólną miarę beznadziejności
+    double suma(0.0);
+    for (auto it=dyzuranci.begin(); it<dyzuranci.end(); ++it) {
+        suma += ((tablicaMiar[*it]/4.0)*(tablicaMiar[*it]/4.0));
+    }
+    miaraBeznadziejnosci = suma;
+}
+
+int XWyswietlanyGrafik::podajMiareDniaTygodniaLubSwieta(QString dt, bool czySwieto) {
+    int miara(0);
+    if (czySwieto) {
+        if (dt == "sobota") {
+            return 8;
+        }
+        else {
+            return 6;
+        }
+    }
+    if (dt == "poniedziałek") miara = 4;
+    else if (dt == "wtorek") miara = 4;
+    else if (dt == "środa") miara = 4;
+    else if (dt == "czwartek") miara = 3;
+    else if (dt == "piątek") miara = 6;
+    else if (dt == "sobota") miara = 8;
+    else if (dt == "niedziela") miara = 6;
+    else miara = 4;
+    return miara;
 }
 
 XWyswietlanyGrafik::~XWyswietlanyGrafik() {

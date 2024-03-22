@@ -44,10 +44,15 @@ int PPrzegladanieGrafikowRoboczych::wybranoSzukanieGrafikow(int miesiac, int rok
     int licznikGrafikow(0);
     for (auto it=listaNazwPlikow.begin(); it<listaNazwPlikow.end(); ++it) {
         nowyWyswietlanyGrafik = db->zaladujGrafikOKonkretnejNazwie(*it, miesiac, rok);
+        nowyWyswietlanyGrafik->obliczMiareBeznadziejnosci();    //liczymy miarę jego beznadziejności
         aktualnaListaGrafikow->push_back(nowyWyswietlanyGrafik);
         licznikGrafikow++;
     }
     ileGrafikowNaLiscie = licznikGrafikow;
+    //teraz sortowanie grafików po mierze beznadziejności
+    std::sort(aktualnaListaGrafikow->begin(), aktualnaListaGrafikow->end(),
+              [](XWyswietlanyGrafik*& a,XWyswietlanyGrafik*& b){return (a->miaraBeznadziejnosci < b->miaraBeznadziejnosci);});
+    //koniec sortowania
     uiPrzegladanieGrafikowRoboczych->ableLeftButton(false);
     uiPrzegladanieGrafikowRoboczych->ableRightButton(true);
     return licznikGrafikow;

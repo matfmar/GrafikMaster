@@ -262,6 +262,8 @@ private:
 
 struct XWyswietlanyGrafik {
     XWyswietlanyGrafik(std::string np, int m, int r);
+    void obliczMiareBeznadziejnosci();
+    int podajMiareDniaTygodniaLubSwieta(QString dt, bool czySwieto);
     ~XWyswietlanyGrafik();
     struct XPozycjaGrafiku {
         XPozycjaGrafiku(QString dz, QString dt, QString dy, bool cS);
@@ -273,6 +275,7 @@ struct XWyswietlanyGrafik {
     std::string nazwaPliku;
     int miesiac;
     int rok;
+    double miaraBeznadziejnosci;
     std::vector<XPozycjaGrafiku*>* listaPozycjiGrafiku;
 };
 

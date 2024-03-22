@@ -199,7 +199,7 @@ void UIPrzegladanieGrafikowRoboczych::onButtonLeftClicked() {
         QMessageBox::critical(this, tr("Błąd"), tr("Nie udało się wyświetlić grafiku."), QMessageBox::Ok);
         return;
     }
-    labelNumber->setText(QString::number(ktory) + " / " + QString::number(ileWszystkich));
+    labelNumber->setText(QString::number(ktory) + " / " + QString::number(ileWszystkich) + " (" + QString::number((int)grafikDoWyswietlenia->miaraBeznadziejnosci) + ")");
     int licznikWierszy(0);
     
     QTableWidgetItem* twitem(nullptr);    
@@ -231,13 +231,22 @@ void UIPrzegladanieGrafikowRoboczych::wyswietlKonkretnyGrafik(XWyswietlanyGrafik
         QMessageBox::critical(this, tr("Błąd"), tr("Nie udało się wyświetlić grafiku."), QMessageBox::Ok);
         return;
     }
-    labelNumber->setText(QString::number(ktory) + " / " + QString::number(ileWszystkich));
+    labelNumber->setText(QString::number(ktory) + " / " + QString::number(ileWszystkich) + " (" + QString::number((int)grafikDoWyswietlenia->miaraBeznadziejnosci) + ")");
     int licznikWierszy(0);
+    QTableWidgetItem* twitem(nullptr);
+    QFont fontForWeekend;
+    fontForWeekend.setBold(true);
     for (auto it = grafikDoWyswietlenia->listaPozycjiGrafiku->begin(); it < grafikDoWyswietlenia->listaPozycjiGrafiku->end(); ++it) {
         tableGrafik->insertRow(licznikWierszy);
         tableGrafik->setItem(licznikWierszy, 0, new QTableWidgetItem((*it)->dzien));
         tableGrafik->setItem(licznikWierszy, 1, new QTableWidgetItem((*it)->dzienTygodnia));
         tableGrafik->setItem(licznikWierszy, 2, new QTableWidgetItem((*it)->dyzurant));
+        if ((*it)->dzienTygodnia == "niedziela" || (*it)->dzienTygodnia == "sobota") {
+            for (int i=0; i<3; ++i) {
+                twitem = tableGrafik->item(licznikWierszy, i);
+                twitem->setFont(fontForWeekend);
+            }
+        }
         licznikWierszy++;
     }    
     buttonKlepnijGrafik->setEnabled(true);
@@ -253,13 +262,22 @@ void UIPrzegladanieGrafikowRoboczych::onButtonRightClicked() {
         QMessageBox::critical(this, tr("Błąd"), tr("Nie udało się wyświetlić grafiku."), QMessageBox::Ok);
         return;
     }
-    labelNumber->setText(QString::number(ktory) + " / " + QString::number(ileWszystkich));
+    labelNumber->setText(QString::number(ktory) + " / " + QString::number(ileWszystkich) + " (" + QString::number((int)grafikDoWyswietlenia->miaraBeznadziejnosci) + ")");
     int licznikWierszy(0);
+    QTableWidgetItem* twitem(nullptr);
+    QFont fontForWeekend;
+    fontForWeekend.setBold(true);
     for (auto it = grafikDoWyswietlenia->listaPozycjiGrafiku->begin(); it < grafikDoWyswietlenia->listaPozycjiGrafiku->end(); ++it) {
         tableGrafik->insertRow(licznikWierszy);
         tableGrafik->setItem(licznikWierszy, 0, new QTableWidgetItem((*it)->dzien));
         tableGrafik->setItem(licznikWierszy, 1, new QTableWidgetItem((*it)->dzienTygodnia));
         tableGrafik->setItem(licznikWierszy, 2, new QTableWidgetItem((*it)->dyzurant));
+        if ((*it)->dzienTygodnia == "niedziela" || (*it)->dzienTygodnia == "sobota") {
+            for (int i=0; i<3; ++i) {
+                twitem = tableGrafik->item(licznikWierszy, i);
+                twitem->setFont(fontForWeekend);
+            }
+        }
         licznikWierszy++;
     }
     buttonKlepnijGrafik->setEnabled(true);
